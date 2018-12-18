@@ -2,6 +2,7 @@
   "name": "go1-base-react-app",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/go1-base-react-app",
   "dependencies": {
     "@go1d/go1d": "^0.2.53",
     "@types/jest": "23.3.10",

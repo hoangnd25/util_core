@@ -1,0 +1,11 @@
+version: "2"
+services:
+  web:
+    image: ${CI_REGISTRY_IMAGE}:${DOCKER_TAG}
+    mem_limit: ${MEM}
+    ports: ["80"]
+    environment:
+      - AWS_REGION
+      - AWS_SECRET_NAME
+      - NODE_ENV
+      - APP_API_URL

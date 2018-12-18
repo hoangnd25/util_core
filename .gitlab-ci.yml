@@ -1,0 +1,92 @@
+image: go1com/ci-nodejs:node8
+
+stages:
+  - build
+  - test
+  - package
+  - deploy
+  - release
+
+build:
+  stage: build
+  tags: ["aws"]
+  script:
+    - yarn install
+    - yarn build
+  artifacts:
+    paths:
+      - node_modules
+      - build
+    expire_in: 6h
+  only: ["branches"]
+
+test:unit:
+  stage: test
+  tags: ["aws"]
+  script:
+    - yarn test --coverage --runInBand
+  artifacts:
+    paths:
+      - coverage
+    expire_in: 1h
+  except:
+    - "tags"
+
+package:
+  image: docker:stable
+  stage: package
+  tags: ["aws"]
+  script:
+    - export TAG_NAME=`date +"%Y%m%d"`-${CI_PIPELINE_ID}
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker build -t $CI_REGISTRY_IMAGE:$TAG_NAME .
+    - docker push $CI_REGISTRY_IMAGE:$TAG_NAME
+  only: ["master", "/^hotfix-.*$/"]
+  except:
+    - "tags"
+
+deploy:master:
+  image: go1com/ci-deploy:aws-cli-ecs
+  stage: deploy
+  tags: ["aws"]
+  dependencies: []
+  variables:
+    MEM: 128M
+    APP_API_URL: https://api-dev.go1.co/
+  script:
+    - export DOCKER_TAG=`date +"%Y%m%d"`-${CI_PIPELINE_ID}
+    - ecs-cli configure profile --access-key ${DEV_AWS_ACCESS_KEY_ID} --secret-key ${DEV_AWS_SECRET_ACCESS_KEY}
+    - ecs-cli configure --region ${DEV_AWS_DEFAULT_REGION} --cluster ${DEV_AWS_ECS_CLUSTER}
+    - ecs-cli compose --file docker-compose.yml --project-name ${CI_PROJECT_NAME}-master service up --deployment-max-percent 200 --deployment-min-healthy-percent 100
+  only: ["master"]
+
+create:releasetag:
+  image: alpine
+  stage: release
+  tags: ["aws"]
+  cache: {}
+  dependencies: []
+  variables:
+    GIT_STRATEGY: none
+  before_script:
+    - apk add -uUv curl
+  script:
+    - export TAG_NAME=`date +"%Y%m%d"`-${CI_PIPELINE_ID}
+    - 'curl -i -XPOST -H "PRIVATE-TOKEN: $GITLAB_TOKEN" -H "SUDO: $GITLAB_USER_LOGIN" "https://code.go1.com.au/api/v4/projects/$CI_PROJECT_ID/repository/tags?tag_name=$TAG_NAME&ref=$CI_COMMIT_SHA"'
+  only: ["master", "/^hotfix-.*$/"]
+
+deploy:prod:
+  image: go1com/ci-deploy:aws-cli-ecs
+  stage: deploy
+  tags: ["aws"]
+  dependencies: []
+  variables:
+    MEM: 128M
+    APP_API_URL: https://api.go1.co/
+  script:
+    - export DOCKER_TAG=${CI_COMMIT_TAG}
+    - ecs-cli configure profile --access-key ${PROD_AWS_ACCESS_KEY_ID} --secret-key ${PROD_AWS_SECRET_ACCESS_KEY}
+    - ecs-cli configure --region ${PROD_AWS_DEFAULT_REGION} --cluster ${PROD_AWS_ECS_CLUSTER}
+    - ecs-cli compose --file docker-compose.yml --project-name ${CI_PROJECT_NAME}-prod service up --deployment-max-percent 200 --deployment-min-healthy-percent 100
+  when: manual
+  only: ["tags"]

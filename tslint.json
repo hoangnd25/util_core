@@ -9,7 +9,6 @@
   ],
   "rules": {
     "prettier": true,
-    "jsx-no-lambda": false,
     "object-literal-sort-keys": false,
     "interface-name": [true, "never-prefix"],
     "trailing-comma": [
@@ -24,7 +23,8 @@
         "singleline": "never",
         "esSpecCompliant": true
       }
-    ] 
+    ],
+    "no-console": false 
   },
   "linterOptions": {
     "exclude": [

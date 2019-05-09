@@ -3,42 +3,53 @@
 ## Requirements
 
 - Node v8
-- Yarn
 
 ## Overview
 
 A base for GO1 React applications to be cloned off of.
 
 ## Maintainers
-
+- Cian O'Leary (cian.oleary@go1.com)
 - Stephen Mudra (stephen.mudra@go1.com)
+
+
+## Features
+- Sever Side Rendering
+- Linting
+- Testing
+- Redux
+- Routing
+- Meta tags on routing
+- Redirection
 
 ## INSTALLATION
 
 ```sh
-brew install yarn
-yarn install
+npm install
 ```
 
 ## RUN
-
-Create an `.env.local` file at the root level with the following content `REACT_APP_JWT="enter your jwt.token"`
-Add a `REACT_APP_API_URL` (eg "http://localhost/GO1" for monolith dev) if you want to change the url
-
 ```sh
-yarn start
+npm run start
 ```
 
 ## BUILD
 
 ```sh
-yarn build
+npm run build
+npm run build:release <- Prod Build
 ```
 
 ## HOW TO TEST
 
 ```sh
-yarn test
+npm run test
+```
+
+## HOW TO LINT
+
+```sh
+npm run lint
 ```
 
 ## HOW TO CREATE A REPO FROM THIS TEMPLATE

@@ -2,7 +2,7 @@ import { reScss } from './webpack.config';
 
 // pageName = 'article' | !'article'
 export const createStyleLoaders = pageName => {
-  const loaders = [
+  return [
     {
       issuer: { not: [reScss] },
       loader: 'isomorphic-style-loader',
@@ -18,7 +18,5 @@ export const createStyleLoaders = pageName => {
     {
       loader: 'sass-loader',
     },
-  ].filter(l => l);
-
-  return loaders;
+  ];
 };

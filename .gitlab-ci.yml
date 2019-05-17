@@ -2,12 +2,15 @@ include:
   - project: 'server/ci-template'
     file: '/.gitlab-ci-react.yml'
 
+variables:
+  BASE_PATH: "/r/app/player/"
+
 deploy:master:
   variables:
     MEM: 128M
-    APP_API_URL: https://api-dev.go1.co/
+    API_ENDPOINT: https://api-dev.go1.co/
 
 deploy:production:
   variables:
     MEM: 128M
-    APP_API_URL: https://api.go1.co/
+    API_ENDPOINT: https://api.go1.co/

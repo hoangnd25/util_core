@@ -1,7 +1,3 @@
-interface IConfigureStoreHelpersConfig {
-  history?: '' | History<any> | undefined;
-  cookie?: {};
-}
 
 declare module 'universal-cookie-express' {
   declare global {

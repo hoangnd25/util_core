@@ -1,5 +1,16 @@
-FROM nginx:1.13.8-alpine-perl
+FROM node:alpine
 
-COPY build /usr/share/nginx/html/go1-base-react-app
-ADD  nginx.conf /etc/nginx/nginx.conf
-RUN  rm /etc/nginx/conf.d/default.conf
+# Create app directory
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+ADD ./build/package.json /usr/src/app/package.json
+RUN npm install
+
+# Bundle app source
+ADD ./build /usr/src/app
+
+ENV PORT 80
+EXPOSE 80
+
+CMD [ "npm", "start" ]

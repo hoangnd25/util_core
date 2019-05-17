@@ -8,4 +8,5 @@ services:
       - AWS_REGION
       - AWS_SECRET_NAME
       - NODE_ENV
-      - APP_API_URL
+      - API_ENDPOINT
+      - BASE_PATH

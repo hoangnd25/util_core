@@ -7,7 +7,7 @@ import createHelpers from './createHelpers';
 export type AppThunkDispatch = ThunkDispatch<ReduxState, {}, AnyAction>;
 export type AppThunkGetState = () => ReduxState;
 
-export default function configureStore(initialState: ReduxState, helpersConfig: IConfigureStoreHelpersConfig) {
+export default function configureStore(initialState: ReduxState, helpersConfig: any) {
   const helpers = createHelpers(helpersConfig);
 
   let composeEnhancers = compose;

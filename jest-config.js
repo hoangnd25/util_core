@@ -2,7 +2,7 @@ const TEST_REGEX = "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|js?|tsx?|ts?)$";
 
 module.exports = {
   collectCoverageFrom: [
-    "<rootDir>/src/((((((**/)**/)**/)**/)**/)**/)*.{ts,tsx,js,jsx}",
+    "<rootDir>/src/**/*.{ts,tsx,js,jsx}",
     "!**/node_modules/**",
   ],
   setupFiles: ["<rootDir>/jest-setup.js"],

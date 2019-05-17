@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { accountReducer } from './account';
 import { runtimeDefaultState, runtimeReducer } from './runtime';
 
 export const initialState = {
@@ -7,6 +8,7 @@ export const initialState = {
 
 const rootReducer = combineReducers({
   runtime: runtimeReducer,
+  account: accountReducer,
 });
 
 export default rootReducer;

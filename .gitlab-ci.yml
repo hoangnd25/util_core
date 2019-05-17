@@ -3,7 +3,7 @@ include:
     file: '/.gitlab-ci-react.yml'
 
 variables:
-  BASE_PATH: "/r/app/player/"
+  BASE_PATH: "/"
 
 deploy:master:
   variables:

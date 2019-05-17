@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "go1-player",
+  "name": "ssr-boilerplate-site",
   "version": "0.0.0",
   "scripts": {
     "build": "babel-node tools/run build --release",

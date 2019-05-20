@@ -8,7 +8,6 @@ import webpack from 'webpack';
 import WebpackAssetsManifest from 'webpack-assets-manifest';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import nodeExternals from 'webpack-node-externals';
-import { createStyleLoaders } from './createStyleLoaderConfig';
 import overrideRules from './lib/overrideRules';
 
 const smp = new SpeedMeasurePlugin();
@@ -38,8 +37,8 @@ const config = {
   mode: isDebug ? 'development' : 'production',
 
   output: {
-    path: resolvePath(BUILD_DIR, 'public/assets'),
-    publicPath: '/assets/',
+    path: resolvePath(BUILD_DIR, 'public', ...(process.env.BASE_PATH || '').split('/'), 'assets'),
+    publicPath: (process.env.BASE_PATH || '') + 'assets/',
     pathinfo: isVerbose,
     filename: isDebug ? '[name].js' : '[name].[chunkhash:8].js',
     chunkFilename: isDebug ? '[name].chunk.js' : '[name].[chunkhash:8].chunk.js',

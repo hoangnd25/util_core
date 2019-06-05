@@ -37,8 +37,8 @@ const config = {
   mode: isDebug ? 'development' : 'production',
 
   output: {
-    path: resolvePath(BUILD_DIR, 'public', ...(process.env.BASE_PATH || '').split('/'), 'assets'),
-    publicPath: (process.env.BASE_PATH || '') + 'assets/',
+    path: resolvePath(BUILD_DIR, `${process.env.BASE_PATH || ''}public/assets`),
+    publicPath: (process.env.BASE_PATH || '/') + 'assets/',
     pathinfo: isVerbose,
     filename: isDebug ? '[name].js' : '[name].[chunkhash:8].js',
     chunkFilename: isDebug ? '[name].chunk.js' : '[name].[chunkhash:8].chunk.js',

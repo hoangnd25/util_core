@@ -1,26 +1,31 @@
 {
   "compilerOptions": {
-    /** https://www.typescriptlang.org/docs/handbook/compiler-options.html */
-    "forceConsistentCasingInFileNames": true,
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "skipLibCheck": true,
-    "target": "es5",
-
-    /** TypeScript checks */
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-
-    /** JavaScript/CommonJS integration */
+    "target": "esnext",
+    "module": "esnext",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
-    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
     "esModuleInterop": true,
-
-    /** webpack integration */
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
     "jsx": "preserve"
-  }
+  },
+  "exclude": [
+    "*.js",
+    "node_modules"
+  ],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ]
 }

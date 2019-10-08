@@ -10,8 +10,9 @@ module.exports = {
   transform: {
     "^.+\\.tsx?$": "babel-jest",
   },
+  testEnvironment: 'jest-environment-jsdom-fourteen',
   testPathIgnorePatterns: ["<rootDir>/build/", "<rootDir>/node_modules/"],
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json"],
-  collectCoverage: true,
   coverageReporters: ["json", "lcov", "text", "clover", "text-summary"],
+  setupFilesAfterEnv: ["<rootDir>/jest-setup.js"],
 };

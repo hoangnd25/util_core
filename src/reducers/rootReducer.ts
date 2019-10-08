@@ -8,7 +8,7 @@ export const initialState = {
 
 const rootReducer = combineReducers({
   runtime: runtimeReducer,
-  account: accountReducer,
+  currentSession: accountReducer,
 });
 
 export default rootReducer;

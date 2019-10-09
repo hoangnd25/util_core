@@ -29,6 +29,14 @@ A base for GO1 React applications to be cloned off of. It is based on Next.js, s
 npm install
 ```
 
+## .env file for local development
+Create a .env file in your root folder with following content:
+```
+APP_ENV=local
+API_ENDPOINT=https://api-dev.go1.co
+LOCAL_JWT=[YOUR JWT]
+```
+
 ## RUN
 ```sh
 npm run dev

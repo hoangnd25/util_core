@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import { Container, Spinner } from '@go1d/go1d';
 
 export const LoadingSpinner = () => (
-    <Container minHeight="100vh" height="100%" contain="full" justifyContent="center" alignItems="center">
+    <Container minHeight="600" height="100vh" contain="full" justifyContent="center" alignItems="center">
         <Spinner size={6} />
   </Container>
 );

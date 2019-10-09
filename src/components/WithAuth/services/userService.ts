@@ -58,7 +58,7 @@ class UserService {
         instanceName = getStorage('active-instance-domain');
       }
       // No login information found
-      if (!jwt) {
+      if (!jwt || !uuid) {
         return new Promise((resolve, reject) => reject(null));
       }
 

@@ -20,7 +20,7 @@ export function getConfigValue(key: string, defaultValue?: string) : string {
   if (!defaultValue) {
     console.error(`Configuration Error: required environment variable '${key}' not found.`);
   }
-  return defaultValue ? defaultValue : "";
+  return defaultValue || "";
 }
 
 export default {

@@ -21,15 +21,5 @@ export default function initializeStore(initialState: ReduxState, helpersConfig:
     applyMiddleware(thunk.withExtraArgument(helpers) as ThunkMiddleware<ReduxState, AnyAction, typeof helpers>)
   );
 
-  // See https://github.com/rackt/redux/releases/tag/v3.1.0
-  const store = createStore(rootReducer, initialState, enhancer);
-
-  // Hot reload reducers (requires Webpack or Browserify HMR to be enabled)
-  if (__DEV__ && module.hot) {
-    module.hot.accept('../reducers/rootReducer', () =>
-      store.replaceReducer(require('../reducers/rootReducer').default)
-    );
-  }
-
-  return store;
+  return createStore(rootReducer, initialState, enhancer);
 }

@@ -14,7 +14,7 @@ interface Payload {
 }
 
 // Reducers
-export function runtimeReducer(state = {}, action: RuntimeAction) {
+export function runtimeReducer(state = runtimeDefaultState, action: RuntimeAction) {
   switch (action.type) {
   case SET_VARIABLE: {
     return {

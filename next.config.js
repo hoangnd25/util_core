@@ -17,7 +17,7 @@ module.exports = {
     DOCKER_TAG: process.env.DOCKER_TAG,
     API_ENDPOINT: process.env.API_ENDPOINT,
     APP_ENV: process.env.APP_ENV,
-    LOGIN_REDIRECT_URL: '/user/login',
+    LOGIN_REDIRECT_URL: '/examples/protectedRoute/login',
   },
 
   webpack: (config, options) => {

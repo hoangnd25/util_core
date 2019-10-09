@@ -28,8 +28,9 @@ export interface GO1User {
 }
 
 export interface CurrentSessionType {
-    user: GO1User;
-    account: GO1Account;
-    portal: GO1Portal;
-    jwt: string;
+    user?: GO1User;
+    account?: GO1Account;
+    portal?: GO1Portal;
+    jwt?: string;
+    authenticated: boolean;
 }

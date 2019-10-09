@@ -4,7 +4,7 @@ module.exports = {
     es6: true,
   },
   extends: [
-    'airbnb', 'prettier', 'prettier/react', 'plugin:import/typescript'
+    'airbnb', 'prettier', 'prettier/react', 'plugin:import/typescript', 'plugin:jest/recommended'
   ],
   globals: {
     React: "writable",
@@ -23,13 +23,18 @@ module.exports = {
     'react',
     '@typescript-eslint',
     'only-warn',
-    'prettier'
+    'prettier',
+    'jest'
   ],
   rules: {
     'no-console': 'warn',
     'no-param-reassign': 'off',
     'no-underscore-dangle': 'off',
     'no-unused-vars': 'off', // https://github.com/typescript-eslint/typescript-eslint/issues/363
+    'max-classes-per-file': 'off',
+    'import/no-extraneous-dependencies': 'off',
+    'class-methods-use-this': 'off',
+    'prefer-promise-reject-errors': 'off',
     'react/prop-types': 'off',
     'react/no-danger': 'off',
     'react/jsx-props-no-spreading': 'off',

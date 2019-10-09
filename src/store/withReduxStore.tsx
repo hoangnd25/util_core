@@ -34,22 +34,21 @@ export default (App, helpers) =>
       if (typeof App.getInitialProps === 'function') {
         appProps = await App.getInitialProps(appContext);
       }
-
       return {
         ...appProps,
         initialReduxState: reduxStore.getState(),
       };
     }
 
-        reduxStore = null;
+    reduxStore = null;
 
-        constructor(props) {
-          super(props);
-          this.reduxStore = getOrCreateStore(props.initialReduxState, helpers);
-        }
+    constructor(props) {
+      super(props);
+      this.reduxStore = getOrCreateStore(props.initialReduxState, helpers);
+    }
 
-        render() {
-          /* tslint:disable */
-          return <App {...this.props} reduxStore={this.reduxStore} />;
-        }
+    render() {
+      /* tslint:disable */
+      return <App {...this.props} reduxStore={this.reduxStore} />;
+    }
   };

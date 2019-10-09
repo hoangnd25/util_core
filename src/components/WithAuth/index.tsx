@@ -25,21 +25,21 @@ const WithAuthComponent = AppPage =>  class extends React.Component<any,any> {
     if (currentSession && currentSession.authenticated === true) {
       return <AppPage {...this.props} />;
     }
-    
+
       if (typeof window !== 'undefined') {
         window.location.assign(
           `${getConfigValue('LOGIN_REDIRECT_URL', '/p/#/access/signin')}?redirect=${encodeURIComponent(
             window.location.pathname)}${encodeURIComponent(window.location.search)}`);
       }
       return <LoadingSpinner/>
-    
+
   }
 };
 
-const mapStateToProps = state => ({ currentSession: state.currentSession });
+export const mapCurrentSessionToProps = state => ({ currentSession: state.currentSession });
 
 const withAuth = AppPage => connect(
-  mapStateToProps,
+  mapCurrentSessionToProps,
   null
 )(WithAuthComponent(AppPage));
 
@@ -85,8 +85,7 @@ export const withCurrentSession = (App, helpers) =>
           }
           return {
             ...appProps,
-            currentSession,
-            currentPath: asPath
+            currentSession
           };
         }
 

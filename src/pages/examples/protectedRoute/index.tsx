@@ -7,7 +7,7 @@ export class NeedLogin extends React.Component<any,any> {
   public render() {
     const { currentSession } = this.props;
     return (
-      <Layout>
+      <Layout wrappingContainer={true}>
         <View marginY={5}>
           <Text element="h1" fontSize={4} fontWeight="semibold">User Details</Text>
         </View>

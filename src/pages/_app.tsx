@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 import { IntlProvider } from 'react-intl';
-import { NotificationContainer, Provider as Go1dProvider, globalCSS, foundations } from '@go1d/go1d';
+import { NotificationContainer, globalCSS, foundations } from '@go1d/go1d';
 import { getNested } from '@go1d/mine/utils';
+import CommonProvider from '@go1d/mine/common/Provider';
+
 import App from 'next/app';
 import Cookies from 'universal-cookie';
 import Suspense, { LoadingSpinner } from '../components/Suspense';
@@ -13,9 +15,11 @@ import createHttp from '../utils/http';
 import { USER_UPDATE as USER_UPDATE_ACTION } from '../reducers/session';
 import { withCurrentSession } from '../components/WithAuth';
 import { CurrentSessionType } from '../types/user';
+import config from '../config';
 
 const cookies = new Cookies();
 const http = createHttp();
+const noOP = () => null;
 
 interface AppProps {
     reduxStore: any;
@@ -48,7 +52,7 @@ export class GO1App extends App<AppProps, any> {
   }
 
   public render() {
-    const { Component, pageProps, reduxStore, currentSession } = this.props;
+    const { Component, pageProps, reduxStore, currentSession, router } = this.props;
     // Show loading if current Session has not been loaded
     if (currentSession && reduxStore && reduxStore.getState().currentSession === null) {
       reduxStore.dispatch({
@@ -68,18 +72,29 @@ export class GO1App extends App<AppProps, any> {
     return (
       <AppContext.Provider value={context}>
         <ReduxProvider store={reduxStore}>
-          <Go1dProvider
-            linkComponent={LinkComponent}
-            accent={getNested(currentSession, 'portal.data.theme.primary', foundations.colors.accent)}
-            logo={getNested(currentSession, 'portal.files.logo', null)}
-          >
-          <Suspense>
-            <IntlProvider locale="en">
-              <Component {...pageProps} />
-              <NotificationContainer />
-            </IntlProvider>
-          </Suspense>
-          </Go1dProvider>
+          <IntlProvider locale="en"  defaultLocale="en" onError={noOP}>
+            <CommonProvider
+              linkComponent={LinkComponent}
+              accent={getNested(currentSession, 'portal.data.theme.primary', foundations.colors.accent)}
+              // logo={getNested(currentSession, 'portal.files.logo', null)}
+              pushNavigationState={router.push}
+              apiUrl={config.apiEndpoint}
+              jwt={currentSession
+                ? currentSession.jwt
+                : undefined
+              }
+              accountId={getNested(currentSession, "account.id", undefined)}
+              portalId={currentSession
+                ? parseInt(currentSession.portal.id, 10)
+                : undefined
+              }
+            >
+              <Suspense>
+                <Component router={router} {...pageProps} />
+                <NotificationContainer />
+              </Suspense>
+            </CommonProvider>
+          </IntlProvider>
         </ReduxProvider>
       </AppContext.Provider>
     );

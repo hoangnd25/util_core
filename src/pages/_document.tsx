@@ -27,11 +27,11 @@ export default class extends Document<any> {
             <style dangerouslySetInnerHTML={{ __html: this.globalCss }} />
             <style dangerouslySetInnerHTML={{ __html: this.props.css }} />
           </Head>
-        <body>
-          <Main />
-          <NextScript />
-        </body>
-      </html>
+          <body>
+            <Main />
+            <NextScript />
+          </body>
+        </html>
       );
     }
 }

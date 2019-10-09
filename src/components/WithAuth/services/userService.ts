@@ -1,6 +1,7 @@
 import Cookies from 'universal-cookie';
 import { GO1Account, GO1Portal, GO1User, CurrentSessionType } from '../../../types/user';
 import { getStorage, setStorage } from '../../../utils/storage';
+import intersection from "../../../utils/intersection";
 
 export function saveSession(currentSession: CurrentSessionType) {
   // only perform browser side
@@ -85,6 +86,20 @@ class UserService {
       return resp.data;
     }
 
+  public getPermissions(account) {
+    return account
+      ? {
+        isContentAdministrator: /content administrator/.test(account.roles),
+        isAdministrator: !!((account.roles && intersection(account.roles, ["administrator", "Administrator"]).length > 0)),
+        isManager: !!((account.roles && intersection(account.roles, ["manager", "Manager"]).length > 0)),
+      }
+      : {
+        isContentAdministrator: false,
+        isAdministrator: false,
+        isManager: false,
+      };
+  }
+
     public makeSession(rawUser: GO1User, instanceName: string) {
       const { accounts = [] as GO1Account[], jwt = '' as string, ...restUser } = rawUser;
       const currentAccount = Array.isArray(accounts)
@@ -97,9 +112,11 @@ class UserService {
       if (!instance) {
         throw new Error('No instance found in account');
       }
+      const permissions = this.getPermissions(restAccount);
+
       return {
         user: restUser as GO1User,
-        account: restAccount as GO1Account,
+        account: { ...restAccount, ...permissions} as GO1Account,
         portal: instance as GO1Portal,
         jwt,
       };

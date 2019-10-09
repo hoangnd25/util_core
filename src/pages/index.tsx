@@ -6,7 +6,7 @@ import Layout from '../components/Layout';
 class Index extends React.Component {
   public render() {
     return (
-      <Layout title="GO1 React Base App">
+      <Layout title="GO1 React Base App" wrappingContainer={true}>
         <View marginBottom={5}>
           <Text element="h1" fontSize={4} fontWeight="semibold">Hello World!</Text>
         </View>
@@ -26,6 +26,7 @@ class Index extends React.Component {
           <Text element="h2" fontSize={3} fontWeight="semibold">Example usages:</Text>
           <UL>
             <LI iconName="ChevronRight"><Link href="/examples/protectedRoute">Protected Route Example</Link></LI>
+            <LI iconName="ChevronRight"><Link href="/examples/withGo1Nav">Example with GO1 TopNav</Link></LI>
           </UL>
 
           <Text element="h2" fontSize={3} fontWeight="semibold">Things to read before you start:</Text>

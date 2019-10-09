@@ -6,7 +6,7 @@ import Layout from '../components/Layout';
 class Index extends React.Component {
   public render() {
     return (
-      <Layout title="GO1 React Base App" wrappingContainer={true}>
+      <Layout title="GO1 React Base App" wrappingContainer>
         <View marginBottom={5}>
           <Text element="h1" fontSize={4} fontWeight="semibold">Hello World!</Text>
         </View>

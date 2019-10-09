@@ -5,7 +5,7 @@ import Layout from '../../../components/Layout/index';
 class LoginPage extends React.Component<any,any> {
   public render() {
     return (
-      <Layout wrappingContainer={true}>
+      <Layout wrappingContainer>
         <View marginBottom={5}>
           <Text element="h1" fontSize={4} fontWeight="semibold">Login needed</Text>
         </View>

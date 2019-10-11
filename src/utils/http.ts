@@ -1,6 +1,6 @@
 /* istanbul ignore file  */
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import * as debug from 'debug';
+import debug from 'debug';
 import config from '../config';
 
 const log = {

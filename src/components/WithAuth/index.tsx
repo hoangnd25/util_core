@@ -28,7 +28,7 @@ const WithAuthComponent = AppPage =>  class extends React.Component<any,any> {
 
       if (typeof window !== 'undefined') {
         window.location.assign(
-          `${getConfigValue('LOGIN_REDIRECT_URL', '/p/#/access/signin')}?redirect=${encodeURIComponent(
+          `${getConfigValue('LOGIN_REDIRECT_URL', '/user/login')}?redirect_url=${encodeURIComponent(
             window.location.pathname)}${encodeURIComponent(window.location.search)}`);
       }
       return <LoadingSpinner/>

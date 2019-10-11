@@ -59,9 +59,8 @@ export const withCurrentSession = (App, helpers) =>
             router: { asPath, query },
             ctx: { req },
           } = ctx;
-          const cookies = {}; // Cookie login deactivated for now. If somebody changes portal or logs in as a different person, Apiom will not store the new information in cookies.
 
-          // to activate cookies: const cookies = new Cookies(req.headers.cookies);
+          const cookies = new Cookies(req.headers.cookie);
 
           let appProps = {};
           let currentSession = null;

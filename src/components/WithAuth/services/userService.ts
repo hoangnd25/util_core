@@ -14,7 +14,7 @@ export function saveSession(currentSession: CurrentSessionType) {
     const cookies = new Cookies();
     cookies.set(
       'go1',
-      [currentSession.user.uuid, currentSession.portal.title, currentSession.jwt, currentSession.portal.id].join(
+      [currentSession.user.uuid,  currentSession.portal.id, currentSession.portal.title, currentSession.jwt].join(
         ':'
       )
     );
@@ -52,7 +52,7 @@ class UserService {
     let instanceId: string;
     // try cookie
     if (go1CookieValue) {
-      [uuid, instanceName, jwt, instanceId] = go1CookieValue.split(':');
+      [uuid, instanceId, instanceName, jwt] = go1CookieValue.split(':');
     } else {
       // Fallback to localStorage if Cookie doesn't exist
       jwt = getStorage('jwt');

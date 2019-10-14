@@ -1,5 +1,7 @@
 import React from 'react';
 import initializeStore from './configureStore';
+import { USER_UPDATE as USER_UPDATE_ACTION } from '../reducers/session';
+import {CurrentSessionType} from "../types/user";
 
 /**
  * Based of the example on https://github.com/zeit/next.js/tree/canary/examples/with-redux
@@ -21,7 +23,7 @@ function getOrCreateStore(initialState, helpers) {
 }
 
 export default (App, helpers) =>
-  class AppWithRedux extends React.Component {
+  class AppWithRedux extends React.Component<{ currentSession: CurrentSessionType, initialReduxState: {}}> {
     static async getInitialProps(appContext) {
       // Get or Create the store with `undefined` as initialState
       // This allows you to set a custom default initialState
@@ -34,6 +36,7 @@ export default (App, helpers) =>
       if (typeof App.getInitialProps === 'function') {
         appProps = await App.getInitialProps(appContext);
       }
+
       return {
         ...appProps,
         initialReduxState: reduxStore.getState(),
@@ -44,11 +47,20 @@ export default (App, helpers) =>
 
     constructor(props) {
       super(props);
-      this.reduxStore = getOrCreateStore(props.initialReduxState, helpers);
+      const { initialReduxState = {}, currentSession = null } = props;
+      this.reduxStore = getOrCreateStore({...initialReduxState, currentSession}, helpers);
     }
 
     render() {
-      /* tslint:disable */
+      const { currentSession } = this.props;
+      // currentSession has been initialized during run time, e.g. client side login with local Storage data
+      const reduxCurrentSession = this.reduxStore.getState().currentSession;
+      if (currentSession && currentSession.authenticated === true && (reduxCurrentSession === null || reduxCurrentSession.authenticated === false)) {
+        this.reduxStore.dispatch({
+          type: USER_UPDATE_ACTION,
+          payload: { ...currentSession },
+        });
+      }
       return <App {...this.props} reduxStore={this.reduxStore} />;
     }
   };

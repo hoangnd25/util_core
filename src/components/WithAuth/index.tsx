@@ -25,13 +25,12 @@ const WithAuthComponent = AppPage =>  class extends React.Component<any,any> {
     if (currentSession && currentSession.authenticated === true) {
       return <AppPage {...this.props} />;
     }
-
-      if (typeof window !== 'undefined') {
-        window.location.assign(
-          `${getConfigValue('LOGIN_REDIRECT_URL', '/user/login')}?redirect_url=${encodeURIComponent(
-            window.location.pathname)}${encodeURIComponent(window.location.search)}`);
-      }
-      return <LoadingSpinner/>
+    if (typeof window !== 'undefined') {
+      window.location.assign(
+        `${getConfigValue('LOGIN_REDIRECT_URL', '/user/login')}?redirect_url=${encodeURIComponent(
+          window.location.pathname)}${encodeURIComponent(window.location.search)}`);
+    }
+    return <LoadingSpinner/>
 
   }
 };
@@ -60,8 +59,6 @@ export const withCurrentSession = (App, helpers) =>
             ctx: { req },
           } = ctx;
 
-          const cookies = new Cookies(req.headers.cookie);
-
           let appProps = {};
           let currentSession = null;
 
@@ -71,6 +68,7 @@ export const withCurrentSession = (App, helpers) =>
           // Only perform on server
           if (typeof window === 'undefined') {
             try {
+              const cookies = new Cookies(req.headers.cookie);
               currentSession = await UserService(http).performAuth(
                 getNested(cookies, 'cookies.go1', null),
                 getNested(query, 'oneTimeToken', null)
@@ -91,12 +89,12 @@ export const withCurrentSession = (App, helpers) =>
         constructor(props) {
           super(props);
           this.state = {
-            currentSession: null,
+            currentSession: props.currentSession ? props.currentSession  : null,
           };
         }
 
         public componentDidMount() {
-          const { currentSession } = this.props;
+          const { currentSession } = this.state;
           const { http } = helpers;
           // Server side did not result in a login
           if (!currentSession) {
@@ -104,24 +102,24 @@ export const withCurrentSession = (App, helpers) =>
             UserService(http)
               .performAuth(null, null)
               .then(
-                data => {
-                  this.setState({ currentSession: { authenticated: true, ...data} });
+                currentSession => {
+                  this.setState({ currentSession });
+                  saveSession(currentSession as CurrentSessionType);
                 },
                 err => {
                   this.setState({ currentSession: { authenticated: false} });
                 }
               );
+          } else if (currentSession.authenticated === true) {
+            saveSession(currentSession);
           }
         }
 
         public render() {
-          const { currentSession: currentSessionState } = this.state;
-          const { currentSession: currentSessionProps, ...restProps } = this.props;
-          const currentSession = (currentSessionProps || currentSessionState) as CurrentSessionType;
-          if (currentSession && currentSession.authenticated === true) {
-            // store user login in cookie and local storage, will only be done browser side
-            saveSession(currentSession);
-          }
-          return <App {...restProps} currentSession={currentSession} />;
+          const { currentSession : currentSessionState  } = this.state as {currentSession: CurrentSessionType};
+          const { currentSession, ...restProps } = this.props;
+
+          // currentSession is saved to redux in withReduxStore.tsx
+          return <App {...restProps} currentSession={currentSessionState} />;
         }
   };

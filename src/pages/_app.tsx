@@ -21,6 +21,11 @@ const cookies = new Cookies();
 const http = createHttp();
 const noOP = () => null;
 
+const context = {
+  cookies,
+  http,
+};
+
 interface AppProps {
     reduxStore: any;
     currentSession: CurrentSessionType;
@@ -29,7 +34,7 @@ interface AppProps {
 export class GO1App extends App<AppProps, any> {
 
   public static async getInitialProps(ctx) {
-    const { currentSession, reduxStore, Component } = ctx;
+    const { Component } = ctx;
     // deactive caching for HTML due to CDN
     if (ctx && ctx.ctx && ctx.ctx.res) {
       ctx.ctx.res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -48,26 +53,16 @@ export class GO1App extends App<AppProps, any> {
       pageProps = await Component.getInitialProps(ctx);
     }
 
-    return {currentSession, reduxStore, pageProps} as any;
+    return { pageProps } as any;
   }
 
   public render() {
     const { Component, pageProps, reduxStore, currentSession, router } = this.props;
     // Show loading if current Session has not been loaded
-    if (currentSession && reduxStore && reduxStore.getState().currentSession === null) {
-      reduxStore.dispatch({
-        type: USER_UPDATE_ACTION,
-        payload: { ...currentSession },
-      });
-    } else if (currentSession === null) {
+    if (currentSession === null) {
       // can be replaced with a skeleton
       return <LoadingSpinner />;
     }
-
-    const context = {
-      cookies,
-      http,
-    };
 
     return (
       <AppContext.Provider value={context}>
@@ -79,15 +74,9 @@ export class GO1App extends App<AppProps, any> {
               // logo={getNested(currentSession, 'portal.files.logo', null)}
               pushNavigationState={router.push}
               apiUrl={config.apiEndpoint}
-              jwt={currentSession
-                ? currentSession.jwt
-                : undefined
-              }
+              jwt={currentSession.jwt}
               accountId={getNested(currentSession, "account.id", undefined)}
-              portalId={currentSession
-                ? parseInt(currentSession.portal.id, 10)
-                : undefined
-              }
+              portalId={parseInt(getNested(currentSession,"portal.id", undefined), 10) }
             >
               <Suspense>
                 <Component router={router} {...pageProps} />

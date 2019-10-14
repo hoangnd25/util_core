@@ -16,7 +16,7 @@ export function saveSession(currentSession: CurrentSessionType) {
       'go1',
       [currentSession.user.uuid,  currentSession.portal.id, currentSession.portal.title, currentSession.jwt].join(
         ':'
-      )
+      ), { path: '/' }
     );
   }
 }
@@ -69,7 +69,6 @@ class UserService {
       uuid,
       portal: instanceName,
     });
-
     return this.makeSession(user, instanceName);
   }
 
@@ -118,6 +117,7 @@ class UserService {
     const permissions = this.getPermissions(restAccount);
 
     return {
+      authenticated: true,
       user: restUser as GO1User,
       account: { ...restAccount, ...permissions} as GO1Account,
       portal: instance as GO1Portal,

@@ -5,17 +5,17 @@ import WithTopNav from './withTopNav';
 
 const Index = ({ children, title="GO1", wrappingContainer, withTopNav, containerProps } : { children: React.ReactNode, title?: string, wrappingContainer?: boolean, withTopNav?: boolean, containerProps?: any }) => {
   return (
-      <>
+      <React.Fragment>
         <Head>
           <title>{title}</title>
         </Head>
         {withTopNav && <WithTopNav />}
         {wrappingContainer === true ?
-          (<Container contain="wide" minHeight={600} justifyContent="center" paddingY={5} {...containerProps}>
+          (<Container contain="wide" minHeight={600} justifyContent="center" paddingY={5} paddingX={5} {...containerProps}>
             {children}
           </Container>)
           : {children}}
-      </>
+      </React.Fragment>
     );
 };
 

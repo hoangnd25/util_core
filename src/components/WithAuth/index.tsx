@@ -55,10 +55,9 @@ export const withCurrentSession = (App, helpers) =>
         public static async getInitialProps(ctx) {
           const { http } = helpers;
           const {
-            router: { asPath, query },
+            router: { query },
             ctx: { req },
           } = ctx;
-
           let appProps = {};
           let currentSession = null;
 
@@ -89,7 +88,7 @@ export const withCurrentSession = (App, helpers) =>
         constructor(props) {
           super(props);
           this.state = {
-            currentSession: props.currentSession ? props.currentSession  : null,
+            currentSession: props.currentSession
           };
         }
 
@@ -103,7 +102,7 @@ export const withCurrentSession = (App, helpers) =>
               .performAuth(null, null)
               .then(
                 currentSessionData => {
-                  this.setState({ currentSessionData });
+                  this.setState({ currentSession: currentSessionData });
                   saveSession(currentSessionData as CurrentSessionType);
                 },
                 err => {

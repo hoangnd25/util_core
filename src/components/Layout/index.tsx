@@ -5,7 +5,7 @@ import WithTopNav from './withTopNav';
 
 const Index = ({ children, title="GO1", wrappingContainer, withTopNav, containerProps } : { children: React.ReactNode, title?: string, wrappingContainer?: boolean, withTopNav?: boolean, containerProps?: any }) => {
   return (
-      <React.Fragment>
+      <>
         <Head>
           <title>{title}</title>
         </Head>
@@ -15,7 +15,7 @@ const Index = ({ children, title="GO1", wrappingContainer, withTopNav, container
             {children}
           </Container>)
           : {children}}
-      </React.Fragment>
+      </>
     );
 };
 

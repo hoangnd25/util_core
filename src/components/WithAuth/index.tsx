@@ -102,9 +102,9 @@ export const withCurrentSession = (App, helpers) =>
             UserService(http)
               .performAuth(null, null)
               .then(
-                currentSession => {
-                  this.setState({ currentSession });
-                  saveSession(currentSession as CurrentSessionType);
+                currentSessionData => {
+                  this.setState({ currentSessionData });
+                  saveSession(currentSessionData as CurrentSessionType);
                 },
                 err => {
                   this.setState({ currentSession: { authenticated: false} });

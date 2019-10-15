@@ -22,6 +22,7 @@ export interface GO1User {
     accounts?: GO1Account[];
     jwt: string;
     first_name?: string;
+    last_name?: string;
     avatar?: {
         url: string;
     };

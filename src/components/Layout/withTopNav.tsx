@@ -16,9 +16,7 @@ const LayoutWithNav = (props) => {
         userAvatar={user.avatar}
         portalIcon={getNested(portal.files, "dashboard_icon")}
         portalConfig={portal.configuration || {}}
-        account={{
-          ...currentSession.account,
-        }}
+        account={currentSession.account}
         featureToggles={{}}
       />
     );

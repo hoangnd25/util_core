@@ -4,9 +4,5 @@ kind: ConfigMap
 metadata:
   name: env-${PROJECT_NAME}
 data:
-  ENV: $ENV
   APP_ENV: $ENV
-  API_ENDPOINT: $API_ENDPOINT
-  BASE_PATH: /
-  RES_CDN: $RES_CDN
   DOCKER_TAG: $DOCKER_TAG

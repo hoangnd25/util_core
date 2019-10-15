@@ -23,7 +23,7 @@ class CustomLink extends React.PureComponent<any> {
     }
 
     return (
-            <Link href={`${prefix}${prefix ? '/' : ''}${href}`} passHref prefetch={false}>
+          <Link href={`${prefix}${prefix ? '/' : ''}${href}`} passHref prefetch={false}>
             <a className={className} style={style}>
                     {children}
                 </a>

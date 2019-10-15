@@ -1,8 +1,10 @@
 import Cookies from 'universal-cookie';
 import { GO1Account, GO1Portal, GO1User, CurrentSessionType } from '../../../types/user';
-import { getStorage, setStorage } from '../../../utils/storage';
+import { getStorage, setStorage, removeStorage } from '../../../utils/storage';
 import intersection from "../../../utils/intersection";
 import { HttpInstance } from '../../../utils/http';
+
+const AUTH_COOKIE_NAME = 'go1';
 
 export function saveSession(currentSession: CurrentSessionType) {
   // only perform browser side
@@ -13,12 +15,21 @@ export function saveSession(currentSession: CurrentSessionType) {
     setStorage('active-instance-domain', currentSession.portal.title, true);
     const cookies = new Cookies();
     cookies.set(
-      'go1',
+      AUTH_COOKIE_NAME,
       [currentSession.user.uuid,  currentSession.portal.id, currentSession.portal.title, currentSession.jwt].join(
         ':'
       ), { path: '/' }
     );
   }
+}
+
+export function removeSession() {
+  removeStorage('jwt');
+  removeStorage('uuid');
+  removeStorage('active-instance');
+  removeStorage('active-instance-domain');
+  const cookies = new Cookies();
+  cookies.remove(AUTH_COOKIE_NAME, { path: '/' });
 }
 
 /* istanbul ignore file  */

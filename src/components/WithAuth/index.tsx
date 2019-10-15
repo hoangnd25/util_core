@@ -2,7 +2,7 @@ import React from 'react';
 import Cookies from 'universal-cookie';
 import { getNested } from '@go1d/mine/utils';
 import {connect} from "react-redux";
-import UserService, { saveSession } from './services/userService';
+import UserService, { saveSession, removeSession } from './services/userService';
 import {CurrentSessionType} from "../../types/user";
 import {getConfigValue} from "../../config";
 import {LoadingSpinner} from "../Suspense";
@@ -70,13 +70,10 @@ export const withCurrentSession = (App, helpers) =>
               const cookies = new Cookies(req.headers.cookie);
               currentSession = await UserService(http).performAuth(
                 getNested(cookies, 'cookies.go1', null),
-                getNested(query, 'oneTimeToken', null)
+                query.oneTimeToken || null
               );
             } catch (err) {
-              // if err is null, that means no login information found, that's fine and expected. Promise.reject() is used
-              if (err) {
-                console.log(JSON.stringify(err));
-              }
+              // Do nothing, Login failed on server side, either due wrong credentials or missing credentials
             }
           }
           return {
@@ -94,30 +91,39 @@ export const withCurrentSession = (App, helpers) =>
 
         public componentDidMount() {
           const { currentSession } = this.state;
+          const { router, router: {query, asPath, pathname} } = this.props;
           const { http } = helpers;
+          const oneTimeToken = query.oneTimeToken || null;
           // Server side did not result in a login
           if (!currentSession) {
             // try login with local storage
+            // Send one time token again on the frontend to log existing user out if oneTimeToken is invalid
             UserService(http)
-              .performAuth(null, null)
+              .performAuth(null, oneTimeToken)
               .then(
                 currentSessionData => {
                   this.setState({ currentSession: currentSessionData });
                   saveSession(currentSessionData as CurrentSessionType);
                 },
                 err => {
+                  removeSession();
                   this.setState({ currentSession: { authenticated: false} });
                 }
               );
           } else if (currentSession.authenticated === true) {
             saveSession(currentSession);
           }
+
+          if (oneTimeToken) {
+            //@TODO Find a way to get rid of one time token in the url without tirggering rerender.
+            router.replace(pathname, asPath.replace(`oneTimeToken=${oneTimeToken}`, ""), { shallow: true });
+          }
+
         }
 
         public render() {
           const { currentSession : currentSessionState  } = this.state as {currentSession: CurrentSessionType};
           const { currentSession, ...restProps } = this.props;
-
           // currentSession is saved to redux in withReduxStore.tsx
           return <App {...restProps} currentSession={currentSessionState} />;
         }

@@ -32,7 +32,6 @@ module.exports = {
     'no-underscore-dangle': 'off',
     'no-unused-vars': 'off', // https://github.com/typescript-eslint/typescript-eslint/issues/363
     'max-classes-per-file': 'off',
-    'import/no-extraneous-dependencies': 'off',
     'class-methods-use-this': 'off',
     'prefer-promise-reject-errors': 'off',
     'react/prop-types': 'off',

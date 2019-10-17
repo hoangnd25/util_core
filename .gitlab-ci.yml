@@ -20,12 +20,14 @@ package:cdn:
 
 deploy:master:
   variables:
+    API_ENDPOINT: "https://api-dev.go1.co"
     CDN_PATH: "https://cdn.go1static.com/assets"
     ENV: "development"
     MEM: 128M
 
 deploy:production:
   variables:
+    API_ENDPOINT: "https://api.go1.co"
     CDN_PATH: "https://cdn.go1static.com/assets"
     ENV: "production"
     MEM: 128M

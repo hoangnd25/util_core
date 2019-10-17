@@ -9,7 +9,7 @@
     "analyze": "webpack-bundle-analyzer ./.next/stats.json",
     "build": "next build",
     "dev": "next",
-    "lint": "eslint {src,tools,test}/**/*.{ts,tsx} -c .eslintrc.js  --fix",
+    "lint": "eslint src/**/*.{ts,tsx} --ignore-pattern src/**/*.test.* -c .eslintrc.js  --fix",
     "start": "next start",
     "test": "jest --config=jest-config.js --collectCoverage --detectOpenHandles --forceExit",
     "type-check": "tsc"
@@ -30,7 +30,8 @@
     "react-redux": "^7.1.1",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
-    "universal-cookie": "^4.0.2"
+    "universal-cookie": "^4.0.2",
+    "webpack": "^4.41.0"
   },
   "devDependencies": {
     "@types/enzyme": "^3.10.3",
@@ -64,7 +65,6 @@
     "redux-devtools-extension": "^2.13.8",
     "stats-webpack-plugin": "^0.7.0",
     "typescript": "^3.6.3",
-    "webpack": "^4.41.0",
     "webpack-bundle-analyzer": "^3.5.2"
   },
   "keywords": [],

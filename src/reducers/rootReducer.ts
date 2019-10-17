@@ -1,14 +1,10 @@
 import { combineReducers } from 'redux';
-import { accountReducer } from './account';
-import { runtimeDefaultState, runtimeReducer } from './runtime';
-
-export const initialState = {
-  runtime: runtimeDefaultState,
-};
+import { sessionReducer } from './session';
+import { runtimeReducer } from './runtime';
 
 const rootReducer = combineReducers({
   runtime: runtimeReducer,
-  account: accountReducer,
+  currentSession: sessionReducer,
 });
 
 export default rootReducer;

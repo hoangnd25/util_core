@@ -51,3 +51,12 @@ export function setStorage(key: string, value: any, persist = false): void {
 export function getStorage(key: string): any {
   return getSession(key) || getLocal(key) || null;
 }
+
+export function removeStorage(key: string): void {
+  try {
+    window.sessionStorage.removeItem(key);
+    window.localStorage.removeItem(key);
+  } catch (e) {
+    // Do Nothing
+  }
+}

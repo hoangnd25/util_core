@@ -6,15 +6,16 @@
 
 ## Overview
 
-A base for GO1 React applications to be cloned off of.
+A base for GO1 React applications to be cloned off of. It is based on Next.js, so please familiarize yourself with it before starting anything.
 
 ## Maintainers
 - Cian O'Leary (cian.oleary@go1.com)
 - Stephen Mudra (stephen.mudra@go1.com)
-
+- Shangzhi Pan (shangzhi.pan@go1.com)
 
 ## Features
 - Sever Side Rendering
+- Authorization with cookies, localstorage and one time login tokens
 - Linting
 - Testing
 - Redux
@@ -28,16 +29,23 @@ A base for GO1 React applications to be cloned off of.
 npm install
 ```
 
+## .env file for local development
+Create a .env file in your root folder with following content:
+```
+APP_ENV=local
+API_ENDPOINT=https://api-dev.go1.co
+LOCAL_JWT=[YOUR JWT]
+```
+
 ## RUN
 ```sh
-npm run start
+npm run dev
 ```
 
 ## BUILD
 
 ```sh
 npm run build
-npm run build:release <- Prod Build
 ```
 
 ## HOW TO TEST

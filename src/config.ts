@@ -1,29 +1,34 @@
-import dotenv from 'dotenv';
+import getConfig from 'next/config';
 
 let config: any;
 
 export function setupConfigSource() {
   if (typeof window === 'undefined') {
-    dotenv.config({ path: '.env', silent: true } as any);
     config = process.env;
   } else {
-    config = window.APP_CONFIG;
+    config = getConfig().publicRuntimeConfig;
   }
 }
 
-export function getConfigValue(key: string) {
+export function getConfigValue(key: string, defaultValue?: string) : string {
   if (!config) {
     setupConfigSource();
   }
   if (key in config) {
     return config[key];
   }
-  console.error(`Configuration Error: required environment variable '${key}' not found.`);
+  if (!defaultValue) {
+    console.error(`Configuration Error: required environment variable '${key}' not found.`);
+  }
+  return defaultValue || "";
 }
 
 export default {
   get exportKeys() {
-    return ['API_ENDPOINT', 'BASE_PATH', 'LOCAL_JWT'];
+    return ['API_ENDPOINT', 'BASE_PATH', 'LOCAL_JWT', 'APP_ENV'];
+  },
+  get appEnv() {
+    return getConfigValue('APP_ENV');
   },
   get basePath() {
     return getConfigValue('BASE_PATH');

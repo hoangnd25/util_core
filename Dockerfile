@@ -4,12 +4,12 @@ FROM node:alpine
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-ADD ./build/package.json /usr/src/app/package.json
-RUN npm install
-
 # Bundle app source
-ADD ./build /usr/src/app
+ADD . /usr/src/app
+RUN npm ci --production
 
+# Configure environment variables and expose port
+ENV NODE_ENV production
 ENV PORT 80
 EXPOSE 80
 

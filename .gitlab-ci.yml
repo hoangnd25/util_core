@@ -8,37 +8,26 @@ variables:
 deploy:master:
   variables:
     MEM: 128M
-    API_ENDPOINT: https://api-dev.go1.co/
 
 deploy:production:
   variables:
     MEM: 128M
-    API_ENDPOINT: https://api.go1.co/
 
 deploy:qa:k8s:
   variables:
     MEM_MIN: 64Mi
     MEM_MAX: 128Mi
     ENV: "k8s-qa"
-    API_ENDPOINT: https://api.qa.go1.cloud/
-    RES_CDN: https://res.cloudinary.com/go1dev/image
-    GO1_CHECKOUT: https://apps.pages.go1.co/go1-checkout
-
+    
 deploy:staging:k8s:
   variables:
     ENV: "staging"
     MEM_MIN: 64Mi
     MEM_MAX: 128Mi
-    API_ENDPOINT: https://api.staging.go1.co/
-    RES_CDN: https://res.cloudinary.com/go1dev/image
-    GO1_CHECKOUT: https://apps.pages.go1.co/go1-checkout
 
 deploy:production:k8s:
   variables:
     MEM_MIN: 64Mi
     MEM_MAX: 128Mi
     ENV: "prod"
-    API_ENDPOINT: https://api.go1.co/
-    RES_CDN: https://res.cloudinary.com/go1dev/image
-    GO1_CHECKOUT: https://pay.go1.com
     ORG_ID: A6GD9

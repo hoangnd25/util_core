@@ -32,7 +32,7 @@ npm install
 ## .env file for local development
 Create a .env file in your root folder with following content:
 ```
-APP_ENV=local
+ENV=local
 API_ENDPOINT=https://api-dev.go1.co
 LOCAL_JWT=[YOUR JWT]
 ```

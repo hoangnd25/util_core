@@ -43,7 +43,7 @@ export class GO1App extends App<AppProps, any> {
     }
 
     // Add health check
-    if (ctx && ctx.router && ctx.router.asPath === "/healthz") {
+    if (ctx && ctx.router && (ctx.router.asPath === "/healthz" || ctx.router.asPath === "/container_status")) {
       ctx.ctx.res.statusCode = 200;
       ctx.ctx.res.end("Ok");
     }

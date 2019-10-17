@@ -8,5 +8,8 @@ services:
       - AWS_REGION
       - AWS_SECRET_NAME
       - NODE_ENV
+      - CDN_PATH
       - API_ENDPOINT
+      - DOCKER_TAG
+      - ENV
       - BASE_PATH

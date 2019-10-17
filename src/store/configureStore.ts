@@ -10,7 +10,7 @@ export default function initializeStore(initialState: ReduxState, helpersConfig:
   let composeEnhancers = compose;
 
   if (
-    process.env.APP_ENV !== 'production' &&
+    process.env.ENV !== 'production' &&
         !(typeof window === 'undefined') &&
         window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
   ) {

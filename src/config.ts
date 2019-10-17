@@ -25,10 +25,10 @@ export function getConfigValue(key: string, defaultValue?: string) : string {
 
 export default {
   get exportKeys() {
-    return ['API_ENDPOINT', 'BASE_PATH', 'LOCAL_JWT', 'APP_ENV'];
+    return ['API_ENDPOINT', 'BASE_PATH', 'LOCAL_JWT', 'ENV'];
   },
   get appEnv() {
-    return getConfigValue('APP_ENV');
+    return getConfigValue('ENV');
   },
   get basePath() {
     return getConfigValue('BASE_PATH');

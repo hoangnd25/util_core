@@ -4,5 +4,5 @@ kind: ConfigMap
 metadata:
   name: env-${PROJECT_NAME}
 data:
-  APP_ENV: $ENV
+  CDN_PATH: $CDN_PATH
   DOCKER_TAG: $DOCKER_TAG

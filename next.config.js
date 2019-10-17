@@ -1,22 +1,22 @@
 // jshint ignore: start
 // .env for local development constants only
 require('dotenv').config({ path: '.env', silent: true });
-const useCDN = process.env.APP_ENV !== 'local' && process.env.APP_ENV !== 'test';
+const useCDN = process.env.ENV !== 'local' && process.env.ENV !== 'test';
 const webpack = require("webpack");
 var LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const StatsPlugin = require("stats-webpack-plugin");
-
 
 module.exports = {
 
   poweredByHeader: false,
   // CDN stuff https://www.npmjs.com/package/next#cdn-support-with-asset-prefix
-  //assetPrefix: useCDN ? `https://cdn.go1static.com/assets/${process.env.DOCKER_TAG}` : '',
+  assetPrefix: useCDN ? `${process.env.CDN_PATH}/${process.env.DOCKER_TAG}` : '',
+  crossOrigin: 'anonymous',
   // Sent env variables to frontend in page-builder
   publicRuntimeConfig: {
     DOCKER_TAG: process.env.DOCKER_TAG,
     API_ENDPOINT: process.env.API_ENDPOINT,
-    APP_ENV: process.env.APP_ENV,
+    ENV: process.env.ENV,
     LOGIN_REDIRECT_URL: '/examples/protectedRoute/login',
   },
 
@@ -38,12 +38,12 @@ module.exports = {
     config.plugins = config.plugins || []
     config.plugins.push(
       new webpack.DefinePlugin({
-      __DEV__: process.env.APP_ENV === 'local',
+      __DEV__: process.env.ENV === 'local',
     }));
     config.plugins.push(new LodashModuleReplacementPlugin);
 
     // only create stats on local
-    if(process.env.APP_ENV === 'local') {
+    if(process.env.ENV === 'local') {
       config.profile = true;
       config.plugins.push(
         new StatsPlugin('stats.json', {

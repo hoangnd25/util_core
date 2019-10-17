@@ -5,6 +5,13 @@ include:
 variables:
   BASE_PATH: "/"
 
+build:
+  stage: build
+  artifacts:
+    paths:
+    - node_modules
+    - .next
+
 deploy:master:
   variables:
     MEM: 128M
@@ -18,7 +25,7 @@ deploy:qa:k8s:
     MEM_MIN: 64Mi
     MEM_MAX: 128Mi
     ENV: "k8s-qa"
-    
+
 deploy:staging:k8s:
   variables:
     ENV: "staging"

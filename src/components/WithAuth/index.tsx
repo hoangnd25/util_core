@@ -115,7 +115,7 @@ export const withCurrentSession = (App, helpers) =>
           }
 
           if (oneTimeToken) {
-            //@TODO Find a way to get rid of one time token in the url without tirggering rerender.
+            // @TODO Find a way to get rid of one time token in the url without tirggering rerender.
             router.replace(pathname, asPath.replace(`oneTimeToken=${oneTimeToken}`, ""), { shallow: true });
           }
 

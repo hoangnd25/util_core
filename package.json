@@ -10,7 +10,8 @@
     "build": "next build",
     "dev": "next",
     "lint": "eslint src/**/*.{ts,tsx} --ignore-pattern src/**/*.test.* -c .eslintrc.js  --fix",
-    "start": "next start",
+    "serve": "next start -p 80",
+    "start": "npm run dev",
     "test": "jest --config=jest-config.js --collectCoverage --detectOpenHandles --forceExit",
     "type-check": "tsc"
   },

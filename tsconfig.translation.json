@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "./extracted",
+    "declaration": false,
+    "jsx": "preserve",
+    "lib": ["dom"],
+    "target": "es5",
+    "moduleResolution": "node", // for module:esnext
+    "allowJs": false,
+    "sourceMap": false,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": false,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "module": "esnext", // for splitting chunks
+    "resolveJsonModule": true
+  },
+  "exclude": ["node_modules", "src/**/*.test.ts"],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx"
+  ]
+}

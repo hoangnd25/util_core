@@ -6,11 +6,16 @@
   "scripts": {
     "analyze": "webpack-bundle-analyzer ./.next/stats.json",
     "build": "next build",
+    "build:langs": "npm run trans:compile && npm run trans:extract && npm run trans:manage && npm run rm:extracted",
     "dev": "next",
     "lint": "eslint src/**/*.{ts,tsx} --ignore-pattern src/**/*.test.* -c .eslintrc.js  --fix",
+    "rm:extracted": "rimraf extracted",
     "serve": "next start -p 80",
     "start": "npm run dev",
     "test": "jest --config=jest-config.js --collectCoverage --detectOpenHandles --forceExit",
+    "trans:compile": "tsc -p tsconfig.translation.json",
+    "trans:extract": "babel extracted",
+    "trans:manage": "node src/utils/manageTranslations.js",
     "type-check": "tsc"
   },
   "dependencies": {
@@ -24,6 +29,7 @@
     "emotion-server": "^9.2.12",
     "lodash-webpack-plugin": "^0.11.5",
     "next": "^9.1.0",
+    "query-string": "^6.8.3",
     "react": "^16.10.1",
     "react-dom": "^16.10.1",
     "react-intl": "^2.9.0",
@@ -35,6 +41,10 @@
     "webpack": "^4.41.0"
   },
   "devDependencies": {
+    "@babel/cli": "7.4.4",
+    "@babel/core": "7.2.2",
+    "@babel/preset-env": "7.3.1",
+    "@babel/preset-react": "^7.0.0",
     "@types/enzyme": "^3.10.3",
     "@types/jest": "^24.0.18",
     "@types/node": "^12.7.8",
@@ -43,6 +53,7 @@
     "@typescript-eslint/parser": "^2.3.2",
     "axios-mock-adapter": "^1.17.0",
     "babel-plugin-lodash": "^3.3.4",
+    "babel-plugin-react-intl": "^3.3.3",
     "babel-plugin-transform-imports": "^2.0.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
@@ -62,6 +73,7 @@
     "lint-staged": "8.1.5",
     "prettier": "^1.18.2",
     "prettier-package-json": "2.1.0",
+    "react-intl-translations-manager": "^5.0.3",
     "redux-devtools-extension": "^2.13.8",
     "typescript": "^3.6.3",
     "webpack-bundle-analyzer": "^3.5.2"

@@ -1,10 +1,8 @@
 {
-  "name": "base-react-app",
-  "description": "",
-  "license": "ISC",
+  "name": "portal",
   "author": "",
-  "version": "2.0.0",
-  "main": "index.tsx",
+  "homepage": "/",
+  "version": "0.0.0",
   "scripts": {
     "analyze": "webpack-bundle-analyzer ./.next/stats.json",
     "build": "next build",
@@ -16,9 +14,9 @@
     "type-check": "tsc"
   },
   "dependencies": {
-    "@go1d/go1d": "^0.9.24",
-    "@go1d/go1d-exchange": "^0.2.35",
-    "@go1d/mine": "^0.2.62",
+    "@go1d/go1d": "^0.9.37",
+    "@go1d/go1d-exchange": "^0.2.43",
+    "@go1d/mine": "^0.3.21",
     "axios": "^0.19.0",
     "debug": "^4.1.1",
     "dotenv": "^8.1.0",

@@ -44,3 +44,7 @@ jspm_packages
 .idea
 .DS_Store
 .next
+
+src/translation/messages
+extracted
+

@@ -16,8 +16,14 @@ module.exports = {
         "preventFullImport": true
       },
     }],
-  ] : [],
+  ] : [
+    [ "react-intl", {
+      "messagesDir": "./src/translation/messages"
+    }]
+  ],
   "presets": [
     "next/babel",
+    "@babel/preset-env",
+    "@babel/preset-react"
   ]
 };

@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
-import { IntlProvider } from 'react-intl';
+import { addLocaleData, IntlProvider } from 'react-intl';
+import locale_en from 'react-intl/locale-data/en';
+import locale_pt from 'react-intl/locale-data/pt';
 import { NotificationContainer, globalCSS, foundations } from '@go1d/go1d';
 import { getNested } from '@go1d/mine/utils';
 import CommonProvider from '@go1d/mine/common/Provider';
@@ -12,10 +14,11 @@ import LinkComponent from '../components/Link';
 import withReduxStore from '../store/withReduxStore';
 import AppContext from '../utils/appContext';
 import createHttp from '../utils/http';
-import { USER_UPDATE as USER_UPDATE_ACTION } from '../reducers/session';
 import { withCurrentSession } from '../components/WithAuth';
 import { CurrentSessionType } from '../types/user';
 import config from '../config';
+import qs from 'query-string';
+import { defaultLocale, countryToLocale, messages } from '../utils/translation';
 
 const cookies = new Cookies();
 const http = createHttp();
@@ -25,6 +28,8 @@ const context = {
   cookies,
   http,
 };
+
+addLocaleData([...locale_en, ...locale_pt]);
 
 interface AppProps {
     reduxStore: any;
@@ -56,8 +61,29 @@ export class GO1App extends App<AppProps, any> {
     return { pageProps } as any;
   }
 
+  public getLanguage(currentSession): string {
+    if (!currentSession && typeof window !== 'undefined') {
+      const {lang} = qs.parse(window.location.search) as { [key: string]: string };
+      if (lang) {
+        return lang;
+      }
+      return window.navigator ? window.navigator.language.split(/[-_]/)[0] : defaultLocale;
+    } else if (currentSession) {
+      const {user, portal} = currentSession;
+      if (user && user.locale) {
+        return user.locale[0] || defaultLocale;
+      } else if (portal && portal.configuration) {
+        return countryToLocale[portal.configuration.locale || 'AU'] || defaultLocale;
+      }
+    }
+
+    return defaultLocale;
+  }
+
+
   public render() {
     const { Component, pageProps, reduxStore, currentSession, router } = this.props;
+    const language = this.getLanguage(currentSession);
     // Show loading if current Session has not been loaded
     if (currentSession === null) {
       // can be replaced with a skeleton
@@ -67,7 +93,7 @@ export class GO1App extends App<AppProps, any> {
     return (
       <AppContext.Provider value={context}>
         <ReduxProvider store={reduxStore}>
-          <IntlProvider locale="en"  defaultLocale="en" onError={noOP}>
+          <IntlProvider locale={language} messages={messages[language]} onError={noOP}>
             <CommonProvider
               linkComponent={LinkComponent}
               accent={getNested(currentSession, 'portal.data.theme.primary', foundations.colors.accent)}

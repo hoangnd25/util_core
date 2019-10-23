@@ -14,7 +14,7 @@ const Index = ({ children, title="GO1", wrappingContainer, withTopNav, container
           (<Container contain="wide" minHeight={600} justifyContent="center" paddingY={5} paddingX={5} {...containerProps}>
             {children}
           </Container>)
-          : {children}}
+          : children}
       </>
     );
 };

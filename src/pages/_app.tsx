@@ -9,6 +9,7 @@ import CommonProvider from '@go1d/mine/common/Provider';
 
 import App from 'next/app';
 import Cookies from 'universal-cookie';
+import qs from 'query-string';
 import Suspense, { LoadingSpinner } from '../components/Suspense';
 import LinkComponent from '../components/Link';
 import withReduxStore from '../store/withReduxStore';
@@ -17,7 +18,6 @@ import createHttp from '../utils/http';
 import { withCurrentSession } from '../components/WithAuth';
 import { CurrentSessionType } from '../types/user';
 import config from '../config';
-import qs from 'query-string';
 import { defaultLocale, countryToLocale, messages } from '../utils/translation';
 
 const cookies = new Cookies();
@@ -67,12 +67,18 @@ export class GO1App extends App<AppProps, any> {
       if (lang) {
         return lang;
       }
+
       return window.navigator ? window.navigator.language.split(/[-_]/)[0] : defaultLocale;
-    } else if (currentSession) {
+    }
+
+    if (currentSession) {
       const {user, portal} = currentSession;
+
       if (user && user.locale) {
         return user.locale[0] || defaultLocale;
-      } else if (portal && portal.configuration) {
+      }
+
+      if (portal && portal.configuration) {
         return countryToLocale[portal.configuration.locale || 'AU'] || defaultLocale;
       }
     }

@@ -1,45 +1,112 @@
 import * as React from 'react';
-import { ButtonFilled, View, Container, Text, UL, LI } from '@go1d/go1d';
-import Link from '../components/Link';
+import Cookies from 'universal-cookie';
+import { View, Text, foundations } from '@go1d/go1d';
+import { getNested } from '@go1d/mine/utils';
+import FeatureToggleService from '../services/featureToggleService';
+import createHttp from '../utils/http';
 import Layout from '../components/Layout';
 
-class Index extends React.Component {
-  public render() {
+const SIDEBAR_WIDTH = 220;
+const cookies = new Cookies();
+const http = createHttp();
+
+class MasterPage extends React.Component<any, any> {
+  public static async getInitialProps() {
+    try {
+      const go1Cookies = getNested(cookies, 'cookies.go1', null);
+      const featureToggles = await FeatureToggleService(http).getFeatures(go1Cookies);
+
+      return {
+        featureToggles,
+      };
+    } catch (e) {
+      return {
+        featureToggles: [],
+      };
+    };
+  }
+
+  getPageTitle() {
+    return 'Portal settings';
+  }
+
+  getPageOptions() {
+    return {
+      title: true,
+      sidebar: true,
+      body: true,
+    };
+  }
+
+  renderSidebar() {
     return (
-      <Layout title="GO1 React Base App" wrappingContainer>
-        <View marginBottom={5}>
-          <Text element="h1" fontSize={4} fontWeight="semibold">Hello World!</Text>
-        </View>
-        <View backgroundColor="background" padding={5} borderRadius={2}>
-          This React Base App is supposed to be a &quot;light-weight&quot; base, to build react apps for GO1. It is based on Next.JS 9 and supports following features out of the box:
-          <View>
-            <UL>
-              <LI>Server Side Rendering</LI>
-              <LI>User Authentication via cookies, localstorage and one time login tokens</LI>
-              <LI>Portal config: Theme Color and Logo will be provided to the @go1d/provider</LI>
-              <LI>IE11 Support</LI>
-              <LI>Testing</LI>
-              <LI>Linting</LI>
-            </UL>
+      <Text fontWeight="semibold">Page sidebar</Text>
+    );
+  }
+
+  renderBody() {
+    return (
+      <>
+        <Text>Page content</Text>
+      </>
+    );
+  }
+
+  render() {
+    const pageTitle = this.getPageTitle();
+    const { title: hasTitle, sidebar: hasSidebar, body: hasBody } = this.getPageOptions();
+
+    return (
+      <View backgroundColor="faint">
+        <Layout
+          title={pageTitle}
+          wrappingContainer
+          withTopNav
+          containerProps={{
+            justifyContent: 'initial',
+          }}
+        >
+          <View css={{
+            [foundations.breakpoints.md]: {
+              flexDirection: 'row',
+              paddingBottom: foundations.spacing[6],
+              paddingTop: foundations.spacing[6],
+            },
+          }}>
+            {hasSidebar && (
+              <View
+                marginBottom={5}
+                marginRight={5}
+                css={{
+                  [foundations.breakpoints.md]: {
+                    width: SIDEBAR_WIDTH,
+                  },
+                }}
+              >
+                {this.renderSidebar()}
+              </View>
+            )}
+
+            {(hasTitle || hasBody) && (
+              <View flexGrow={1} flexShrink={1}>
+                {hasTitle && (
+                  <View marginBottom={5}>
+                    <Text element="h1" fontSize={4} fontWeight="semibold">{pageTitle}</Text>
+                  </View>
+                )}
+
+                {hasBody && (
+                  <View backgroundColor="background" padding={5} borderRadius={2}>
+                    {this.renderBody()}
+                  </View>
+                )}
+              </View>
+            )}
           </View>
-
-          <Text element="h2" fontSize={3} fontWeight="semibold">Example usages:</Text>
-          <UL>
-            <LI iconName="ChevronRight"><Link href="/examples/protectedRoute">Protected Route Example</Link></LI>
-            <LI iconName="ChevronRight"><Link href="/examples/withGo1Nav">Example with GO1 TopNav</Link></LI>
-          </UL>
-
-          <Text element="h2" fontSize={3} fontWeight="semibold">Things to read before you start:</Text>
-          <UL>
-            <LI iconName="ChevronRight"><Link href="https://nextjs.org/learn/basics/getting-started" target="_blank">Next.js Getting Started</Link></LI>
-            <LI iconName="ChevronRight"><Link href="https://nextjs.org/docs#dynamic-routing" target="_blank">Dynamic Routing</Link></LI>
-            <LI iconName="ChevronRight"><Link href="https://arunoda.me/blog/ssr-and-server-only-modules" target="_blank">Bundle size: SSR and Server Only Modules</Link></LI>
-          </UL>
-
-        </View>
-      </Layout>
+        </Layout>
+      </View>
     );
   }
 }
 
-export default Index;
+export default MasterPage;

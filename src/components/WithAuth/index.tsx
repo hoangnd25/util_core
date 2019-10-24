@@ -1,7 +1,8 @@
 import React from 'react';
+import {connect} from "react-redux";
 import Cookies from 'universal-cookie';
 import { getNested } from '@go1d/mine/utils';
-import {connect} from "react-redux";
+import { PortalModel } from '@go1d/go1d-exchange';
 import UserService, { saveSession, removeSession } from './services/userService';
 import {CurrentSessionType} from "../../types/user";
 import {getConfigValue} from "../../config";
@@ -21,17 +22,26 @@ const WithAuthComponent = AppPage =>  class extends React.Component<any,any> {
 
   // check auth status and redirect to login if not
   public render() {
-    const {currentSession} = this.props;
-    if (currentSession && currentSession.authenticated === true) {
-      return <AppPage {...this.props} />;
-    }
-    if (typeof window !== 'undefined') {
-      window.location.assign(
-        `${getConfigValue('LOGIN_REDIRECT_URL', '/user/login')}?redirect_url=${encodeURIComponent(
-          window.location.pathname)}${encodeURIComponent(window.location.search)}`);
-    }
-    return <LoadingSpinner/>
+    const { currentSession } = this.props;
+    const isAuthenticated = currentSession && currentSession.authenticated === true;
 
+    if (isAuthenticated) {
+      if (currentSession.account && currentSession.account.isAdministrator) {
+        return <AppPage {...this.props} />;
+      }
+
+      if (typeof window !== 'undefined') {
+        window.location.assign('/p/#/app/dashboard');
+        return;
+      }
+    }
+
+    if (typeof window !== 'undefined') {
+      const windowLocation = window.location;
+      windowLocation.assign(`${windowLocation.origin}/p/#/access/signin?redirect_url=${windowLocation.href}`);
+    }
+
+    return <LoadingSpinner />
   }
 };
 

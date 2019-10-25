@@ -1,9 +1,9 @@
 import Cookies from 'universal-cookie';
-import { GO1Account, GO1Portal, GO1User, CurrentSessionType } from '../../../types/user';
-import { setStorage, removeStorage } from '../../../utils/storage';
-import intersection from "../../../utils/intersection";
-import { HttpInstance } from '../../../utils/http';
-import extractGo1Metadata from '../../../utils/helper';
+import { GO1Account, GO1Portal, GO1User, CurrentSessionType } from '../types/user';
+import { setStorage, removeStorage } from '../utils/storage';
+import intersection from "../utils/intersection";
+import { HttpInstance } from '../utils/http';
+import extractGo1Metadata from '../utils/helper';
 
 const AUTH_COOKIE_NAME = 'go1';
 

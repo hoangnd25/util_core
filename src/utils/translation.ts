@@ -15,6 +15,23 @@ export const messages = {
   [defaultLocale]: messagesEN_AU,
 };
 
+export const defineMessagesList = () => {
+  return defineMessages({
+    dataFeedEmptyBlockTitle: {
+      id: 'data.feed.empty.block.title',
+      defaultMessage: 'No Data Yet',
+    },
+    dataFeedEmptyBlockActionText: {
+      id: 'data.feed.empty.block.action.text',
+      defaultMessage: 'Start',
+    },
+    dataFeedUploadBlockErrorTextFileExtension: {
+      id: 'data.feed.upload.block.error.text.file.extension',
+      defaultMessage: '{fileName} is not a supported file type',
+    },
+  });
+};
+
 export const getIntl = (locale?: string) => {
   const intlLocale = locale || defaultLocale;
   const intlProvider = new IntlProvider({ intlLocale, messages: messages[intlLocale] });

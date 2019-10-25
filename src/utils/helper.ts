@@ -22,7 +22,7 @@ export default function extractGo1Metadata(cookies: Cookies = defaultCookies) {
 
 
   // Fallback to localStorage if Cookie doesn't exist
-  if (typeof window === 'undefined') {
+  if (typeof window !== 'undefined') {
     const jwt = getStorage('jwt');
     const uuid = getStorage('uuid');
     const instanceId = getStorage('active-instance');

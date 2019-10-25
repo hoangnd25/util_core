@@ -1,11 +1,26 @@
 import * as React from 'react';
+import {connect} from "react-redux";
 import { Text, View } from '@go1d/go1d';
 import { PortalModel } from '@go1d/go1d-exchange';
 import withAuth from '../../../components/WithAuth';
 import Integrations from '../index';
 import SidebarMenus from '../../../components/SidebarMenus';
+import DataFeedEmptyState from '../../../components/dataFeed/emptyState';
+import DataFeedUploadState from '../../../components/dataFeed/uploadState';
+
+interface Props {
+  currentSession: any;
+}
+
+interface State {
+  step: number;
+}
 
 export class UserDataFeed extends Integrations {
+  state = {
+    step: 0,
+  };
+
   constructor(props) {
     super(props);
   }
@@ -41,13 +56,34 @@ export class UserDataFeed extends Integrations {
     );
   }
 
+  onChangeStep = (step: number) => {
+    this.setState({ step })
+  };
+
   renderBody() {
+    const { step } = this.state;
+    const { currentSession } = this.props;
+
     return (
-      <>
-        renderAWSConnectionBody: {this.renderAWSConnectionDetail()}
-      </>
+      <View minHeight={600}>
+        {step === 0 && (
+          <DataFeedEmptyState onStart={this.onChangeStep} />
+        )}
+        {step === 1 && (
+          <View flexDirection="row" flexWrap="wrap">
+            <View width={[1,1,3/5]} alignItems="flex-start">
+              <DataFeedUploadState currentSession={currentSession} onCancel={this.onChangeStep} />
+            </View>
+          </View>
+        )}
+      </View>
     );
   }
 }
 
-export default withAuth(UserDataFeed);
+const mapCurrentSessionToProps = state => ({ currentSession: state.currentSession });
+
+export default withAuth(connect(
+  mapCurrentSessionToProps,
+  null
+)(UserDataFeed));

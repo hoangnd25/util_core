@@ -18,7 +18,7 @@ it('renders without crashing', () => {
   );
 });
 
-it('renders external link without crashing', () => {
+it('renders active link without crashing', () => {
   mount(
     <SidebarMenus active="Menu ID" menus={fakeMenus} />
   );

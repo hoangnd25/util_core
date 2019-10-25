@@ -32,11 +32,8 @@ const WithAuthComponent = AppPage =>  class extends React.Component<any,any> {
 
       if (typeof window !== 'undefined') {
         window.location.assign('/p/#/app/dashboard');
-        return;
       }
-    }
-
-    if (typeof window !== 'undefined') {
+    } else if (typeof window !== 'undefined') {
       const windowLocation = window.location;
       windowLocation.assign(`${windowLocation.origin}/p/#/access/signin?redirect_url=${windowLocation.href}`);
     }

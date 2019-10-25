@@ -1,4 +1,18 @@
 {
   "Uh oh, that's a no": "Uh oh, that's a no",
-  "example.message": "Example usages"
+  "sidebar.integrations-addons": "Add-ons",
+  "sidebar.integrations-autopilot": "Autopilot",
+  "sidebar.integrations-azure": "Microsoft Azure",
+  "sidebar.integrations-course-catalog": "Course Catalog",
+  "sidebar.integrations-developers": "Developers",
+  "sidebar.integrations-lti-provider": "LTI Provider",
+  "sidebar.integrations-scorm": "SCORM",
+  "sidebar.integrations-single-sign-on": "Single Sign-On",
+  "sidebar.integrations-stripe": "Stripe",
+  "sidebar.integrations-successfactors": "SuccessFactors",
+  "sidebar.integrations-user-data-feed": "User Data Feed",
+  "sidebar.integrations-vettrak": "Vettrak",
+  "sidebar.integrations-wisenet": "Wisenet",
+  "sidebar.integrations-xero": "Xero",
+  "sidebar.integrations-zapier": "Zapier"
 }

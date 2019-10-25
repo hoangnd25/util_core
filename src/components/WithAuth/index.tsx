@@ -1,7 +1,8 @@
 import React from 'react';
 import {connect} from "react-redux";
 import Cookies from 'universal-cookie';
-import UserService, { saveSession, removeSession } from './services/userService';
+import { PortalModel } from '@go1d/go1d-exchange';
+import UserService, { saveSession, removeSession } from '../../services/userService';
 import {CurrentSessionType} from "../../types/user";
 import {LoadingSpinner} from "../Suspense";
 

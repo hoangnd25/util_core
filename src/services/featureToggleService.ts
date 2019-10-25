@@ -1,4 +1,3 @@
-import { getStorage } from '../utils/storage';
 import { HttpInstance } from '../utils/http';
 
 class FeatureToggleService {
@@ -9,22 +8,14 @@ class FeatureToggleService {
     return this;
   }
 
-  public async getFeatures(go1CookieValue?: string) {
-    let portal = '';
-
-    // try to get from cookie
-    if (go1CookieValue) {
-      const [uuid, instanceId, portalName, jwt] = go1CookieValue.split(':');
-      portal = portalName;
-    }
-    // Fallback to localStorage if Cookie doesn't exist
-    else {
-      portal = getStorage('active-instance-domain');
+  public async getFeatures(portal?: string) {
+    if (portal) {
+      const url = `/featuretoggle/feature${portal ? `?context[portal][]=${portal}` : ''}`;
+      const { data } = await this.http.get(url);
+      return data;
     }
 
-    const url = `/featuretoggle/feature${portal ? `?context[portal][]=${portal}` : ""}`;
-    const { data } = await this.http.get(url);
-    return data;
+    return {};
   }
 }
 

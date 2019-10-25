@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Text, View } from '@go1d/go1d';
+import { PortalModel } from '@go1d/go1d-exchange';
 import withAuth from '../../../components/WithAuth';
 import Integrations from '../index';
 import SidebarMenus from '../../../components/SidebarMenus';
@@ -11,6 +12,16 @@ export class UserDataFeed extends Integrations {
 
   getPageTitle() {
     return 'User data feed';
+  }
+
+  renderAWSConnectionDetail() {
+    const { currentSession } = this.props;
+    const portal = new PortalModel(currentSession.portal || {});
+    return (
+      <>
+        renderAWSConnectionDetail: {JSON.stringify(portal)}
+      </>
+    );
   }
 
   renderSidebar() {
@@ -32,7 +43,9 @@ export class UserDataFeed extends Integrations {
 
   renderBody() {
     return (
-      <Text>DataFeed content</Text>
+      <>
+        renderAWSConnectionBody: {this.renderAWSConnectionDetail()}
+      </>
     );
   }
 }

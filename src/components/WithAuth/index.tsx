@@ -1,11 +1,8 @@
 import React from 'react';
 import {connect} from "react-redux";
 import Cookies from 'universal-cookie';
-import { getNested } from '@go1d/mine/utils';
-import { PortalModel } from '@go1d/go1d-exchange';
 import UserService, { saveSession, removeSession } from './services/userService';
 import {CurrentSessionType} from "../../types/user";
-import {getConfigValue} from "../../config";
 import {LoadingSpinner} from "../Suspense";
 
 /**
@@ -74,9 +71,8 @@ export const withCurrentSession = (App, helpers) =>
           // Only perform on server
           if (typeof window === 'undefined') {
             try {
-              const cookies = new Cookies(req.headers.cookie);
               currentSession = await UserService(http).performAuth(
-                getNested(cookies, 'cookies.go1', null),
+                new Cookies(req.headers.cookie),
                 query.oneTimeToken || null
               );
             } catch (err) {

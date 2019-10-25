@@ -57,7 +57,7 @@ class MasterPage extends React.Component<any, any> {
     const { title: hasTitle, sidebar: hasSidebar, body: hasBody } = this.getPageOptions();
 
     return (
-      <View backgroundColor="faint">
+      <View backgroundColor="faint" minHeight="100vh">
         <Layout
           title={pageTitle}
           wrappingContainer
@@ -76,9 +76,9 @@ class MasterPage extends React.Component<any, any> {
             {hasSidebar && (
               <View
                 marginBottom={5}
-                marginRight={5}
                 css={{
                   [foundations.breakpoints.md]: {
+                    marginRight: foundations.spacing[5],
                     width: SIDEBAR_WIDTH,
                   },
                 }}

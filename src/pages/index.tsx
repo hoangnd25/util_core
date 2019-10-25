@@ -1,20 +1,18 @@
 import * as React from 'react';
-import Cookies from 'universal-cookie';
 import { View, Text, foundations } from '@go1d/go1d';
-import { getNested } from '@go1d/mine/utils';
-import FeatureToggleService from '../services/featureToggleService';
+import featureToggleService from '../services/featureToggleService';
 import createHttp from '../utils/http';
+import extractGo1Metadata from '../utils/helper';
 import Layout from '../components/Layout';
 
 const SIDEBAR_WIDTH = 220;
-const cookies = new Cookies();
 const http = createHttp();
 
 class MasterPage extends React.Component<any, any> {
   public static async getInitialProps() {
     try {
-      const go1Cookies = getNested(cookies, 'cookies.go1', null);
-      const featureToggles = await FeatureToggleService(http).getFeatures(go1Cookies);
+      const { portalName } = extractGo1Metadata();
+      const featureToggles = await featureToggleService(http).getFeatures(portalName);
 
       return {
         featureToggles,

@@ -1,8 +1,9 @@
 import Cookies from 'universal-cookie';
 import { GO1Account, GO1Portal, GO1User, CurrentSessionType } from '../../../types/user';
-import { getStorage, setStorage, removeStorage } from '../../../utils/storage';
+import { setStorage, removeStorage } from '../../../utils/storage';
 import intersection from "../../../utils/intersection";
 import { HttpInstance } from '../../../utils/http';
+import extractGo1Metadata from '../../../utils/helper';
 
 const AUTH_COOKIE_NAME = 'go1';
 
@@ -41,7 +42,7 @@ class UserService {
     return this;
   }
 
-  public async performAuth(go1CookieValue: string, oneTimeLoginToken: string) {
+  public async performAuth(go1Cookies: Cookies, oneTimeLoginToken: string) {
     let user: GO1User = null;
     // try one time login tokens
     if (oneTimeLoginToken) {
@@ -57,30 +58,16 @@ class UserService {
       return this.makeSession(user, '');
     }
 
-    let jwt = '';
-    let uuid: string;
-    let instanceName = '';
-    let instanceId: string;
-    // try cookie
-    if (go1CookieValue) {
-      [uuid, instanceId, instanceName, jwt] = go1CookieValue.split(':');
-    } else {
-      // Fallback to localStorage if Cookie doesn't exist
-      jwt = getStorage('jwt');
-      uuid = getStorage('uuid');
-      instanceName = getStorage('active-instance-domain');
-    }
+    const { jwt, uuid, portalName } = extractGo1Metadata(go1Cookies);
+
     // No login information found
     if (!jwt || !uuid) {
       return new Promise((resolve, reject) => reject(null));
     }
 
     this.http.setJWT(jwt);
-    user = await this.getCurrentAccount({
-      uuid,
-      portal: instanceName,
-    });
-    return this.makeSession(user, instanceName);
+    user = await this.getCurrentAccount({ uuid, portal: portalName });
+    return this.makeSession(user, portalName);
   }
 
   public async getCurrentAccount(params?: { portal: string; uuid: string }): Promise<any> {

@@ -18,7 +18,7 @@ test('should get correct feature toggle data', async () => {
   mock.onGet('/featuretoggle/feature?context[portal][]=test.mygo1.com').reply(200, fakeToggles);
 
   const service = FeatureToggleService(http);
-  const data = await service.getFeatures('uuid:instanceId:test.mygo1.com:jwt');
+  const data = await service.getFeatures('test.mygo1.com');
 
   expect(data).toEqual(fakeToggles);
 });

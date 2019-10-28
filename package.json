@@ -10,7 +10,7 @@
     "dev": "node server.js",
     "lint": "eslint src/**/*.{ts,tsx} --ignore-pattern src/**/*.test.* -c .eslintrc.js  --fix",
     "rm:extracted": "rimraf extracted",
-    "serve": "NODE_ENV=production node server.js",
+    "serve": "NODE_ENV=production PORT=80 node server.js",
     "start": "NODE_ENV=production node server.js",
     "test": "jest --config=jest-config.js --collectCoverage --detectOpenHandles --forceExit",
     "trans:compile": "tsc -p tsconfig.translation.json",

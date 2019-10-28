@@ -33,7 +33,7 @@ before commit
 
 ## RUN
 ```sh
-npm run dev
+npm run start
 ```
 
 ## BUILD
@@ -43,15 +43,14 @@ npm run build
 npm run build:release <- Prod Build
 ```
 
-## RUN PROD
-```sh
-npm run start OR npm run serve
-```
-
 ## HOW TO TEST
 
 ```sh
 npm run test
+```
+
+```sh
+Notice: in case you want to test file in ./src/pages/* , put test files in ./src/__tests__ to avoid error when building source for prod
 ```
 
 ## HOW TO LINT

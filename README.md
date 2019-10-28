@@ -33,7 +33,7 @@ before commit
 
 ## RUN
 ```sh
-npm run start
+npm run dev
 ```
 
 ## BUILD
@@ -41,6 +41,11 @@ npm run start
 ```sh
 npm run build
 npm run build:release <- Prod Build
+```
+
+## RUN PROD
+```sh
+npm run start OR npm run serve
 ```
 
 ## HOW TO TEST

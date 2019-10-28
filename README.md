@@ -50,7 +50,11 @@ npm run test
 ```
 
 ```sh
-Notice: in case you want to test file in ./src/pages/* , put test files in ./src/__tests__ to avoid error when building source for prod
+Notice: in case you want to test file in ./src/pages/* , 
+
+put test files in ./src/__tests__ 
+
+to avoid error when building source for prod
 ```
 
 ## HOW TO LINT

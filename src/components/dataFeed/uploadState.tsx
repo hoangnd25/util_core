@@ -28,7 +28,7 @@ interface State {
   errorMess: string | null;
 }
 
-const dataFeedService = DataFeedService();
+export const dataFeedService = DataFeedService();
 
 class DataFeedUploadState extends React.Component<Props, State> {
   state = {
@@ -42,7 +42,6 @@ class DataFeedUploadState extends React.Component<Props, State> {
     this.setState({ isShowUploader: false, isUploading: true, isUploadingFailed: false, errorMess: null });
     const options = {
       complete: results => {
-        console.log(results);
         if (results.errors.length > 0) {
           this.setState({ isUploading: false, isUploadingFailed: true });
         } else {

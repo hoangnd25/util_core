@@ -87,3 +87,4 @@ export default withAuth(connect(
   mapCurrentSessionToProps,
   null
 )(UserDataFeed));
+``

@@ -33,7 +33,7 @@ const WithAuthComponent = AppPage =>  class extends React.Component<any,any> {
       }
     } else if (typeof window !== 'undefined') {
       const windowLocation = window.location;
-      windowLocation.assign(`${windowLocation.origin}/p/#/access/signin?redirect_url=${windowLocation.href}`);
+      windowLocation.assign(`${windowLocation.origin}/p/#/access/signin?redirectUrlAfterLogin=${windowLocation.href}`);
     }
 
     return <LoadingSpinner />

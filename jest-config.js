@@ -12,7 +12,7 @@ module.exports = {
     "^.+\\.tsx?$": "babel-jest",
   },
   testEnvironment: 'jest-environment-jsdom-fourteen',
-  testPathIgnorePatterns: ["<rootDir>/build/", "<rootDir>/node_modules/", "<rootDir>/src/pages/examples/"],
+  testPathIgnorePatterns: ["<rootDir>/build/", "<rootDir>/node_modules/", "<rootDir>/src/pages/examples/", '<rootDir>/.next/'],
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json"],
   coverageReporters: ["json", "lcov", "text", "clover", "text-summary"],
   setupFilesAfterEnv: ["<rootDir>/jest-setup.js"],

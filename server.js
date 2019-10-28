@@ -16,6 +16,7 @@ app.prepare().then(() => {
     if (!route) {
       return handle(req, res);
     }
+    console.log(req.url);
     return app.render(req, res, route.page, query);
   });
 

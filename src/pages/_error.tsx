@@ -6,27 +6,26 @@ import { FormattedMessage } from 'react-intl';
 function Error({ statusCode }) {
   return (
     <Container contain="full" height={600} justifyContent="center">
-      <View flexDirection="row" justifyContent="center">
-        {statusCode ? (
+      <View flexDirection="column" alignItems="center">
+        {statusCode && (
           <Text color="default" fontSize={6} fontWeight="semibold" lineHeight="paragraph">
             {statusCode}
           </Text>
-        ) : (
-          <>
-            <Text color="default" fontSize={6} fontWeight="semibold" lineHeight="paragraph">
-              <FormattedMessage id="Uh oh, that's a no" defaultMessage="Uh oh, that's a no" />
-            </Text>
-            <Icon
-              name="Go1Logo"
-              color="default"
-              size={6}
-              style={{
-                marginTop: '17px',
-              }}
-              marginLeft={3}
-            />
-          </>
         )}
+        <View marginTop={5} flexDirection="row">
+          <Text color="default" fontSize={6} fontWeight="semibold" lineHeight="paragraph">
+            <FormattedMessage id="Uh oh, that's a no" defaultMessage="Uh oh, that's a no" />
+          </Text>
+          <Icon
+            name="Go1Logo"
+            color="default"
+            size={6}
+            style={{
+              marginTop: '17px',
+            }}
+            marginLeft={3}
+          />
+        </View>
       </View>
     </Container>
   );

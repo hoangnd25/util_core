@@ -2,22 +2,15 @@ import getConfig from 'next/config';
 
 let config: any;
 
-export function setupConfigSource() {
-  if (typeof window === 'undefined') {
-    config = process.env;
-  } else {
-    config = getConfig().publicRuntimeConfig;
-  }
-}
-
 export function getConfigValue(key: string, defaultValue?: string) : string {
   if (!config) {
-    setupConfigSource();
+    config = getConfig().publicRuntimeConfig;
   }
   if (key in config) {
     return config[key];
   }
   if (!defaultValue) {
+    // eslint-disable-next-line
     console.error(`Configuration Error: required environment variable '${key}' not found.`);
   }
   return defaultValue || "";
@@ -36,9 +29,6 @@ export default {
   get port() {
     return getConfigValue('PORT');
   },
-  get enableHttps() {
-    return getConfigValue('ENABLE_HTTPS');
-  },
   get host() {
     return `localhost:${getConfigValue('PORT')}`;
   },
@@ -49,6 +39,7 @@ export default {
     return typeof window !== 'undefined' && window.document && typeof window.document.createElement === 'function';
   },
   get localJWT() {
+    // eslint-disable-next-line
     return __DEV__ && getConfigValue('LOCAL_JWT');
   },
 };

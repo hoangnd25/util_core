@@ -12,7 +12,6 @@ import LinkComponent from '../components/Link';
 import withReduxStore from '../store/withReduxStore';
 import AppContext from '../utils/appContext';
 import createHttp from '../utils/http';
-import { USER_UPDATE as USER_UPDATE_ACTION } from '../reducers/session';
 import { withCurrentSession } from '../components/WithAuth';
 import { CurrentSessionType } from '../types/user';
 import config from '../config';

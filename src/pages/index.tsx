@@ -94,7 +94,17 @@ class MasterPage extends React.Component<any, any> {
                 )}
 
                 {hasBody && (
-                  <View backgroundColor="background" padding={5} borderRadius={2}>
+                  <View
+                    backgroundColor="background"
+                    boxShadow="crisp"
+                    padding={5}
+                    borderRadius={2}
+                    css={{
+                      [foundations.breakpoints.md]: {
+                        padding: foundations.spacing[6],
+                      },
+                    }}
+                  >
                     {this.renderBody()}
                   </View>
                 )}

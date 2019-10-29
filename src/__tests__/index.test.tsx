@@ -6,6 +6,10 @@ import configureMockStore from "redux-mock-store";
 import CommonProvider from '@go1d/mine/common/Provider';
 import { UserDataFeed } from '../pages/integrations/userDataFeed';
 
+const intlMock = {
+  formatMessage: jest.fn(),
+};
+
 const mockComponent = () => <div />;
 jest.mock("@go1d/go1d/build/components/BaseUploader", () => ({
   default: (props: any) =>
@@ -39,7 +43,7 @@ const setup = (props = {}) => {
           accountId={123}
           portalId={123}
         >
-          <UserDataFeed currentSession={currentSession} {...props} />
+          <UserDataFeed intl={intlMock} currentSession={currentSession} {...props} />
         </CommonProvider>
       </IntlProvider>
     </ReduxProvider>

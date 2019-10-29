@@ -1,4 +1,4 @@
-export const SIDEBAR_MENUS = {
+const SIDEBAR_MENUS = {
   ADDONS: 'sidebar.integrations-addons',
   SCORM: 'sidebar.integrations-scorm',
   AUTOPILOT: 'sidebar.integrations-autopilot',
@@ -15,3 +15,5 @@ export const SIDEBAR_MENUS = {
   DEVELOPER: 'sidebar.integrations-developers',
   USER_DATA_FEED: 'sidebar.integrations-user-data-feed',
 };
+
+export default SIDEBAR_MENUS;

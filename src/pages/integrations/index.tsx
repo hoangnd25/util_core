@@ -1,5 +1,5 @@
 import { PortalModel } from '@go1d/go1d-exchange';
-import { SIDEBAR_MENUS } from '../../constants/sidebarMenu';
+import SIDEBAR_MENUS from '../../constants/sidebarMenu';
 import { getText } from '../../utils/translation';
 import MasterPage from '../index';
 

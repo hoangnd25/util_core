@@ -47,6 +47,7 @@ class UserService {
     if (oneTimeLoginToken) {
       user = await this.getCurrentAccountWithOTT(oneTimeLoginToken);
       // local developer mode
+      // eslint-disable-next-line
     } else if (__DEV__ && process.env.LOCAL_JWT) {
       // For local support .env JWT, will pick the first account returned by the server
       this.http.setJWT(process.env.LOCAL_JWT);

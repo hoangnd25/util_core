@@ -4,6 +4,7 @@ export interface GO1Portal {
     configuration: any;
     data: any;
     files: {
+        // eslint-disable-next-line
         dashboard_icon?: string;
     };
 }
@@ -21,8 +22,10 @@ export interface GO1User {
     roles?: string[];
     accounts?: GO1Account[];
     jwt: string;
+    /*eslint-disable */
     first_name?: string;
     last_name?: string;
+    /* eslint-enable */
     avatar?: {
         url: string;
     };

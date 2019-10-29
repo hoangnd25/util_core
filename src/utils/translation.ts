@@ -29,6 +29,26 @@ export const defineMessagesList = () => {
       id: 'data.feed.upload.block.error.text.file.extension',
       defaultMessage: '{fileName} is not a supported file type',
     },
+
+    // Integration detail: User data feed
+    integrationUserDataFeedPageTitle: {
+      id: 'integrationUserDataFeed.pageTitle',
+      defaultMessage: 'User data feed!',
+    },
+    integrationUserDataFeedSidebarTitle: {
+      id: 'integrationUserDataFeed.sidebarTitle',
+      defaultMessage: 'Integrations',
+    },
+    integrationUserDataFeedConnectionDetailTitle: {
+      id: 'integrationUserDataFeed.connectionDetailTitle',
+      defaultMessage: 'Your data feed',
+    },
+
+    // AWS connection detail
+    awsConnectionDetailCopied: {
+      id: 'awsConnectionDetail.Copied',
+      defaultMessage: 'Copied!',
+    },
   });
 };
 

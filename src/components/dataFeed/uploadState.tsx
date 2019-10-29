@@ -2,7 +2,6 @@ import * as React from 'react';
 import {
   View,
   Text,
-  EmptyState,
   BaseUploader,
   ButtonFilled,
   foundations,
@@ -14,18 +13,23 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import csvParser from 'papaparse';
 import { defineMessagesList } from '../../utils/translation';
 import DataFeedService, { fixedPortalFields, CreateMappingPayload, CsvData } from '../../services/dataFeed';
+import { AWSCredential } from '../../types/userDataFeed';
+import AWSConnectionDetail from '../awsConnectionDetail';
 
 interface Props {
-  onCancel: (step: number) => void;
   intl: any,
   currentSession: any,
+  onCancel: (step: number) => void;
+  onDone: () => void;
 }
 
 interface State {
   isShowUploader: boolean;
+  isUploadingSucceed: boolean;
   isUploadingFailed: boolean;
   isUploading: boolean;
   errorMess: string | null;
+  awsCredential: AWSCredential;
 }
 
 export const dataFeedService = DataFeedService();
@@ -33,13 +37,22 @@ export const dataFeedService = DataFeedService();
 class DataFeedUploadState extends React.Component<Props, State> {
   state = {
     isShowUploader: true,
+    isUploadingSucceed: false,
     isUploadingFailed: false,
     isUploading: false,
     errorMess: null,
+    awsCredential: null,
   };
 
   public onParseFile(file: File) {
-    this.setState({ isShowUploader: false, isUploading: true, isUploadingFailed: false, errorMess: null });
+    this.setState({
+      isShowUploader: false,
+      isUploading: true,
+      isUploadingSucceed: false,
+      isUploadingFailed: false,
+      errorMess: null,
+    });
+
     const options = {
       complete: results => {
         if (results.errors.length > 0) {
@@ -49,7 +62,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
         }
       },
     };
-    csvParser.parse(file, options)
+    csvParser.parse(file, options);
   }
 
   /**
@@ -57,23 +70,42 @@ class DataFeedUploadState extends React.Component<Props, State> {
    */
   public onParseCsvDone(csvData: any) {
     const { currentSession } = this.props;
-    let mappedFields = {};
-    const headers = csvData[0];
-    fixedPortalFields.forEach(portalField => {
-      const csvField = headers.find(field => field === portalField);
-      if (csvField) {
-        mappedFields = dataFeedService.doMapping(portalField, csvField, mappedFields);
-      }
-    });
+    const mappedFields = this.createMappedFields(csvData);
     const rows: CsvData = dataFeedService.getRows(mappedFields, csvData);
     const payload: CreateMappingPayload = {
       type: 'account',
       mappings: mappedFields,
       rows,
     };
+
     dataFeedService.createMapping(payload, currentSession.portal.id)
-      .then(() => this.setState({ isUploading: false, isShowUploader: true }))
-      .catch(() => this.setState({ isUploading: false, isUploadingFailed: true }));
+      .then((awsCredential: AWSCredential) => {
+        this.setState({
+          isUploading: false,
+          isUploadingSucceed: true,
+          awsCredential,
+        });
+      })
+      .catch(error => {
+        console.log('DataFeedUploadState.Error', error);
+        this.setState({
+          isUploading: false,
+          isUploadingFailed: true,
+        });
+      });
+  }
+
+  private createMappedFields(csvData: CsvData) {
+    let mappedFields = {};
+
+    fixedPortalFields.forEach(portalField => {
+      const csvField = csvData[0].find(field => field === portalField);
+      if (csvField) {
+        mappedFields = dataFeedService.doMapping(portalField, csvField, mappedFields);
+      }
+    });
+
+    return mappedFields;
   }
 
   public onReject(file: File) {
@@ -84,20 +116,44 @@ class DataFeedUploadState extends React.Component<Props, State> {
   }
 
   public render() {
-    const { isShowUploader, isUploading, isUploadingFailed, errorMess } = this.state;
-    const { onCancel } = this.props;
+    const {
+      isShowUploader,
+      isUploading,
+      isUploadingSucceed,
+      isUploadingFailed,
+      errorMess,
+      awsCredential,
+    } = this.state;
+    const { onDone, onCancel } = this.props;
+
+    if (isUploadingSucceed && awsCredential) {
+      return (
+        <>
+          <AWSConnectionDetail awsCredential={awsCredential} />
+
+          <View flexDirection="row" justifyContent="flex-end" width="100%" marginTop={7}>
+            <ButtonFilled color="accent" size="lg" onClick={() => onDone()}>
+              <FormattedMessage id="data.feed.upload.block.done.button" defaultMessage="Done" />
+            </ButtonFilled>
+          </View>
+        </>
+      );
+    }
 
     return (
       <>
-        <Text fontWeight="semibold" fontSize={4} marginBottom={4}>Select file</Text>
-        <Text marginBottom={5}>
+        <Text fontWeight="semibold" fontSize={4} marginBottom={3}>Select file</Text>
+        <Text marginTop={2}>
           <FormattedMessage id="data.feed.upload.block.sub.title" defaultMessage="Browse for a CSV file to upload for setting up fields mapping rules."/>
         </Text>
+
         <View
           border={1}
           borderColor="faded"
           borderRadius={2}
           backgroundColor="faint"
+          marginTop={6}
+          width={[1, 1, 3/5]}
           css={{
             borderWidth: '1px',
             borderStyle: 'solid',
@@ -133,6 +189,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
               )}
             </BaseUploader>
           )}
+
           {!isShowUploader && (
             <View
               paddingX={3}
@@ -148,6 +205,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
                   <Text color="subtle"><FormattedMessage id="data.feed.upload.block.uploading" defaultMessage="Uploading"/>...</Text>
                 </View>
               )}
+
               {isUploadingFailed && (
                 <View
                   flexDirection="row"
@@ -169,13 +227,17 @@ class DataFeedUploadState extends React.Component<Props, State> {
               )}
             </View>
           )}
+
           {errorMess && (
             <Text marginTop={2} color="danger">{errorMess}</Text>
           )}
         </View>
-        <ButtonFilled onClick={() => onCancel(0)} marginTop={7}>
-          <FormattedMessage id="data.feed.upload.block.cancel.button" defaultMessage="Cancel"/>
-        </ButtonFilled>
+
+        <View flexDirection="row" justifyContent="flex-start" width="100%" marginTop={7}>
+          <ButtonFilled size="lg" onClick={() => onCancel(0)}>
+            <FormattedMessage id="data.feed.upload.block.cancel.button" defaultMessage="Cancel"/>
+          </ButtonFilled>
+        </View>
       </>
     );
   }

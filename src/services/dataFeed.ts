@@ -1,6 +1,6 @@
 import Cookies from 'universal-cookie';
 import createHttp, { HttpInstance } from '../utils/http';
-
+import { AWSCredential } from '../types/userDataFeed';
 import BaseService from "./baseService";
 
 const defaultHttp = createHttp();
@@ -33,25 +33,25 @@ class DataFeedService extends BaseService {
   }
 
   public getRows(mappedFields: MappedFields, csvData: CsvData): string[][] {
-    const fieldResults = [];
-    let dataResults = [];
-    for (const key in mappedFields) {
-      if (mappedFields.hasOwnProperty(key)) {
-        fieldResults.push(key);
-      }
-    }
-    csvData.forEach((data, index) => {
-      // exclude file's headers
-      if (index !== 0) {
-        dataResults = [...dataResults, data];
-      }
-    });
+    const fieldResults = Object.getOwnPropertyNames(mappedFields);
+    const dataResults = csvData.splice(1); // exclude file's headers
 
     return [fieldResults, ...dataResults];
   }
 
-  public createMapping(payload: CreateMappingPayload, portalId: number): Promise<any> {
-    return this.http.put(`/user-feed/mapping/${portalId}`, payload);
+  public createMapping(payload: CreateMappingPayload, portalId: number): Promise<AWSCredential> {
+    return this.http.put(`/user-feed/mapping/${portalId}`, payload)
+      .then(() => this.fetchAWSCredentials(portalId));
+  }
+
+  async fetchAWSCredentials(portalId: number) {
+    const fakeData = {
+      awsBucketUrl: 's3://go1-user-feed/500470/',
+      awsAccessKeyId: 'AKIAUKQHLFBQM3BHD3XO',
+      awsSecretKey: '8Kn5nc5ySvP+ysC+HQ8gwM1GZw5kLWVb4OpA3fBF',
+    };
+    const { data } = await this.http.get(`/user-feed/connection/${ portalId }`).then(() => ({ data: fakeData }));
+    return data;
   }
 }
 

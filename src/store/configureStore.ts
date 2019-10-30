@@ -1,7 +1,7 @@
 import { AnyAction, applyMiddleware, compose, createStore } from 'redux';
 import thunk, { ThunkMiddleware } from 'redux-thunk';
-import { ReduxState } from '../types/reducers';
-import rootReducer from '../reducers/rootReducer';
+import { ReduxState } from '@src/types/reducers';
+import rootReducer from '@src/reducers/rootReducer';
 import createHelpers from './createHelpers';
 
 export default function initializeStore(initialState: ReduxState, helpersConfig: any) {

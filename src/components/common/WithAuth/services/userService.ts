@@ -1,8 +1,8 @@
 import Cookies from 'universal-cookie';
-import { GO1Account, GO1Portal, GO1User, CurrentSessionType } from '../../../types/user';
-import { getStorage, setStorage, removeStorage } from '../../../utils/storage';
-import intersection from "../../../utils/intersection";
-import { HttpInstance } from '../../../utils/http';
+import { GO1Account, GO1Portal, GO1User, CurrentSessionType } from '@src/types/user';
+import { getStorage, setStorage, removeStorage } from '@src/utils/storage';
+import intersection from "@src/utils/intersection";
+import { HttpInstance } from '@src/utils/http';
 
 const AUTH_COOKIE_NAME = 'go1';
 
@@ -131,7 +131,7 @@ class UserService {
     return {
       authenticated: true,
       user: restUser as GO1User,
-      account: { ...restAccount, ...permissions} as GO1Account,
+      account: { ...restAccount, ...permissions } as GO1Account,
       portal: instance as GO1Portal,
       jwt,
     };

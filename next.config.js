@@ -1,6 +1,7 @@
 // jshint ignore: start
 // .env for local development constants only
 require('dotenv').config({ path: '.env', silent: true });
+const path = require('path');
 const useCDN = process.env.ENV !== 'local' && process.env.ENV !== 'test';
 const webpack = require("webpack");
 var LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
@@ -21,6 +22,12 @@ module.exports = {
   },
 
   webpack: (config, options) => {
+
+    config.resolve.alias = config.resolve.alias || [];
+    // Setting @src as alias for ./src folder, so no ../../../../../ is needed anymore
+    // has to be done in eslintrc.js and tsconfig.json and .babelrc.js as well
+    config.resolve.alias['@src'] = path.resolve('./src');
+
     // Include node_modules for babel transformation
     config.module.rules.push({
       test: /\.js$/,

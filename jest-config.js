@@ -4,7 +4,7 @@ module.exports = {
   collectCoverageFrom: [
     "<rootDir>/src/**/*.{ts,tsx,js,jsx}",
     "!**/node_modules/**",
-    "!<rootDir>/src/pages/examples/**",
+    "!<rootDir>/src/pages/r/app/base-app-demo/**",
     "!<rootDir>/**/mocks/**",
     "!<rootDir>/src/pages/_document.tsx",
     "!<rootDir>/src/pages/_error.tsx"
@@ -15,7 +15,7 @@ module.exports = {
     "^.+\\.tsx?$": "babel-jest",
   },
   testEnvironment: 'jest-environment-jsdom-fourteen',
-  testPathIgnorePatterns: ["<rootDir>/build/", "<rootDir>/.next/", "<rootDir>/node_modules/", "<rootDir>/src/pages/examples/"],
+  testPathIgnorePatterns: ["<rootDir>/build/", "<rootDir>/.next/", "<rootDir>/node_modules/", "<rootDir>/src/pages/r/app/base-app-demo/"],
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json"],
   coverageReporters: ["json", "lcov", "text", "clover", "text-summary"],
   setupFilesAfterEnv: ["<rootDir>/jest-setup.js"],

@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Container, Icon, Text, View } from '@go1d/go1d';
 import { FormattedMessage } from 'react-intl';
 
-
 function Error({ statusCode }) {
   return (
     <Container contain="full" height={600} justifyContent="center">
@@ -38,7 +37,7 @@ Error.getInitialProps = ({ res, err }) => {
   } else if (err) {
     statusCode = err.statusCode;
   }
-  return {currentSession: {}, statusCode };
+  return { currentSession: {}, statusCode };
 };
 
 export default Error;

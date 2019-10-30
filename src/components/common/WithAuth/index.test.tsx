@@ -7,9 +7,9 @@ import withAuth, { withCurrentSession } from './index';
 import { View } from '@go1d/go1d';
 import CommonProvider from "@go1d/mine/common/Provider";
 import MockAdapter from 'axios-mock-adapter';
-import createHttp from "../../utils/http";
-import authenticatedStoreState from '../../store/mocks/authenticatedStore';
-import unauthenticatedStoreState from '../../store/mocks/unauthenticatedStore';
+import createHttp from "@src/utils/http";
+import authenticatedStoreState from '@src/store/mocks/authenticatedStore';
+import unauthenticatedStoreState from '@src/store/mocks/unauthenticatedStore';
 import LinkComponent from "../Link";
 import {loginResponseMock, currentSessionMock} from "./mocks/authMocks";
 

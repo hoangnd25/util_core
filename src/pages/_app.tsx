@@ -4,7 +4,7 @@ import { IntlProvider } from 'react-intl';
 import { NotificationContainer, globalCSS, foundations } from '@go1d/go1d';
 import { getNested } from '@go1d/mine/utils';
 import CommonProvider from '@go1d/mine/common/Provider';
-
+import Router from "next/router";
 import App from 'next/app';
 import Cookies from 'universal-cookie';
 import Suspense, { LoadingSpinner } from '@src/components/common/Suspense';
@@ -56,7 +56,7 @@ export class GO1App extends App<AppProps, any> {
   }
 
   public render() {
-    const { Component, pageProps, reduxStore, currentSession, router } = this.props;
+    const { Component, pageProps, reduxStore, currentSession } = this.props;
     // Show loading if current Session has not been loaded
     if (currentSession === null) {
       // can be replaced with a skeleton
@@ -71,14 +71,14 @@ export class GO1App extends App<AppProps, any> {
               linkComponent={LinkComponent}
               accent={getNested(currentSession, 'portal.data.theme.primary', foundations.colors.accent)}
               // logo={getNested(currentSession, 'portal.files.logo', null)}
-              pushNavigationState={router.push}
+              pushNavigationState={Router.push}
               apiUrl={config.apiEndpoint}
               jwt={currentSession.jwt}
               accountId={getNested(currentSession, "account.id", undefined)}
               portalId={parseInt(getNested(currentSession,"portal.id", undefined), 10) }
             >
               <Suspense>
-                <Component router={router} {...pageProps} />
+                <Component router={Router} {...pageProps} />
                 <NotificationContainer />
               </Suspense>
             </CommonProvider>

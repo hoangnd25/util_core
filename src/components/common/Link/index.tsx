@@ -12,6 +12,7 @@ class CustomLink extends React.PureComponent<any> {
       style,
       replace = false,
       target = '_self',
+      prefix = '', // deprecated!!!!!!! write full link instead in href
     } = this.props;
 
     if (isApiomLink || (typeof href === 'string' && href.indexOf('http') === 0) || externalLink) {
@@ -23,7 +24,7 @@ class CustomLink extends React.PureComponent<any> {
     }
 
     return (
-      <Link href={`${href}`} passHref prefetch={false} replace={replace}>
+      <Link href={`${prefix}${prefix ? "/" : ""}${href}`} passHref prefetch={false} replace={replace}>
         <a className={className} style={style}>
           {children}
         </a>

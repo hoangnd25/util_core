@@ -84,12 +84,12 @@ export class AWSConnectionDetail extends React.PureComponent<Props, State> {
           >
             <Text
               fontSize={3}
-              overflow="hidden"
               css={{
                 lineHeight: "46px",
+                overflow: "hidden",
+                position: "relative",
                 textOverflow: "ellipsis",
                 whiteSpace: "nowrap",
-                position: "relative",
                 top: isSecretField ? foundations.spacing[2] : 0,
               }}
             >{isSecretField ? '********************' : fieldValue}</Text>

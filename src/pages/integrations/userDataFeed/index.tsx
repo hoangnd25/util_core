@@ -35,13 +35,10 @@ export class UserDataFeed extends Integrations {
   }
 
   componentDidMount() {
-    // const { currentSession } = this.props;
-    // dataFeedService.fetchAWSCredentials(currentSession.portal.id)
-    //   .then(awsCredential => this.setState({ awsCredential, isLoading: false }))
-    //   .catch(() => this.setState({ isLoading: false }));
-
-    // waiting for GO1P-30946 to send a request to fetch connection detail
-    this.setState({ isLoading: false });
+    const { currentSession } = this.props;
+    dataFeedService.fetchAWSCredentials(currentSession.portal.id)
+      .then(awsCredential => this.setState({ awsCredential, isLoading: false }))
+      .catch(() => this.setState({ isLoading: false }));
   }
 
   getPageTitle() {
@@ -90,7 +87,7 @@ export class UserDataFeed extends Integrations {
 
     if (awsCredential) {
       return (
-        <>
+        <View minHeight="60vh">
           <View marginBottom={5}>
             <Text element="h3" fontSize={4} fontWeight="semibold">{yourDataFeedTitle}</Text>
           </View>
@@ -100,12 +97,12 @@ export class UserDataFeed extends Integrations {
             expandable={true}
             awsCredential={awsCredential}
           />
-        </>
+        </View>
       );
     }
 
     return (
-      <View minHeight={600}>
+      <View minHeight="60vh">
         {step === 0 && (
           <DataFeedEmptyState onStart={step => this.onChangeStep(step)} />
         )}

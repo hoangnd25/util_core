@@ -33,7 +33,7 @@ export const defineMessagesList = () => {
     // Integration detail: User data feed
     integrationUserDataFeedPageTitle: {
       id: 'integrationUserDataFeed.pageTitle',
-      defaultMessage: 'User data feed!',
+      defaultMessage: 'User data feed',
     },
     integrationUserDataFeedSidebarTitle: {
       id: 'integrationUserDataFeed.sidebarTitle',

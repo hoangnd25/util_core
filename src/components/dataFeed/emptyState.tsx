@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, EmptyState } from '@go1d/go1d';
+import { EmptyState } from '@go1d/go1d';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { defineMessagesList } from '../../utils/translation';
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ButtonFilled, View, Container, Text, UL, LI } from '@go1d/go1d';
-import Link from '../components/Link';
-import Layout from '../components/Layout';
+import Link from '@src/components/common/Link';
+import Layout from '@src/components/common/Layout';
 
 class Index extends React.Component {
   public render() {
@@ -25,8 +25,8 @@ class Index extends React.Component {
 
           <Text element="h2" fontSize={3} fontWeight="semibold">Example usages:</Text>
           <UL>
-            <LI iconName="ChevronRight"><Link href="/examples/protectedRoute">Protected Route Example</Link></LI>
-            <LI iconName="ChevronRight"><Link href="/examples/withGo1Nav">Example with GO1 TopNav</Link></LI>
+            <LI iconName="ChevronRight"><Link href="/r/app/base-app-demo/examples/protectedRoute">Protected Route Example</Link></LI>
+            <LI iconName="ChevronRight"><Link href="/r/app/base-app-demo/examples/withGo1Nav">Example with GO1 TopNav</Link></LI>
           </UL>
 
           <Text element="h2" fontSize={3} fontWeight="semibold">Things to read before you start:</Text>

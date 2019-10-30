@@ -6,8 +6,8 @@ import { IntlProvider } from 'react-intl';
 import { View } from '@go1d/go1d';
 import CommonProvider from '@go1d/mine/common/Provider';
 import Layout from './index';
-import LinkComponent from '../../components/Link';
-import authenticatedStoreState from '../../store/mocks/authenticatedStore';
+import LinkComponent from '@src/components/common/Link';
+import authenticatedStoreState from '@src/store/mocks/authenticatedStore';
 
 const mockStore = configureStore([]);
 

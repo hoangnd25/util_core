@@ -1,13 +1,14 @@
 import * as React from 'react';
-import { View, Container, Text } from '@go1d/go1d';
-import withAuth from '../../../components/WithAuth';
-import Layout from '../../../components/Layout/index';
+import { ButtonFilled, View, Container, Text } from '@go1d/go1d';
+import withAuth from '@src/components/common/WithAuth';
+import Layout from '@src/components/common/Layout/index';
 
 export class NeedLogin extends React.Component<any,any> {
   public render() {
     const { currentSession } = this.props;
     return (
       <Layout wrappingContainer>
+        <ButtonFilled href="/r/app/base-app-demo" color="accent">Back to Overview</ButtonFilled>
         <View marginY={5}>
           <Text element="h1" fontSize={4} fontWeight="semibold">User Details</Text>
         </View>
@@ -35,7 +36,7 @@ export class NeedLogin extends React.Component<any,any> {
         <View marginY={5}>
           <Text element="h1" fontSize={4} fontWeight="semibold">JWT</Text>
         </View>
-        <View backgroundColor="background" padding={5} css={{"word-break":"break-all"}}>
+        <View backgroundColor="background" padding={5} css={{ "word-break":"break-all" }}>
           {currentSession.jwt}
         </View>
       </Layout>

@@ -1,5 +1,5 @@
 import MockAdapter from 'axios-mock-adapter';
-import create from '../../../utils/http';
+import create from '@src/utils/http';
 import UserService from './userService';
 
 let mock: MockAdapter;

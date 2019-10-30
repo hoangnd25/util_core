@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View, Container, Text } from '@go1d/go1d';
-import Layout from '../../../components/Layout/index';
+import Layout from '@src/components/common/Layout/index';
 
 class LoginPage extends React.Component<any,any> {
   public render() {

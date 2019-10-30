@@ -7,14 +7,14 @@ import CommonProvider from '@go1d/mine/common/Provider';
 
 import App from 'next/app';
 import Cookies from 'universal-cookie';
-import Suspense, { LoadingSpinner } from '../components/Suspense';
-import LinkComponent from '../components/Link';
-import withReduxStore from '../store/withReduxStore';
-import AppContext from '../utils/appContext';
-import createHttp from '../utils/http';
-import { withCurrentSession } from '../components/WithAuth';
-import { CurrentSessionType } from '../types/user';
-import config from '../config';
+import Suspense, { LoadingSpinner } from '@src/components/common/Suspense';
+import LinkComponent from '@src/components/common/Link';
+import withReduxStore from '@src/store/withReduxStore';
+import AppContext from '@src/utils/appContext';
+import createHttp from '@src/utils/http';
+import { withCurrentSession } from '@src/components/common/WithAuth';
+import { CurrentSessionType } from '@src/types/user';
+import config from '@src/config';
 
 const cookies = new Cookies();
 const http = createHttp();

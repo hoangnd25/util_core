@@ -2,10 +2,10 @@ import { mount } from 'enzyme';
 import * as React from 'react';
 import { View } from '@go1d/go1d';
 import {GO1App} from './_app';
-import {currentSessionMock} from "../components/WithAuth/mocks/authMocks";
+import {currentSessionMock} from "@src/components/common/WithAuth/mocks/authMocks";
 
 import configureStore from 'redux-mock-store';
-import authenticatedStoreState from '../store/mocks/authenticatedStore';
+import authenticatedStoreState from '@src/store/mocks/authenticatedStore';
 
 /** TEST SETUP **/
 const mockStore = configureStore([]);

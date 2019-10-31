@@ -6,18 +6,18 @@ import locale_pt from 'react-intl/locale-data/pt';
 import { NotificationContainer, globalCSS, foundations } from '@go1d/go1d';
 import { getNested } from '@go1d/mine/utils';
 import CommonProvider from '@go1d/mine/common/Provider';
-
+import Router from "next/router";
 import App from 'next/app';
 import Cookies from 'universal-cookie';
 import qs from 'query-string';
-import Suspense, { LoadingSpinner } from '../components/Suspense';
-import LinkComponent from '../components/Link';
-import withReduxStore from '../store/withReduxStore';
-import AppContext from '../utils/appContext';
-import createHttp from '../utils/http';
-import { withCurrentSession } from '../components/WithAuth';
-import { CurrentSessionType } from '../types/user';
-import config from '../config';
+import Suspense, { LoadingSpinner } from '@src/components/common/Suspense';
+import LinkComponent from '@src/components/common/Link';
+import withReduxStore from '@src/store/withReduxStore';
+import AppContext from '@src/utils/appContext';
+import createHttp from '@src/utils/http';
+import { withCurrentSession } from '@src/components/common/WithAuth';
+import { CurrentSessionType } from '@src/types/user';
+import config, { getBaseUrl } from '@src/config';
 import { defaultLocale, countryToLocale, messages } from '../utils/translation';
 
 const cookies = new Cookies();
@@ -48,7 +48,7 @@ export class GO1App extends App<AppProps, any> {
     }
 
     // Add health check
-    if (ctx && ctx.router && (ctx.router.asPath === "/healthz" || ctx.router.asPath === "/container_status")) {
+    if (ctx && ctx.router && ctx.router.asPath && (ctx.router.asPath.indexOf("/healthz") !== -1 || ctx.router.asPath.indexOf("/container_status") !== -1)) {
       ctx.ctx.res.statusCode = 200;
       ctx.ctx.res.end("Ok");
     }
@@ -88,7 +88,7 @@ export class GO1App extends App<AppProps, any> {
 
 
   public render() {
-    const { Component, pageProps, reduxStore, currentSession, router } = this.props;
+    const { Component, pageProps, reduxStore, currentSession } = this.props;
     const language = this.getLanguage(currentSession);
     // Show loading if current Session has not been loaded
     if (currentSession === null) {
@@ -104,14 +104,14 @@ export class GO1App extends App<AppProps, any> {
               linkComponent={LinkComponent}
               accent={getNested(currentSession, 'portal.data.theme.primary', foundations.colors.accent)}
               // logo={getNested(currentSession, 'portal.files.logo', null)}
-              pushNavigationState={router.push}
+              pushNavigationState={Router.push}
               apiUrl={config.apiEndpoint}
               jwt={currentSession.jwt}
               accountId={getNested(currentSession, "account.id", undefined)}
               portalId={parseInt(getNested(currentSession,"portal.id", undefined), 10) }
             >
               <Suspense>
-                <Component router={router} {...pageProps} />
+                <Component router={Router} {...pageProps} />
                 <NotificationContainer />
               </Suspense>
             </CommonProvider>

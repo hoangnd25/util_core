@@ -6,6 +6,18 @@ module.exports = {
   extends: [
     'airbnb', 'prettier', 'prettier/react', 'plugin:import/typescript', 'plugin:jest/recommended'
   ],
+  // Setting @src as alias for ./src folder, so no ../../../../../ is needed anymore
+  // has to be done in next.config.js and tsconfig.json and .babelrc.js as well
+  settings: {
+    "import/resolver": {
+      "alias": {
+        "map": [
+          ["@src", './src']
+        ],
+        extensions: ['.ts', '.js', '.jsx', '.tsx']
+      }
+    },
+  },
   globals: {
     React: "writable",
     Atomics: 'readonly',
@@ -33,6 +45,7 @@ module.exports = {
     'no-unused-vars': 'off', // https://github.com/typescript-eslint/typescript-eslint/issues/363
     'max-classes-per-file': 'off',
     'class-methods-use-this': 'off',
+    'object-curly-spacing': 1,
     'prefer-promise-reject-errors': 'off',
     'react/prop-types': 'off',
     'react/no-danger': 'off',

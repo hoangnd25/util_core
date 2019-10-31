@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, Select, foundations } from '@go1d/go1d';
 import { MenuItem } from '../../types/menu';
-import CustomLink from '../Link';
+import CustomLink from '@src/components/common/Link';
 
 interface SidebarMenusProps {
   menus: MenuItem[];

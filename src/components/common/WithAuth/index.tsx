@@ -1,10 +1,9 @@
 import React from 'react';
-import {connect} from "react-redux";
 import Cookies from 'universal-cookie';
-import { PortalModel } from '@go1d/go1d-exchange';
-import UserService, { saveSession, removeSession } from '../../services/userService';
-import {CurrentSessionType} from "../../types/user";
-import {LoadingSpinner} from "../Suspense";
+import { connect } from "react-redux";
+import { CurrentSessionType } from "@src/types/user";
+import UserService, { saveSession, removeSession } from '@src/services/userService';
+import { LoadingSpinner } from "../Suspense";
 
 /**
  * The following HOC is used to enable protected routes and inject the "currentSession" object in to the page
@@ -95,7 +94,7 @@ export const withCurrentSession = (App, helpers) =>
 
         public componentDidMount() {
           const { currentSession } = this.state;
-          const { router, router: {query, asPath, pathname} } = this.props;
+          const { router, router: { query, asPath, pathname } } = this.props;
           const { http } = helpers;
           const oneTimeToken = query.oneTimeToken || null;
           // Server side did not result in a login
@@ -111,7 +110,7 @@ export const withCurrentSession = (App, helpers) =>
                 },
                 err => {
                   removeSession();
-                  this.setState({ currentSession: { authenticated: false} });
+                  this.setState({ currentSession: { authenticated: false } });
                 }
               );
           } else if (currentSession.authenticated === true) {

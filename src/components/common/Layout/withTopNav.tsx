@@ -3,7 +3,7 @@ import { View, Container, Text } from '@go1d/go1d';
 import TopMenu from '@go1d/mine/common/TopMenu';
 import { getNested } from '@go1d/mine/utils';
 import { UserModel, PortalModel, AccountModel } from '@go1d/go1d-exchange';
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import { mapCurrentSessionToProps } from '../WithAuth';
 
 const LayoutWithNav = (props) => {

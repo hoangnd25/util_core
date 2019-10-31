@@ -33,7 +33,7 @@ npm install
 Create a .env file in your root folder with following content:  
 ```  
 ENV=local  
-API_ENDPOINT=https://api-dev.go1.co  
+API_URL=https://api-dev.go1.co  
 LOCAL_JWT=[YOUR JWT]  
 ```  
   

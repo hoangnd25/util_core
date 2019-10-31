@@ -25,7 +25,7 @@ it('localJWT', () => {
 });
 
 it('exportKeys', () => {
-  expect(config.exportKeys).toContain('API_ENDPOINT');
+  expect(config.exportKeys).toContain('API_URL');
   expect(config.exportKeys).toContain('BASE_PATH');
   expect(config.exportKeys).toContain('LOCAL_JWT');
   expect(config.exportKeys).toContain('ENV');

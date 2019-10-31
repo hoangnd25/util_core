@@ -16,7 +16,7 @@ module.exports = {
   // Sent env variables to frontend in page-builder
   publicRuntimeConfig: {
     DOCKER_TAG: process.env.DOCKER_TAG,
-    API_ENDPOINT: process.env.API_ENDPOINT,
+    API_URL: process.env.API_URL,
     ENV: process.env.ENV,
     LOGIN_REDIRECT_URL: process.env.ENV === 'local' ? '/r/app/base-app-demo/examples/protectedRoute/login' : '/user/login',
   },

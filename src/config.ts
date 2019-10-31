@@ -33,7 +33,7 @@ export function getConfigValue(key: string, defaultValue?: string) : string {
 
 export default {
   get exportKeys() {
-    return ['API_ENDPOINT', 'BASE_PATH', 'LOCAL_JWT', 'ENV'];
+    return ['API_URL', 'BASE_PATH', 'LOCAL_JWT', 'ENV'];
   },
   get appEnv() {
     return getConfigValue('ENV');
@@ -48,7 +48,7 @@ export default {
     return `localhost:${getConfigValue('PORT')}`;
   },
   get apiEndpoint() {
-    return getConfigValue('API_ENDPOINT');
+    return getConfigValue('API_URL');
   },
   get isClientSide() {
     return typeof window !== 'undefined' && window.document && typeof window.document.createElement === 'function';

@@ -18,7 +18,7 @@ module.exports = {
     DOCKER_TAG: process.env.DOCKER_TAG,
     API_ENDPOINT: process.env.API_ENDPOINT,
     ENV: process.env.ENV,
-    LOGIN_REDIRECT_URL: '/examples/protectedRoute/login',
+    LOGIN_REDIRECT_URL: process.env.ENV === 'local' ? '/r/app/base-app-demo/examples/protectedRoute/login' : '/user/login',
   },
 
   webpack: (config, options) => {

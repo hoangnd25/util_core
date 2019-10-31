@@ -14,7 +14,7 @@ import AppContext from '@src/utils/appContext';
 import createHttp from '@src/utils/http';
 import { withCurrentSession } from '@src/components/common/WithAuth';
 import { CurrentSessionType } from '@src/types/user';
-import config from '@src/config';
+import config, {getBaseUrl} from '@src/config';
 
 const cookies = new Cookies();
 const http = createHttp();
@@ -42,7 +42,7 @@ export class GO1App extends App<AppProps, any> {
     }
 
     // Add health check
-    if (ctx && ctx.router && (ctx.router.asPath === "/healthz" || ctx.router.asPath === "/container_status")) {
+    if (ctx && ctx.router && (ctx.router.asPath.indexOf("/healthz") !== -1 || ctx.router.asPath.indexOf("/container_status") !== -1)) {
       ctx.ctx.res.statusCode = 200;
       ctx.ctx.res.end("Ok");
     }

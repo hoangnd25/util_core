@@ -2,6 +2,27 @@ import getConfig from 'next/config';
 
 let config: any;
 
+// module is considered a microapp e.g. prospector, 1-player. So in case we will need to merge two microapps into one, this setup will allow us to do it with less effort.
+// if you have more than one module here, please specify the name and path in the list below
+export const modulesInApp = {
+  "base-app-demo": { baseUrl: "/r/app/base-app-demo" }
+};
+
+const availableModules = Object.keys(modulesInApp);
+
+// if only one module in this app, moduleName is optional
+export const getBaseUrl = (moduleName=null) => {
+  let { baseUrl } = modulesInApp[availableModules[0]];
+  if (moduleName && availableModules.length > 1) {
+    availableModules.forEach(module => {
+      if (moduleName === modulesInApp[module].name) {
+        baseUrl = modulesInApp[module].baseUrl;
+      }
+    });
+  }
+  return baseUrl;
+};
+
 export function getConfigValue(key: string, defaultValue?: string) : string {
   if (!config) {
     config = getConfig().publicRuntimeConfig;

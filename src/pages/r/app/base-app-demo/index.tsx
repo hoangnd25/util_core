@@ -25,8 +25,9 @@ class Index extends React.Component {
 
           <Text element="h2" fontSize={3} fontWeight="semibold">Example usages:</Text>
           <UL>
-            <LI iconName="ChevronRight"><Link href="/r/app/base-app-demo/examples/protectedRoute">Protected Route Example</Link></LI>
-            <LI iconName="ChevronRight"><Link href="/r/app/base-app-demo/examples/withGo1Nav">Example with GO1 TopNav</Link></LI>
+            <LI iconName="ChevronRight"><Link module="base-app-demo" href="/examples/protectedRoute">Protected Route Example</Link></LI>
+            <LI iconName="ChevronRight"><Link module="base-app-demo" href="/examples/withGo1Nav">Example with GO1 TopNav</Link></LI>
+            <LI iconName="ChevronRight"><Link module="base-app-demo" href="/examples/linkComponent">Example usage of the new LinkComponent</Link></LI>
           </UL>
 
           <Text element="h2" fontSize={3} fontWeight="semibold">Things to read before you start:</Text>

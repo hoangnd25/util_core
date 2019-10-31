@@ -4,23 +4,26 @@ import { IntlProvider } from 'react-intl';
 import { Provider as ReduxProvider } from 'react-redux';
 import configureMockStore from "redux-mock-store";
 import CommonProvider from '@go1d/mine/common/Provider';
-import { UserDataFeed } from '../pages/integrations/userDataFeed';
+import { UserDataFeed } from '@src/pages/integrations/userDataFeed';
 
-const intlMock = {
-  formatMessage: jest.fn(),
-};
+let intlMock;
 
 const mockComponent = () => <div />;
-jest.mock("@go1d/go1d/build/components/BaseUploader", () => ({
-  default: (props: any) =>
-    props.children
-      ? props.children({
-        getRootProps: () => ({}),
-        isDragActive: false,
-        open: false,
-      })
-      : mockComponent,
-}));
+beforeEach(() => {
+  jest.mock("@go1d/go1d/build/components/BaseUploader", () => ({
+    default: (props: any) =>
+      props.children
+        ? props.children({
+          getRootProps: () => ({}),
+          isDragActive: false,
+          open: false,
+        })
+        : mockComponent,
+  }));
+  intlMock = {
+    formatMessage: jest.fn(),
+  };
+});
 
 const setup = (props = {}) => {
   const currentSession = {

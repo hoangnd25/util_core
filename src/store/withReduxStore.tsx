@@ -1,7 +1,7 @@
 import React from 'react';
+import { USER_UPDATE as USER_UPDATE_ACTION } from '@src/reducers/session';
+import { CurrentSessionType } from "@src/types/user";
 import initializeStore from './configureStore';
-import { USER_UPDATE as USER_UPDATE_ACTION } from '../reducers/session';
-import {CurrentSessionType} from "../types/user";
 
 /**
  * Based of the example on https://github.com/zeit/next.js/tree/canary/examples/with-redux
@@ -48,7 +48,7 @@ export default (App, helpers) =>
     constructor(props) {
       super(props);
       const { initialReduxState = {}, currentSession = null } = props;
-      this.reduxStore = getOrCreateStore({...initialReduxState, currentSession}, helpers);
+      this.reduxStore = getOrCreateStore({ ...initialReduxState, currentSession }, helpers);
     }
 
     render() {

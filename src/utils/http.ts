@@ -1,7 +1,7 @@
 /* istanbul ignore file  */
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import debug from 'debug';
-import config from '../config';
+import config from '@src/config';
 
 const log = {
   error: debug('go:http:error'),

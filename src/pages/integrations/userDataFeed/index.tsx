@@ -4,7 +4,7 @@ import { injectIntl } from 'react-intl';
 import DataFeedService from '../../../services/dataFeed';
 import { AWSCredential } from '../../../types/userDataFeed';
 import { defineMessagesList } from '../../../utils/translation';
-import withAuth from '../../../components/WithAuth';
+import withAuth from '../../../components/common/WithAuth';
 import SidebarMenus from '../../../components/SidebarMenus';
 import AWSConnectionDetail from '../../../components/awsConnectionDetail';
 import DataFeedEmptyState from '../../../components/dataFeed/emptyState';

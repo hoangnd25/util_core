@@ -9,7 +9,7 @@ services:
       - AWS_SECRET_NAME
       - NODE_ENV
       - CDN_PATH
-      - API_ENDPOINT
+      - API_URL
       - DOCKER_TAG
       - ENV
       - BASE_PATH

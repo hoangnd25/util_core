@@ -2,10 +2,42 @@ import { mount } from 'enzyme';
 import * as React from 'react';
 import { IntlProvider } from 'react-intl';
 import DataFeedUploadState, { dataFeedService } from './uploadState';
-import { BaseUploader } from '@go1d/go1d';
-import csvParser from 'papaparse';
 
+const scrollToTopFn = jest.fn();
 const fakeOnCancel = jest.fn();
+const fakeMappingFields = [{
+  label: 'mail',
+  mappedField: '',
+  name: 'mail',
+  options: [],
+  published: true,
+  required: true,
+  type: 'string',
+}, {
+  label: 'first name',
+  mappedField: '',
+  name: 'first_name',
+  options: [],
+  published: true,
+  required: true,
+  type: 'string',
+}, {
+  label: 'last name',
+  mappedField: '',
+  name: 'last_name',
+  options: [],
+  published: true,
+  required: true,
+  type: 'string',
+}, {
+  label: 'status',
+  mappedField: '',
+  name: 'status',
+  options: [0, 1, 2],
+  published: true,
+  required: false,
+  type: 'integer',
+}];
 
 jest.mock("react-dropzone", () => ({
   default: (props: any) =>
@@ -36,55 +68,103 @@ const setup = (props = {}) => {
   };
   return mount(
     <IntlProvider locale="en">
-      <DataFeedUploadState onCancel={fakeOnCancel} currentSession={currentSession} intl={jest.fn()} {...props} />
+      <DataFeedUploadState scrollToTop={scrollToTopFn} onCancel={fakeOnCancel} currentSession={currentSession} intl={jest.fn()} {...props} />
     </IntlProvider>
   );
 };
 
 it('renders without crashing', () => {
+  spyOn(dataFeedService, 'fetchMappingFields').and.callFake(() => Promise.resolve());
   setup();
+
+  expect(dataFeedService.fetchMappingFields).toHaveBeenCalledWith(123);
 });
 
-it('should call createMapping parse csv done', async () => {
-  const spyCreateMapping = spyOn(dataFeedService, 'createMapping').and.callFake( () => Promise.resolve({}));
+it('should return correct mapped fields', async () => {
+  spyOn(dataFeedService, 'createMapping').and.callFake(() => Promise.resolve());
+  spyOn(dataFeedService, 'fetchAWSCredentials').and.callFake(() => Promise.resolve());
+  spyOn(dataFeedService, 'createAWSCredentials').and.callFake(() => Promise.resolve());
+
   const Element = setup();
-  (Element.find('DataFeedUploadState').instance() as any).onParseCsvDone([
-    ['first_name', 'mail'],
-    ['go1', 'go1@mail.com'],
-  ]);
-  expect(spyCreateMapping).toHaveBeenCalledWith({
+  const Component = Element.find('DataFeedUploadState') as any;
+  const ComponentInstance = Component.instance();
+
+  Component.setState({ go1Fields: fakeMappingFields });
+  ComponentInstance.onMapField(fakeMappingFields[0], 'Email');
+
+  const mappedFields = [{
+    label: 'mail',
+    mappedField: 'Email',
+    name: 'mail',
+    options: [],
+    published: true,
+    required: true,
+    type: 'string',
+  }, {
+    label: 'first name',
+    mappedField: '',
+    name: 'first_name',
+    options: [],
+    published: true,
+    required: true,
+    type: 'string',
+  }, {
+    label: 'last name',
+    mappedField: '',
+    name: 'last_name',
+    options: [],
+    published: true,
+    required: true,
+    type: 'string',
+  }, {
+    label: 'status',
+    mappedField: '',
+    name: 'status',
+    options: [0, 1, 2],
+    published: true,
+    required: false,
+    type: 'integer',
+  }];
+  expect(Component.state('go1Fields')).toEqual(mappedFields);
+  expect(ComponentInstance.validate()).toBeFalsy();
+
+  ComponentInstance.onMapField(fakeMappingFields[1], 'First Name');
+  ComponentInstance.onMapField(fakeMappingFields[2], 'Last Name');
+
+  expect(ComponentInstance.validate()).toBeTruthy();
+  expect(ComponentInstance.mapFields()).toEqual({
+    mail: 'Email',
+    first_name: 'First Name',
+    last_name: 'Last Name',
+    status: '',
+  });
+
+  await ComponentInstance.onMappingDone();
+  const mappingPayload = {
     type: 'account',
     mappings: {
-      csv_mail: 'mail',
-      csv_first_name: 'first_name',
+      mail: 'Email',
+      first_name: 'First Name',
+      last_name: 'Last Name',
+      status: '',
     },
-    rows: [
-      ['csv_mail', 'csv_first_name'],
-      ['go1', 'go1@mail.com'],
-    ],
-  }, 123);
+    rows: [],
+  }
+  expect(dataFeedService.createMapping).toHaveBeenCalledWith(mappingPayload, 123);
 });
 
-it('should call createMapping parse csv successfully', async () => {
-  const spyCreateMapping = spyOn(dataFeedService, 'createMapping').and.callFake( () => Promise.resolve({}));
-  spyOn(csvParser, 'parse').and.callFake( (file, { complete }) => complete({
-    data: [
-      ['first_name', 'mail'],
-      ['go1', 'go1@mail.com'],
-    ],
-    errors: [],
-  }));
+it('should scroll to top when request is failed', async () => {
+  spyOn(dataFeedService, 'createMapping').and.callFake(() => Promise.reject({}));
+
   const Element = setup();
-  Element.find(BaseUploader).prop('onChange')([new File([], "file")]);
-  expect(spyCreateMapping).toHaveBeenCalledWith({
-    type: 'account',
-    mappings: {
-      csv_mail: 'mail',
-      csv_first_name: 'first_name',
-    },
-    rows: [
-      ['csv_mail', 'csv_first_name'],
-      ['go1', 'go1@mail.com'],
-    ],
-  }, 123);
+  const Component = Element.find('DataFeedUploadState') as any;
+  Component.setState({ go1Fields: fakeMappingFields });
+
+  const ComponentInstance = Component.instance();
+  ComponentInstance.onMapField(fakeMappingFields[0], 'Email');
+  ComponentInstance.onMapField(fakeMappingFields[1], 'First Name');
+  ComponentInstance.onMapField(fakeMappingFields[2], 'Last Name');
+
+  await ComponentInstance.onMappingDone();
+  expect(scrollToTopFn).toHaveBeenCalled();
 });

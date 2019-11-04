@@ -36,9 +36,8 @@ export class UserDataFeed extends Integrations {
 
   componentDidMount() {
     const { currentSession } = this.props;
-    dataFeedService.fetchAWSCredentials(currentSession.portal.id)
-      .then(awsCredential => this.setState({ awsCredential, isLoading: false }))
-      .catch(() => this.setState({ isLoading: false }));
+    this.fetchAWSCredentials(currentSession.portal.id)
+      .finally(() => this.setState({ isLoading: false }));
   }
 
   getPageTitle() {
@@ -70,7 +69,7 @@ export class UserDataFeed extends Integrations {
   }
 
   fetchAWSCredentials(portalId: number) {
-    dataFeedService.fetchAWSCredentials(portalId)
+    return dataFeedService.fetchAWSCredentials(portalId)
       .then(awsCredential => this.setState({ awsCredential }));
   }
 
@@ -104,14 +103,16 @@ export class UserDataFeed extends Integrations {
     return (
       <View minHeight="60vh">
         {step === 0 && (
-          <DataFeedEmptyState onStart={step => this.onChangeStep(step)} />
+          <DataFeedEmptyState onStart={() => this.onChangeStep(1)} />
         )}
 
         {step === 1 && (
           <DataFeedUploadState
             currentSession={currentSession}
+            hasConnection={awsCredential ? true : false}
             onDone={() => this.fetchAWSCredentials(currentSession.portal.id)}
-            onCancel={step => this.onChangeStep(step)}
+            onCancel={() => this.onChangeStep(0)}
+            scrollToTop={() => this.scrollToTop()}
           />
         )}
       </View>

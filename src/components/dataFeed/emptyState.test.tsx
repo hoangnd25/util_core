@@ -21,5 +21,5 @@ it('renders without crashing', () => {
 it('should call onStart', () => {
   const Component = setup();
   Component.find(EmptyState).prop('action')({} as any);
-  expect(fakeOnStart).toHaveBeenCalledWith(1);
+  expect(fakeOnStart).toHaveBeenCalled();
 });

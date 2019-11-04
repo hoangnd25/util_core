@@ -63,7 +63,7 @@ export class GO1App extends App<AppProps, any> {
 
   public getLanguage(currentSession): string {
     if (!currentSession && typeof window !== 'undefined') {
-      const {lang} = qs.parse(window.location.search) as { [key: string]: string };
+      const { lang } = qs.parse(window.location.search) as { [key: string]: string };
       if (lang) {
         return lang;
       }
@@ -72,7 +72,7 @@ export class GO1App extends App<AppProps, any> {
     }
 
     if (currentSession) {
-      const {user, portal} = currentSession;
+      const { user, portal } = currentSession;
 
       if (user && user.locale) {
         return user.locale[0] || defaultLocale;

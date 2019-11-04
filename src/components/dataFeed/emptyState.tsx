@@ -4,7 +4,7 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import { defineMessagesList } from '../../utils/translation';
 
 interface Props {
-  onStart: (step: number) => void;
+  onStart: () => void;
   intl: any
 }
 
@@ -16,7 +16,7 @@ class DataFeedEmptyState extends React.Component<Props> {
       <EmptyState
         title={intl.formatMessage(defineMessagesList().dataFeedEmptyBlockTitle)}
         actionText={intl.formatMessage(defineMessagesList().dataFeedEmptyBlockActionText)}
-        action={() => onStart(1)}
+        action={() => onStart()}
       >
         <FormattedMessage id="empty.block.content" defaultMessage="You haven’t config any your S3 bucket yet. Creating your first mapping."/>
       </EmptyState>

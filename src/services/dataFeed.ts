@@ -1,6 +1,6 @@
 import Cookies from 'universal-cookie';
 import createHttp, { HttpInstance } from '../utils/http';
-import { AWSCredential } from '../types/userDataFeed';
+import { AWSCredential, MappingField } from '../types/userDataFeed';
 import BaseService from "./baseService";
 
 const defaultHttp = createHttp();
@@ -14,37 +14,41 @@ export interface CreateMappingPayload {
   rows: CsvData,
 }
 
-export const fixedPortalFields = ['mail', 'first_name', 'last_name', 'status', 'roles', 'managers', 'groups'];
-
 class DataFeedService extends BaseService {
   constructor(http: HttpInstance = defaultHttp, go1CookieValue?: Cookies) {
     super(http, go1CookieValue);
   }
 
-  public doMapping(portalField: string, csvField: string, mappedFields: MappedFields) {
-    const formattedCsvField = `csv_${csvField}`;
-    if (mappedFields[formattedCsvField]) {
-      delete mappedFields[formattedCsvField];
+  async fetchMappingFields(portalId: number): Promise<MappingField[] | null> {
+    const { data: allFields } = await this.http.get(`/user-feed/fields/${portalId}/account`);
+    const { data: allMappingFields } = await this.http.get(`/user-feed/mapping/${portalId}`);
+    const mappingData = (allMappingFields || {}).mappings || {};
+
+    if (allFields) {
+      return Object.getOwnPropertyNames(allFields)
+        .map(fieldName => {
+          const { label, type, enum: options, mandatory, published } = allFields[fieldName];
+          return {
+            type,
+            label,
+            options,
+            name: fieldName,
+            required: !!mandatory,
+            published: !!published,
+            mappedField: mappingData[fieldName],
+          };
+        })
+        .filter(field => !!field.published);
     }
-    return {
-      ...mappedFields,
-      [formattedCsvField]: portalField,
-    };
+
+    return null;
   }
 
-  public getRows(mappedFields: MappedFields, csvData: CsvData): string[][] {
-    const fieldResults = Object.getOwnPropertyNames(mappedFields);
-    const dataResults = csvData.splice(1); // exclude file's headers
-
-    return [fieldResults, ...dataResults];
+  createMapping(payload: CreateMappingPayload, portalId: number): Promise<AWSCredential> {
+    return this.http.put(`/user-feed/mapping/${portalId}`, payload);
   }
 
-  public createMapping(payload: CreateMappingPayload, portalId: number): Promise<AWSCredential> {
-    return this.http.put(`/user-feed/mapping/${portalId}`, payload)
-      .then(() => this.createAWSCredentials(portalId));
-  }
-
-  private createAWSCredentials(portalId: number): Promise<AWSCredential> {
+  createAWSCredentials(portalId: number): Promise<AWSCredential> {
     return this.http.post(`/user-feed/connection/${ portalId }`)
       .then(() => this.fetchAWSCredentials(portalId));
   }
@@ -58,7 +62,7 @@ class DataFeedService extends BaseService {
         awsBucketUrl: aws_bucket_url,
         awsAccessKeyId: aws_access_key_id,
         awsSecretKey: aws_secret_access_key,
-      }
+      };
     }
 
     return null;

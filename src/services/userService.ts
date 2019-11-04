@@ -117,7 +117,7 @@ class UserService {
     return {
       authenticated: true,
       user: restUser as GO1User,
-      account: { ...restAccount, ...permissions} as GO1Account,
+      account: { ...restAccount, ...permissions } as GO1Account,
       portal: instance as GO1Portal,
       jwt,
     };

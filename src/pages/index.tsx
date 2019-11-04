@@ -9,6 +9,13 @@ const SIDEBAR_WIDTH = 220;
 const http = createHttp();
 
 class MasterPage extends React.Component<any, any> {
+  pageContentRef: any;
+
+  constructor(props) {
+    super(props);
+    this.pageContentRef = React.createRef();
+  }
+
   public static async getInitialProps() {
     try {
       const { portalName } = extractGo1Metadata();
@@ -50,12 +57,18 @@ class MasterPage extends React.Component<any, any> {
     );
   }
 
+  scrollToTop() {
+    if (this.pageContentRef && this.pageContentRef.scrollIntoView) {
+      this.pageContentRef.scrollIntoView();
+    }
+  }
+
   render() {
     const pageTitle = this.getPageTitle();
     const { title: hasTitle, sidebar: hasSidebar, body: hasBody } = this.getPageOptions();
 
     return (
-      <View backgroundColor="faint" minHeight="100vh">
+      <View backgroundColor="faint" minHeight="100vh" innerRef={element => this.pageContentRef = element}>
         <Layout
           title={pageTitle}
           wrappingContainer
@@ -97,10 +110,14 @@ class MasterPage extends React.Component<any, any> {
                   <View
                     backgroundColor="background"
                     boxShadow="crisp"
-                    padding={5}
+                    paddingX={4}
+                    paddingY={5}
                     borderRadius={2}
                     css={{
                       [foundations.breakpoints.md]: {
+                        padding: foundations.spacing[5],
+                      },
+                      [foundations.breakpoints.lg]: {
                         padding: foundations.spacing[6],
                       },
                     }}

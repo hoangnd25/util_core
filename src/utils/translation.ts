@@ -30,6 +30,20 @@ export const defineMessagesList = () => {
       defaultMessage: '{fileName} is not a supported file type',
     },
 
+    // Integration detail: User data feed mapping
+    userDataFeedMappingSkipField: {
+      id: 'userDataFeed.block.mapping.skipField',
+      defaultMessage: 'Skip this field',
+    },
+    userDataFeedMappingSelectFieldPlaceholder: {
+      id: 'userDataFeed.block.mapping.selectAField',
+      defaultMessage: 'Select a field',
+    },
+    userDataFeedMappingFailedError: {
+      id: 'userDataFeed.block.mapping.failedError',
+      defaultMessage: 'Failed to save your mapping, please try again or contact us for assistance',
+    },
+
     // Integration detail: User data feed
     integrationUserDataFeedPageTitle: {
       id: 'integrationUserDataFeed.pageTitle',

@@ -8,27 +8,44 @@ import {
   Button,
   Spinner,
   Icon,
+  Select,
+  Banner,
+  SelectDropdown,
 } from '@go1d/go1d';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import csvParser from 'papaparse';
 import { defineMessagesList } from '../../utils/translation';
-import DataFeedService, { fixedPortalFields, CreateMappingPayload, CsvData } from '../../services/dataFeed';
-import { AWSCredential } from '../../types/userDataFeed';
+import DataFeedService, { CsvData, CreateMappingPayload } from '../../services/dataFeed';
+import { AWSCredential, MappingField } from '../../types/userDataFeed';
 import AWSConnectionDetail from '../awsConnectionDetail';
+
+enum MappingStep {
+  Upload = 1,
+  Mapping = 2,
+  Finish = 3,
+}
 
 interface Props {
   intl: any,
   currentSession: any,
-  onCancel: (step: number) => void;
+  hasConnection?: boolean,
+  scrollToTop: () => void;
+  onCancel: () => void;
   onDone: () => void;
 }
 
 interface State {
+  submitted: boolean;
   isShowUploader: boolean;
-  isUploadingSucceed: boolean;
   isUploadingFailed: boolean;
   isUploading: boolean;
-  errorMess: string | null;
+  uploadError: string;
+
+  step: MappingStep;
+  csvData: CsvData;
+  go1Fields: MappingField[];
+  showOptionalFields: boolean;
+  mappingError: string;
   awsCredential: AWSCredential;
 }
 
@@ -36,97 +53,246 @@ export const dataFeedService = DataFeedService();
 
 class DataFeedUploadState extends React.Component<Props, State> {
   state = {
+    submitted: false,
     isShowUploader: true,
-    isUploadingSucceed: false,
     isUploadingFailed: false,
     isUploading: false,
-    errorMess: null,
+    uploadError: null,
+
+    step: MappingStep.Upload,
+    csvData: [],
+    go1Fields: [],
+    showOptionalFields: false,
+    mappingError: null,
     awsCredential: null,
   };
 
-  public onParseFile(file: File) {
+  componentDidMount() {
+    const { currentSession } = this.props;
+    dataFeedService.fetchMappingFields(currentSession.portal.id)
+      .then(go1Fields => this.setState({ go1Fields }));
+  }
+
+  onParseFile(file: File) {
     this.setState({
       isShowUploader: false,
       isUploading: true,
-      isUploadingSucceed: false,
       isUploadingFailed: false,
-      errorMess: null,
+      uploadError: null,
     });
 
     const options = {
       complete: results => {
         if (results.errors.length > 0) {
-          this.setState({ isUploading: false, isUploadingFailed: true });
+          this.setState({
+            isUploading: false,
+            isUploadingFailed: true,
+          });
         } else {
-          this.onParseCsvDone(results.data);
+          this.setState({
+            isUploading: false,
+            csvData: results.data,
+            step: MappingStep.Mapping,
+          });
         }
       },
     };
     csvParser.parse(file, options);
   }
 
-  /**
-   * Temporary logic for fixed fields, fixed csv file, will change when implement mapping screen
-   */
-  public onParseCsvDone(csvData: any) {
-    const { currentSession } = this.props;
-    const mappedFields = this.createMappedFields(csvData);
-    const rows: CsvData = dataFeedService.getRows(mappedFields, csvData);
-    const payload: CreateMappingPayload = {
-      type: 'account',
-      mappings: mappedFields,
-      rows,
-    };
-
-    dataFeedService.createMapping(payload, currentSession.portal.id)
-      .then((awsCredential: AWSCredential) => {
-        this.setState({
-          isUploading: false,
-          isUploadingSucceed: true,
-          awsCredential,
-        });
-      })
-      .catch(error => {
-        console.log('DataFeedUploadState.Error', error);
-        this.setState({
-          isUploading: false,
-          isUploadingFailed: true,
-        });
-      });
-  }
-
-  private createMappedFields(csvData: CsvData) {
-    let mappedFields = {};
-
-    fixedPortalFields.forEach(portalField => {
-      const csvField = csvData[0].find(field => field === portalField);
-      if (csvField) {
-        mappedFields = dataFeedService.doMapping(portalField, csvField, mappedFields);
-      }
-    });
-
-    return mappedFields;
-  }
-
-  public onReject(file: File) {
-    const { intl } = this.props;
+  onReject(file: File) {
     if (file.type !== 'text/csv') {
-      this.setState({ errorMess: intl.formatMessage(defineMessagesList().dataFeedUploadBlockErrorTextFileExtension, { fileName: file.name }) });
+      const uploadError = this.props.intl.formatMessage(defineMessagesList().dataFeedUploadBlockErrorTextFileExtension, { fileName: file.name });
+      this.setState({ uploadError });
     }
   }
 
-  public render() {
+  onMapField(mapField: MappingField, csvField: string) {
+    const { go1Fields } = this.state;
+    const go1FieldsMapped = go1Fields.map(field => {
+      if (field.name === mapField.name) {
+        field.mappedField = csvField;
+      }
+
+      return field;
+    });
+
+    this.setState({ go1Fields: go1FieldsMapped });
+  }
+
+  onMappingDone() {
+    this.setState({ submitted: true });
+    if (this.validate()) {
+      const { currentSession, hasConnection, scrollToTop } = this.props;
+      const portalId = currentSession.portal && currentSession.portal.id;
+      const payload: CreateMappingPayload = {
+        type: 'account',
+        mappings: this.mapFields(),
+        rows: this.state.csvData.slice(0, 5), // get Header & 5 first records
+      };
+
+      return dataFeedService.createMapping(payload, portalId)
+        .then(() => dataFeedService[hasConnection ? 'fetchAWSCredentials' : 'createAWSCredentials'](portalId))
+        .then((awsCredential: AWSCredential) => this.setState({ awsCredential, step: MappingStep.Finish }))
+        .catch(mappingResult => {
+          const { data } = mappingResult.response || {};
+          const mappingError = data && data.errors
+            ? data.errors[0].title
+            : this.props.intl.formatMessage(defineMessagesList().userDataFeedMappingFailedError);
+
+          this.setState({ isUploadingFailed: true, mappingError });
+          scrollToTop();
+        });
+    }
+  }
+
+  renderField(go1Field: MappingField) {
+    const { csvData, submitted } = this.state;
+    const skipOptionLabel = this.props.intl.formatMessage(defineMessagesList().userDataFeedMappingSelectFieldPlaceholder);
+    const selectFieldPlaceholder = this.props.intl.formatMessage(defineMessagesList().userDataFeedMappingSelectFieldPlaceholder);
+    const skipOptions = [{ value: '', label: skipOptionLabel }];
+    const csvFields = csvData[0].map(fieldName => {
+      return {
+        value: fieldName,
+        label: fieldName,
+      };
+    });
+
+    return (
+      <View flexDirection="row" flexWrap="wrap" borderColor="soft" borderBottom={1} paddingY={3}>
+        <View width={[1/2, 1/2, 1/2]}>
+          <View alignItems="center" flexDirection="row" flexShrink={1} flexGrow={1}>
+            <Text fontSize={2} textTransform="capitalize">{go1Field.label}</Text>
+
+            <Text color="subtle" fontSize={1} marginLeft={3}>
+              {go1Field.required && (
+                <>
+                  <View
+                    css={{
+                      [foundations.breakpoints.sm]: { display: "none" },
+                    }}
+                  >
+                    <FormattedMessage id="userDataFeed.block.mapping.requiredLabel" defaultMessage="Required"/>
+                  </View>
+
+                  <View css={{
+                    [foundations.breakpoints.md]: { display: "none" },
+                  }}>*</View>
+                </>
+              )}
+
+              {!go1Field.required && (
+                <View css={{
+                  [foundations.breakpoints.sm]: { display: "none" },
+                }}>
+                  <FormattedMessage id="userDataFeed.block.mapping.optionalLabel" defaultMessage="Optional"/>
+                </View>
+              )}
+            </Text>
+          </View>
+        </View>
+
+        {/* Mapping action on desktop */}
+        <View
+          width={[1/2, 1/2, 1/2]}
+          display="none"
+          css={{
+            [foundations.breakpoints.md]: { display: "flex" },
+          }}
+        >
+          <View maxWidth="220">
+            <Select
+              options={go1Field.required ? csvFields : skipOptions.concat(csvFields)}
+              placeholder={selectFieldPlaceholder}
+              defaultValue={go1Field.mappedField}
+              value={go1Field.mappedField}
+              onChange={({ target }) => this.onMapField(go1Field, target.value)}
+            />
+          </View>
+
+          {submitted && go1Field.required && !go1Field.mappedField && (
+            <Text color="danger" fontSize={1} marginTop={3}>
+              <FormattedMessage id="userDataFeed.block.mapping.requiredErrorMessage" defaultMessage="This field is required"/>
+            </Text>
+          )}
+        </View>
+
+        {/* Mapping action on mobile */}
+        <View
+          width={[1/2, 1/2, 1/2]}
+          css={{
+            [foundations.breakpoints.md]: { display: "none" },
+          }}
+        >
+          <SelectDropdown
+            optionRenderer={null}
+            closeOnSelection={true}
+            value={go1Field.mappedField}
+            options={go1Field.required ? csvFields : skipOptions.concat(csvFields)}
+            onChange={({ target }) => this.onMapField(go1Field, target.value)}
+           >
+            {({ ref, getToggleButtonProps }) => (
+              <ButtonFilled
+                {...getToggleButtonProps()}
+                innerRef={ref}
+                justifyContent="flex-start"
+              >
+                <View flexDirection="row" alignItems="center">
+                  {go1Field.mappedField && <Icon name="Check" marginRight={3} />}
+                  <Text
+                    flexShrink={1}
+                    flexGrow={1}
+                    fontWeight="normal"
+                    css={{
+                      overflow: "hidden",
+                      whiteSpace: "nowrap",
+                      textOverflow: "ellipsis",
+                    }}
+                  >
+                    {go1Field.mappedField || (
+                      <Text><FormattedMessage id="userDataFeed.block.mapping.mapWith" defaultMessage="Map with"/>...</Text>
+                    )}
+                  </Text>
+                </View>
+              </ButtonFilled>
+            )}
+           </SelectDropdown>
+        </View>
+
+        {submitted && go1Field.required && !go1Field.mappedField && (
+          <View
+            width="100%"
+            flexDirection="row"
+            justifyContent="flex-end"
+            marginTop={2}
+            css={{
+              [foundations.breakpoints.md]: { display: "none" },
+            }}
+          >
+            <Text color="danger" fontSize={1} marginTop={3}>
+              <FormattedMessage id="userDataFeed.block.mapping.requiredErrorMessage" defaultMessage="This field is required"/>
+            </Text>
+          </View>
+        )}
+      </View>
+    );
+  }
+
+  render() {
     const {
+      step,
       isShowUploader,
       isUploading,
-      isUploadingSucceed,
       isUploadingFailed,
-      errorMess,
+      uploadError,
       awsCredential,
+      go1Fields,
+      showOptionalFields,
+      mappingError,
     } = this.state;
     const { onDone, onCancel } = this.props;
 
-    if (isUploadingSucceed && awsCredential) {
+    if (step === MappingStep.Finish) {
       return (
         <>
           <AWSConnectionDetail awsCredential={awsCredential} />
@@ -140,9 +306,109 @@ class DataFeedUploadState extends React.Component<Props, State> {
       );
     }
 
+    if (step === MappingStep.Mapping) {
+      const optionalFieldsCount = go1Fields.filter(field => !field.required).length;
+
+      return (
+        <>
+          <Text fontWeight="semibold" fontSize={4} marginBottom={3}>
+            <FormattedMessage id="data.feed.mapping.block.title" defaultMessage="Create mapping rules"/>
+          </Text>
+          <Text marginTop={2}>
+            <FormattedMessage id="data.feed.mapping.block.sub.title" defaultMessage="Map the fields in your CSV file to the portal fields"/>
+          </Text>
+
+          <View width="100%" marginTop={6}>
+            {mappingError && (
+              <Banner type="danger" marginBottom={6}>
+                <Text css={{ whiteSpace: "pre-line" }}>{mappingError}</Text>
+              </Banner>
+            )}
+
+            <View flexDirection="row" flexWrap="wrap" marginBottom={4}>
+              <View width={[5/6, 1/2, 1/2]}>
+                <Text fontSize={2} fontWeight="semibold" textTransform="uppercase" color="subtle">
+                  <FormattedMessage id="userDataFeed.block.mapping.go1Fields" defaultMessage="GO1 fields"/>
+                </Text>
+              </View>
+
+              <View width={[1/6, 1/2, 1/2]}>
+                <Text
+                  fontSize={2}
+                  fontWeight="semibold"
+                  textTransform="uppercase"
+                  color="subtle"
+                  css={{
+                    [foundations.breakpoints.sm]: {
+                      display: "none",
+                    }
+                  }}
+                >
+                  <FormattedMessage id="userDataFeed.block.mapping.csvFields" defaultMessage="CSV fields"/>
+                </Text>
+              </View>
+            </View>
+
+            {go1Fields.filter(field => field.required).map(requiredField => {
+              return (
+                <>
+                  {this.renderField(requiredField)}
+                </>
+              );
+            })}
+
+            {optionalFieldsCount > 0 && (
+              <>
+                {showOptionalFields && go1Fields.filter(field => !field.required).map(optionalField => {
+                  return (
+                    <>
+                      {this.renderField(optionalField)}
+                    </>
+                  );
+                })}
+
+                <View
+                  color="subtle"
+                  alignItems="center"
+                  flexDirection="row"
+                  marginTop={5}
+                  onClick={() => this.setState({ showOptionalFields: !showOptionalFields })}
+                  css={{
+                    cursor: "pointer",
+
+                    ":hover": {
+                      color: foundations.colors.default,
+                    }
+                  }}
+                >
+                  <Icon name={ showOptionalFields ? 'ChevronUp' : 'ChevronDown'} />
+                  <Text fontSize={2} marginLeft={3}>
+                    {!showOptionalFields && <FormattedMessage id="userDataFeed.block.mapping.showOptionalFields" defaultMessage="Show all optional fields"/>}
+                    {showOptionalFields && <FormattedMessage id="userDataFeed.block.mapping.hideOptionalFields" defaultMessage="Hide all optional fields"/>}
+                  </Text>
+                </View>
+              </>
+            )}
+          </View>
+
+          <View flexDirection="row" justifyContent="space-between" width="100%" marginTop={7}>
+            <ButtonFilled size="lg" onClick={() => onCancel()}>
+              <FormattedMessage id="userDataFeed.block.mapping.button.cancel" defaultMessage="Cancel"/>
+            </ButtonFilled>
+
+            <ButtonFilled color="accent" size="lg" onClick={() => this.onMappingDone()}>
+              <FormattedMessage id="userDataFeed.block.mapping.button.next" defaultMessage="Next" />
+            </ButtonFilled>
+          </View>
+        </>
+      );
+    }
+
     return (
       <>
-        <Text fontWeight="semibold" fontSize={4} marginBottom={3}>Select file</Text>
+        <Text fontWeight="semibold" fontSize={4} marginBottom={3}>
+          <FormattedMessage id="data.feed.upload.block.title" defaultMessage="Select file"/>
+        </Text>
         <Text marginTop={2}>
           <FormattedMessage id="data.feed.upload.block.sub.title" defaultMessage="Browse for a CSV file to upload for setting up fields mapping rules."/>
         </Text>
@@ -175,13 +441,35 @@ class DataFeedUploadState extends React.Component<Props, State> {
                   alignItems="center"
                   height="100%"
                   width="100%"
+                  css={{ cursor: "pointer" }}
                 >
-                  <Button
+                  <View
                     color="subtle"
-                    iconName="Interactive"
+                    flexDirection="row"
+                    alignItems="center"
+                    flexShrink={1}
+                    flexGrow={1}
+                    paddingX={4}
                   >
-                    {isDragActive ? <FormattedMessage id="data.feed.upload.block.uploader.dragging" defaultMessage="Drop it here"/> :  <FormattedMessage id="data.feed.upload.block.uploader.drag" defaultMessage="Drag and drop to upload"/>}
-                  </Button>
+                    <Icon name="Interactive" marginRight={3} />
+
+                    <Text
+                      flexShrink={1}
+                      flexGrow={1}
+                      css={{
+                        overflow: "hidden",
+                        whiteSpace: "nowrap",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
+                      {
+                        isDragActive
+                          ? <FormattedMessage id="data.feed.upload.block.uploader.dragging" defaultMessage="Drop it here"/>
+                          : <FormattedMessage id="data.feed.upload.block.uploader.drag" defaultMessage="Drag and drop to upload"/>
+                      }
+                    </Text>
+                  </View>
+
                   <Button iconName="Upload">
                     <FormattedMessage id="data.feed.upload.block.upload.choose.file" defaultMessage="Choose a file"/>
                   </Button>
@@ -219,7 +507,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
                   </View>
                   <Button
                     color="accent"
-                    onClick={() => this.setState({ isShowUploader: true, errorMess: null })}
+                    onClick={() => this.setState({ isShowUploader: true, uploadError: null })}
                   >
                     <FormattedMessage id="data.feed.upload.block.upload.retry" defaultMessage="Retry"/>
                   </Button>
@@ -228,18 +516,36 @@ class DataFeedUploadState extends React.Component<Props, State> {
             </View>
           )}
 
-          {errorMess && (
-            <Text marginTop={2} color="danger">{errorMess}</Text>
+          {uploadError && (
+            <Text marginTop={2} color="danger">{uploadError}</Text>
           )}
         </View>
 
         <View flexDirection="row" justifyContent="flex-start" width="100%" marginTop={7}>
-          <ButtonFilled size="lg" onClick={() => onCancel(0)}>
+          <ButtonFilled size="lg" onClick={() => onCancel()}>
             <FormattedMessage id="data.feed.upload.block.cancel.button" defaultMessage="Cancel"/>
           </ButtonFilled>
         </View>
       </>
     );
+  }
+
+  private validate() {
+    const { go1Fields } = this.state;
+    const invalidFields = go1Fields.filter(field => field.required && !field.mappedField);
+
+    return invalidFields.length === 0;
+  }
+
+  private mapFields() {
+    let mappedFields = {};
+    const { go1Fields } = this.state;
+
+    go1Fields.forEach(go1Field => {
+      mappedFields[go1Field.name] = go1Field.mappedField || '';
+    });
+
+    return mappedFields;
   }
 }
 

@@ -66,16 +66,8 @@ export const defineMessagesList = () => {
   });
 };
 
-export const getIntl = (locale?: string) => {
-  const intlLocale = locale || defaultLocale;
-  const intlProvider = new IntlProvider({ intlLocale, messages: messages[intlLocale] });
-  const { intl } = intlProvider.getChildContext();
-  return intl;
-}
-
-export const getText = (searchKey, locale) => {
-  const intl = getIntl(locale);
-  const dictionary = defineMessages({
+export const getSidebarTexts = () => {
+  return defineMessages({
     'sidebar.integrations-addons': {
       id: 'sidebar.integrations-addons',
       defaultMessage: 'Add-ons',
@@ -137,6 +129,4 @@ export const getText = (searchKey, locale) => {
       defaultMessage: 'User Data Feed',
     },
   });
-
-  return intl.formatMessage(dictionary[searchKey]);
 }

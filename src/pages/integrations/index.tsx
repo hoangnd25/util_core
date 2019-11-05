@@ -1,6 +1,6 @@
 import { PortalModel } from '@go1d/go1d-exchange';
 import SIDEBAR_MENUS from '../../constants/sidebarMenu';
-import { getText } from '../../utils/translation';
+import { getSidebarTexts } from '../../utils/translation';
 import MasterPage from '../index';
 
 class Integrations extends MasterPage {
@@ -8,12 +8,11 @@ class Integrations extends MasterPage {
     super(props);
   }
 
-  getString(searchKey: string): string {
-    const locale = typeof window !== 'undefined' ? (window as any).locale : undefined;
-    return getText(searchKey, locale);
+  getString(searchKey: string, intl?: any): string {
+    return intl.formatMessage(getSidebarTexts()[searchKey]);
   }
 
-  getSidebarMenus() {
+  getSidebarMenus(intl?: any) {
     const { currentSession, featureToggles = {} } = this.props;
     const portal = new PortalModel(currentSession.portal || {});
     const allIntegrations = (portal && portal.configuration && portal.configuration.integrations) || {};
@@ -26,105 +25,105 @@ class Integrations extends MasterPage {
     const sidebarMenus = [
       {
         id: SIDEBAR_MENUS.ADDONS,
-        title: this.getString(SIDEBAR_MENUS.ADDONS),
+        title: this.getString(SIDEBAR_MENUS.ADDONS, intl),
         href: 'app/integrations/addons',
         isApiomLink: true,
         isVisible: true,
       },
       {
         id: SIDEBAR_MENUS.SCORM,
-        title: this.getString(SIDEBAR_MENUS.SCORM),
+        title: this.getString(SIDEBAR_MENUS.SCORM, intl),
         href: 'app/integrations/addon/scorm',
         isApiomLink: true,
         isVisible: enabledIntegrations.scorm,
       },
       {
         id: SIDEBAR_MENUS.AUTOPILOT,
-        title: this.getString(SIDEBAR_MENUS.AUTOPILOT),
+        title: this.getString(SIDEBAR_MENUS.AUTOPILOT, intl),
         href: 'app/integrations/addon/autopilot',
         isApiomLink: true,
         isVisible: enabledIntegrations.autopilot,
       },
       {
         id: SIDEBAR_MENUS.STRIPE,
-        title: this.getString(SIDEBAR_MENUS.STRIPE),
+        title: this.getString(SIDEBAR_MENUS.STRIPE, intl),
         href: 'app/integrations/addon/stripe',
         isApiomLink: true,
         isVisible: enabledIntegrations.stripe,
       },
       {
         id: SIDEBAR_MENUS.ZAPIER,
-        title: this.getString(SIDEBAR_MENUS.ZAPIER),
+        title: this.getString(SIDEBAR_MENUS.ZAPIER, intl),
         href: 'app/integrations/addon/zapier',
         isApiomLink: true,
         isVisible: enabledIntegrations.zapier,
       },
       {
         id: SIDEBAR_MENUS.LTI_PROVIDER,
-        title: this.getString(SIDEBAR_MENUS.LTI_PROVIDER),
+        title: this.getString(SIDEBAR_MENUS.LTI_PROVIDER, intl),
         href: 'app/integrations/addon/ltiprovider',
         isApiomLink: true,
         isVisible: enabledIntegrations.ltiprovider,
       },
       {
         id: SIDEBAR_MENUS.VETTRAK,
-        title: this.getString(SIDEBAR_MENUS.VETTRAK),
+        title: this.getString(SIDEBAR_MENUS.VETTRAK, intl),
         href: 'app/integrations/addon/vettrak',
         isApiomLink: true,
         isVisible: enabledIntegrations.vettrak,
       },
       {
         id: SIDEBAR_MENUS.WISENET,
-        title: this.getString(SIDEBAR_MENUS.WISENET),
+        title: this.getString(SIDEBAR_MENUS.WISENET, intl),
         href: 'app/integrations/addon/wisenet',
         isApiomLink: true,
         isVisible: enabledIntegrations.wisenet && featureToggles.wisenet,
       },
       {
         id: SIDEBAR_MENUS.XERO,
-        title: this.getString(SIDEBAR_MENUS.XERO),
+        title: this.getString(SIDEBAR_MENUS.XERO, intl),
         href: 'app/integrations/addon/xero',
         isApiomLink: true,
         isVisible: enabledIntegrations.xero && featureToggles.xero,
       },
       {
         id: SIDEBAR_MENUS.SUCCESS_FACTORS,
-        title: this.getString(SIDEBAR_MENUS.SUCCESS_FACTORS),
+        title: this.getString(SIDEBAR_MENUS.SUCCESS_FACTORS, intl),
         href: 'app/integrations/addon/successfactors',
         isApiomLink: true,
         isVisible: enabledIntegrations.successfactors,
       },
       {
         id: SIDEBAR_MENUS.MICROSOFT_AZURE,
-        title: this.getString(SIDEBAR_MENUS.MICROSOFT_AZURE),
+        title: this.getString(SIDEBAR_MENUS.MICROSOFT_AZURE, intl),
         href: 'app/integrations/addon/azure',
         isApiomLink: true,
         isVisible: enabledIntegrations.azure,
       },
       {
         id: SIDEBAR_MENUS.COURSE_CATALOG,
-        title: this.getString(SIDEBAR_MENUS.COURSE_CATALOG),
+        title: this.getString(SIDEBAR_MENUS.COURSE_CATALOG, intl),
         href: 'app/integrations/embed',
         isApiomLink: true,
         isVisible: true,
       },
       {
         id: SIDEBAR_MENUS.SINGLE_SIGN_ON,
-        title: this.getString(SIDEBAR_MENUS.SINGLE_SIGN_ON),
+        title: this.getString(SIDEBAR_MENUS.SINGLE_SIGN_ON, intl),
         href: featureToggles.cs_tool ? 'app/integrations/sso-saml' : 'app/integrations/sso',
         isApiomLink: true,
         isVisible: true,
       },
       {
         id: SIDEBAR_MENUS.DEVELOPER,
-        title: this.getString(SIDEBAR_MENUS.DEVELOPER),
+        title: this.getString(SIDEBAR_MENUS.DEVELOPER, intl),
         href: 'app/integrations/developer',
         isApiomLink: true,
         isVisible: true,
       },
       {
         id: SIDEBAR_MENUS.USER_DATA_FEED,
-        title: this.getString(SIDEBAR_MENUS.USER_DATA_FEED),
+        title: this.getString(SIDEBAR_MENUS.USER_DATA_FEED, intl),
         href: '/r/app/portal/integrations/user-data-feed',
         isApiomLink: false,
         isVisible: true,

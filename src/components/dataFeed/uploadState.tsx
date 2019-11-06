@@ -16,10 +16,10 @@ import {
 } from '@go1d/go1d';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import csvParser from 'papaparse';
-import { defineMessagesList } from '../../utils/translation';
-import DataFeedService, { CsvData, CreateMappingPayload } from '../../services/dataFeed';
-import { AWSCredential, MappingField, MappingData } from '../../types/userDataFeed';
-import AWSConnectionDetail from '../awsConnectionDetail';
+import { defineMessagesList } from '@src/utils/translation';
+import DataFeedService, { CsvData, CreateMappingPayload } from '@src/services/dataFeed';
+import { AWSCredential, MappingField, MappingData } from '@src/types/userDataFeed';
+import AWSConnectionDetail from '@src/components/awsConnectionDetail';
 
 interface CSVField {
   value: string;
@@ -144,6 +144,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
 
   onMappingDone() {
     this.setState({ submitted: true });
+
     if (this.validate()) {
       const { isEditing, scrollToTop, currentSession, awsCredential: awsCredentialProp } = this.props;
       const portalId = currentSession.portal && currentSession.portal.id;
@@ -177,6 +178,8 @@ class DataFeedUploadState extends React.Component<Props, State> {
           scrollToTop();
         });
     }
+
+    return null;
   }
 
   renderSkeleton() {

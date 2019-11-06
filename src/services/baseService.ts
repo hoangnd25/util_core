@@ -1,6 +1,6 @@
 import Cookies from 'universal-cookie';
-import { HttpInstance } from '../utils/http';
-import extractGo1Metadata from '../utils/helper';
+import { HttpInstance } from '@src/utils/http';
+import extractGo1Metadata from '@src/utils/helper';
 
 /* istanbul ignore file  */
 class BaseService {

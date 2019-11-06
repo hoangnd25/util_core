@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import * as clipboardUtil from '../../utils/clipboard';
+import * as clipboardUtil from '@src/utils/clipboard';
 import CopyToClipboard from './index';
 
 const mockFn = jest.fn();

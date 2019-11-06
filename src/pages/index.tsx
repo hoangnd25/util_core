@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { View, Text, foundations, Skeleton } from '@go1d/go1d';
-import featureToggleService from '../services/featureToggleService';
-import createHttp from '../utils/http';
-import extractGo1Metadata from '../utils/helper';
-import Layout from '../components/common/Layout';
+import featureToggleService from '@src/services/featureToggleService';
+import createHttp from '@src/utils/http';
+import extractGo1Metadata from '@src/utils/helper';
+import Layout from '@src/components/common/Layout';
 
 const SIDEBAR_WIDTH = 220;
 const http = createHttp();

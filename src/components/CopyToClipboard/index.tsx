@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from '@go1d/go1d';
-import { copyToClipboard } from '../../utils/clipboard';
+import { copyToClipboard } from '@src/utils/clipboard';
 
 interface Props {
   text: string;

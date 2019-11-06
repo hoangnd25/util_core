@@ -1,9 +1,9 @@
 import React from 'react';
-import { Text, View, InputGroup, foundations, ButtonFilled, ButtonMinimal, Tooltip } from '@go1d/go1d';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import { AWSCredential } from '../../types/userDataFeed';
-import { defineMessagesList } from '../../utils/translation';
-import CopyToClipboard from '../CopyToClipboard';
+import { Text, View, InputGroup, foundations, ButtonFilled, ButtonMinimal, Tooltip } from '@go1d/go1d';
+import { AWSCredential } from '@src/types/userDataFeed';
+import { defineMessagesList } from '@src/utils/translation';
+import CopyToClipboard from '@src/components/CopyToClipboard';
 
 interface Props {
   intl: any,

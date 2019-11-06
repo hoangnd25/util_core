@@ -1,5 +1,5 @@
 import MockAdapter from 'axios-mock-adapter';
-import createHttpInstance from '../utils/http';
+import createHttpInstance from '@src/utils/http';
 import dataFeedService from './dataFeed';
 
 let mock: MockAdapter;

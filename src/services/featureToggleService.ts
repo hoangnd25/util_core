@@ -1,4 +1,4 @@
-import { HttpInstance } from '../utils/http';
+import { HttpInstance } from '@src/utils/http';
 
 class FeatureToggleService {
   public http: HttpInstance = null;

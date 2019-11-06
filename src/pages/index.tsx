@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, foundations } from '@go1d/go1d';
+import { View, Text, foundations, Skeleton } from '@go1d/go1d';
 import featureToggleService from '../services/featureToggleService';
 import createHttp from '../utils/http';
 import extractGo1Metadata from '../utils/helper';
@@ -43,24 +43,33 @@ class MasterPage extends React.Component<any, any> {
     };
   }
 
+  scrollToTop() {
+    if (this.pageContentRef && this.pageContentRef.scrollIntoView) {
+      this.pageContentRef.scrollIntoView();
+    }
+  }
+
   renderSidebar() {
     return (
-      <Text fontWeight="semibold">Page sidebar</Text>
+      <>
+        <Skeleton backgroundColor="soft" height={foundations.spacing[6]} marginBottom={5} />
+        <Skeleton backgroundColor="soft" height={foundations.spacing[6]} marginBottom={5} />
+        <Skeleton backgroundColor="soft" height={foundations.spacing[6]} marginBottom={5} />
+      </>
     );
   }
 
   renderBody() {
     return (
       <>
-        <Text>Page content</Text>
+        <Skeleton backgroundColor="faint" height={foundations.spacing[6]} marginBottom={5} />
+        <Skeleton backgroundColor="faint" height={foundations.spacing[6]} marginBottom={5} />
+        <Skeleton backgroundColor="faint" height={foundations.spacing[6]} marginBottom={5} />
+        <Skeleton backgroundColor="faint" height={foundations.spacing[6]} marginBottom={5} />
+        <Skeleton backgroundColor="faint" height={foundations.spacing[6]} marginBottom={5} />
+        <Skeleton backgroundColor="faint" height={foundations.spacing[6]} marginBottom={5} />
       </>
     );
-  }
-
-  scrollToTop() {
-    if (this.pageContentRef && this.pageContentRef.scrollIntoView) {
-      this.pageContentRef.scrollIntoView();
-    }
   }
 
   render() {
@@ -68,7 +77,7 @@ class MasterPage extends React.Component<any, any> {
     const { title: hasTitle, sidebar: hasSidebar, body: hasBody } = this.getPageOptions();
 
     return (
-      <View backgroundColor="faint" minHeight="100vh" innerRef={element => this.pageContentRef = element}>
+      <View backgroundColor="faint" minHeight="100vh" innerRef={element => {this.pageContentRef = element;}}>
         <Layout
           title={pageTitle}
           wrappingContainer

@@ -13,3 +13,9 @@ export interface MappingField {
   options: any[];
   mappedField?: string;
 }
+
+export interface MappingData {
+  mappings: Record<string, string>;
+  updated: number;
+  author: object;
+}

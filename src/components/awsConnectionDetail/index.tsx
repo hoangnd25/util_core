@@ -122,16 +122,17 @@ export class AWSConnectionDetail extends React.PureComponent<Props, State> {
       >
         <View flexDirection="row" alignItems="center">
           <View flexGrow={1} flexShrink={1}>
-            <Text fontWeight="semibold" fontSize={expandable ? 3 : 4} marginBottom={3}>
+            <Text fontWeight="semibold" fontSize={expandable ? 3 : 4}>
               <FormattedMessage id="awsConnectionDetail.title" defaultMessage="AWS Connection Details" />
             </Text>
-            <Text marginTop={2}>
+            <Text color="subtle" fontWeight="semibold" marginTop={2}>
               <FormattedMessage id="awsConnectionDetail.description" defaultMessage="Integrate using the following details to keep your user records up to date" />
             </Text>
           </View>
 
           {expandable && (
             <ButtonMinimal
+              data-testid="awsConnectionDetail.toggleButton"
               color="accent"
               onClick={() => this.setState({ expanded: !expanded })}
             >
@@ -147,8 +148,8 @@ export class AWSConnectionDetail extends React.PureComponent<Props, State> {
         </View>
 
         {isConnectionDetailVisible && (
-          <View width={[1, 1, 3/5]} alignItems="flex-start">
-            <View width="100%" marginTop={6}>
+          <View data-testid="awsConnectionDetail.fields" width={[1, 1, 3/5]} alignItems="flex-start">
+            <View data-testid="awsConnectionDetail.fieldBucketUrl" width="100%" marginTop={6}>
               <Text marginBottom={3}>
                 <FormattedMessage id="awsConnectionDetail.fieldBucketURL" defaultMessage="Bucket URL" />
               </Text>
@@ -156,7 +157,7 @@ export class AWSConnectionDetail extends React.PureComponent<Props, State> {
               {this.renderAWSField(awsCredential.awsBucketUrl)}
             </View>
 
-            <View width="100%" marginTop={6}>
+            <View data-testid="awsConnectionDetail.fieldAccessKeyId" width="100%" marginTop={6}>
               <Text marginBottom={3}>
                 <FormattedMessage id="awsConnectionDetail.fieldAccessKey" defaultMessage="Access key" />
               </Text>
@@ -164,7 +165,7 @@ export class AWSConnectionDetail extends React.PureComponent<Props, State> {
               {this.renderAWSField(awsCredential.awsAccessKeyId, true)}
             </View>
 
-            <View width="100%" marginTop={6}>
+            <View data-testid="awsConnectionDetail.fieldSecretKey" width="100%" marginTop={6}>
               <Text marginBottom={3}>
                 <FormattedMessage id="awsConnectionDetail.fieldSecretKey" defaultMessage="Secret key" />
               </Text>

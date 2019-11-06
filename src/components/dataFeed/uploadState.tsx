@@ -11,30 +11,35 @@ import {
   Select,
   Banner,
   SelectDropdown,
+  Skeleton,
+  NotificationManager,
 } from '@go1d/go1d';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import csvParser from 'papaparse';
 import { defineMessagesList } from '../../utils/translation';
 import DataFeedService, { CsvData, CreateMappingPayload } from '../../services/dataFeed';
-import { AWSCredential, MappingField } from '../../types/userDataFeed';
+import { AWSCredential, MappingField, MappingData } from '../../types/userDataFeed';
 import AWSConnectionDetail from '../awsConnectionDetail';
 
-enum MappingStep {
-  Upload = 1,
-  Mapping = 2,
-  Finish = 3,
+interface CSVField {
+  value: string;
+  label: string;
 }
 
 interface Props {
-  intl: any,
-  currentSession: any,
-  hasConnection?: boolean,
+  intl: any;
+  currentSession: any;
+  isEditing: boolean;
+  defaultStep: MappingStep;
+  awsCredential: AWSCredential;
+  mappingData: MappingData;
   scrollToTop: () => void;
   onCancel: () => void;
   onDone: () => void;
 }
 
 interface State {
+  touched: boolean;
   submitted: boolean;
   isShowUploader: boolean;
   isUploadingFailed: boolean;
@@ -43,32 +48,46 @@ interface State {
 
   step: MappingStep;
   csvData: CsvData;
+  csvFields: CSVField[];
   go1Fields: MappingField[];
   showOptionalFields: boolean;
   mappingError: string;
   awsCredential: AWSCredential;
 }
 
+export enum MappingStep {
+  Upload = 1,
+  Mapping = 2,
+  Finish = 3,
+}
+
 export const dataFeedService = DataFeedService();
 
 class DataFeedUploadState extends React.Component<Props, State> {
   state = {
+    touched: false,
     submitted: false,
     isShowUploader: true,
     isUploadingFailed: false,
     isUploading: false,
     uploadError: null,
 
-    step: MappingStep.Upload,
     csvData: [],
+    csvFields: [],
     go1Fields: [],
+    step: MappingStep.Upload,
     showOptionalFields: false,
     mappingError: null,
     awsCredential: null,
   };
 
   componentDidMount() {
-    const { currentSession } = this.props;
+    const { currentSession, defaultStep } = this.props;
+
+    if (defaultStep) {
+      this.setState({ step: defaultStep });
+    }
+
     dataFeedService.fetchMappingFields(currentSession.portal.id)
       .then(go1Fields => this.setState({ go1Fields }));
   }
@@ -117,13 +136,16 @@ class DataFeedUploadState extends React.Component<Props, State> {
       return field;
     });
 
-    this.setState({ go1Fields: go1FieldsMapped });
+    this.setState({
+      touched: true,
+      go1Fields: go1FieldsMapped,
+    });
   }
 
   onMappingDone() {
     this.setState({ submitted: true });
     if (this.validate()) {
-      const { currentSession, hasConnection, scrollToTop } = this.props;
+      const { isEditing, scrollToTop, currentSession, awsCredential: awsCredentialProp } = this.props;
       const portalId = currentSession.portal && currentSession.portal.id;
       const payload: CreateMappingPayload = {
         type: 'account',
@@ -132,8 +154,19 @@ class DataFeedUploadState extends React.Component<Props, State> {
       };
 
       return dataFeedService.createMapping(payload, portalId)
-        .then(() => dataFeedService[hasConnection ? 'fetchAWSCredentials' : 'createAWSCredentials'](portalId))
-        .then((awsCredential: AWSCredential) => this.setState({ awsCredential, step: MappingStep.Finish }))
+        .then(() => awsCredentialProp ? Promise.resolve(awsCredentialProp) : dataFeedService.createAWSCredentials(portalId))
+        .then((awsCredential: AWSCredential) => {
+          if (isEditing) {
+            this.setState({ awsCredential, touched: false });
+
+            NotificationManager.success({
+              message: <View justifyContent="flex-start"><FormattedMessage id="dataFeed.mapping.successfully" defaultMessage="Update data mapping successfully." /></View>,
+              options: { lifetime: 3000, isOpen: true },
+            });
+          } else {
+            this.setState({ awsCredential, step: MappingStep.Finish });
+          }
+        })
         .catch(mappingResult => {
           const { data } = mappingResult.response || {};
           const mappingError = data && data.errors
@@ -146,17 +179,32 @@ class DataFeedUploadState extends React.Component<Props, State> {
     }
   }
 
+  renderSkeleton() {
+    return [1, 2, 3, 4, 5, 6, 7, 8].map(skeOrder => {
+      return (
+        <View flexDirection="row" flexWrap="wrap" borderColor="soft" borderTop={skeOrder === 1 ? 0 : 1} paddingY={3} key={`mapping-skeleton-${skeOrder}`}>
+          <View width={[1/2, 1/2, 1/2]}>
+            <Skeleton backgroundColor="faint" maxWidth="60%" borderRadius={2} height={foundations.spacing[6]} />
+          </View>
+
+          <View width={[1/2, 1/2, 1/2]}>
+            <Skeleton backgroundColor="faint" maxWidth="60%" borderRadius={2} height={foundations.spacing[6]} />
+          </View>
+        </View>
+      );
+    });
+  }
+
   renderField(go1Field: MappingField) {
-    const { csvData, submitted } = this.state;
-    const skipOptionLabel = this.props.intl.formatMessage(defineMessagesList().userDataFeedMappingSelectFieldPlaceholder);
+    const { csvFields: csvFieldsState, csvData, submitted } = this.state;
+    const skipOptionLabel = this.props.intl.formatMessage(defineMessagesList().userDataFeedMappingSkipField);
     const selectFieldPlaceholder = this.props.intl.formatMessage(defineMessagesList().userDataFeedMappingSelectFieldPlaceholder);
     const skipOptions = [{ value: '', label: skipOptionLabel }];
-    const csvFields = csvData[0].map(fieldName => {
-      return {
-        value: fieldName,
-        label: fieldName,
-      };
-    });
+    const csvFields = csvFieldsState.length > 0 ? csvFieldsState : this.getMappedFields(csvData[0]);
+
+    if (csvFields.length > 0 && csvFieldsState.length === 0) {
+      this.setState({ csvFields });
+    }
 
     return (
       <View flexDirection="row" flexWrap="wrap" borderColor="soft" borderBottom={1} paddingY={3}>
@@ -281,6 +329,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
   render() {
     const {
       step,
+      touched,
       isShowUploader,
       isUploading,
       isUploadingFailed,
@@ -290,7 +339,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
       showOptionalFields,
       mappingError,
     } = this.state;
-    const { onDone, onCancel } = this.props;
+    const { isEditing, onDone, onCancel } = this.props;
 
     if (step === MappingStep.Finish) {
       return (
@@ -311,95 +360,145 @@ class DataFeedUploadState extends React.Component<Props, State> {
 
       return (
         <>
+          {isEditing && (
+            <View
+              color="subtle"
+              alignItems="center"
+              flexDirection="row"
+              marginBottom={4}
+              onClick={() => onCancel()}
+              css={{
+                cursor: "pointer",
+
+                ":hover": {
+                  color: foundations.colors.default,
+                }
+              }}
+            >
+              <Icon name="ChevronLeft" />
+              <Text fontSize={2} marginLeft={3}>
+                <FormattedMessage id="userDataFeed.block.mapping.edit.yourDataFeed" defaultMessage="Your data feed"/>
+              </Text>
+            </View>
+          )}
+
           <Text fontWeight="semibold" fontSize={4} marginBottom={3}>
-            <FormattedMessage id="data.feed.mapping.block.title" defaultMessage="Create mapping rules"/>
+            {!isEditing && <FormattedMessage id="userDataFeed.block.mapping.title" defaultMessage="Create mapping rules"/>}
+            {isEditing && <FormattedMessage id="userDataFeed.block.mapping.editingTitle" defaultMessage="Data mapping details"/>}
           </Text>
           <Text marginTop={2}>
-            <FormattedMessage id="data.feed.mapping.block.sub.title" defaultMessage="Map the fields in your CSV file to the portal fields"/>
+            {!isEditing && <FormattedMessage id="userDataFeed.block.mapping.subTitle" defaultMessage="Map the fields in your CSV file to the portal fields"/>}
+            {isEditing && <FormattedMessage id="userDataFeed.block.mapping.editingSubTitle" defaultMessage="You can edit your current mapping rules"/>}
           </Text>
 
-          <View width="100%" marginTop={6}>
-            {mappingError && (
-              <Banner type="danger" marginBottom={6}>
-                <Text css={{ whiteSpace: "pre-line" }}>{mappingError}</Text>
-              </Banner>
-            )}
+          {go1Fields.length > 0 && (
+            <>
+              <View width="100%" marginTop={6}>
+                {mappingError && (
+                  <Banner type="danger" marginBottom={6}>
+                    <Text css={{ whiteSpace: "pre-line" }}>{mappingError}</Text>
+                  </Banner>
+                )}
 
-            <View flexDirection="row" flexWrap="wrap" marginBottom={4}>
-              <View width={[5/6, 1/2, 1/2]}>
-                <Text fontSize={2} fontWeight="semibold" textTransform="uppercase" color="subtle">
-                  <FormattedMessage id="userDataFeed.block.mapping.go1Fields" defaultMessage="GO1 fields"/>
-                </Text>
-              </View>
+                <View flexDirection="row" flexWrap="wrap" marginBottom={4}>
+                  <View width={[5/6, 1/2, 1/2]}>
+                    <Text fontSize={2} fontWeight="semibold" textTransform="uppercase" color="subtle">
+                      <FormattedMessage id="userDataFeed.block.mapping.go1Fields" defaultMessage="GO1 fields"/>
+                    </Text>
+                  </View>
 
-              <View width={[1/6, 1/2, 1/2]}>
-                <Text
-                  fontSize={2}
-                  fontWeight="semibold"
-                  textTransform="uppercase"
-                  color="subtle"
-                  css={{
-                    [foundations.breakpoints.sm]: {
-                      display: "none",
-                    }
-                  }}
-                >
-                  <FormattedMessage id="userDataFeed.block.mapping.csvFields" defaultMessage="CSV fields"/>
-                </Text>
-              </View>
-            </View>
+                  <View width={[1/6, 1/2, 1/2]}>
+                    <Text
+                      fontSize={2}
+                      fontWeight="semibold"
+                      textTransform="uppercase"
+                      color="subtle"
+                      css={{
+                        [foundations.breakpoints.sm]: {
+                          display: "none",
+                        }
+                      }}
+                    >
+                      <FormattedMessage id="userDataFeed.block.mapping.csvFields" defaultMessage="CSV fields"/>
+                    </Text>
+                  </View>
+                </View>
 
-            {go1Fields.filter(field => field.required).map(requiredField => {
-              return (
-                <>
-                  {this.renderField(requiredField)}
-                </>
-              );
-            })}
-
-            {optionalFieldsCount > 0 && (
-              <>
-                {showOptionalFields && go1Fields.filter(field => !field.required).map(optionalField => {
+                {go1Fields.filter(field => field.required).map(requiredField => {
                   return (
                     <>
-                      {this.renderField(optionalField)}
+                      {this.renderField(requiredField)}
                     </>
                   );
                 })}
 
-                <View
-                  color="subtle"
-                  alignItems="center"
-                  flexDirection="row"
-                  marginTop={5}
-                  onClick={() => this.setState({ showOptionalFields: !showOptionalFields })}
-                  css={{
-                    cursor: "pointer",
+                {optionalFieldsCount > 0 && (
+                  <>
+                    {showOptionalFields && go1Fields.filter(field => !field.required).map(optionalField => {
+                      return (
+                        <>
+                          {this.renderField(optionalField)}
+                        </>
+                      );
+                    })}
 
-                    ":hover": {
-                      color: foundations.colors.default,
-                    }
-                  }}
-                >
-                  <Icon name={ showOptionalFields ? 'ChevronUp' : 'ChevronDown'} />
-                  <Text fontSize={2} marginLeft={3}>
-                    {!showOptionalFields && <FormattedMessage id="userDataFeed.block.mapping.showOptionalFields" defaultMessage="Show all optional fields"/>}
-                    {showOptionalFields && <FormattedMessage id="userDataFeed.block.mapping.hideOptionalFields" defaultMessage="Hide all optional fields"/>}
-                  </Text>
-                </View>
-              </>
-            )}
-          </View>
+                    <View
+                      color="subtle"
+                      alignItems="center"
+                      flexDirection="row"
+                      marginTop={5}
+                      onClick={() => this.setState({ showOptionalFields: !showOptionalFields })}
+                      css={{
+                        cursor: "pointer",
 
-          <View flexDirection="row" justifyContent="space-between" width="100%" marginTop={7}>
-            <ButtonFilled size="lg" onClick={() => onCancel()}>
-              <FormattedMessage id="userDataFeed.block.mapping.button.cancel" defaultMessage="Cancel"/>
-            </ButtonFilled>
+                        ":hover": {
+                          color: foundations.colors.default,
+                        }
+                      }}
+                    >
+                      <Icon name={ showOptionalFields ? 'ChevronUp' : 'ChevronDown'} />
+                      <Text fontSize={2} marginLeft={3}>
+                        {!showOptionalFields && <FormattedMessage id="userDataFeed.block.mapping.showOptionalFields" defaultMessage="Show all optional fields"/>}
+                        {showOptionalFields && <FormattedMessage id="userDataFeed.block.mapping.hideOptionalFields" defaultMessage="Hide all optional fields"/>}
+                      </Text>
+                    </View>
+                  </>
+                )}
+              </View>
 
-            <ButtonFilled color="accent" size="lg" onClick={() => this.onMappingDone()}>
-              <FormattedMessage id="userDataFeed.block.mapping.button.next" defaultMessage="Next" />
-            </ButtonFilled>
-          </View>
+              <View flexDirection="row" justifyContent={isEditing ? "flex-end" : "space-between"} width="100%" marginTop={7}>
+                {!isEditing && (
+                  <ButtonFilled size="lg" onClick={() => onCancel()}>
+                    <FormattedMessage id="userDataFeed.block.mapping.button.cancel" defaultMessage="Cancel"/>
+                  </ButtonFilled>
+                )}
+
+                {!isEditing && (
+                  <ButtonFilled color="accent" size="lg" onClick={() => this.onMappingDone()}>
+                    <FormattedMessage id="userDataFeed.block.mapping.button.next" defaultMessage="Next" />}
+                  </ButtonFilled>
+                )}
+
+                {isEditing && !touched && (
+                  <ButtonFilled color="accent" size="lg" onClick={() => onCancel()}>
+                    <FormattedMessage id="userDataFeed.block.mapping.button.done" defaultMessage="Done" />
+                  </ButtonFilled>
+                )}
+
+                {isEditing && touched && (
+                  <ButtonFilled color="accent" size="lg" onClick={() => this.onMappingDone()}>
+                    <FormattedMessage id="userDataFeed.block.mapping.button.update" defaultMessage="Update" />
+                  </ButtonFilled>
+                )}
+              </View>
+            </>
+          )}
+
+          {go1Fields.length === 0 && (
+            <View width="100%" marginTop={6}>
+              {this.renderSkeleton()}
+            </View>
+          )}
         </>
       );
     }
@@ -546,6 +645,29 @@ class DataFeedUploadState extends React.Component<Props, State> {
     });
 
     return mappedFields;
+  }
+
+  private getMappedFields(csvHeader: string[]) {
+    if (csvHeader && csvHeader.length > 0) {
+      return csvHeader
+        .filter(fieldName => !!fieldName)
+        .map(fieldName => {
+          return {
+            value: fieldName,
+            label: fieldName,
+          };
+        });
+    }
+
+    const { go1Fields } = this.state;
+    return go1Fields
+      .filter(field => !!field.mappedField)
+      .map(field => {
+        return {
+          value: field.mappedField,
+          label: field.mappedField,
+        };
+      });
   }
 }
 

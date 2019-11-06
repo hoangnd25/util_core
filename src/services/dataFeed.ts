@@ -1,6 +1,6 @@
 import Cookies from 'universal-cookie';
-import createHttp, { HttpInstance } from '../utils/http';
-import { AWSCredential, MappingField } from '../types/userDataFeed';
+import createHttp, { HttpInstance } from '@src/utils/http';
+import { AWSCredential, MappingField } from '@src/types/userDataFeed';
 import BaseService from "./baseService";
 
 const defaultHttp = createHttp();

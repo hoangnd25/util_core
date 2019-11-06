@@ -10,7 +10,7 @@ import MockAdapter from 'axios-mock-adapter';
 import createHttp from "@src/utils/http";
 import authenticatedStoreState from '@src/store/mocks/authenticatedStore';
 import unauthenticatedStoreState from '@src/store/mocks/unauthenticatedStore';
-import LinkComponent from "../Link/index";
+import LinkComponent from "@src/components/common/Link/index";
 import {loginResponseMock, currentSessionMock} from "./mocks/authMocks";
 
 /** TEST SETUP **/

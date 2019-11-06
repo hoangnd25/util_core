@@ -1,6 +1,6 @@
-import { defineMessages, IntlProvider } from 'react-intl';
-import messagesEN_AU from '../translation/lang/en.json';
-import messagesPT from '../translation/lang/pt.json';
+import { defineMessages } from 'react-intl';
+import messagesEN_AU from '@src/translation/lang/en.json';
+import messagesPT from '@src/translation/lang/pt.json';
 
 export const defaultLocale = 'en';
 

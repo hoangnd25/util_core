@@ -1,6 +1,11 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    // Setting @src as alias for ./src folder, so no ../../../../../ is needed anymore
+    // has to be done in eslintrc.js and next.config.js and .babelrc.js as well
+    "baseUrl": "./src",
+    "paths": {
+      "@src/*": ["*"]
+    },
     "outDir": "./extracted",
     "declaration": false,
     "jsx": "preserve",

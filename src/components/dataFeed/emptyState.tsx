@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { EmptyState } from '@go1d/go1d';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import { defineMessagesList } from '../../utils/translation';
+import { defineMessagesList } from '@src/utils/translation';
 
 interface Props {
   onStart: () => void;

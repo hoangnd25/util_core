@@ -2,15 +2,15 @@ import * as React from 'react';
 import dayjs from 'dayjs';
 import { Spinner, Text, View, Icon } from '@go1d/go1d';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import DataFeedService from '../../../services/dataFeed';
-import { AWSCredential, MappingData } from '../../../types/userDataFeed';
-import { defineMessagesList } from '../../../utils/translation';
-import withAuth from '../../../components/common/WithAuth';
-import SidebarMenus from '../../../components/SidebarMenus';
-import AWSConnectionDetail from '../../../components/awsConnectionDetail';
-import DataFeedEmptyState from '../../../components/dataFeed/emptyState';
-import DataFeedUploadState, { MappingStep } from '../../../components/dataFeed/uploadState';
-import Integrations from '../index';
+import DataFeedService from '@src/services/dataFeed';
+import { AWSCredential, MappingData } from '@src/types/userDataFeed';
+import { defineMessagesList } from '@src/utils/translation';
+import withAuth from '@src/components/common/WithAuth';
+import SidebarMenus from '@src/components/SidebarMenus';
+import AWSConnectionDetail from '@src/components/awsConnectionDetail';
+import DataFeedEmptyState from '@src/components/dataFeed/emptyState';
+import DataFeedUploadState, { MappingStep } from '@src/components/dataFeed/uploadState';
+import Integrations from '@src/pages/integrations';
 
 export const dataFeedService = DataFeedService();
 

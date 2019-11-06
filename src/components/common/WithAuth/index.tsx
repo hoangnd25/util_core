@@ -3,7 +3,7 @@ import Cookies from 'universal-cookie';
 import { connect } from "react-redux";
 import { CurrentSessionType } from "@src/types/user";
 import UserService, { saveSession, removeSession } from '@src/services/userService';
-import { LoadingSpinner } from "../Suspense";
+import { LoadingSpinner } from "@src/components/common/Suspense";
 
 /**
  * The following HOC is used to enable protected routes and inject the "currentSession" object in to the page

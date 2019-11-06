@@ -1,8 +1,8 @@
 import { mount } from 'enzyme';
 import * as React from 'react';
 import { IntlProvider } from 'react-intl';
+import * as clipboardUtil from '@src/utils/clipboard';
 import { AWSConnectionDetail } from './index';
-import * as clipboardUtil from '../../utils/clipboard';
 
 const fakeCredentials = {
   awsBucketUrl: 's3://cd22d769e7d5.credential.name',

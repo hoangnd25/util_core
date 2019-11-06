@@ -1,7 +1,7 @@
 import { PortalModel } from '@go1d/go1d-exchange';
-import SIDEBAR_MENUS from '../../constants/sidebarMenu';
-import { getSidebarTexts } from '../../utils/translation';
-import MasterPage from '../index';
+import SIDEBAR_MENUS from '@src/constants/sidebarMenu';
+import { getSidebarTexts } from '@src/utils/translation';
+import MasterPage from '@src/pages';
 
 class Integrations extends MasterPage {
   constructor(props) {

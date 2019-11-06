@@ -77,7 +77,7 @@ test('should fetch mapping fields', async () => {
     type: 'string',
   }, {
     label: 'status',
-    mappedField: '',
+    mappedField: null,
     name: 'status',
     options: [0, 1, 2],
     published: true,
@@ -100,6 +100,34 @@ test('should send correct payload & url to create mapping', () => {
 
   service.createMapping(fakeMappingPayload, 123);
   expect(http.put).toBeCalledWith('/user-feed/mapping/123', fakeMappingPayload);
+});
+
+test('should fetch mapping data', async () => {
+  const fakeMappings = {
+    mail: 'Email',
+    first_name: 'First Name',
+    last_name: 'Last Name',
+    status: '',
+  };
+
+  mock.onGet('/user-feed/mapping/123').reply(200, {
+    mappings: fakeMappings,
+    updated: 123456789,
+    author: {
+      first_name: 'Testing',
+      last_name: 'User',
+    },
+  });
+
+  const service = dataFeedService(http);
+  const mappingData = await service.fetchMappingData(123);
+  expect(mappingData).toEqual({
+    mappings: fakeMappings,
+    updated: 123456789000,
+    author: {
+      fullName: 'Testing User',
+    },
+  });
 });
 
 test('should fetch AWS connection detail', async () => {

@@ -80,6 +80,14 @@ it('renders without crashing', () => {
   expect(dataFeedService.fetchMappingFields).toHaveBeenCalledWith(123);
 });
 
+it('Should init with default step', () => {
+  spyOn(dataFeedService, 'fetchMappingFields').and.callFake(() => Promise.resolve());
+
+  const Element = setup({ defaultStep: 2 });
+  const Component = Element.find('DataFeedUploadState') as any;
+  expect(Component.state('step')).toEqual(2);
+});
+
 it('should return correct mapped fields', async () => {
   spyOn(dataFeedService, 'createMapping').and.callFake(() => Promise.resolve());
   spyOn(dataFeedService, 'fetchAWSCredentials').and.callFake(() => Promise.resolve());
@@ -89,6 +97,7 @@ it('should return correct mapped fields', async () => {
   const Component = Element.find('DataFeedUploadState') as any;
   const ComponentInstance = Component.instance();
 
+  expect(Component.state('touched')).toBeFalsy();
   Component.setState({ go1Fields: fakeMappingFields });
   ComponentInstance.onMapField(fakeMappingFields[0], 'Email');
 
@@ -125,6 +134,7 @@ it('should return correct mapped fields', async () => {
     required: false,
     type: 'integer',
   }];
+  expect(Component.state('touched')).toBeTruthy();
   expect(Component.state('go1Fields')).toEqual(mappedFields);
   expect(ComponentInstance.validate()).toBeFalsy();
 

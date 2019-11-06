@@ -1,17 +1,23 @@
 import * as React from 'react';
-import { Spinner, Text, View } from '@go1d/go1d';
-import { injectIntl } from 'react-intl';
+import dayjs from 'dayjs';
+import { Spinner, Text, View, Icon } from '@go1d/go1d';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import DataFeedService from '../../../services/dataFeed';
-import { AWSCredential } from '../../../types/userDataFeed';
+import { AWSCredential, MappingData } from '../../../types/userDataFeed';
 import { defineMessagesList } from '../../../utils/translation';
 import withAuth from '../../../components/common/WithAuth';
 import SidebarMenus from '../../../components/SidebarMenus';
 import AWSConnectionDetail from '../../../components/awsConnectionDetail';
 import DataFeedEmptyState from '../../../components/dataFeed/emptyState';
-import DataFeedUploadState from '../../../components/dataFeed/uploadState';
+import DataFeedUploadState, { MappingStep } from '../../../components/dataFeed/uploadState';
 import Integrations from '../index';
 
-const dataFeedService = DataFeedService();
+export const dataFeedService = DataFeedService();
+
+enum DataFeedState {
+  Empty = 1,
+  Upload = 2,
+}
 
 interface Props {
   currentSession: any;
@@ -20,14 +26,18 @@ interface Props {
 interface State {
   step: number;
   isLoading: number;
+  isEditing: number;
   awsCredential: AWSCredential;
+  mappingData: MappingData;
 }
 
 export class UserDataFeed extends Integrations {
   state = {
-    step: 0,
+    step: DataFeedState.Empty,
     isLoading: true,
+    isEditing: false,
     awsCredential: null,
+    mappingData: null,
   };
 
   constructor(props) {
@@ -36,8 +46,7 @@ export class UserDataFeed extends Integrations {
 
   componentDidMount() {
     const { currentSession } = this.props;
-    this.fetchAWSCredentials(currentSession.portal.id)
-      .finally(() => this.setState({ isLoading: false }));
+    this.fetchData(currentSession.portal.id);
   }
 
   getPageTitle() {
@@ -64,18 +73,9 @@ export class UserDataFeed extends Integrations {
     );
   }
 
-  onChangeStep(step: number) {
-    this.setState({ step })
-  }
-
-  fetchAWSCredentials(portalId: number) {
-    return dataFeedService.fetchAWSCredentials(portalId)
-      .then(awsCredential => this.setState({ awsCredential }));
-  }
-
   renderBody() {
-    const { step, isLoading, awsCredential } = this.state;
     const { intl, currentSession } = this.props;
+    const { step, isLoading, isEditing, awsCredential, mappingData } = this.state;
     const yourDataFeedTitle = intl.formatMessage(defineMessagesList().integrationUserDataFeedConnectionDetailTitle);
 
     if (isLoading) {
@@ -84,39 +84,85 @@ export class UserDataFeed extends Integrations {
       );
     }
 
-    if (awsCredential) {
+    if (!isEditing && (awsCredential || mappingData)) {
       return (
         <View minHeight="60vh">
           <View marginBottom={5}>
             <Text element="h3" fontSize={4} fontWeight="semibold">{yourDataFeedTitle}</Text>
           </View>
 
-          <AWSConnectionDetail
-            backgroundColor="faint"
-            expandable={true}
-            awsCredential={awsCredential}
-          />
+          {awsCredential && (
+            <AWSConnectionDetail
+              backgroundColor="faint"
+              expandable={true}
+              awsCredential={awsCredential}
+            />
+          )}
+
+          {mappingData && (
+            <View
+              alignItems="center"
+              backgroundColor="faint"
+              borderColor="soft"
+              flexDirection="row"
+              borderRadius={2}
+              border={1}
+              padding={4}
+              paddingRight={5}
+              marginTop={5}
+              css={{ cursor: "pointer" }}
+              onClick={() => this.setState({step: DataFeedState.Upload, isEditing: true})}
+            >
+              <View flexGrow={1} flexShrink={1}>
+                <Text fontWeight="semibold" fontSize={3}>
+                  <FormattedMessage id="userDataFeed.block.mappingData.title" defaultMessage="Data Mapping" />
+                </Text>
+
+                {(mappingData.updated || mappingData.author) && (
+                  <Text color="subtle" fontWeight="semibold" marginTop={2}>
+                    {mappingData.updated ? dayjs(mappingData.updated).format('DD MMM YYYY') : null} ⋅ {mappingData.author ? mappingData.author.fullName : null}
+                  </Text>
+                )}
+              </View>
+
+              <Icon color="subtle" name="Edit" />
+            </View>
+          )}
         </View>
       );
     }
 
     return (
       <View minHeight="60vh">
-        {step === 0 && (
-          <DataFeedEmptyState onStart={() => this.onChangeStep(1)} />
+        {step === DataFeedState.Empty && (
+          <DataFeedEmptyState onStart={() => this.setState({step: DataFeedState.Upload})} />
         )}
 
-        {step === 1 && (
+        {step === DataFeedState.Upload && (
           <DataFeedUploadState
             currentSession={currentSession}
-            hasConnection={awsCredential ? true : false}
-            onDone={() => this.fetchAWSCredentials(currentSession.portal.id)}
-            onCancel={() => this.onChangeStep(0)}
+            isEditing={isEditing}
+            awsCredential={awsCredential}
+            mappingData={mappingData}
+            defaultStep={isEditing ? MappingStep.Mapping : undefined}
+            onDone={() => this.fetchData(currentSession.portal.id)}
+            onCancel={() => this.setState({step: DataFeedState.Empty, isEditing: false})}
             scrollToTop={() => this.scrollToTop()}
           />
         )}
       </View>
     );
+  }
+
+  private async fetchData(portalId: number) {
+    const awsCredential = await dataFeedService.fetchAWSCredentials(portalId);
+    const mappingData = await dataFeedService.fetchMappingData(portalId);
+
+    this.setState({
+      isLoading: false,
+      awsCredential,
+      mappingData,
+    })
   }
 }
 

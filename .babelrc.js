@@ -15,6 +15,7 @@ module.exports = {
               case "DropdownItem": return `@go1d/go1d/build/components/Dropdown/DropdownItem`;
               case "LI": return `@go1d/go1d/build/components/UL/LI`;
               case "NotificationContainer": return `@go1d/go1d/build/components/Notification/NotificationContainer`;
+              case "NotificationManager": return `@go1d/go1d/build/components/Notification/NotificationManager`;
               // Checked till Letter "I"
               default: return `@go1d/go1d/build/components/${importName}`;
             }

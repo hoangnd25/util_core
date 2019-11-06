@@ -21,10 +21,11 @@ class DataFeedService extends BaseService {
 
   async fetchMappingFields(portalId: number): Promise<MappingField[] | null> {
     const { data: allFields } = await this.http.get(`/user-feed/fields/${portalId}/account`);
-    const { data: allMappingFields } = await this.http.get(`/user-feed/mapping/${portalId}`);
-    const mappingData = (allMappingFields || {}).mappings || {};
 
     if (allFields) {
+      const allMappingFields = await this.fetchMappingData(portalId);
+      const mappingData = (allMappingFields || {}).mappings || {};
+
       return Object.getOwnPropertyNames(allFields)
         .map(fieldName => {
           const { label, type, enum: options, mandatory, published } = allFields[fieldName];
@@ -35,7 +36,7 @@ class DataFeedService extends BaseService {
             name: fieldName,
             required: !!mandatory,
             published: !!published,
-            mappedField: mappingData[fieldName],
+            mappedField: mappingData[fieldName] || null,
           };
         })
         .filter(field => !!field.published);
@@ -46,6 +47,24 @@ class DataFeedService extends BaseService {
 
   createMapping(payload: CreateMappingPayload, portalId: number): Promise<AWSCredential> {
     return this.http.put(`/user-feed/mapping/${portalId}`, payload);
+  }
+
+  async fetchMappingData(portalId: number) {
+    const { data } = await this.http.get(`/user-feed/mapping/${portalId}`);
+    const { mappings, updated = 0, author } = data || {};
+
+    if (mappings) {
+      const { first_name: firstName, last_name: lastName } = author || {};
+      const fullName = [firstName, lastName].filter(field => !!field).join(' ');
+
+      return {
+        ...data,
+        updated: updated * 1000,
+        author: fullName ? { fullName } : null,
+      };
+    }
+
+    return null;
   }
 
   createAWSCredentials(portalId: number): Promise<AWSCredential> {

@@ -478,7 +478,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
 
                 {!isEditing && (
                   <ButtonFilled color="accent" size="lg" onClick={() => this.onMappingDone()}>
-                    <FormattedMessage id="userDataFeed.block.mapping.button.next" defaultMessage="Next" />}
+                    <FormattedMessage id="userDataFeed.block.mapping.button.next" defaultMessage="Next" />
                   </ButtonFilled>
                 )}
 

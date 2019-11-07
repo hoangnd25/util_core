@@ -138,24 +138,32 @@ it('should return correct mapped fields', async () => {
   expect(Component.state('go1Fields')).toEqual(mappedFields);
   expect(ComponentInstance.validate()).toBeFalsy();
 
-  ComponentInstance.onMapField(fakeMappingFields[1], 'First Name');
-  ComponentInstance.onMapField(fakeMappingFields[2], 'Last Name');
+  ComponentInstance.onMapField(fakeMappingFields[1], 'Name');
+  ComponentInstance.onMapField(fakeMappingFields[2], 'Name');
 
   expect(ComponentInstance.validate()).toBeTruthy();
   expect(ComponentInstance.mapFields()).toEqual({
     mail: 'Email',
-    first_name: 'First Name',
-    last_name: 'Last Name',
+    first_name: 'Name',
+    last_name: 'Name',
     status: '',
   });
+
+  expect(ComponentInstance.getMappedFields()).toEqual([{
+    value: 'Email',
+    label: 'Email',
+  }, {
+    value: 'Name',
+    label: 'Name',
+  }]);
 
   await ComponentInstance.onMappingDone();
   const mappingPayload = {
     type: 'account',
     mappings: {
       mail: 'Email',
-      first_name: 'First Name',
-      last_name: 'Last Name',
+      first_name: 'Name',
+      last_name: 'Name',
       status: '',
     },
     rows: [],

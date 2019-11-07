@@ -650,27 +650,25 @@ class DataFeedUploadState extends React.Component<Props, State> {
     return mappedFields;
   }
 
-  private getMappedFields(csvHeader: string[]) {
-    if (csvHeader && csvHeader.length > 0) {
-      return csvHeader
-        .filter(fieldName => !!fieldName)
-        .map(fieldName => {
-          return {
-            value: fieldName,
-            label: fieldName,
-          };
-        });
+  private getMappedFields(csvHeader: string[] = []) {
+    const mappedFields = csvHeader.length > 0 ? csvHeader : [];
+
+    if (mappedFields.length === 0 && this.state.go1Fields) {
+      this.state.go1Fields.forEach(field => {
+        const { mappedField } = field;
+
+        if (!!mappedField && !mappedFields.includes(mappedField)) {
+          mappedFields.push(mappedField);
+        }
+      });
     }
 
-    const { go1Fields } = this.state;
-    return go1Fields
-      .filter(field => !!field.mappedField)
-      .map(field => {
-        return {
-          value: field.mappedField,
-          label: field.mappedField,
-        };
-      });
+    return mappedFields.map(fieldName => {
+      return {
+        value: fieldName,
+        label: fieldName,
+      };
+    });
   }
 }
 

@@ -55,6 +55,7 @@
   "userDataFeed.block.mapping.hideOptionalFields": "Hide all optional fields",
   "userDataFeed.block.mapping.mapWith": "Map with",
   "userDataFeed.block.mapping.optionalLabel": "Optional",
+  "userDataFeed.block.mapping.portalFields": "Portal fields",
   "userDataFeed.block.mapping.requiredErrorMessage": "This field is required",
   "userDataFeed.block.mapping.requiredLabel": "Required",
   "userDataFeed.block.mapping.selectAField": "Select a field",

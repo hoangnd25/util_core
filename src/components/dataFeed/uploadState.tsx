@@ -406,7 +406,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
                 <View flexDirection="row" flexWrap="wrap" marginBottom={4}>
                   <View width={[5/6, 1/2, 1/2]}>
                     <Text fontSize={2} fontWeight="semibold" textTransform="uppercase" color="subtle">
-                      <FormattedMessage id="userDataFeed.block.mapping.go1Fields" defaultMessage="GO1 fields"/>
+                      <FormattedMessage id="userDataFeed.block.mapping.portalFields" defaultMessage="Portal fields"/>
                     </Text>
                   </View>
 

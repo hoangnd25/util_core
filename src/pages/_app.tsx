@@ -15,7 +15,7 @@ import LinkComponent from '@src/components/common/Link';
 import withReduxStore from '@src/store/withReduxStore';
 import AppContext from '@src/utils/appContext';
 import createHttp from '@src/utils/http';
-import { withCurrentSession } from '@src/components/common/WithAuth';
+import { withCurrentSession, withFeatureToggles } from '@src/components/common/WithAuth';
 import { CurrentSessionType } from '@src/types/user';
 import config from '@src/config';
 import { defaultLocale, countryToLocale, messages } from '@src/utils/translation';
@@ -32,8 +32,9 @@ const context = {
 addLocaleData([...locale_en, ...locale_pt]);
 
 interface AppProps {
-    reduxStore: any;
-    currentSession: CurrentSessionType;
+  reduxStore: any;
+  currentSession: CurrentSessionType;
+  featureToggles: Record<string, any>;
 }
 
 export class GO1App extends App<AppProps, any> {
@@ -88,8 +89,9 @@ export class GO1App extends App<AppProps, any> {
 
 
   public render() {
-    const { Component, pageProps, reduxStore, currentSession } = this.props;
+    const { Component, pageProps, reduxStore, currentSession, featureToggles } = this.props;
     const language = this.getLanguage(currentSession);
+
     // Show loading if current Session has not been loaded
     if (currentSession === null) {
       // can be replaced with a skeleton
@@ -111,7 +113,7 @@ export class GO1App extends App<AppProps, any> {
               portalId={parseInt(getNested(currentSession,"portal.id", undefined), 10) }
             >
               <Suspense>
-                <Component router={Router} {...pageProps} />
+                <Component router={Router} featureToggles={featureToggles} {...pageProps} />
                 <NotificationContainer />
               </Suspense>
             </CommonProvider>
@@ -122,6 +124,4 @@ export class GO1App extends App<AppProps, any> {
   }
 }
 
-export default withCurrentSession(withReduxStore(GO1App, { cookies, http }), {
-  http,
-});
+export default withFeatureToggles(withCurrentSession(withReduxStore(GO1App, context), context), context);

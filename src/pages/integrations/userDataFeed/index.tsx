@@ -57,7 +57,7 @@ export class UserDataFeed extends Integrations {
   renderSidebar() {
     const { intl } = this.props;
     const sidebarMenus = this.getSidebarMenus(intl);
-    const sidebarTitle = intl.formatMessage(defineMessagesList().integrationUserDataFeedSidebarTitle);
+    const sidebarTitle = intl.formatMessage(defineMessagesList().integrationSidebarTitle);
 
     return (
       <>

@@ -12,7 +12,7 @@ const mockIntl = {
   formatMessage: (rawMessage: string) => rawMessage,
 };
 
-const setup = (props = {}) => {
+const setup = (props = { featureToggles: {} }) => {
   const currentSession = {
     portal: {
       id: 123,
@@ -47,12 +47,13 @@ const setup = (props = {}) => {
       isAdministrator: true,
     },
   };
+  const { featureToggles, ...nestProps } = props;
 
   return mount(
     <ReduxProvider store={mockStore({ currentSession })}>
       <IntlProvider locale="en">
         <CommonProvider pushNavigationState={jest.fn()} apiUrl="api.go1.co" jwt="jwt" accountId={123} portalId={456}>
-          <Integrations intl={mockIntl} currentSession={currentSession} {...props} />
+          <Integrations {...nestProps} intl={mockIntl} currentSession={currentSession} featureToggles={featureToggles} />
         </CommonProvider>
       </IntlProvider>
     </ReduxProvider>
@@ -60,11 +61,15 @@ const setup = (props = {}) => {
 };
 
 it('renders without crashing', () => {
-  setup();
+  setup({
+    featureToggles: {},
+  });
 });
 
 it('Should returns sidebar menus', () => {
-  const Element = setup();
+  const Element = setup({
+    featureToggles: {},
+  });
   const Page = Element.find(Integrations).instance() as any;
   const sidebarMenus = Page.getSidebarMenus(mockIntl);
 
@@ -112,6 +117,7 @@ it('Should returns sidebar menus', () => {
     },
     href: 'app/integrations/addon/zapier',
     isApiomLink: true,
+    isVisible: false,
   }, {
     id: 'sidebar.integrations-lti-provider',
     title: {
@@ -120,6 +126,7 @@ it('Should returns sidebar menus', () => {
     },
     href: 'app/integrations/addon/ltiprovider',
     isApiomLink: true,
+    isVisible: false,
   }, {
     id: 'sidebar.integrations-vettrak',
     title: {
@@ -128,6 +135,7 @@ it('Should returns sidebar menus', () => {
     },
     href: 'app/integrations/addon/vettrak',
     isApiomLink: true,
+    isVisible: false,
   }, {
     id: 'sidebar.integrations-wisenet',
     title: {
@@ -136,6 +144,7 @@ it('Should returns sidebar menus', () => {
     },
     href: 'app/integrations/addon/wisenet',
     isApiomLink: true,
+    isVisible: false,
   }, {
     id: 'sidebar.integrations-xero',
     title: {
@@ -144,6 +153,7 @@ it('Should returns sidebar menus', () => {
     },
     href: 'app/integrations/addon/xero',
     isApiomLink: true,
+    isVisible: false,
   }, {
     id: 'sidebar.integrations-successfactors',
     title: {
@@ -152,6 +162,7 @@ it('Should returns sidebar menus', () => {
     },
     href: 'app/integrations/addon/successfactors',
     isApiomLink: true,
+    isVisible: false,
   }, {
     id: 'sidebar.integrations-azure',
     title: {
@@ -160,6 +171,7 @@ it('Should returns sidebar menus', () => {
     },
     href: 'app/integrations/addon/azure',
     isApiomLink: true,
+    isVisible: false,
   }, {
     id: 'sidebar.integrations-course-catalog',
     title: {
@@ -193,17 +205,33 @@ it('Should returns sidebar menus', () => {
       id: 'sidebar.integrations-user-data-feed',
       defaultMessage: 'User Data Feed',
     },
-    href: '/r/app/portal/integrations/user-data-feed',
+    href: '/integrations/user-data-feed',
     isApiomLink: false,
-    isVisible: true,
+    isVisible: false,
   }];
+
   expect(sidebarMenus).toEqual(expectedSidebarMenus);
+});
+
+it('Should show user data feed menu', () => {
+  const Element = setup({
+    featureToggles: {
+      'user-data-feed': true,
+    },
+  });
+  const Page = Element.find(Integrations).instance() as any;
+  const sidebarMenus = Page.getSidebarMenus(mockIntl) as any[];
+
+  const dataFeedMenu = sidebarMenus.find(menu => menu.id === 'sidebar.integrations-user-data-feed');
+  expect(dataFeedMenu.isVisible).toBeTruthy();
 });
 
 it('Should format message', () => {
   spyOn(translationUtil, 'getSidebarTexts').and.returnValue({ sidebarMenu: 'Sidebar Menu Title' });
 
-  const Element = setup();
+  const Element = setup({
+    featureToggles: {},
+  });
   const Page = Element.find(Integrations).instance() as any;
 
   const actual = Page.getString('sidebarMenu', mockIntl);

@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { CurrentSessionType } from "@src/types/user";
 import UserService, { saveSession, removeSession } from '@src/services/userService';
 import { LoadingSpinner } from "@src/components/common/Suspense";
+import extractGo1Metadata from '@src/utils/helper';
+import featureToggleService from '@src/services/featureToggleService';
 
 /**
  * The following HOC is used to enable protected routes and inject the "currentSession" object in to the page
@@ -130,4 +132,74 @@ export const withCurrentSession = (App, helpers) =>
           // currentSession is saved to redux in withReduxStore.tsx
           return <App {...restProps} currentSession={currentSessionState} />;
         }
+  };
+
+/**
+ * The following HOC is used to inject the "featureToggles" object
+ */
+export const withFeatureToggles = (App, helpers) =>
+  class FeatureToggles extends React.Component<any, any> {
+    static displayName = 'FeatureToggles';
+
+    public static async getInitialProps(ctx) {
+      const { http } = helpers;
+      const {
+        ctx: { req },
+      } = ctx;
+      let appProps = {};
+      let featureToggles = null;
+
+      if (App.getInitialProps) {
+        appProps = await App.getInitialProps(ctx);
+      }
+
+      if (typeof window === 'undefined') {
+        try {
+          const go1Cookie = new Cookies(req.headers.cookie);
+          const { portalName } = extractGo1Metadata(go1Cookie);
+          featureToggles = await featureToggleService(http).getFeatures(portalName);
+        } catch(err) {}
+      }
+
+      return {
+        ...appProps,
+        featureToggles,
+      };
+    }
+
+    constructor(props) {
+      super(props);
+
+      this.state = {
+        featureToggles: props.featureToggles,
+      };
+    }
+
+    componentDidMount() {
+      this.fetchFeatureToggles();
+    }
+
+    render() {
+      const { featureToggles: featureTogglesState } = this.state;
+      const { featureToggles, ...restProps } = this.props;
+
+      if (featureTogglesState) {
+        return <App {...restProps} featureToggles={featureTogglesState} />;
+      }
+
+      return <App {...this.props} />;
+    }
+
+    private async fetchFeatureToggles() {
+      const { featureTogglesState } = this.state;
+
+      // Server side did not resolve `featureToggles`
+      if (!featureTogglesState) {
+        const { http } = helpers;
+        const { portalName } = extractGo1Metadata();
+        const featureToggles = await featureToggleService(http).getFeatures(portalName);
+
+        this.setState({ featureToggles });
+      }
+    }
   };

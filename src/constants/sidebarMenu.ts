@@ -1,6 +1,7 @@
 const SIDEBAR_MENUS = {
   ADDONS: 'sidebar.integrations-addons',
   SCORM: 'sidebar.integrations-scorm',
+  SCORM_AND_XAPI: 'sidebar.integrations-scorm-and-xapi',
   AUTOPILOT: 'sidebar.integrations-autopilot',
   STRIPE: 'sidebar.integrations-stripe',
   ZAPIER: 'sidebar.integrations-zapier',

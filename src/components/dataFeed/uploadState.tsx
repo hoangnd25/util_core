@@ -338,7 +338,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
       isUploadingFailed,
       uploadError,
       awsCredential,
-      go1Fields,
+      go1Fields = [],
       showOptionalFields,
       mappingError,
     } = this.state;
@@ -633,7 +633,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
   }
 
   private validate() {
-    const { go1Fields } = this.state;
+    const { go1Fields = [] } = this.state;
     const invalidFields = go1Fields.filter(field => field.required && !field.mappedField);
 
     return invalidFields.length === 0;
@@ -641,7 +641,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
 
   private mapFields() {
     let mappedFields = {};
-    const { go1Fields } = this.state;
+    const { go1Fields = [] } = this.state;
 
     go1Fields.forEach(go1Field => {
       mappedFields[go1Field.name] = go1Field.mappedField || '';
@@ -651,10 +651,11 @@ class DataFeedUploadState extends React.Component<Props, State> {
   }
 
   private getMappedFields(csvHeader: string[] = []) {
+    const { go1Fields = [] } = this.state;
     const mappedFields = csvHeader.length > 0 ? csvHeader : [];
 
-    if (mappedFields.length === 0 && this.state.go1Fields) {
-      this.state.go1Fields.forEach(field => {
+    if (mappedFields.length === 0 && go1Fields) {
+      go1Fields.forEach(field => {
         const { mappedField } = field;
 
         if (!!mappedField && !mappedFields.includes(mappedField)) {

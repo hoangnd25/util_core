@@ -3,7 +3,6 @@ import * as React from 'react';
 import { IntlProvider } from 'react-intl';
 import { Provider as ReduxProvider } from 'react-redux';
 import configureMockStore from "redux-mock-store";
-import { View } from '@go1d/go1d';
 import CommonProvider from '@go1d/mine/common/Provider';
 import { UserDataFeed, dataFeedService } from '@src/pages/integrations/userDataFeed';
 
@@ -54,11 +53,15 @@ const setup = (props = {}) => {
 };
 
 it('renders without crashing', () => {
-  setup();
+  setup({
+    featureToggles: {},
+  });
 });
 
 it('Should able to jump to top', () => {
-  const Element = setup();
+  const Element = setup({
+    featureToggles: {},
+  });
   const Page = Element.find(UserDataFeed).instance() as any;
 
   Page.scrollToTop();
@@ -84,7 +87,9 @@ it('renders with mapping data', async () => {
   spyOn(dataFeedService, 'fetchAWSCredentials').and.callFake(() => Promise.resolve(fakeAWSCredentials));
   spyOn(dataFeedService, 'fetchMappingData').and.callFake(() => Promise.resolve(fakeMapping));
 
-  const Element = setup();
+  const Element = setup({
+    featureToggles: {},
+  });
   const Page = Element.find(UserDataFeed);
   await (Page.instance() as any).fetchData();
 

@@ -1,12 +1,6 @@
 import * as React from 'react';
 import { View, Text, foundations, Skeleton } from '@go1d/go1d';
-import featureToggleService from '@src/services/featureToggleService';
-import createHttp from '@src/utils/http';
-import extractGo1Metadata from '@src/utils/helper';
 import Layout from '@src/components/common/Layout';
-
-const SIDEBAR_WIDTH = 220;
-const http = createHttp();
 
 class MasterPage extends React.Component<any, any> {
   pageContentRef: any;
@@ -14,21 +8,6 @@ class MasterPage extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.pageContentRef = React.createRef();
-  }
-
-  public static async getInitialProps() {
-    try {
-      const { portalName } = extractGo1Metadata();
-      const featureToggles = await featureToggleService(http).getFeatures(portalName);
-
-      return {
-        featureToggles,
-      };
-    } catch (e) {
-      return {
-        featureToggles: [],
-      };
-    };
   }
 
   getPageTitle() {
@@ -99,7 +78,7 @@ class MasterPage extends React.Component<any, any> {
                 css={{
                   [foundations.breakpoints.md]: {
                     marginRight: foundations.spacing[5],
-                    width: SIDEBAR_WIDTH,
+                    width: 220,
                   },
                 }}
               >

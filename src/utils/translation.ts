@@ -44,14 +44,22 @@ export const defineMessagesList = () => {
       defaultMessage: 'Failed to save your mapping, please try again or contact us for assistance',
     },
 
+    // Integration detail: SCORM & xAPI
+    integrationSidebarTitle: {
+      id: 'integrationUserDataFeed.sidebarTitle',
+      defaultMessage: 'Integrations',
+    },
+
+    // Integration detail: SCORM & xAPI
+    integrationScormAndXApiTitle: {
+      id: 'integrationScormAndXApi.pageTitle',
+      defaultMessage: 'SCORM and xAPI',
+    },
+
     // Integration detail: User data feed
     integrationUserDataFeedPageTitle: {
       id: 'integrationUserDataFeed.pageTitle',
       defaultMessage: 'User data feed',
-    },
-    integrationUserDataFeedSidebarTitle: {
-      id: 'integrationUserDataFeed.sidebarTitle',
-      defaultMessage: 'Integrations',
     },
     integrationUserDataFeedConnectionDetailTitle: {
       id: 'integrationUserDataFeed.connectionDetailTitle',
@@ -75,6 +83,10 @@ export const getSidebarTexts = () => {
     'sidebar.integrations-scorm': {
       id: 'sidebar.integrations-scorm',
       defaultMessage: 'SCORM',
+    },
+    'sidebar.integrations-scorm-and-xapi': {
+      id: 'sidebar.integrations-scorm-and-xapi',
+      defaultMessage: 'SCORM and xAPI',
     },
     'sidebar.integrations-autopilot': {
       id: 'sidebar.integrations-autopilot',

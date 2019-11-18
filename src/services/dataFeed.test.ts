@@ -1,6 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import createHttpInstance from '@src/utils/http';
 import dataFeedService from './dataFeed';
+import { MappingData } from '@src/types/userDataFeed';
 
 let mock: MockAdapter;
 const http = createHttpInstance();
@@ -103,6 +104,18 @@ test('should send correct payload & url to create mapping', () => {
 });
 
 test('should fetch mapping data', async () => {
+  const assertFetchMapping = async (mockResponse: any, expected: MappingData) => {
+    mock.onGet('/user-feed/mapping/123').reply(200, {
+      ...mockResponse,
+    });
+
+    const service = dataFeedService(http);
+    const mappingData = await service.fetchMappingData(123);
+    expect(mappingData).toEqual({
+      ...expected,
+    });
+  };
+
   const fakeMappings = {
     mail: 'Email',
     first_name: 'First Name',
@@ -110,24 +123,43 @@ test('should fetch mapping data', async () => {
     status: '',
   };
 
-  mock.onGet('/user-feed/mapping/123').reply(200, {
-    mappings: fakeMappings,
-    updated: 123456789,
-    author: {
-      first_name: 'Testing',
-      last_name: 'User',
+  await assertFetchMapping(
+    {
+      mappings: fakeMappings,
+      updated: 123456789,
+      author: {
+        first_name: 'Testing',
+        last_name: 'User',
+      },
     },
-  });
+    {
+      mappings: fakeMappings,
+      updated: 123456789000,
+      author: {
+        fullName: 'Testing User',
+      },
+    }
+  );
 
-  const service = dataFeedService(http);
-  const mappingData = await service.fetchMappingData(123);
-  expect(mappingData).toEqual({
-    mappings: fakeMappings,
-    updated: 123456789000,
-    author: {
-      fullName: 'Testing User',
+  await assertFetchMapping(
+    {
+      mappings: fakeMappings,
+      updated: 123456789,
+      author: {
+        first_name: 'Testing',
+        last_name: 'User',
+      },
+      external_id: 'mail',
     },
-  });
+    {
+      mappings: fakeMappings,
+      updated: 123456789000,
+      author: {
+        fullName: 'Testing User',
+      },
+      externalId: 'mail',
+    }
+  );
 });
 
 test('should fetch AWS connection detail', async () => {

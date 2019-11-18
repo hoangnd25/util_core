@@ -1,6 +1,6 @@
 import Cookies from 'universal-cookie';
 import createHttp, { HttpInstance } from '@src/utils/http';
-import { AWSCredential, MappingField } from '@src/types/userDataFeed';
+import { AWSCredential, MappingField, MappingData } from '@src/types/userDataFeed';
 import BaseService from "./baseService";
 
 const defaultHttp = createHttp();
@@ -49,16 +49,17 @@ class DataFeedService extends BaseService {
     return this.http.put(`/user-feed/mapping/${portalId}`, payload);
   }
 
-  async fetchMappingData(portalId: number) {
+  async fetchMappingData(portalId: number): Promise<MappingData> {
     const { data } = await this.http.get(`/user-feed/mapping/${portalId}`);
-    const { mappings, updated = 0, author } = data || {};
+    const { mappings, updated = 0, author, external_id: externalId } = data || {};
 
     if (mappings) {
       const { first_name: firstName, last_name: lastName } = author || {};
       const fullName = [firstName, lastName].filter(field => !!field).join(' ');
 
       return {
-        ...data,
+        mappings,
+        externalId,
         updated: updated * 1000,
         author: fullName ? { fullName } : null,
       };

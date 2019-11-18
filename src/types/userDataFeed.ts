@@ -16,6 +16,7 @@ export interface MappingField {
 
 export interface MappingData {
   mappings: Record<string, string>;
+  externalId?: string;
   updated: number;
   author: object;
 }

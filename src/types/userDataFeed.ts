@@ -12,6 +12,7 @@ export interface MappingField {
   published: boolean;
   options: any[];
   mappedField?: string;
+  weight: string;
 }
 
 export interface MappingData {

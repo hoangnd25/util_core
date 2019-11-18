@@ -16,7 +16,8 @@ test('should fetch mapping fields', async () => {
       type: 'string',
       enum: [],
       mandatory: '1',
-      published: '1'
+      published: '1',
+      weight: "74",
     },
     first_name: {
       label: 'first name',
@@ -52,39 +53,46 @@ test('should fetch mapping fields', async () => {
 
   const service = dataFeedService(http);
   const actual = await service.fetchMappingFields(123);
-  const expected = [{
-    label: 'mail',
-    mappedField: 'Email',
-    name: 'mail',
-    options: [],
-    published: true,
-    required: true,
-    type: 'string',
-  }, {
-    label: 'first name',
-    mappedField: 'First Name',
-    name: 'first_name',
-    options: [],
-    published: true,
-    required: true,
-    type: 'string',
-  }, {
-    label: 'last name',
-    mappedField: 'Last Name',
-    name: 'last_name',
-    options: [],
-    published: true,
-    required: true,
-    type: 'string',
-  }, {
-    label: 'status',
-    mappedField: null,
-    name: 'status',
-    options: [0, 1, 2],
-    published: true,
-    required: false,
-    type: 'integer',
-  }];
+  const expected = {
+    externalId: 'mail',
+    go1Fields: [{
+      label: 'mail',
+      mappedField: 'Email',
+      name: 'mail',
+      options: [],
+      published: true,
+      required: true,
+      type: 'string',
+      weight: "74",
+    }, {
+      label: 'first name',
+      mappedField: 'First Name',
+      name: 'first_name',
+      options: [],
+      published: true,
+      required: true,
+      type: 'string',
+      weight: "0",
+    }, {
+      label: 'last name',
+      mappedField: 'Last Name',
+      name: 'last_name',
+      options: [],
+      published: true,
+      required: true,
+      type: 'string',
+      weight: "0",
+    }, {
+      label: 'status',
+      mappedField: null,
+      name: 'status',
+      options: [0, 1, 2],
+      published: true,
+      required: false,
+      type: 'integer',
+      weight: "0",
+    }],
+  };
 
   expect(actual).toEqual(expected);
 });
@@ -95,6 +103,7 @@ test('should send correct payload & url to create mapping', () => {
   const service = dataFeedService(http);
   const fakeMappingPayload = {
     type: 'account',
+    external_id: 'mail',
     mappings: {},
     rows: [],
   } as any;

@@ -13,6 +13,7 @@ const fakeMappingFields = [{
   published: true,
   required: true,
   type: 'string',
+  weight: "74",
 }, {
   label: 'first name',
   mappedField: '',
@@ -37,6 +38,15 @@ const fakeMappingFields = [{
   published: true,
   required: false,
   type: 'integer',
+}, {
+  label: 'ECK Field',
+  mappedField: '',
+  name: 'eck',
+  options: [0, 1, 2],
+  published: true,
+  required: true,
+  type: 'integer',
+  weight: "74",
 }];
 
 jest.mock("react-dropzone", () => ({
@@ -80,7 +90,7 @@ it('renders without crashing', () => {
   expect(dataFeedService.fetchMappingFields).toHaveBeenCalledWith(123);
 });
 
-it('Should init with default step', () => {
+it('Should init with default step', async () => {
   spyOn(dataFeedService, 'fetchMappingFields').and.callFake(() => Promise.resolve());
 
   const Element = setup({ defaultStep: 2 });
@@ -89,6 +99,10 @@ it('Should init with default step', () => {
 });
 
 it('should return correct mapped fields', async () => {
+  spyOn(dataFeedService, 'fetchMappingFields').and.callFake(() => Promise.resolve({
+    go1Fields: fakeMappingFields,
+    externalId: 'mail',
+  }));
   spyOn(dataFeedService, 'createMapping').and.callFake(() => Promise.resolve());
   spyOn(dataFeedService, 'fetchAWSCredentials').and.callFake(() => Promise.resolve());
   spyOn(dataFeedService, 'createAWSCredentials').and.callFake(() => Promise.resolve());
@@ -97,8 +111,8 @@ it('should return correct mapped fields', async () => {
   const Component = Element.find('DataFeedUploadState') as any;
   const ComponentInstance = Component.instance();
 
+  await ComponentInstance.componentDidMount();
   expect(Component.state('touched')).toBeFalsy();
-  Component.setState({ go1Fields: fakeMappingFields });
   ComponentInstance.onMapField(fakeMappingFields[0], 'Email');
 
   const mappedFields = [{
@@ -109,6 +123,7 @@ it('should return correct mapped fields', async () => {
     published: true,
     required: true,
     type: 'string',
+    weight: "74",
   }, {
     label: 'first name',
     mappedField: '',
@@ -133,16 +148,30 @@ it('should return correct mapped fields', async () => {
     published: true,
     required: false,
     type: 'integer',
+  }, {
+    label: 'ECK Field',
+    mappedField: '',
+    name: 'eck',
+    options: [0, 1, 2],
+    published: true,
+    required: true,
+    type: 'integer',
+    weight: "74",
   }];
   expect(Component.state('touched')).toBeTruthy();
   expect(Component.state('go1Fields')).toEqual(mappedFields);
+  expect(Component.state('externalIdFields')[0].value).toEqual('mail');
+  expect(Component.state('externalIdFields')[1].value).toEqual('eck');
+  expect(Component.state('externalId')).toEqual('mail');
   expect(ComponentInstance.validate()).toBeFalsy();
 
   ComponentInstance.onMapField(fakeMappingFields[1], 'Name');
   ComponentInstance.onMapField(fakeMappingFields[2], 'Name');
+  ComponentInstance.onMapField(fakeMappingFields[4], 'Name');
 
   expect(ComponentInstance.validate()).toBeTruthy();
   expect(ComponentInstance.mapFields()).toEqual({
+    eck: 'Name',
     mail: 'Email',
     first_name: 'Name',
     last_name: 'Name',
@@ -157,10 +186,13 @@ it('should return correct mapped fields', async () => {
     label: 'Name',
   }]);
 
+  await ComponentInstance.onMapExternalId('eck');
   await ComponentInstance.onMappingDone();
   const mappingPayload = {
     type: 'account',
+    external_id: 'eck',
     mappings: {
+      eck: 'Name',
       mail: 'Email',
       first_name: 'Name',
       last_name: 'Name',

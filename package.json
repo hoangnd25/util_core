@@ -7,7 +7,7 @@
     "analyze": "webpack-bundle-analyzer ./.next/stats.json",
     "build": "next build",
     "build:langs": "npm run trans:compile && npm run trans:extract && npm run trans:manage && npm run rm:extracted",
-    "dev": "node server.js",
+    "dev": "node --inspect server.js",
     "lint": "eslint src/**/*.{ts,tsx} --ignore-pattern src/**/*.test.* -c .eslintrc.js  --fix",
     "rm:extracted": "rimraf extracted",
     "serve": "NODE_ENV=production node server.js",

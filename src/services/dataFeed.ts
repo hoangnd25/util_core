@@ -11,6 +11,7 @@ export type CsvData = string[][];
 export interface CreateMappingPayload {
   type: 'account',
   mappings: MappedFields,
+  external_id: string,
   rows: CsvData,
 }
 
@@ -19,21 +20,27 @@ class DataFeedService extends BaseService {
     super(http, go1CookieValue);
   }
 
-  async fetchMappingFields(portalId: number): Promise<MappingField[] | null> {
+  async fetchMappingFields(portalId: number): Promise<{ go1Fields: MappingField[], externalId: string } | null> {
     const { data: allFields } = await this.http.get(`/user-feed/fields/${portalId}/account`);
+    const formattedResult = {
+      go1Fields: [],
+      externalId: 'mail',
+    };
 
     if (allFields) {
       const allMappingFields = await this.fetchMappingData(portalId);
       const mappingData = (allMappingFields || {}).mappings || {};
 
-      return Object.getOwnPropertyNames(allFields)
+      formattedResult.externalId = (allMappingFields || {}).externalId || 'mail';
+      formattedResult.go1Fields = Object.getOwnPropertyNames(allFields)
         .map(fieldName => {
-          const { label, type, enum: options, mandatory, published } = allFields[fieldName];
+          const { label, type, enum: options, mandatory, published, weight } = allFields[fieldName];
           return {
             type,
             label,
             options,
             name: fieldName,
+            weight: weight !== undefined ? weight : "0",
             required: !!mandatory,
             published: !!published,
             mappedField: mappingData[fieldName] || null,
@@ -42,7 +49,7 @@ class DataFeedService extends BaseService {
         .filter(field => !!field.published);
     }
 
-    return null;
+    return formattedResult;
   }
 
   createMapping(payload: CreateMappingPayload, portalId: number): Promise<AWSCredential> {

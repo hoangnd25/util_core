@@ -55,6 +55,8 @@
   "userDataFeed.block.mapping.button.update": "Update",
   "userDataFeed.block.mapping.csvFields": "CSV fields",
   "userDataFeed.block.mapping.edit.yourDataFeed": "Your data feed",
+  "userDataFeed.block.mapping.editingExternalIdHelpText": "Set a field with a unique value as the unique identifier",
+  "userDataFeed.block.mapping.editingExternalIdTitle": "Unique identifier",
   "userDataFeed.block.mapping.editingSubTitle": "You can edit your current mapping rules",
   "userDataFeed.block.mapping.editingTitle": "Data mapping details",
   "userDataFeed.block.mapping.failedError": "Failed to save your mapping, please try again or contact us for assistance",

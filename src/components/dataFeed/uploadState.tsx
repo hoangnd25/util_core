@@ -23,7 +23,7 @@ import AWSConnectionDetail from '@src/components/awsConnectionDetail';
 
 interface CSVField {
   value: string;
-  label: string;
+  label: string | React.ReactNode;
 }
 
 interface Props {
@@ -49,6 +49,8 @@ interface State {
   step: MappingStep;
   csvData: CsvData;
   csvFields: CSVField[];
+  externalId: string;
+  externalIdFields: CSVField[],
   go1Fields: MappingField[];
   showOptionalFields: boolean;
   mappingError: string;
@@ -74,6 +76,8 @@ class DataFeedUploadState extends React.Component<Props, State> {
 
     csvData: [],
     csvFields: [],
+    externalId: 'mail',
+    externalIdFields: [],
     go1Fields: [],
     step: MappingStep.Upload,
     showOptionalFields: false,
@@ -89,7 +93,11 @@ class DataFeedUploadState extends React.Component<Props, State> {
     }
 
     dataFeedService.fetchMappingFields(currentSession.portal.id)
-      .then(go1Fields => this.setState({ go1Fields }));
+      .then(data => this.setState({
+        go1Fields: data.go1Fields,
+        externalIdFields: this.getAvailableExternalIdFields(data.go1Fields),
+        externalId: data.externalId,
+      }));
   }
 
   onParseFile(file: File) {
@@ -142,15 +150,24 @@ class DataFeedUploadState extends React.Component<Props, State> {
     });
   }
 
+  onMapExternalId(value: string) {
+    this.setState({
+      touched: true,
+      externalId: value,
+    });
+  }
+
   onMappingDone() {
     this.setState({ submitted: true });
 
     if (this.validate()) {
       const { isEditing, scrollToTop, currentSession, awsCredential: awsCredentialProp } = this.props;
+      const { externalId } = this.state;
       const portalId = currentSession.portal && currentSession.portal.id;
       const payload: CreateMappingPayload = {
         type: 'account',
         mappings: this.mapFields(),
+        external_id: externalId,
         rows: this.state.csvData.slice(0, 5), // get Header & 5 first records
       };
 
@@ -186,11 +203,11 @@ class DataFeedUploadState extends React.Component<Props, State> {
     return [1, 2, 3, 4, 5, 6, 7, 8].map(skeOrder => {
       return (
         <View flexDirection="row" flexWrap="wrap" borderColor="soft" borderTop={skeOrder === 1 ? 0 : 1} paddingY={3} key={`mapping-skeleton-${skeOrder}`}>
-          <View width={[1/2, 1/2, 1/2]}>
+          <View width={[1 / 2, 1 / 2, 1 / 2]}>
             <Skeleton backgroundColor="faint" maxWidth="60%" borderRadius={2} height={foundations.spacing[6]} />
           </View>
 
-          <View width={[1/2, 1/2, 1/2]}>
+          <View width={[1 / 2, 1 / 2, 1 / 2]}>
             <Skeleton backgroundColor="faint" maxWidth="60%" borderRadius={2} height={foundations.spacing[6]} />
           </View>
         </View>
@@ -211,7 +228,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
 
     return (
       <View flexDirection="row" flexWrap="wrap" borderColor="soft" borderBottom={1} paddingY={3}>
-        <View width={[1/2, 1/2, 1/2]}>
+        <View width={[1 / 2, 1 / 2, 1 / 2]}>
           <View alignItems="center" flexDirection="row" flexShrink={1} flexGrow={1}>
             <Text fontSize={2} textTransform="capitalize">{go1Field.label}</Text>
 
@@ -223,7 +240,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
                       [foundations.breakpoints.sm]: { display: "none" },
                     }}
                   >
-                    <FormattedMessage id="userDataFeed.block.mapping.requiredLabel" defaultMessage="Required"/>
+                    <FormattedMessage id="userDataFeed.block.mapping.requiredLabel" defaultMessage="Required" />
                   </View>
 
                   <View css={{
@@ -236,7 +253,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
                 <View css={{
                   [foundations.breakpoints.sm]: { display: "none" },
                 }}>
-                  <FormattedMessage id="userDataFeed.block.mapping.optionalLabel" defaultMessage="Optional"/>
+                  <FormattedMessage id="userDataFeed.block.mapping.optionalLabel" defaultMessage="Optional" />
                 </View>
               )}
             </Text>
@@ -245,7 +262,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
 
         {/* Mapping action on desktop */}
         <View
-          width={[1/2, 1/2, 1/2]}
+          width={[1 / 2, 1 / 2, 1 / 2]}
           display="none"
           css={{
             [foundations.breakpoints.md]: { display: "flex" },
@@ -263,14 +280,14 @@ class DataFeedUploadState extends React.Component<Props, State> {
 
           {submitted && go1Field.required && !go1Field.mappedField && (
             <Text color="danger" fontSize={1} marginTop={3}>
-              <FormattedMessage id="userDataFeed.block.mapping.requiredErrorMessage" defaultMessage="This field is required"/>
+              <FormattedMessage id="userDataFeed.block.mapping.requiredErrorMessage" defaultMessage="This field is required" />
             </Text>
           )}
         </View>
 
         {/* Mapping action on mobile */}
         <View
-          width={[1/2, 1/2, 1/2]}
+          width={[1 / 2, 1 / 2, 1 / 2]}
           css={{
             [foundations.breakpoints.md]: { display: "none" },
           }}
@@ -281,7 +298,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
             value={go1Field.mappedField}
             options={go1Field.required ? csvFields : skipOptions.concat(csvFields)}
             onChange={({ target }) => this.onMapField(go1Field, target.value)}
-           >
+          >
             {({ ref, getToggleButtonProps }) => (
               <ButtonFilled
                 {...getToggleButtonProps()}
@@ -301,13 +318,13 @@ class DataFeedUploadState extends React.Component<Props, State> {
                     }}
                   >
                     {go1Field.mappedField || (
-                      <Text><FormattedMessage id="userDataFeed.block.mapping.mapWith" defaultMessage="Map with"/>...</Text>
+                      <Text><FormattedMessage id="userDataFeed.block.mapping.mapWith" defaultMessage="Map with" />...</Text>
                     )}
                   </Text>
                 </View>
               </ButtonFilled>
             )}
-           </SelectDropdown>
+          </SelectDropdown>
         </View>
 
         {submitted && go1Field.required && !go1Field.mappedField && (
@@ -321,12 +338,92 @@ class DataFeedUploadState extends React.Component<Props, State> {
             }}
           >
             <Text color="danger" fontSize={1} marginTop={3}>
-              <FormattedMessage id="userDataFeed.block.mapping.requiredErrorMessage" defaultMessage="This field is required"/>
+              <FormattedMessage id="userDataFeed.block.mapping.requiredErrorMessage" defaultMessage="This field is required" />
             </Text>
           </View>
         )}
       </View>
     );
+  }
+
+  renderExternalId() {
+    const { externalId, externalIdFields } = this.state;
+    const current: CSVField = externalIdFields.find(field => field.value === externalId);
+    if (current === undefined) {
+      return null;
+    }
+
+    return (
+      <>
+        <FormattedMessage id="userDataFeed.block.mapping.editingExternalIdTitle" defaultMessage="Unique identifier" />
+        <View flexDirection="row" flexWrap="wrap" borderColor="soft" paddingY={3}>
+          {/* Mapping action on desktop */}
+          <View
+            width={[1 / 2, 1 / 2, 1 / 2]}
+            display="none"
+            css={{
+              [foundations.breakpoints.md]: { display: "flex" },
+            }}
+          >
+            <View maxWidth="220">
+              <Select
+                options={externalIdFields}
+                value={externalId}
+                onChange={({ target }) => this.onMapExternalId(target.value)}
+              >
+              </Select>
+            </View>
+          </View>
+
+          {/* Mapping action on mobile */}
+          <View
+            width={[1 / 2, 1 / 2, 1 / 2]}
+            css={{
+              [foundations.breakpoints.md]: { display: "none" },
+            }}
+          >
+            <SelectDropdown
+              optionRenderer={null}
+              closeOnSelection={true}
+              value={current.value}
+              options={externalIdFields}
+              onChange={({ target }) => this.onMapExternalId(target.value)}
+            >
+              {({ ref, getToggleButtonProps }) => (
+                <ButtonFilled
+                  {...getToggleButtonProps()}
+                  innerRef={ref}
+                  justifyContent="flex-start"
+                >
+                  <View flexDirection="row" alignItems="center">
+                    {current.value && <Icon name="Check" marginRight={3} />}
+                    <Text
+                      flexShrink={1}
+                      flexGrow={1}
+                      fontWeight="normal"
+                      css={{
+                        overflow: "hidden",
+                        whiteSpace: "nowrap",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
+                      {current.label || (
+                        <Text><FormattedMessage id="userDataFeed.block.mapping.mapWith" defaultMessage="Map with" />...</Text>
+                      )}
+                    </Text>
+                  </View>
+                </ButtonFilled>
+              )}
+            </SelectDropdown>
+          </View>
+        </View>
+        <Text
+          color='subtle'
+          fontSize={2}>
+          <FormattedMessage id="userDataFeed.block.mapping.editingExternalIdHelpText" defaultMessage="Set a field with a unique value as the unique identifier" />
+        </Text>
+      </>
+    )
   }
 
   render() {
@@ -380,22 +477,26 @@ class DataFeedUploadState extends React.Component<Props, State> {
             >
               <Icon name="ChevronLeft" />
               <Text fontSize={2} marginLeft={3}>
-                <FormattedMessage id="userDataFeed.block.mapping.edit.yourDataFeed" defaultMessage="Your data feed"/>
+                <FormattedMessage id="userDataFeed.block.mapping.edit.yourDataFeed" defaultMessage="Your data feed" />
               </Text>
             </View>
           )}
 
           <Text fontWeight="semibold" fontSize={4} marginBottom={3}>
-            {!isEditing && <FormattedMessage id="userDataFeed.block.mapping.title" defaultMessage="Create mapping rules"/>}
-            {isEditing && <FormattedMessage id="userDataFeed.block.mapping.editingTitle" defaultMessage="Data mapping details"/>}
+            {!isEditing && <FormattedMessage id="userDataFeed.block.mapping.title" defaultMessage="Create mapping rules" />}
+            {isEditing && <FormattedMessage id="userDataFeed.block.mapping.editingTitle" defaultMessage="Data mapping details" />}
           </Text>
           <Text marginTop={2}>
-            {!isEditing && <FormattedMessage id="userDataFeed.block.mapping.subTitle" defaultMessage="Map the fields in your CSV file to the portal fields"/>}
-            {isEditing && <FormattedMessage id="userDataFeed.block.mapping.editingSubTitle" defaultMessage="You can edit your current mapping rules"/>}
+            {!isEditing && <FormattedMessage id="userDataFeed.block.mapping.subTitle" defaultMessage="Map the fields in your CSV file to the portal fields" />}
+            {isEditing && <FormattedMessage id="userDataFeed.block.mapping.editingSubTitle" defaultMessage="You can edit your current mapping rules" />}
           </Text>
 
           {go1Fields.length > 0 && (
             <>
+              <View width="100%" marginTop={6}>
+                {this.renderExternalId()}
+              </View>
+
               <View width="100%" marginTop={6}>
                 {mappingError && (
                   <Banner type="danger" marginBottom={6}>
@@ -404,13 +505,13 @@ class DataFeedUploadState extends React.Component<Props, State> {
                 )}
 
                 <View flexDirection="row" flexWrap="wrap" marginBottom={4}>
-                  <View width={[5/6, 1/2, 1/2]}>
+                  <View width={[5 / 6, 1 / 2, 1 / 2]}>
                     <Text fontSize={2} fontWeight="semibold" textTransform="uppercase" color="subtle">
-                      <FormattedMessage id="userDataFeed.block.mapping.portalFields" defaultMessage="Portal fields"/>
+                      <FormattedMessage id="userDataFeed.block.mapping.portalFields" defaultMessage="Portal fields" />
                     </Text>
                   </View>
 
-                  <View width={[1/6, 1/2, 1/2]}>
+                  <View width={[1 / 6, 1 / 2, 1 / 2]}>
                     <Text
                       fontSize={2}
                       fontWeight="semibold"
@@ -422,7 +523,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
                         }
                       }}
                     >
-                      <FormattedMessage id="userDataFeed.block.mapping.csvFields" defaultMessage="CSV fields"/>
+                      <FormattedMessage id="userDataFeed.block.mapping.csvFields" defaultMessage="CSV fields" />
                     </Text>
                   </View>
                 </View>
@@ -459,10 +560,10 @@ class DataFeedUploadState extends React.Component<Props, State> {
                         }
                       }}
                     >
-                      <Icon name={ showOptionalFields ? 'ChevronUp' : 'ChevronDown'} />
+                      <Icon name={showOptionalFields ? 'ChevronUp' : 'ChevronDown'} />
                       <Text fontSize={2} marginLeft={3}>
-                        {!showOptionalFields && <FormattedMessage id="userDataFeed.block.mapping.showOptionalFields" defaultMessage="Show all optional fields"/>}
-                        {showOptionalFields && <FormattedMessage id="userDataFeed.block.mapping.hideOptionalFields" defaultMessage="Hide all optional fields"/>}
+                        {!showOptionalFields && <FormattedMessage id="userDataFeed.block.mapping.showOptionalFields" defaultMessage="Show all optional fields" />}
+                        {showOptionalFields && <FormattedMessage id="userDataFeed.block.mapping.hideOptionalFields" defaultMessage="Hide all optional fields" />}
                       </Text>
                     </View>
                   </>
@@ -472,7 +573,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
               <View flexDirection="row" justifyContent={isEditing ? "flex-end" : "space-between"} width="100%" marginTop={7}>
                 {!isEditing && (
                   <ButtonFilled size="lg" onClick={() => onCancel()}>
-                    <FormattedMessage id="userDataFeed.block.mapping.button.cancel" defaultMessage="Cancel"/>
+                    <FormattedMessage id="userDataFeed.block.mapping.button.cancel" defaultMessage="Cancel" />
                   </ButtonFilled>
                 )}
 
@@ -509,10 +610,10 @@ class DataFeedUploadState extends React.Component<Props, State> {
     return (
       <>
         <Text fontWeight="semibold" fontSize={4} marginBottom={3}>
-          <FormattedMessage id="data.feed.upload.block.title" defaultMessage="Select file"/>
+          <FormattedMessage id="data.feed.upload.block.title" defaultMessage="Select file" />
         </Text>
         <Text marginTop={2}>
-          <FormattedMessage id="data.feed.upload.block.sub.title" defaultMessage="Browse for a CSV file to upload for setting up fields mapping rules."/>
+          <FormattedMessage id="data.feed.upload.block.sub.title" defaultMessage="Browse for a CSV file to upload for setting up fields mapping rules." />
         </Text>
 
         <View
@@ -521,7 +622,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
           borderRadius={2}
           backgroundColor="faint"
           marginTop={6}
-          width={[1, 1, 3/5]}
+          width={[1, 1, 3 / 5]}
           css={{
             borderWidth: '1px',
             borderStyle: 'solid',
@@ -535,9 +636,9 @@ class DataFeedUploadState extends React.Component<Props, State> {
               onChange={files => this.onParseFile(files[0])}
               onDropRejected={files => this.onReject(files[0])}
             >
-              {({open, getRootProps, isDragActive}) => (
+              {({ open, getRootProps, isDragActive }) => (
                 <View
-                  {...getRootProps({refKey: 'innerRef'})}
+                  {...getRootProps({ refKey: 'innerRef' })}
                   flexDirection="row"
                   justifyContent="space-between"
                   alignItems="center"
@@ -566,14 +667,14 @@ class DataFeedUploadState extends React.Component<Props, State> {
                     >
                       {
                         isDragActive
-                          ? <FormattedMessage id="data.feed.upload.block.uploader.dragging" defaultMessage="Drop it here"/>
-                          : <FormattedMessage id="data.feed.upload.block.uploader.drag" defaultMessage="Drag and drop to upload"/>
+                          ? <FormattedMessage id="data.feed.upload.block.uploader.dragging" defaultMessage="Drop it here" />
+                          : <FormattedMessage id="data.feed.upload.block.uploader.drag" defaultMessage="Drag and drop to upload" />
                       }
                     </Text>
                   </View>
 
                   <Button iconName="Upload">
-                    <FormattedMessage id="data.feed.upload.block.upload.choose.file" defaultMessage="Choose a file"/>
+                    <FormattedMessage id="data.feed.upload.block.upload.choose.file" defaultMessage="Choose a file" />
                   </Button>
                 </View>
               )}
@@ -591,8 +692,8 @@ class DataFeedUploadState extends React.Component<Props, State> {
             >
               {isUploading && (
                 <View flexDirection="row">
-                  <Spinner marginRight={3} size={3}/>
-                  <Text color="subtle"><FormattedMessage id="data.feed.upload.block.uploading" defaultMessage="Uploading"/>...</Text>
+                  <Spinner marginRight={3} size={3} />
+                  <Text color="subtle"><FormattedMessage id="data.feed.upload.block.uploading" defaultMessage="Uploading" />...</Text>
                 </View>
               )}
 
@@ -602,16 +703,16 @@ class DataFeedUploadState extends React.Component<Props, State> {
                   justifyContent="space-between"
                 >
                   <View flexDirection="row" alignItems="center">
-                    <Icon color="danger" name="NotPassed" marginRight={3} size={3}/>
+                    <Icon color="danger" name="NotPassed" marginRight={3} size={3} />
                     <Text color="danger">
-                      <FormattedMessage id="data.feed.upload.block.upload.failed" defaultMessage="Upload failed"/>
+                      <FormattedMessage id="data.feed.upload.block.upload.failed" defaultMessage="Upload failed" />
                     </Text>
                   </View>
                   <Button
                     color="accent"
                     onClick={() => this.setState({ isShowUploader: true, uploadError: null })}
                   >
-                    <FormattedMessage id="data.feed.upload.block.upload.retry" defaultMessage="Retry"/>
+                    <FormattedMessage id="data.feed.upload.block.upload.retry" defaultMessage="Retry" />
                   </Button>
                 </View>
               )}
@@ -625,7 +726,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
 
         <View flexDirection="row" justifyContent="flex-start" width="100%" marginTop={7}>
           <ButtonFilled size="lg" onClick={() => onCancel()}>
-            <FormattedMessage id="data.feed.upload.block.cancel.button" defaultMessage="Cancel"/>
+            <FormattedMessage id="data.feed.upload.block.cancel.button" defaultMessage="Cancel" />
           </ButtonFilled>
         </View>
       </>
@@ -648,6 +749,15 @@ class DataFeedUploadState extends React.Component<Props, State> {
     });
 
     return mappedFields;
+  }
+
+  private getAvailableExternalIdFields(go1Fields: MappingField[]): CSVField[] {
+    return go1Fields
+      .filter((field: MappingField) => field.weight === "74")
+      .map((field: MappingField) => ({
+        value: field.name,
+        label: (<Text fontSize={2} textTransform="capitalize">{field.label}</Text>),
+      }));
   }
 
   private getMappedFields(csvHeader: string[] = []) {

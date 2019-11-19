@@ -71,7 +71,7 @@ export class ScormAndXapi extends Integrations {
           <View data-testid="scormAndXApi.hasApplicationID">
             <View marginBottom={6}>
               <Text>
-                <FormattedMessage id="integrationScormAndXApi.hasApplicationIDDesc" defaultMessage="Application ID can be used as a SCORM or an xAPI Provider. You can download your content as .scorm or .xapi extension in Course Over page > Settings > Publish / Sharing menu." />
+                <FormattedMessage id="integrationScormAndXApi.hasApplicationIDDesc" defaultMessage="This application ID can be used as a SCORM or xAPI provider. You can now download your content in SCORM or xAPI format from the Publish / Sharing menu found in the Settings section of each piece of training." />
               </Text>
             </View>
 
@@ -122,7 +122,10 @@ export class ScormAndXapi extends Integrations {
           <View data-testid="scormAndXApi.noApplicationID">
             <View marginBottom={6}>
               <Text>
-                <FormattedMessage id="integrationScormAndXApi.noApplicationIDDesc" defaultMessage="Your portal have SCORM and xAPI enabled. Click Generate Application ID button to create an application ID." />
+                <FormattedMessage id="integrationScormAndXApi.noApplicationIDDesc" defaultMessage="You are one click away from having the ability to export training as SCORM and xAPI enabled on your portal." />
+              </Text>
+              <Text>
+                <FormattedMessage id="integrationScormAndXApi.noApplicationIDGenerateAction" defaultMessage="Click Generate Application ID button below to create an application ID." />
               </Text>
             </View>
 

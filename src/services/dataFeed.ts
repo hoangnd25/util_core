@@ -75,18 +75,29 @@ class DataFeedService extends BaseService {
     return null;
   }
 
-  createAWSCredentials(portalId: number): Promise<AWSCredential> {
-    return this.http.post(`/user-feed/connection/${ portalId }`)
-      .then(() => this.fetchAWSCredentials(portalId));
+  createAWSCredentials(portalId: number, isFixData = false): Promise<AWSCredential> {
+    return this.http.post(`/user-feed/connection/${ portalId }${ isFixData ? '?fix=true' : '' }`)
+      .then(response => this.formatConnection(response.data, !isFixData));
   }
 
   async fetchAWSCredentials(portalId: number) {
     const { data } = await this.http.get(`/user-feed/connection/${ portalId }`);
-    const { aws_bucket_url, aws_access_key_id, aws_secret_access_key } = data;
+    return this.formatConnection(data);
+  }
 
-    if (data && aws_bucket_url) {
+  private formatConnection(rawData, isNew = false) {
+    const {
+      aws_bucket_url,
+      aws_created_date,
+      aws_access_key_id,
+      aws_secret_access_key,
+    } = rawData || {};
+
+    if (aws_bucket_url) {
       return {
+        isNew,
         awsBucketUrl: aws_bucket_url,
+        awsCreatedDate: aws_created_date,
         awsAccessKeyId: aws_access_key_id,
         awsSecretKey: aws_secret_access_key,
       };

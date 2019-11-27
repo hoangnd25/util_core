@@ -78,7 +78,12 @@ const setup = (props = {}) => {
   };
   return mount(
     <IntlProvider locale="en">
-      <DataFeedUploadState scrollToTop={scrollToTopFn} onCancel={fakeOnCancel} currentSession={currentSession} intl={jest.fn()} {...props} />
+      <DataFeedUploadState
+        scrollToTop={scrollToTopFn}
+        onCancel={fakeOnCancel}
+        currentSession={currentSession}
+        intl={jest.fn()}
+        {...props} />
     </IntlProvider>
   );
 };
@@ -201,6 +206,53 @@ it('should return correct mapped fields', async () => {
     rows: [],
   }
   expect(dataFeedService.createMapping).toHaveBeenCalledWith(mappingPayload, 123);
+  expect(dataFeedService.createAWSCredentials).toHaveBeenCalledWith(123);
+});
+
+it('should not update existing connection', async () => {
+  spyOn(dataFeedService, 'createMapping').and.callFake(() => Promise.resolve());
+  spyOn(dataFeedService, 'createAWSCredentials').and.callFake(() => Promise.resolve());
+
+  const Element = setup({
+    awsCredential: {
+      isNew: false,
+      awsCreatedDate: '2019-10-30T05:50:06+00:00',
+      awsBucketUrl: 's3://cd22d769e7d5.credential.name',
+      awsAccessKeyId: 'cd22d769e7d5',
+    }
+  });
+  const Component = Element.find('DataFeedUploadState') as any;
+  Component.setState({ go1Fields: fakeMappingFields });
+
+  const ComponentInstance = Component.instance();
+  await ComponentInstance.onMappingDone();
+  expect(dataFeedService.createAWSCredentials).not.toHaveBeenCalled();
+});
+
+it('should update connection with param &fix', async () => {
+  spyOn(dataFeedService, 'createMapping').and.callFake(() => Promise.resolve());
+  spyOn(dataFeedService, 'createAWSCredentials').and.callFake(() => Promise.resolve());
+
+  const Element = setup({
+    awsCredential: {
+      isNew: false,
+      awsCreatedDate: '2019-10-30T05:50:06+00:00',
+      awsBucketUrl: 's3://cd22d769e7d5.credential.name',
+      awsAccessKeyId: 'cd22d769e7d5',
+      awsSecretKey: 'd4db524a-ca36-480f-b228-cd22d769e7d5',
+    }
+  });
+  const Component = Element.find('DataFeedUploadState') as any;
+  Component.setState({ go1Fields: fakeMappingFields });
+
+  const ComponentInstance = Component.instance();
+  ComponentInstance.onMapField(fakeMappingFields[1], 'Name');
+  ComponentInstance.onMapField(fakeMappingFields[2], 'Name');
+  ComponentInstance.onMapField(fakeMappingFields[4], 'Name');
+
+  await ComponentInstance.onMapExternalId('eck');
+  await ComponentInstance.onMappingDone();
+  expect(dataFeedService.createAWSCredentials).toHaveBeenCalledWith(123, true);
 });
 
 it('should scroll to top when request is failed', async () => {

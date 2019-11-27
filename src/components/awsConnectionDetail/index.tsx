@@ -1,6 +1,7 @@
 import React from 'react';
+import dayjs from 'dayjs';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import { Text, View, InputGroup, foundations, ButtonFilled, ButtonMinimal, Tooltip } from '@go1d/go1d';
+import { Text, View, InputGroup, foundations, ButtonFilled, ButtonMinimal, Tooltip, Icon } from '@go1d/go1d';
 import { AWSCredential } from '@src/types/userDataFeed';
 import { defineMessagesList } from '@src/utils/translation';
 import CopyToClipboard from '@src/components/CopyToClipboard';
@@ -148,8 +149,8 @@ export class AWSConnectionDetail extends React.PureComponent<Props, State> {
         </View>
 
         {isConnectionDetailVisible && (
-          <View data-testid="awsConnectionDetail.fields" width={[1, 1, 3/5]} alignItems="flex-start">
-            <View data-testid="awsConnectionDetail.fieldBucketUrl" width="100%" marginTop={6}>
+          <View data-testid="awsConnectionDetail.fields" alignItems="flex-start">
+            <View data-testid="awsConnectionDetail.fieldBucketUrl" width={[1, 1, 3/5]} marginTop={6}>
               <Text marginBottom={3}>
                 <FormattedMessage id="awsConnectionDetail.fieldBucketURL" defaultMessage="Bucket URL" />
               </Text>
@@ -157,7 +158,7 @@ export class AWSConnectionDetail extends React.PureComponent<Props, State> {
               {this.renderAWSField(awsCredential.awsBucketUrl)}
             </View>
 
-            <View data-testid="awsConnectionDetail.fieldAccessKeyId" width="100%" marginTop={6}>
+            <View data-testid="awsConnectionDetail.fieldAccessKeyId" width={[1, 1, 3/5]} marginTop={6}>
               <Text marginBottom={3}>
                 <FormattedMessage id="awsConnectionDetail.fieldAccessKey" defaultMessage="Access key" />
               </Text>
@@ -165,12 +166,43 @@ export class AWSConnectionDetail extends React.PureComponent<Props, State> {
               {this.renderAWSField(awsCredential.awsAccessKeyId, true)}
             </View>
 
-            <View data-testid="awsConnectionDetail.fieldSecretKey" width="100%" marginTop={6}>
-              <Text marginBottom={3}>
-                <FormattedMessage id="awsConnectionDetail.fieldSecretKey" defaultMessage="Secret key" />
-              </Text>
+            <View width="100%" marginTop={6}>
+              <View data-testid="awsConnectionDetail.fieldSecretKey" width={[1, 1, 3/5]}>
+                <Text marginBottom={3}>
+                  <FormattedMessage id="awsConnectionDetail.fieldSecretKey" defaultMessage="Secret key" />
+                </Text>
 
-              {this.renderAWSField(awsCredential.awsSecretKey, true)}
+                {awsCredential.isNew && (
+                  <View marginBottom={4} display="block">
+                    {this.renderAWSField(awsCredential.awsSecretKey, true)}
+                  </View>
+                )}
+              </View>
+
+              <View flexDirection="row" paddingBottom={4} width={awsCredential.isNew ? [1, 1, 3/5] : "100%"}>
+                <View marginRight={3} paddingTop={2}>
+                  <Icon color="warning" name="Danger" />
+                </View>
+
+                <View flexShrink={1} flexGrow={1}>
+                  <Text color="subtle">
+                    {!awsCredential.isNew && (
+                      <FormattedMessage
+                        id="awsConnectionDetail.fieldSecretKeyDescStored"
+                        defaultMessage="Your secret key was created on {date}. Please find where you have saved it."
+                        values={{ date: dayjs(awsCredential.awsCreatedDate).format('DD MMM YYYY') }}
+                      />
+                    )}
+
+                    {awsCredential.isNew && (
+                      <FormattedMessage
+                        id="awsConnectionDetail.fieldSecretKeyDescNew"
+                        defaultMessage="For security reason, you only see this key once and cannot be recovered it. Please copy and keep it somewhere safe but accessible."
+                      />
+                    )}
+                  </Text>
+                </View>
+              </View>
             </View>
           </View>
         )}

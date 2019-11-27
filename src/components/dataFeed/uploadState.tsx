@@ -172,7 +172,15 @@ class DataFeedUploadState extends React.Component<Props, State> {
       };
 
       return dataFeedService.createMapping(payload, portalId)
-        .then(() => awsCredentialProp ? Promise.resolve(awsCredentialProp) : dataFeedService.createAWSCredentials(portalId))
+        .then(() => {
+          if (awsCredentialProp) {
+            return awsCredentialProp.awsSecretKey
+              ? dataFeedService.createAWSCredentials(portalId, true) // remove SecretKey from an existing connection in database
+              : Promise.resolve(awsCredentialProp);
+          }
+
+          return dataFeedService.createAWSCredentials(portalId);
+        })
         .then((awsCredential: AWSCredential) => {
           if (isEditing) {
             this.setState({ awsCredential, touched: false });

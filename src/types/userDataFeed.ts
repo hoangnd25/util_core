@@ -1,4 +1,6 @@
 export interface AWSCredential {
+  isNew: boolean;
+  awsCreatedDate: string;
   awsBucketUrl: string;
   awsAccessKeyId: string;
   awsSecretKey: string;

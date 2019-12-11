@@ -25,13 +25,6 @@ deploy:master:
     ENV: "development"
     MEM: 128M
 
-deploy:production:
-  variables:
-    API_URL: "https://api.go1.co"
-    CDN_PATH: "https://cdn.go1static.com/assets"
-    ENV: "production"
-    MEM: 128M
-
 deploy:qa:k8s:
   variables:
     API_ENDPOINT: "https://api.qa.go1.cloud"
@@ -39,15 +32,11 @@ deploy:qa:k8s:
     MEM_MIN: 64Mi
     MEM_MAX: 128Mi
 
-deploy:staging:k8s:
+deploy:production:
   variables:
+    API_URL: "https://api.go1.co"
     CDN_PATH: "https://cdn.go1static.com/assets"
-    MEM_MIN: 64Mi
-    MEM_MAX: 128Mi
-
-deploy:production:k8s:
-  variables:
-    CDN_PATH: "https://cdn.go1static.com/assets"
+    ENV: "production"
     MEM_MIN: 64Mi
     MEM_MAX: 128Mi
     ORG_ID: A6GD9

@@ -94,7 +94,7 @@ export const withCurrentSession = (App, helpers) =>
           };
         }
 
-        public componentDidMount() {
+        public async componentDidMount() {
           const { currentSession } = this.state;
           const { router, router: { query, asPath, pathname } } = this.props;
           const { http } = helpers;
@@ -103,18 +103,22 @@ export const withCurrentSession = (App, helpers) =>
           if (!currentSession) {
             // try login with local storage
             // Send one time token again on the frontend to log existing user out if oneTimeToken is invalid
-            UserService(http)
-              .performAuth(null, oneTimeToken)
-              .then(
-                currentSessionData => {
-                  this.setState({ currentSession: currentSessionData });
-                  saveSession(currentSessionData as CurrentSessionType);
-                },
-                err => {
-                  removeSession();
-                  this.setState({ currentSession: { authenticated: false } });
-                }
-              );
+            try {
+              await UserService(http)
+                .performAuth(null, oneTimeToken)
+                .then(
+                  currentSessionData => {
+                    this.setState({ currentSession: currentSessionData });
+                    saveSession(currentSessionData as CurrentSessionType);
+                  },
+                  () => {
+                    removeSession();
+                    this.setState({ currentSession: { authenticated: false } });
+                  }
+                );
+            } catch (err) {
+              // Do nothing, Login failed
+            }
           } else if (currentSession.authenticated === true) {
             saveSession(currentSession);
           }

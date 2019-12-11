@@ -74,6 +74,9 @@ const setup = (props = {}) => {
   const currentSession = {
     portal: {
       id: 123,
+      configuration: {
+        integrations: {},
+      },
     },
   };
   return mount(

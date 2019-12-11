@@ -16,6 +16,9 @@ const setup = (props = { featureToggles: {} }) => {
   const currentSession = {
     portal: {
       id: 123,
+      configuration: {
+        integrations: {},
+      },
     },
     account: {
       id: 123,

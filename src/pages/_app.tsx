@@ -90,7 +90,6 @@ export class GO1App extends App<AppProps, any> {
 
   public render() {
     const { Component, pageProps, reduxStore, currentSession, featureToggles } = this.props;
-    const language = this.getLanguage(currentSession);
 
     // Show loading if current Session has not been loaded
     if (currentSession === null) {
@@ -98,6 +97,7 @@ export class GO1App extends App<AppProps, any> {
       return <LoadingSpinner />;
     }
 
+    const language = this.getLanguage(currentSession);
     return (
       <AppContext.Provider value={context}>
         <ReduxProvider store={reduxStore}>

@@ -18,7 +18,7 @@ const setup = (props?: any) => {
 
   return mount(
     <IntlProvider locale="en">
-      <AWSConnectionDetail intl={intlMock} awsCredential={fakeCredentials} {...props} />
+      <AWSConnectionDetail {...props} intl={intlMock} awsCredential={fakeCredentials} />
     </IntlProvider>
   );
 };

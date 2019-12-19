@@ -49,21 +49,23 @@ class SidebarMenus extends React.PureComponent<SidebarMenusProps> {
     return (
       <>
         {menus.map(menu => {
+          const isActive = menu.id === active;
           return menu.isVisible && (
-            <CustomLink
+            <View
               key={`menu-${menu.id}`}
-              href={menu.href}
               isApiomLink={menu.isApiomLink}
+              href={!isActive ? menu.href : null}
+              element={!isActive && menu.href ? CustomLink : View}
             >
               <View
                 marginY={2}
                 paddingY={3}
                 borderColor="accent"
-                borderLeft={menu.id === active ? 3 : 0}
-                paddingLeft={menu.id === active ? 3 : 0}
+                borderLeft={isActive ? 3 : 0}
+                paddingLeft={isActive ? 3 : 0}
               >
                 <Text
-                  color={menu.id === active ? 'default' : 'subtle'}
+                  color={isActive ? 'default' : 'subtle'}
                   fontWeight="semibold"
                   css={{
                     ":hover": {
@@ -72,7 +74,7 @@ class SidebarMenus extends React.PureComponent<SidebarMenusProps> {
                   }}
                   >{menu.title}</Text>
               </View>
-            </CustomLink>
+            </View>
           );
         })}
       </>

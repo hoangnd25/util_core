@@ -4,7 +4,7 @@ import { IntlProvider } from 'react-intl';
 import { Provider as ReduxProvider } from 'react-redux';
 import configureMockStore from "redux-mock-store";
 import CommonProvider from '@go1d/mine/common/Provider';
-import { UserDataFeed, dataFeedService } from '@src/pages/integrations/userDataFeed';
+import { UserDataFeed, dataFeedService } from '@src/pages/r/app/portal/integrations/user-data-feed';
 
 const intlMock = {
   formatMessage: jest.fn(),

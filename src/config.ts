@@ -6,7 +6,8 @@ let config: any;
 // if you have more than one module here, please specify the name and path in the list below
 // This list is also used for the link component to check if it is an internal or external link
 export const modulesInApp = {
-  "base-app-demo": { baseURL: "/r/app/base-app-demo" }
+  "base-app-demo": { baseURL: "/r/app/base-app-demo" },
+  "portal": { baseURL: "/r/app/portal" }
 };
 
 export const availableModules = Object.keys(modulesInApp);

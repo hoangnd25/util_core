@@ -10,7 +10,7 @@ import SidebarMenus from '@src/components/SidebarMenus';
 import AWSConnectionDetail from '@src/components/awsConnectionDetail';
 import DataFeedEmptyState from '@src/components/dataFeed/emptyState';
 import DataFeedUploadState, { MappingStep } from '@src/components/dataFeed/uploadState';
-import Integrations from '@src/pages/integrations';
+import Integrations from '@src/pages/r/app/portal/integrations';
 
 export const dataFeedService = DataFeedService();
 

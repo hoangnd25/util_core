@@ -6,7 +6,7 @@ import DataFeedService from '@src/services/dataFeed';
 import ScormService from '@src/services/scormService';
 import withAuth from '@src/components/common/WithAuth';
 import SidebarMenus from '@src/components/SidebarMenus';
-import Integrations from '@src/pages/integrations';
+import Integrations from '@src/pages/r/app/portal/integrations';
 
 export const dataFeedService = DataFeedService();
 export const scormService = ScormService();

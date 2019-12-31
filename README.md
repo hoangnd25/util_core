@@ -8,7 +8,7 @@
 
 This app is for GO1 admin portal settings.
 
-Visit [http://localhost:3000](http://localhost:3000) to see how the app works
+Visit [http://localhost:3000/r/app/portal](http://localhost:3000/r/app/portal) to see how the app works
 
 
 ## Maintainers

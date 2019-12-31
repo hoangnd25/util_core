@@ -4,7 +4,7 @@ import { IntlProvider } from 'react-intl';
 import { Provider as ReduxProvider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import CommonProvider from '@go1d/mine/common/Provider';
-import { ScormAndXapi as ScormAndXapiPage, scormService } from '@src/pages/integrations/scormAndXApi/index';
+import { ScormAndXapi as ScormAndXapiPage, scormService } from '@src/pages/r/app/portal/integrations/scorm-and-xapi/index';
 
 const mockStore = configureMockStore();
 const intlMock = {

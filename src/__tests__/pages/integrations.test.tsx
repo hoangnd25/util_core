@@ -4,7 +4,7 @@ import { IntlProvider } from 'react-intl';
 import { Provider as ReduxProvider } from 'react-redux';
 import configureMockStore from "redux-mock-store";
 import CommonProvider from '@go1d/mine/common/Provider';
-import Integrations from '@src/pages/integrations';
+import Integrations from '@src/pages/r/app/portal/integrations';
 import * as translationUtil from '@src/utils/translation';
 
 const mockStore = configureMockStore();

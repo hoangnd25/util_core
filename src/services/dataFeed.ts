@@ -35,9 +35,10 @@ class DataFeedService extends BaseService {
       formattedResult.go1Fields = Object.getOwnPropertyNames(allFields)
         .map(fieldName => {
           const { label, type, enum: options, mandatory, published, weight } = allFields[fieldName];
+          const formattedLabel = label === 'mail' ? 'email': label;
           return {
             type,
-            label,
+            label: formattedLabel,
             options,
             name: fieldName,
             weight: weight !== undefined ? weight : "0",

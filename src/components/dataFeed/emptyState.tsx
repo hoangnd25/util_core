@@ -18,7 +18,7 @@ class DataFeedEmptyState extends React.Component<Props> {
         actionText={intl.formatMessage(defineMessagesList().dataFeedEmptyBlockActionText)}
         action={() => onStart()}
       >
-        <FormattedMessage id="empty.block.content" defaultMessage="You haven’t config any your S3 bucket yet. Creating your first mapping."/>
+        <FormattedMessage id="empty.block.content" defaultMessage="You don’t have a S3 folder. Start creating your folder and set up mapping rules."/>
       </EmptyState>
     );
   }

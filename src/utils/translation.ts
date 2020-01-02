@@ -23,7 +23,7 @@ export const defineMessagesList = () => {
     },
     dataFeedEmptyBlockActionText: {
       id: 'data.feed.empty.block.action.text',
-      defaultMessage: 'Start',
+      defaultMessage: 'Get started',
     },
     dataFeedUploadBlockErrorTextFileExtension: {
       id: 'data.feed.upload.block.error.text.file.extension',

@@ -62,7 +62,7 @@ test('should fetch mapping fields', async () => {
   const expected = {
     externalId: 'mail',
     go1Fields: [{
-      label: 'mail',
+      label: 'email',
       mappedField: 'Email',
       name: 'mail',
       options: [],

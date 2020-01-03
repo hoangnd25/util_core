@@ -4,4 +4,5 @@ export interface MenuItem {
   href: string;
   isApiomLink: boolean;
   isVisible: boolean;
+  module?: string;
 }

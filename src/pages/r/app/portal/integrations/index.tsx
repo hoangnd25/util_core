@@ -36,6 +36,7 @@ class Integrations extends MasterPage {
         href: featureToggles.xAPI ? '/integrations/scorm-and-xapi' : 'app/integrations/addon/scorm',
         isApiomLink: !featureToggles.xAPI,
         isVisible: !!enabledIntegrations.scorm,
+        module: featureToggles.xAPI ? 'portal' : undefined,
       },
       {
         id: SIDEBAR_MENUS.AUTOPILOT,
@@ -127,6 +128,7 @@ class Integrations extends MasterPage {
         href: '/integrations/user-data-feed',
         isApiomLink: false,
         isVisible: !!featureToggles['user-data-feed'],
+        module: 'portal',
       },
     ];
 

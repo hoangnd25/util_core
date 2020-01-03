@@ -91,6 +91,7 @@ it('Should returns sidebar menus', () => {
     href: 'app/integrations/addon/scorm',
     isApiomLink: true,
     isVisible: false,
+    module: undefined,
   }, {
     id: 'sidebar.integrations-autopilot',
     title: {
@@ -208,6 +209,7 @@ it('Should returns sidebar menus', () => {
     href: '/integrations/user-data-feed',
     isApiomLink: false,
     isVisible: false,
+    module: 'portal',
   }];
 
   expect(sidebarMenus).toEqual(expectedSidebarMenus);

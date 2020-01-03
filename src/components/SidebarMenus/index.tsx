@@ -52,7 +52,7 @@ class SidebarMenus extends React.PureComponent<SidebarMenusProps> {
           const isActive = menu.id === active;
           return menu.isVisible && (
             <View
-              module="portal"
+              module={menu.module}
               key={`menu-${menu.id}`}
               isApiomLink={menu.isApiomLink}
               href={!isActive ? menu.href : null}

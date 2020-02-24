@@ -21,7 +21,7 @@
   "dependencies": {
     "@go1d/go1d": "^0.9.37",
     "@go1d/go1d-exchange": "^0.2.43",
-    "@go1d/mine": "^0.3.84",
+    "@go1d/mine": "^0.3.149",
     "axios": "^0.19.0",
     "copy-to-clipboard": "^3.2.0",
     "dayjs": "^1.8.16",

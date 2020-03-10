@@ -7,6 +7,7 @@ export interface GO1Portal {
         // eslint-disable-next-line
         dashboard_icon?: string;
     };
+    featureToggles: any;
 }
 
 export interface GO1Account {

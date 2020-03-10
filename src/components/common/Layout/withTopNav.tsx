@@ -9,6 +9,8 @@ const LayoutWithNav = (props) => {
   const { currentSession } = props;
   const user = new UserModel(currentSession.user || {});
   const portal = new PortalModel(currentSession.portal || {});
+  const featureToggles = getNested(currentSession, 'portal.featureToggles', {});
+
   return (
     <TopMenu
       userName={`${user.firstName} ${user.lastName}`}
@@ -16,7 +18,7 @@ const LayoutWithNav = (props) => {
       portalIcon={getNested(portal.files, "dashboard_icon")}
       portalConfig={portal.configuration || {}}
       account={currentSession.account}
-      featureToggles={{}}
+      featureToggles={featureToggles}
     />
   );
 };

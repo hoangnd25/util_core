@@ -4,6 +4,7 @@ import { setStorage, removeStorage } from '@src/utils/storage';
 import intersection from "@src/utils/intersection";
 import { HttpInstance } from '@src/utils/http';
 import extractGo1Metadata from '@src/utils/helper';
+import featureToggleService from '@src/services/featureToggleService';
 
 const AUTH_COOKIE_NAME = 'go1';
 
@@ -100,7 +101,7 @@ class UserService {
       };
   }
 
-  public makeSession(rawUser: GO1User, instanceName: string) {
+  public async makeSession(rawUser: GO1User, instanceName: string) {
     const { accounts = [] as GO1Account[], jwt = '' as string, ...restUser } = rawUser;
     const currentAccount = Array.isArray(accounts)
       ? accounts.find(account => String(account.instance.title) === instanceName) || accounts[0]
@@ -112,6 +113,16 @@ class UserService {
     if (!instance) {
       throw new Error('No instance found in account');
     }
+
+    let featureToggles = {};
+    try {
+      featureToggles = await featureToggleService(this.http).getFeatures(instance.title);
+    } catch(err) {
+      // do nothing
+    }
+
+    instance.featureToggles = featureToggles as any;
+
     const permissions = this.getPermissions(restAccount);
 
     return {

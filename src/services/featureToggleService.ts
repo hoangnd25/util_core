@@ -10,9 +10,16 @@ class FeatureToggleService {
 
   public async getFeatures(portal?: string) {
     if (portal) {
-      const url = `/featuretoggle/feature${portal ? `?context[portal][]=${portal}` : ''}`;
-      const { data } = await this.http.get(url);
-      return data;
+      const featureToggles = {};
+      const { data: portalFeatures } = await this.http.get(`featuretoggle/feature?context[portal][]=${portal}`);
+      const { data: houstonFeatures } = await this.http.get('atlantis/features');
+      const contentSelector = houstonFeatures['content-selector'];
+
+      return {
+        ...featureToggles,
+        ...portalFeatures,
+        "content-selector": !!(contentSelector && contentSelector.enabled),
+      };
     }
 
     return {};

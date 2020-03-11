@@ -25,6 +25,10 @@ beforeEach(() => {
 });
 
 const setup = (props = {}) => {
+  const componentProps = {
+    ...props,
+    scrollToTop: jest.fn(),
+  };
   const currentSession = {
     portal: {
       id: 123,
@@ -48,7 +52,7 @@ const setup = (props = {}) => {
           accountId={123}
           portalId={123}
         >
-          <UserDataFeed {...props} intl={intlMock} currentSession={currentSession} />
+          <UserDataFeed {...componentProps} intl={intlMock} currentSession={currentSession} />
         </CommonProvider>
       </IntlProvider>
     </ReduxProvider>
@@ -65,9 +69,9 @@ it('Should able to jump to top', () => {
   const Element = setup({
     featureToggles: {},
   });
-  const Page = Element.find(UserDataFeed).instance() as any;
+  const Page = Element.find(UserDataFeed);
 
-  Page.scrollToTop();
+  Page.prop('scrollToTop')();
 });
 
 it('renders with mapping data', async () => {

@@ -1,17 +1,23 @@
 import * as React from 'react';
 import { Spinner, Text, View, ButtonFilled, ButtonMinimal, foundations } from '@go1d/go1d';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import { defineMessagesList } from '@src/utils/translation';
-import DataFeedService from '@src/services/dataFeed';
 import ScormService from '@src/services/scormService';
 import withAuth from '@src/components/common/WithAuth';
-import SidebarMenus from '@src/components/SidebarMenus';
-import Integrations from '@src/pages/r/app/portal/integrations';
+import withMasterPage, { MasterPageProps } from "@src/pages/masterPage";
 
-export const dataFeedService = DataFeedService();
 export const scormService = ScormService();
 
-export class ScormAndXapi extends Integrations {
+interface Props extends MasterPageProps{
+  currentSession: any;
+}
+
+interface State {
+  isLoading: boolean,
+  isProcessing: boolean,
+  appID: string | null,
+}
+
+export class ScormAndXapi extends React.Component<Props, State> {
   constructor(props) {
     super(props);
   }
@@ -26,31 +32,7 @@ export class ScormAndXapi extends Integrations {
     this.fetchApplicationId();
   }
 
-  getPageTitle() {
-    const { intl } = this.props;
-    return intl.formatMessage(defineMessagesList().integrationScormAndXApiTitle);
-  }
-
-  renderSidebar() {
-    const { intl } = this.props;
-    const sidebarMenus = this.getSidebarMenus(intl);
-    const sidebarTitle = intl.formatMessage(defineMessagesList().integrationSidebarTitle);
-
-    return (
-      <>
-        <View marginBottom={3}>
-          <Text element="h3" fontWeight="semibold" fontSize={3}>{sidebarTitle}</Text>
-        </View>
-
-        <SidebarMenus
-          active="sidebar.integrations-scorm"
-          menus={sidebarMenus}
-        />
-      </>
-    );
-  }
-
-  renderBody() {
+  render() {
     const { isLoading, isProcessing, appID } = this.state;
 
     if (isLoading) {
@@ -156,4 +138,4 @@ export class ScormAndXapi extends Integrations {
   }
 }
 
-export default injectIntl(withAuth(ScormAndXapi));
+export default injectIntl(withAuth(withMasterPage(ScormAndXapi, { parentPage: 'integration', childPage: 'scorm-and-xapi' })));

@@ -50,6 +50,12 @@ export const defineMessagesList = () => {
       defaultMessage: 'Integrations',
     },
 
+    // Integration detail: default
+    integrationDefaultTitle: {
+      id: 'integrationDefault.pageTitle',
+      defaultMessage: 'Portal settings',
+    },
+
     // Integration detail: SCORM & xAPI
     integrationScormAndXApiTitle: {
       id: 'integrationScormAndXApi.pageTitle',

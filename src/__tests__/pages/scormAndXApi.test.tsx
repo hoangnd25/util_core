@@ -11,8 +11,11 @@ const intlMock = {
   formatMessage: jest.fn(),
 };
 
-const setup = (props = { featureToggles: {} }) => {
-  const { featureToggles, ...nestProps } = props;
+const setup = (props = {}) => {
+  const componentProps = {
+    ...props,
+    scrollToTop: jest.fn(),
+  };
   const currentSession = {
     portal: {
       id: 123,
@@ -30,7 +33,7 @@ const setup = (props = { featureToggles: {} }) => {
     <ReduxProvider store={mockStore({ currentSession })}>
       <IntlProvider locale="en">
         <CommonProvider pushNavigationState={jest.fn()} apiUrl="api.go1.co" jwt="jwt" accountId={123} portalId={456}>
-          <ScormAndXapiPage intl={intlMock} currentSession={currentSession} featureToggles={featureToggles} {...nestProps} />
+          <ScormAndXapiPage intl={intlMock} currentSession={currentSession} {...componentProps} />
         </CommonProvider>
       </IntlProvider>
     </ReduxProvider>

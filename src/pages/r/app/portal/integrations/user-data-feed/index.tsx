@@ -6,11 +6,10 @@ import DataFeedService from '@src/services/dataFeed';
 import { AWSCredential, MappingData } from '@src/types/userDataFeed';
 import { defineMessagesList } from '@src/utils/translation';
 import withAuth from '@src/components/common/WithAuth';
-import SidebarMenus from '@src/components/SidebarMenus';
+import withMasterPage, { MasterPageProps } from '@src/pages/masterPage';
 import AWSConnectionDetail from '@src/components/awsConnectionDetail';
 import DataFeedEmptyState from '@src/components/dataFeed/emptyState';
 import DataFeedUploadState, { MappingStep } from '@src/components/dataFeed/uploadState';
-import Integrations from '@src/pages/r/app/portal/integrations';
 
 export const dataFeedService = DataFeedService();
 
@@ -19,19 +18,19 @@ enum DataFeedState {
   Upload = 2,
 }
 
-interface Props {
+interface Props extends MasterPageProps{
   currentSession: any;
 }
 
 interface State {
   step: number;
-  isLoading: number;
-  isEditing: number;
+  isLoading: boolean;
+  isEditing: boolean;
   awsCredential: AWSCredential;
   mappingData: MappingData;
 }
 
-export class UserDataFeed extends Integrations {
+export class UserDataFeed extends React.Component<Props, State> {
   state = {
     step: DataFeedState.Empty,
     isLoading: true,
@@ -49,31 +48,7 @@ export class UserDataFeed extends Integrations {
     this.fetchData(currentSession.portal.id);
   }
 
-  getPageTitle() {
-    const { intl } = this.props;
-    return intl.formatMessage(defineMessagesList().integrationUserDataFeedPageTitle);
-  }
-
-  renderSidebar() {
-    const { intl } = this.props;
-    const sidebarMenus = this.getSidebarMenus(intl);
-    const sidebarTitle = intl.formatMessage(defineMessagesList().integrationSidebarTitle);
-
-    return (
-      <>
-        <View marginBottom={3}>
-          <Text element="h3" fontWeight="semibold" fontSize={3}>{sidebarTitle}</Text>
-        </View>
-
-        <SidebarMenus
-          active="sidebar.integrations-user-data-feed"
-          menus={sidebarMenus}
-        />
-      </>
-    );
-  }
-
-  renderBody() {
+  render() {
     const { intl, currentSession } = this.props;
     const { step, isLoading, isEditing, awsCredential, mappingData } = this.state;
     const yourDataFeedTitle = intl.formatMessage(defineMessagesList().integrationUserDataFeedConnectionDetailTitle);
@@ -147,7 +122,7 @@ export class UserDataFeed extends Integrations {
             defaultStep={isEditing ? MappingStep.Mapping : undefined}
             onDone={() => this.fetchData(currentSession.portal.id)}
             onCancel={() => this.setState({step: DataFeedState.Empty, isEditing: false})}
-            scrollToTop={() => this.scrollToTop()}
+            scrollToTop={() => this.props.scrollToTop()}
           />
         )}
       </View>
@@ -166,4 +141,4 @@ export class UserDataFeed extends Integrations {
   }
 }
 
-export default injectIntl(withAuth(UserDataFeed));
+export default injectIntl(withAuth(withMasterPage(UserDataFeed, { parentPage: 'integration', childPage: 'user-data-feed' })));

@@ -23,3 +23,13 @@ it('renders active link without crashing', () => {
     <SidebarMenus active="Menu ID" menus={fakeMenus} />
   );
 });
+
+it('onchange item and go to apiom', () => {
+  delete window.location;
+  window.location = { assign: jest.fn() } as any;
+  const Component = mount(
+    <SidebarMenus active="Menu ID" menus={fakeMenus} />
+  );
+  (Component.instance() as any ).onChangeMenu({ target: { value: 'Menu ID' } });
+  expect(window.location.assign).toHaveBeenCalledWith('/p/#/https://menu.href');
+});

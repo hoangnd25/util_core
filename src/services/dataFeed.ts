@@ -42,8 +42,8 @@ class DataFeedService extends BaseService {
             options,
             name: fieldName,
             weight: weight !== undefined ? weight : "0",
-            required: !!mandatory,
-            published: !!published,
+            required: mandatory === '1',
+            published: published === '1',
             mappedField: mappingData[fieldName] || null,
           };
         })

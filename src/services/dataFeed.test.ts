@@ -44,7 +44,7 @@ test('should fetch mapping fields', async () => {
       type: 'integer',
       enum: [0, 1, 2],
       mandatory: '',
-      published: '1'
+      published: '0'
     },
   };
   const fakeMappings = {
@@ -87,15 +87,6 @@ test('should fetch mapping fields', async () => {
       published: true,
       required: true,
       type: 'string',
-      weight: "0",
-    }, {
-      label: 'status',
-      mappedField: null,
-      name: 'status',
-      options: [0, 1, 2],
-      published: true,
-      required: false,
-      type: 'integer',
       weight: "0",
     }],
   };

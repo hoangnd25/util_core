@@ -6,6 +6,7 @@ import SIDEBAR_MENUS from "@src/constants/sidebarMenu";
 import { defineMessagesList, getSidebarTexts } from "@src/utils/translation";
 import { PortalModel } from '@go1d/go1d-exchange';
 import SidebarMenus from "@src/components/SidebarMenus";
+import { getNested } from '@go1d/mine/utils';
 
 export interface MasterPageProps {
   intl: any;
@@ -43,13 +44,15 @@ export const withMasterPage = (Component: any, options: MasterPageOptions): any 
     getSidebarMenus(intl?: any) {
       const { currentSession, featureToggles } = this.props;
       const portal = new PortalModel(currentSession.portal || {});
-      const allIntegrations = (portal && portal.configuration && portal.configuration.integrations) || {};
+      const allIntegrations = getNested(portal, 'configuration.integrations', {});
       const { parentPage } = options;
 
       const enabledIntegrations = {} as any;
       Object.getOwnPropertyNames(allIntegrations).forEach(name => {
         enabledIntegrations[name] = !!allIntegrations[name].status;
       });
+
+      const hasDataMapping = !!featureToggles['user-data-feed'] || getNested(portal, 'configuration.data_mapping');
 
       if (parentPage === 'integration') {
         return [
@@ -157,7 +160,7 @@ export const withMasterPage = (Component: any, options: MasterPageOptions): any 
             title: this.getString(SIDEBAR_MENUS.USER_DATA_FEED, intl),
             href: '/integrations/user-data-feed',
             isApiomLink: false,
-            isVisible: !!featureToggles['user-data-feed'],
+            isVisible: hasDataMapping,
             module: 'portal',
           },
         ];

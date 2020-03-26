@@ -5,6 +5,7 @@ import intersection from "@src/utils/intersection";
 import { HttpInstance } from '@src/utils/http';
 import extractGo1Metadata from '@src/utils/helper';
 import featureToggleService from '@src/services/featureToggleService';
+import portalService from '@src/services/portalService';
 
 const AUTH_COOKIE_NAME = 'go1';
 
@@ -120,8 +121,16 @@ class UserService {
     } catch(err) {
       // do nothing
     }
-
     instance.featureToggles = featureToggles as any;
+
+    let data_mapping = false;
+    try {
+      const dataMappingSetting = await portalService(this.http).fetchCustomConfiguration(instance.title, 'data_mapping');
+      data_mapping = dataMappingSetting === 'true';
+    } catch(err) {
+      // do nothing
+    }
+    instance.configuration = { ...instance.configuration, data_mapping };
 
     const permissions = this.getPermissions(restAccount);
 

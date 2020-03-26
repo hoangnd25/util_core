@@ -8,23 +8,26 @@ import { Provider as ReduxProvider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 
 const intlFuncMock = jest.fn();
+const currentSessionMock = {
+  portal: {
+    id: 123,
+    configuration: {
+      integrations: {},
+    },
+  },
+  account: {
+    id: 123,
+    isAdministrator: true,
+  },
+};
 
-const setup = (props = {}, options = { parentPage: 'integration', childPage: 'scorm-and-xapi' }) => {
+const setup = (
+  props = {},
+  options = { parentPage: 'integration', childPage: 'scorm-and-xapi' },
+  currentSession = currentSessionMock,
+) => {
   const Component = withMasterPage(() => <View />, options);
   Component.displayName = 'TestComponent';
-
-  const currentSession = {
-    portal: {
-      id: 123,
-      configuration: {
-        integrations: {},
-      },
-    },
-    account: {
-      id: 123,
-      isAdministrator: true,
-    },
-  };
 
   const featureToggles = {};
   const mockStore = configureMockStore();
@@ -91,4 +94,36 @@ it('should return scorm active menu', () => {
   const Component = setup();
   const instance = Component.find('TestComponent').instance() as any;
   expect(instance.getActiveMenu()).toEqual('sidebar.integrations-scorm');
+});
+
+it('should not show `User Data Feed` menu', () => {
+  const Component = setup();
+  expect(Component.find('[data-testid="sidebar.integrations-user-data-feed"]')).toHaveLength(0);
+});
+
+it('should show `User Data Feed` menu with feature toggle', () => {
+  const Component = setup({
+    featureToggles: {
+      'user-data-feed': true,
+    },
+  });
+  expect(Component.find('[data-testid="sidebar.integrations-user-data-feed"]').length).toBeGreaterThan(0);
+});
+
+it('should show `User Data Feed` menu with portal configuration', () => {
+  const currentSession= {
+    portal: {
+      id: 123,
+      configuration: {
+        integrations: {},
+        data_mapping: true,
+      },
+    },
+    account: {
+      id: 123,
+      isAdministrator: true,
+    },
+  };
+  const Component = setup(undefined, undefined, currentSession);
+  expect(Component.find('[data-testid="sidebar.integrations-user-data-feed"]').length).toBeGreaterThan(0);
 });

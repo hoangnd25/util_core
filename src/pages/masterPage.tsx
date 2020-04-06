@@ -51,8 +51,8 @@ export const withMasterPage = (Component: any, options: MasterPageOptions): any 
       Object.getOwnPropertyNames(allIntegrations).forEach(name => {
         enabledIntegrations[name] = !!allIntegrations[name].status;
       });
-
-      const hasDataMapping = !!featureToggles['user-data-feed'] || getNested(portal, 'configuration.data_mapping');
+      const isAvailableOnFeatureToggle = featureToggles && !!featureToggles['user-data-feed'];
+      const hasDataMapping = isAvailableOnFeatureToggle || getNested(portal, 'configuration.data_mapping');
 
       if (parentPage === 'integration') {
         return [

@@ -151,7 +151,7 @@ export const withFeatureToggles = (App, helpers) =>
         ctx: { req },
       } = ctx;
       let appProps = {};
-      let featureToggles = null;
+      let featureToggles = {};
 
       if (App.getInitialProps) {
         appProps = await App.getInitialProps(ctx);

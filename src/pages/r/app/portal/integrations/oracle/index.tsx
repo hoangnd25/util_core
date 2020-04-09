@@ -35,7 +35,7 @@ interface OracleProps {
   child: any;
 }
 
-export class Oracle extends React.Component<any, any> {
+export class Oracle extends React.Component<OracleProps, any> {
   private child: React.RefObject<TabMenuNavigation> = React.createRef();
 
   constructor(http: HttpInstance, props) {
@@ -72,14 +72,6 @@ export class Oracle extends React.Component<any, any> {
     if (isLoading) {
       return <Spinner size={3} />;
     }
-
-    const exportStatusMock = {
-      total: 70,
-      status: 'in-progress',
-      done: 25,
-      items: [0],
-      errors: [0],
-    };
 
     return (
       <View>
@@ -201,7 +193,7 @@ export class Oracle extends React.Component<any, any> {
 
                         {exportStatus && exportStatus.status === 'in-progress' && (
                           <View marginY={4}>
-                            <LineProgress percent={(exportStatusMock.done / exportStatusMock.total) * 100} />
+                            <LineProgress percent={(exportStatus.done / exportStatus.total) * 100} />
                           </View>
                         )}
                       </View>
@@ -284,15 +276,15 @@ export class Oracle extends React.Component<any, any> {
     console.log(currentSession)
     const portalId = currentSession.portal && currentSession.portal.id;
     const exportStatus = await contentDistributorService.getExportStatus(portalId);
-    // if (exportStatus.status === 'complete') {
-    //   try {
-    //     setInterval(async () => {
-    //       this.getContentDistributorStatus();
-    //     }, 10000);
-    //   } catch (e) {
-    //     console.log(e);
-    //   }
-    // }
+    if (exportStatus.status === 'complete') {
+      try {
+        setInterval(async () => {
+          this.getContentDistributorStatus();
+        }, 10000);
+      } catch (e) {
+        console.log(e);
+      }
+    }
     if (!exportStatus) {
       this.setState({ exportStatus: false, isLoading: false });
     } else this.setState({ exportStatus, isLoading: false });

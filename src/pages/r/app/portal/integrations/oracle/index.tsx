@@ -26,28 +26,19 @@ export const portalService = PortalService();
 
 interface Props extends MasterPageProps {
   currentSession: any;
-  http: any;
 }
 
-interface OracleProps {
-  onClickTabItem: any;
-  currentSession: any;
-  child: any;
-}
-
-export class Oracle extends React.Component<OracleProps, any> {
+export class Oracle extends React.Component<Props, any> {
   private child: React.RefObject<TabMenuNavigation> = React.createRef();
-
-  constructor(http: HttpInstance, props) {
+  constructor(props) {
     super(props);
-
     this.state = {
       isLoading: true,
     };
     this.child = React.createRef();
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.fetchAccountData();
     this.fetchContentSelection();
     this.getContentDistributorStatus();
@@ -79,7 +70,7 @@ export class Oracle extends React.Component<OracleProps, any> {
           <TabMenuNavigation ref={this.child}>
             <View label="Account Settings">
               <View paddingTop={6}>
-                <Form
+                <Form             
                   initialValues={{
                     domain: (accountData && accountData.domain) || '',
                     username: (accountData && accountData.username) || '',
@@ -143,7 +134,7 @@ export class Oracle extends React.Component<OracleProps, any> {
                       iconName="Export"
                       color="accent"
                       width="fit-content"
-                      onClick={() => this.exportContent(currentSession.portal.id)}
+                      onClick={() => this.contentDistributorExport(currentSession.portal.id)}
                     >
                       Export
                     </ButtonFilled>
@@ -158,7 +149,6 @@ export class Oracle extends React.Component<OracleProps, any> {
                     </View>
                   </View>
                 )}
-                {/* EXPORT STATUS */}
                 {exportStatus && (
                   <View>
                     <Text paddingY={[5, 6]} fontWeight="semibold" fontSize={3}>
@@ -266,14 +256,12 @@ export class Oracle extends React.Component<OracleProps, any> {
   private async fetchContentSelection() {
     const { currentSession } = this.props;
     const portalId = currentSession.portal && currentSession.portal.id;
-    const jwt = currentSession && currentSession.jwt;
-    const customContentCollection = await contentDistributorService.getCustomContent(portalId, jwt);
+    const customContentCollection = await contentDistributorService.getCustomContent(portalId);
     this.setState({ customContentCollection, isLoading: false });
   }
 
   private async getContentDistributorStatus() {
     const { currentSession } = this.props;
-    console.log(currentSession)
     const portalId = currentSession.portal && currentSession.portal.id;
     const exportStatus = await contentDistributorService.getExportStatus(portalId);
     if (exportStatus.status === 'complete') {
@@ -290,7 +278,7 @@ export class Oracle extends React.Component<OracleProps, any> {
     } else this.setState({ exportStatus, isLoading: false });
   }
 
-  private async exportContent(portalId) {
+  private async contentDistributorExport(portalId) {
     const exportContent = await contentDistributorService.exportContent(portalId, 'oracle');
     if (exportContent.status) {
       this.setState({ exportContent, isLoading: false });

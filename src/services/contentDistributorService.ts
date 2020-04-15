@@ -10,10 +10,9 @@ class ContentDistributorService extends BaseService {
     super(http, go1CookieValue);
   }
 
-  async getCustomContent(portalId: number, jwt: string): Promise<any> {
-    const url = `collection-service/portal/${portalId}/collections/default/stats?jwt=`
-    this.http.clearJWT();
-    const { data } = await this.http.get(url + jwt);
+  async getCustomContent(portalId: number): Promise<any> {
+    const url = `collection-service/portal/${portalId}/collections/default/stats`
+    const { data } = await this.http.get(url);
     return data;
   }
 

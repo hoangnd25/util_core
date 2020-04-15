@@ -7,7 +7,7 @@ import { View } from '@go1d/go1d';
 class TabMenuNavigation extends Component<{ children }, any> {
   static propTypes = {
     children: PropTypes.instanceOf(Array).isRequired,
-    onClickTabItem: PropTypes.func
+    onClickTabItem: PropTypes.func,
   };
 
   constructor(props) {
@@ -21,8 +21,6 @@ class TabMenuNavigation extends Component<{ children }, any> {
   onClickTabItem = tab => {
     this.setState({ activeTab: tab });
   };
-
-
 
   render() {
     const { children } = this.props;

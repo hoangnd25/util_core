@@ -62,6 +62,11 @@ export const defineMessagesList = () => {
       defaultMessage: 'SCORM and xAPI',
     },
 
+    integrationOracleTitle: {
+      id: 'integrationOracle.pageTitle',
+      defaultMessage: 'Oracle',
+    },
+
     // Integration detail: User data feed
     integrationUserDataFeedPageTitle: {
       id: 'integrationUserDataFeed.pageTitle',
@@ -145,6 +150,10 @@ export const getSidebarTexts = () => {
     'sidebar.integrations-user-data-feed': {
       id: 'sidebar.integrations-user-data-feed',
       defaultMessage: 'User Data Feed',
+    },
+    'sidebar.integrations-oracle': {
+      id: 'sidebar.integrations-oracle',
+      defaultMessage: 'Oracle',
     },
   });
 }

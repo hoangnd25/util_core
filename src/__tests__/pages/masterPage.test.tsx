@@ -65,7 +65,7 @@ it('should no crash', () => {
 it('should return integration menus', () => {
   const Component = setup();
   const instance = Component.find('TestComponent').instance() as any;
-  expect(instance.getSidebarMenus().length).toEqual(15);
+  expect(instance.getSidebarMenus().length).toEqual(16);
 });
 
 it('should return data feed title', () => {
@@ -125,5 +125,5 @@ it('should show `User Data Feed` menu with portal configuration', () => {
     },
   };
   const Component = setup(undefined, undefined, currentSession);
-  expect(Component.find('[data-testid="sidebar.integrations-user-data-feed"]').length).toBeGreaterThan(0);
+  expect(Component.find('[data-testid="sidebar.integrations-user-data-feed"]').length).toBe(3);
 });

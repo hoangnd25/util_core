@@ -44,9 +44,9 @@ export const withMasterPage = (Component: any, options: MasterPageOptions): any 
     getSidebarMenus(intl?: any) {
       const { currentSession, featureToggles } = this.props;
       const portal = new PortalModel(currentSession.portal || {});
-      const allIntegrations = getNested(portal, 'configuration.integrations', {});
+      const allIntegrations = (portal && portal.configuration && portal.configuration.integrations) || {};
       const { parentPage } = options;
-
+      
       const enabledIntegrations = {} as any;
       Object.getOwnPropertyNames(allIntegrations).forEach(name => {
         enabledIntegrations[name] = !!allIntegrations[name].status;
@@ -128,6 +128,14 @@ export const withMasterPage = (Component: any, options: MasterPageOptions): any 
             isVisible: !!enabledIntegrations.successfactors,
           },
           {
+            id: SIDEBAR_MENUS.ORACLE,
+            title: this.getString(SIDEBAR_MENUS.ORACLE, intl),
+            href: '/integrations/oracle',
+            isApiomLink: false,
+            isVisible: !!enabledIntegrations.oracle,
+            module: 'portal',
+          },
+          {
             id: SIDEBAR_MENUS.MICROSOFT_AZURE,
             title: this.getString(SIDEBAR_MENUS.MICROSOFT_AZURE, intl),
             href: 'app/integrations/addon/azure',
@@ -163,6 +171,8 @@ export const withMasterPage = (Component: any, options: MasterPageOptions): any 
             isVisible: hasDataMapping,
             module: 'portal',
           },
+
+          
         ];
       }
       return [];
@@ -182,6 +192,7 @@ export const withMasterPage = (Component: any, options: MasterPageOptions): any 
       const mapping = {
         'user-data-feed': defineMessagesList().integrationUserDataFeedPageTitle,
         'scorm-and-xapi': defineMessagesList().integrationScormAndXApiTitle,
+        'oracle': defineMessagesList().integrationOracle,
       };
       return intl.formatMessage(mapping[childPage] || defineMessagesList().integrationDefaultTitle);
     }
@@ -191,6 +202,7 @@ export const withMasterPage = (Component: any, options: MasterPageOptions): any 
       const mapping = {
         'user-data-feed': SIDEBAR_MENUS.USER_DATA_FEED,
         'scorm-and-xapi': SIDEBAR_MENUS.SCORM,
+        'oracle': SIDEBAR_MENUS.ORACLE,
       };
       return mapping[childPage] || '';
     }

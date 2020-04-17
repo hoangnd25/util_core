@@ -110,20 +110,20 @@ it('should show `User Data Feed` menu with feature toggle', () => {
   expect(Component.find('[data-testid="sidebar.integrations-user-data-feed"]').length).toBeGreaterThan(0);
 });
 
-// it('should show `User Data Feed` menu with portal configuration', () => {
-//   const currentSession= {
-//     portal: {
-//       id: 123,
-//       configuration: {
-//         integrations: {},
-//         data_mapping: true,
-//       },
-//     },
-//     account: {
-//       id: 123,
-//       isAdministrator: true,
-//     },
-//   };
-//   const Component = setup(undefined, undefined, currentSession);
-//   expect(Component.find('[data-testid="sidebar.integrations-user-data-feed"]').length).toBe(0);
-// });
+it('should show `User Data Feed` menu with portal configuration', () => {
+  const currentSession= {
+    portal: {
+      id: 123,
+      configuration: {
+        integrations: {},
+        data_mapping: true,
+      },
+    },
+    account: {
+      id: 123,
+      isAdministrator: true,
+    },
+  };
+  const Component = setup(undefined, undefined, currentSession);
+  expect(Component.find('[data-testid="sidebar.integrations-user-data-feed"]').length).toBe(3);
+});

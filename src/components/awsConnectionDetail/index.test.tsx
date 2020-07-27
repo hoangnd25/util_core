@@ -1,24 +1,18 @@
 import { mount } from 'enzyme';
 import * as React from 'react';
 import { IntlProvider } from 'react-intl';
-import * as clipboardUtil from '@src/utils/clipboard';
-import { AWSConnectionDetail } from './index';
+import { AWSConnectionDetail } from '.';
 
 const fakeCredentials = {
   awsBucketUrl: 's3://cd22d769e7d5.credential.name',
   awsAccessKeyId: 'cd22d769e7d5',
   awsSecretKey: 'd4db524a-ca36-480f-b228-cd22d769e7d5',
 };
-const intlMock = {
-  formatMessage: jest.fn(),
-};
 
 const setup = (props?: any) => {
-  spyOn(clipboardUtil, 'copyToClipboard');
-
   return mount(
     <IntlProvider locale="en">
-      <AWSConnectionDetail {...props} intl={intlMock} awsCredential={fakeCredentials} />
+      <AWSConnectionDetail {...props} awsCredential={fakeCredentials} />
     </IntlProvider>
   );
 };

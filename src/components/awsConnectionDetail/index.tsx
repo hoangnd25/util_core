@@ -1,13 +1,13 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import { injectIntl, FormattedMessage } from 'react-intl';
-import { Text, View, InputGroup, foundations, ButtonFilled, ButtonMinimal, Tooltip, Icon } from '@go1d/go1d';
-import { AWSCredential } from '@src/types/userDataFeed';
-import { defineMessagesList } from '@src/utils/translation';
-import CopyToClipboard from '@src/components/CopyToClipboard';
+import { Trans } from '@lingui/macro';
+import { Text, View, InputGroup, foundations, ButtonFilled, ButtonMinimal, Tooltip } from '@go1d/go1d';
+import IconCopy from '@go1d/go1d/build/components/Icons/Copy';
+import IconDanger from '@go1d/go1d/build/components/Icons/Danger';
+import CopyToClipboard from '@src/components/common/CopyToClipboard';
+import { AWSCredential } from '@src/services/dataFeed';
 
 interface Props {
-  intl: any,
   awsCredential: AWSCredential;
   backgroundColor?: string;
   expandable?: boolean;
@@ -31,35 +31,32 @@ export class AWSConnectionDetail extends React.PureComponent<Props, State> {
   }
 
   renderCopyButton(copied = false) {
-    const { intl } = this.props;
     const CopyButton = (
       <ButtonFilled
         border={1}
         borderColor="faded"
         color="soft"
-        iconName="Copy"
+        icon={IconCopy}
         transition="none"
         minHeight="48"
         css={{
           borderTopLeftRadius: 0,
           borderBottomLeftRadius: 0,
           lineHeight: 48,
-
           '&:hover': {
             transform: 'translate(0, 0)',
           },
         }}
       >
-        <FormattedMessage id="awsConnectionDetail.buttonCopy" defaultMessage="Copy" />
+        <Trans>Copy</Trans>
       </ButtonFilled>
     );
 
     if (copied) {
       return (
-        <Tooltip tip={intl.formatMessage(defineMessagesList().awsConnectionDetailCopied)}>{CopyButton}</Tooltip>
+        <Tooltip tip={<Trans>Copied!</Trans>}>{CopyButton}</Tooltip>
       );
     }
-
     return CopyButton;
   }
 
@@ -124,10 +121,10 @@ export class AWSConnectionDetail extends React.PureComponent<Props, State> {
         <View flexDirection="row" alignItems="center">
           <View flexGrow={1} flexShrink={1}>
             <Text fontWeight="semibold" fontSize={expandable ? 3 : 4}>
-              <FormattedMessage id="awsConnectionDetail.title" defaultMessage="AWS Connection Details" />
+              <Trans>AWS Connection Details</Trans>
             </Text>
             <Text color="subtle" fontWeight="semibold" marginTop={2}>
-              <FormattedMessage id="awsConnectionDetail.description" defaultMessage="Integrate using the following details to keep your user records up to date" />
+              <Trans>Integrate using the following details to keep your user records up to date</Trans>
             </Text>
           </View>
 
@@ -137,13 +134,7 @@ export class AWSConnectionDetail extends React.PureComponent<Props, State> {
               color="accent"
               onClick={() => this.setState({ expanded: !expanded })}
             >
-              {!isConnectionDetailVisible && (
-                <FormattedMessage id="awsConnectionDetail.toggleConnectionShow" defaultMessage="Show" />
-              )}
-
-              {isConnectionDetailVisible && (
-                <FormattedMessage id="awsConnectionDetail.toggleConnectionHide" defaultMessage="Hide" />
-              )}
+              {!isConnectionDetailVisible ? <Trans>Show</Trans> : <Trans>Hide</Trans>}
             </ButtonMinimal>
           )}
         </View>
@@ -152,7 +143,7 @@ export class AWSConnectionDetail extends React.PureComponent<Props, State> {
           <View data-testid="awsConnectionDetail.fields" alignItems="flex-start">
             <View data-testid="awsConnectionDetail.fieldBucketUrl" width={[1, 1, 3/5]} marginTop={6}>
               <Text marginBottom={3}>
-                <FormattedMessage id="awsConnectionDetail.fieldBucketURL" defaultMessage="Bucket URL" />
+                <Trans>Bucket URL</Trans>
               </Text>
 
               {this.renderAWSField(awsCredential.awsBucketUrl)}
@@ -160,7 +151,7 @@ export class AWSConnectionDetail extends React.PureComponent<Props, State> {
 
             <View data-testid="awsConnectionDetail.fieldAccessKeyId" width={[1, 1, 3/5]} marginTop={6}>
               <Text marginBottom={3}>
-                <FormattedMessage id="awsConnectionDetail.fieldAccessKey" defaultMessage="Access key" />
+                <Trans>Access key</Trans>
               </Text>
 
               {this.renderAWSField(awsCredential.awsAccessKeyId, true)}
@@ -169,7 +160,7 @@ export class AWSConnectionDetail extends React.PureComponent<Props, State> {
             <View width="100%" marginTop={6}>
               <View data-testid="awsConnectionDetail.fieldSecretKey" width={[1, 1, 3/5]}>
                 <Text marginBottom={3}>
-                  <FormattedMessage id="awsConnectionDetail.fieldSecretKey" defaultMessage="Secret key" />
+                  <Trans>Secret key</Trans>
                 </Text>
 
                 {awsCredential.isNew && (
@@ -181,24 +172,15 @@ export class AWSConnectionDetail extends React.PureComponent<Props, State> {
 
               <View flexDirection="row" paddingBottom={4} width={awsCredential.isNew ? [1, 1, 3/5] : "100%"}>
                 <View marginRight={3} paddingTop={2}>
-                  <Icon color="warning" name="Danger" />
+                  <IconDanger color="warning" />
                 </View>
 
                 <View flexShrink={1} flexGrow={1}>
                   <Text color="subtle">
-                    {!awsCredential.isNew && (
-                      <FormattedMessage
-                        id="awsConnectionDetail.fieldSecretKeyDescStored"
-                        defaultMessage="Your secret key was created on {date}. Please find where you have saved it."
-                        values={{ date: dayjs(awsCredential.awsCreatedDate).format('DD MMM YYYY') }}
-                      />
-                    )}
-
-                    {awsCredential.isNew && (
-                      <FormattedMessage
-                        id="awsConnectionDetail.fieldSecretKeyDescNew"
-                        defaultMessage="For security reason, you only see this key once and cannot be recovered it. Please copy and keep it somewhere safe but accessible."
-                      />
+                    {!awsCredential.isNew ? (
+                      <Trans>Your secret key was created on {dayjs(awsCredential.awsCreatedDate).format('DD MMM YYYY')}. Please find where you have saved it.</Trans>
+                    ) : (
+                      <Trans>For security reason, you only see this key once and cannot be recovered it. Please copy and keep it somewhere safe but accessible.</Trans>
                     )}
                   </Text>
                 </View>
@@ -211,4 +193,4 @@ export class AWSConnectionDetail extends React.PureComponent<Props, State> {
   }
 }
 
-export default injectIntl(AWSConnectionDetail);
+export default AWSConnectionDetail;

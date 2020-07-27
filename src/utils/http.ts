@@ -2,6 +2,7 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import debug from 'debug';
 import config from '@src/config';
+import JwtRefresh from './jwtRefresh';
 
 const log = {
   error: debug('go:http:error'),
@@ -10,9 +11,10 @@ const log = {
 };
 
 export type HttpInstance = AxiosInstance & {
-    setJWT: (jwt: string) => void;
-    clearJWT: () => void;
+  setJWT: (jwt: string) => void;
+  clearJWT: () => void;
 };
+
 export default function create(opts: any = {}): HttpInstance {
   const http = axios.create({
     baseURL: config.apiEndpoint,
@@ -29,6 +31,8 @@ export default function create(opts: any = {}): HttpInstance {
     http.defaults.headers.Authorization = null;
   };
 
+  const jr = new JwtRefresh(http);
+
   // Add logging interceptors to axios
   http.interceptors.request.use((reqConfig: AxiosRequestConfig) => {
     log.request(
@@ -36,8 +40,13 @@ export default function create(opts: any = {}): HttpInstance {
       reqConfig.params,
       reqConfig.data
     );
+
+    // don't need execute it now, run on next event loop
+    setTimeout(() => jr.onRequest(reqConfig), 0);
+
     return reqConfig;
   });
+
   http.interceptors.response.use(
     (response: AxiosResponse) => {
       log.response(
@@ -52,7 +61,7 @@ export default function create(opts: any = {}): HttpInstance {
       if (error.config) {
         log.error(
           `${error.response && error.response.status} ${error.config.method &&
-                        error.config.method.toUpperCase()} ${error.config.url}`
+          error.config.method.toUpperCase()} ${error.config.url}`
         );
       } else {
         log.error(`${error.name}: ${error.message}`);

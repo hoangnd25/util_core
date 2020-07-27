@@ -3,17 +3,17 @@ import * as React from 'react';
 import { IntlProvider } from 'react-intl';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
-import withAuth, { withCurrentSession } from './index';
 import { View } from '@go1d/go1d';
 import CommonProvider from "@go1d/mine/common/Provider";
 import MockAdapter from 'axios-mock-adapter';
 import createHttp from "@src/utils/http";
 import authenticatedStoreState from '@src/store/mocks/authenticatedStore';
 import unauthenticatedStoreState from '@src/store/mocks/unauthenticatedStore';
-import LinkComponent from "@src/components/common/Link/index";
-import {loginResponseMock, currentSessionMock} from "./mocks/authMocks";
+import withAuth, { withCurrentSession } from './index';
+import LinkComponent from "../Link/index";
+import { loginResponseMock, currentSessionMock } from "./mocks/authMocks";
 
-/** TEST SETUP **/
+/** TEST SETUP * */
 let Component;
 
 class App extends React.Component {
@@ -22,10 +22,11 @@ class App extends React.Component {
 const http = createHttp();
 
 const mockStore = configureStore([]);
+const defaultStore = mockStore();
 
 const setup = (props: any = {}) => {
   Component = withCurrentSession(App, { http });
-  return mount(<Component router={{query: {oneTimeToken:"aaa"}, replace :() => {}, asPath: {replace :() => {} } }} {...props}/>);
+  return mount(<Component router={{ query: { oneTimeToken:"aaa" }, replace :() => {}, asPath: { replace :() => {} } }} store={defaultStore} {...props}/>);
 };
 
 const checkAuthStatus = currentSession => {
@@ -36,7 +37,7 @@ const checkAuthStatus = currentSession => {
   expect(JSON.parse(localStorage.getItem('active-instance-domain'))).toBe(currentSessionMock.portal.title);
 
 };
-/** TEST SETUP END **/
+/** TEST SETUP END * */
 
 beforeEach(() => {
   // values stored in tests will also be available in other tests unless you run
@@ -48,7 +49,7 @@ it('does client side one time login token login', done => {
   const Mock = new MockAdapter(http);
   Mock.onGet().reply(200, loginResponseMock);
   const wrapper = setup() as any;
-  Component.getInitialProps({router: {query: {}}, ctx: { req:{}}});
+  Component.getInitialProps({ router: { query: {} }, ctx: { req:{}, store: defaultStore } });
   setImmediate(() => {
     wrapper.update();
     expect(wrapper.find("App").length).toBe(1);
@@ -66,13 +67,13 @@ it('handles login error correctly', done => {
     wrapper.update();
     expect(wrapper.find("App").length).toBe(1);
     expect(wrapper.find("View").length).toBe(1);
-    expect(wrapper.instance().state.currentSession).toMatchObject({authenticated: false});
+    expect(wrapper.instance().state.currentSession).toMatchObject({ authenticated: false });
     done();
   });
 });
 
 it('processes ssr information correctly', done => {
-  const wrapper = setup({currentSession: currentSessionMock}) as any;
+  const wrapper = setup({ currentSession: currentSessionMock }) as any;
   setImmediate(() => {
     wrapper.update();
     expect(wrapper.find("App").length).toBe(1);
@@ -89,7 +90,7 @@ it('processes localStorage login correctly', done => {
   localStorage.setItem('active-instance-domain', currentSessionMock.portal.title);
   const Mock = new MockAdapter(http);
   Mock.onGet().reply(200, loginResponseMock);
-  const wrapper = setup({router: {query: {}, replace :() => {}, asPath: {replace :() => {} } }}) as any;
+  const wrapper = setup({ router: { query: {}, replace :() => {}, asPath: { replace :() => {} } } }) as any;
   setImmediate(() => {
     wrapper.update();
     expect(wrapper.find("App").length).toBe(1);
@@ -101,7 +102,7 @@ it('processes localStorage login correctly', done => {
 
 it('Test withAuth redirects if no login state', () => {
   delete window.location;
-  global.window.location = {assign: jest.fn()};
+  global.window.location = { assign: jest.fn() };
   const store = mockStore(unauthenticatedStoreState);
   const Component = withAuth(App);
   const wrapper = mount(<IntlProvider locale="en"  defaultLocale="en" onError={()=> {}}>
@@ -118,10 +119,10 @@ it('Test withAuth redirects if no login state', () => {
 
 it('Test withAuth no redirects if login state', () => {
   delete window.location;
-  global.window.location = {assign: jest.fn()};
+  global.window.location = { assign: jest.fn() };
   const store = mockStore(authenticatedStoreState);
   const Component = withAuth(App);
-  Component.getInitialProps({router: {query: {}}, ctx: { req:{}}});
+  Component.getInitialProps({ router: { query: {} }, ctx: { req:{} } });
   const wrapper = mount(<IntlProvider locale="en"  defaultLocale="en" onError={()=> {}}>
       <CommonProvider linkComponent={LinkComponent}>
         <Provider store={store}>

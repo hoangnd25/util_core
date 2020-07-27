@@ -1,10 +1,8 @@
 {
   "compilerOptions": {
-    // Setting @src as alias for ./src folder, so no ../../../../../ is needed anymore
-    // has to be done in eslintrc.js and next.config.js and .babelrc.js as well
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
-      "@src/*": ["*"]
+      "@src/*": ["src/*"]
     },
     "target": "esnext",
     "module": "esnext",
@@ -26,8 +24,7 @@
   },
   "exclude": [
     "*.js",
-    "node_modules",
-    "*.test.tsx"
+    "node_modules"
   ],
   "include": [
     "next-env.d.ts",

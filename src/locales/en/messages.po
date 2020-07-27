@@ -1,0 +1,329 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2020-07-23 22:00+1000\n"
+"Mime-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+#: src/components/AwsConnectionDetail/index.tsx:69
+msgid "AWS Connection Details"
+msgstr ""
+
+#: src/components/AwsConnectionDetail/index.tsx:92
+msgid "Access key"
+msgstr ""
+
+#: src/components/common/WithIntegrations/index.tsx:21
+msgid "Addons"
+msgstr ""
+
+#: src/pages/r/app/portal/integrations/scorm-and-xapi/index.tsx:38
+#: src/pages/r/app/portal/integrations/scorm-and-xapi/index.tsx:51
+msgid "Application ID"
+msgstr ""
+
+#: src/components/common/WithIntegrations/index.tsx:38
+msgid "Autopilot"
+msgstr ""
+
+#: src/components/common/WithIntegrations/index.tsx:127
+msgid "Azure B2C"
+msgstr ""
+
+#: src/pages/r/app/base-app-demo/examples/linkComponent/index.tsx:10
+#~ msgid "Back to Overview"
+#~ msgstr ""
+
+#: src/components/DataFeed/uploadState.tsx:409
+msgid "Browse for a CSV file to upload for setting up fields mapping rules."
+msgstr ""
+
+#: src/components/AwsConnectionDetail/index.tsx:84
+msgid "Bucket URL"
+msgstr ""
+
+#: src/components/DataFeed/uploadState.tsx:347
+msgid "CSV fields"
+msgstr ""
+
+#: src/components/DataFeed/uploadState.tsx:382
+#: src/components/DataFeed/uploadState.tsx:467
+msgid "Cancel"
+msgstr ""
+
+#: src/components/common/WithIntegrations/index.tsx:110
+msgid "Canvas"
+msgstr ""
+
+#: src/components/DataFeed/uploadState.tsx:435
+msgid "Choose a file"
+msgstr ""
+
+#: src/pages/r/app/portal/integrations/scorm-and-xapi/index.tsx:84
+msgid "Click Generate Application ID button below to create an application ID."
+msgstr ""
+
+#: src/components/AwsConnectionDetail/index.tsx:33
+msgid "Copied!"
+msgstr ""
+
+#: src/components/AwsConnectionDetail/index.tsx:30
+msgid "Copy"
+msgstr ""
+
+#: src/components/common/WithIntegrations/index.tsx:135
+msgid "Course Catalog"
+msgstr ""
+
+#: src/components/DataFeed/uploadState.tsx:316
+msgid "Create mapping rules"
+msgstr ""
+
+#: src/pages/r/app/portal/integrations/user-data-feed/index.tsx:64
+msgid "Data Mapping"
+msgstr ""
+
+#: src/components/DataFeed/uploadState.tsx:317
+msgid "Data mapping details"
+msgstr ""
+
+#: src/components/common/WithIntegrations/index.tsx:149
+msgid "Developer"
+msgstr ""
+
+#: src/components/DataFeed/uploadState.tsx:295
+#: src/components/DataFeed/uploadState.tsx:390
+msgid "Done"
+msgstr ""
+
+#: src/components/DataFeed/uploadState.tsx:430
+msgid "Drag and drop to upload"
+msgstr ""
+
+#: src/components/DataFeed/uploadState.tsx:429
+msgid "Drop it here"
+msgstr ""
+
+#: src/pages/r/app/portal/integrations/oracle/index.tsx:238
+msgid "Export requested."
+msgstr ""
+
+#: src/components/DataFeed/uploadState.tsx:144
+msgid "Failed to save your mapping, please try again or contact us for assistance"
+msgstr ""
+
+#: src/components/AwsConnectionDetail/index.tsx:116
+msgid "For security reason, you only see this key once and cannot be recovered it. Please copy and keep it somewhere safe but accessible."
+msgstr ""
+
+#: src/pages/r/app/portal/integrations/scorm-and-xapi/index.tsx:90
+msgid "Generate Application ID"
+msgstr ""
+
+#: src/components/DataFeed/emptyState.tsx:9
+#: src/components/DataFeed/emptyState.tsx:9
+msgid "Get started"
+msgstr ""
+
+#: src/components/AwsConnectionDetail/index.tsx:77
+msgid "Hide"
+msgstr ""
+
+#: src/components/DataFeed/uploadState.tsx:374
+msgid "Hide all optional fields"
+msgstr ""
+
+#: src/components/AwsConnectionDetail/index.tsx:72
+msgid "Integrate using the following details to keep your user records up to date"
+msgstr ""
+
+#: src/components/common/WithIntegrations/index.tsx:62
+msgid "LTI Provider"
+msgstr ""
+
+#: src/components/DataFeed/uploadState.tsx:320
+msgid "Map the fields in your CSV file to the portal fields"
+msgstr ""
+
+#: src/components/DataFeed/uploadState.tsx:226
+#: src/components/DataFeed/uploadState.tsx:274
+msgid "Map with"
+msgstr ""
+
+#: src/components/common/WithIntegrations/index.tsx:118
+msgid "Microsoft Azure"
+msgstr ""
+
+#: src/components/DataFeed/uploadState.tsx:386
+msgid "Next"
+msgstr ""
+
+#: src/components/DataFeed/uploadState.tsx:194
+msgid "Optional"
+msgstr ""
+
+#: src/components/common/WithIntegrations/index.tsx:102
+msgid "Oracle"
+msgstr ""
+
+#: src/components/DataFeed/uploadState.tsx:337
+msgid "Portal fields"
+msgstr ""
+
+#: src/pages/r/app/portal/integrations/scorm-and-xapi/index.tsx:73
+msgid "Remove Application ID"
+msgstr ""
+
+#: src/components/DataFeed/uploadState.tsx:183
+msgid "Required"
+msgstr ""
+
+#: src/components/DataFeed/uploadState.tsx:457
+msgid "Retry"
+msgstr ""
+
+#: src/components/common/WithIntegrations/index.tsx:29
+msgid "SCORM and xAPI"
+msgstr ""
+
+#: src/components/common/WithIntegrations/index.tsx:29
+msgid "Scorm"
+msgstr ""
+
+#: src/components/AwsConnectionDetail/index.tsx:101
+msgid "Secret key"
+msgstr ""
+
+#: src/components/DataFeed/uploadState.tsx:167
+msgid "Select a field"
+msgstr ""
+
+#: src/components/DataFeed/uploadState.tsx:406
+msgid "Select file"
+msgstr ""
+
+#: src/components/DataFeed/uploadState.tsx:282
+msgid "Set a field with a unique value as the unique identifier"
+msgstr ""
+
+#: src/pages/r/app/portal/integrations/oracle/index.tsx:185
+msgid "Settings failed to save."
+msgstr ""
+
+#: src/pages/r/app/portal/integrations/oracle/index.tsx:178
+msgid "Settings saved."
+msgstr ""
+
+#: src/components/AwsConnectionDetail/index.tsx:77
+msgid "Show"
+msgstr ""
+
+#: src/components/DataFeed/uploadState.tsx:373
+msgid "Show all optional fields"
+msgstr ""
+
+#: src/components/common/WithIntegrations/index.tsx:142
+msgid "Single Sign On"
+msgstr ""
+
+#: src/components/DataFeed/uploadState.tsx:166
+msgid "Skip this field"
+msgstr ""
+
+#: src/components/common/WithIntegrations/index.tsx:46
+msgid "Stripe"
+msgstr ""
+
+#: src/components/common/WithIntegrations/index.tsx:94
+msgid "Success Factors"
+msgstr ""
+
+#: src/pages/r/app/portal/integrations/scorm-and-xapi/index.tsx:45
+msgid "This application ID can be used as a SCORM or xAPI provider. You can now download your content in SCORM or xAPI format from the Publish / Sharing menu found in the Settings section of each piece of training."
+msgstr ""
+
+#: src/components/DataFeed/uploadState.tsx:209
+#: src/components/DataFeed/uploadState.tsx:237
+msgid "This field is required"
+msgstr ""
+
+#: src/pages/_error.tsx:13
+msgid "Uh oh, that's a no"
+msgstr ""
+
+#: src/pages/r/app/portal/integrations/oracle/index.tsx:246
+msgid "Unable to request export."
+msgstr ""
+
+#: src/components/DataFeed/uploadState.tsx:249
+msgid "Unique identifier"
+msgstr ""
+
+#: src/components/DataFeed/uploadState.tsx:394
+msgid "Update"
+msgstr ""
+
+#: src/components/DataFeed/uploadState.tsx:132
+msgid "Update data mapping successfully.\""
+msgstr ""
+
+#: src/components/DataFeed/uploadState.tsx:453
+msgid "Upload failed"
+msgstr ""
+
+#: src/components/DataFeed/uploadState.tsx:446
+msgid "Uploading"
+msgstr ""
+
+#: src/components/common/WithIntegrations/index.tsx:156
+msgid "User Data Feed"
+msgstr ""
+
+#: src/components/common/WithIntegrations/index.tsx:70
+msgid "VETTRAK"
+msgstr ""
+
+#: src/components/common/WithIntegrations/index.tsx:78
+msgid "Wisenet"
+msgstr ""
+
+#: src/components/common/WithIntegrations/index.tsx:86
+msgid "Xero"
+msgstr ""
+
+#: src/pages/r/app/portal/integrations/scorm-and-xapi/index.tsx:81
+msgid "You are one click away from having the ability to export training as SCORM and xAPI enabled on your portal."
+msgstr ""
+
+#: src/components/DataFeed/uploadState.tsx:321
+msgid "You can edit your current mapping rules"
+msgstr ""
+
+#: src/components/DataFeed/emptyState.tsx:10
+msgid "You don’t have a S3 folder. Start creating your folder and set up mapping rules."
+msgstr ""
+
+#: src/components/DataFeed/uploadState.tsx:311
+#: src/pages/r/app/portal/integrations/user-data-feed/index.tsx:55
+msgid "Your data feed"
+msgstr ""
+
+#: src/components/AwsConnectionDetail/index.tsx:116
+msgid "Your secret key was created on {0}. Please find where you have saved it."
+msgstr ""
+
+#: src/components/common/WithIntegrations/index.tsx:54
+msgid "Zapier"
+msgstr ""
+
+#: src/components/DataFeed/uploadState.tsx:84
+msgid "{0} is not a supported file type"
+msgstr ""

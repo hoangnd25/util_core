@@ -21,8 +21,13 @@ const setup = (props = {}, isLoading = false) => {
   };
   
   const currentSession = {
+    authenticated: true,
     portal: {
-      id: 123,
+      id: '123',
+      title: 'test.mygo1.com',
+      data: {},
+      featureToggles: [],
+      files: {},
       configuration: {
         integrations: {
           oracle: {
@@ -36,6 +41,7 @@ const setup = (props = {}, isLoading = false) => {
     account: {
       id: 123,
       isAdministrator: true,
+      uuid: '00000000-0000-0000-00000000',
     },
   };
 
@@ -51,7 +57,7 @@ const setup = (props = {}, isLoading = false) => {
             accountId={123}
             portalId={456}
           >
-            <Oracle intl={intlMock} currentSession={currentSession} {...componentProps} />
+            <Oracle currentSession={currentSession} {...componentProps} />
           </CommonProvider>
         </IntlProvider>
       </ReduxProvider>

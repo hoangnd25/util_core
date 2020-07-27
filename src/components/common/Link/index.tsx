@@ -13,9 +13,7 @@ class CustomLink extends React.PureComponent<any> {
       style,
       replace = false,
       target = '_self',
-      prefix = '', // deprecated!!!!!!! write full link instead in href,
-      as,
-      query = {},
+      prefix = '', // deprecated!!!!!!! write full link instead in href
     } = this.props;
 
     let externalLink = true;
@@ -37,16 +35,7 @@ class CustomLink extends React.PureComponent<any> {
     }
 
     return (
-      <Link
-        href={{
-          pathname: composedLink,
-          query,
-        }}
-        as={as || composedLink}
-        passHref
-        prefetch={false}
-        replace={replace}
-      >
+      <Link href={composedLink} passHref prefetch={false} replace={replace}>
         <a className={className} style={style}>
           {children}
         </a>

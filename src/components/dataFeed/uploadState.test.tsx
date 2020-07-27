@@ -85,7 +85,6 @@ const setup = (props = {}) => {
         scrollToTop={scrollToTopFn}
         onCancel={fakeOnCancel}
         currentSession={currentSession}
-        intl={jest.fn()}
         {...props} />
     </IntlProvider>
   );

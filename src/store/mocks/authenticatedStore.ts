@@ -10,7 +10,7 @@ export default {
       mail: 'shangzhi.pan@go1.com',
       created: 1537494805,
       access: 0,
-      login: 1572239406,
+      login: 1574126755,
       status: true,
       first_name: 'Shangzhi',
       last_name: 'Pan Test',
@@ -39,7 +39,7 @@ export default {
         uri: 'https://res.cloudinary.com/go1vn/image/upload/v1554078657/apkognm7udeaideiadig.jpg'
       },
       uid: 38118,
-      accounts_total: 10,
+      accounts_total: 11,
       secondary_emails: [
         'shangzhi@web.de'
       ],
@@ -153,8 +153,360 @@ export default {
       type: 'content_partner',
       partner_id: 'go1',
       customer_id: 'cus_DdvhtmLQEQAWqk',
-      partner_portal_id: null
+      partner_portal_id: null,
+      featureToggles: [
+        {
+          raw: {
+            name: '1_profile',
+            id: '1_profile',
+            enabled: false
+          }
+        },
+        {
+          raw: {
+            name: 'visability-and-access',
+            id: 'visability-and-access',
+            enabled: true
+          }
+        },
+        {
+          raw: {
+            name: 'li-micro-app-video',
+            id: 'li-micro-app-video',
+            enabled: true
+          }
+        },
+        {
+          raw: {
+            name: 'mark-assessment-improvements',
+            id: 'mark-assessment-improvements',
+            enabled: false
+          }
+        },
+        {
+          raw: {
+            name: 'li-micro-app-text',
+            id: 'li-micro-app-text',
+            enabled: true
+          }
+        },
+        {
+          raw: {
+            name: 'li-micro-app',
+            id: 'li-micro-app',
+            enabled: true
+          }
+        },
+        {
+          raw: {
+            name: 'oauthappmanager',
+            id: 'oauthappmanager',
+            enabled: true
+          }
+        },
+        {
+          raw: {
+            name: 'cs_tool',
+            id: 'cs_tool',
+            enabled: false
+          }
+        },
+        {
+          raw: {
+            name: 'learning_experience_feedback',
+            id: 'learning_experience_feedback',
+            enabled: false
+          }
+        },
+        {
+          raw: {
+            name: 'groups_management_v2',
+            id: 'groups_management_v2',
+            enabled: true
+          }
+        },
+        {
+          raw: {
+            name: '1_player',
+            id: '1_player',
+            enabled: false
+          }
+        },
+        {
+          raw: {
+            name: 'individual_licensing',
+            id: 'individual_licensing',
+            enabled: true
+          }
+        },
+        {
+          raw: {
+            name: 'top_menu',
+            id: 'top_menu',
+            enabled: true
+          }
+        },
+        {
+          raw: {
+            name: 'award_improvements_child_mandatory',
+            id: 'award_improvements_child_mandatory',
+            enabled: false
+          }
+        },
+        {
+          raw: {
+            name: 'li-micro-app-iframe',
+            id: 'li-micro-app-iframe',
+            enabled: true
+          }
+        },
+        {
+          raw: {
+            name: 'wisenet',
+            id: 'wisenet',
+            enabled: true
+          }
+        },
+        {
+          raw: {
+            name: 'user-data-feed',
+            id: 'user-data-feed',
+            enabled: false
+          }
+        },
+        {
+          raw: {
+            name: 'zapier_improvements',
+            id: 'zapier_improvements',
+            enabled: false
+          }
+        },
+        {
+          raw: {
+            name: 'xAPI',
+            id: 'xAPI',
+            enabled: false
+          }
+        },
+        {
+          raw: {
+            name: 'content_reuse',
+            id: 'content_reuse',
+            enabled: true
+          }
+        },
+        {
+          raw: {
+            name: 'admin_request_purchases',
+            id: 'admin_request_purchases',
+            enabled: true
+          }
+        },
+        {
+          raw: {
+            name: 'text-body',
+            id: 'text-body',
+            enabled: true
+          }
+        },
+        {
+          raw: {
+            name: 'video_player_improvements',
+            id: 'video_player_improvements',
+            enabled: false
+          }
+        },
+        {
+          raw: {
+            name: 'portal_content_selection',
+            id: 'portal_content_selection',
+            enabled: false
+          }
+        },
+        {
+          raw: {
+            name: 'use_learning_record_index',
+            id: 'use_learning_record_index',
+            enabled: true
+          }
+        },
+        {
+          raw: {
+            name: 'seek_integration',
+            id: 'seek_integration',
+            enabled: false
+          }
+        },
+        {
+          raw: {
+            name: '1player_toggle_test',
+            id: '1player_toggle_test',
+            enabled: false
+          }
+        },
+        {
+          raw: {
+            name: 'content_sharing',
+            id: 'content_sharing',
+            enabled: true
+          }
+        },
+        {
+          raw: {
+            name: 'account_report_improvement',
+            id: 'account_report_improvement',
+            enabled: true
+          }
+        },
+        {
+          raw: {
+            name: 'groups_management',
+            id: 'groups_management',
+            enabled: true
+          }
+        },
+        {
+          raw: {
+            name: 'helens.mygo1.com',
+            id: 'helens.mygo1.com',
+            enabled: false
+          }
+        },
+        {
+          raw: {
+            name: 'send_bulk_notification',
+            id: 'send_bulk_notification',
+            enabled: false
+          }
+        },
+        {
+          raw: {
+            name: 'signin_improvements',
+            id: 'signin_improvements',
+            enabled: false
+          }
+        },
+        {
+          raw: {
+            name: 'new-lti',
+            id: 'new-lti',
+            enabled: false
+          }
+        },
+        {
+          raw: {
+            name: 'xero',
+            id: 'xero',
+            enabled: true
+          }
+        },
+        {
+          raw: {
+            name: 'additional_learner_profile_attributes',
+            id: 'additional_learner_profile_attributes',
+            enabled: true
+          }
+        },
+        {
+          raw: {
+            name: 'recommendations_phase2',
+            id: 'recommendations_phase2',
+            enabled: true
+          }
+        },
+        {
+          raw: {
+            name: 'content_flag',
+            id: 'content_flag',
+            enabled: true
+          }
+        },
+        {
+          raw: {
+            name: 'recommendations',
+            id: 'recommendations',
+            enabled: true
+          }
+        },
+        {
+          raw: {
+            name: 'topics',
+            id: 'topics',
+            enabled: true
+          }
+        },
+        {
+          raw: {
+            name: 'course-overview-type-list',
+            id: 'course-overview-type-list',
+            enabled: true
+          }
+        },
+        {
+          raw: {
+            name: 'achievement',
+            id: 'achievement',
+            enabled: false
+          }
+        },
+        {
+          raw: {
+            name: 'portal_licensing',
+            id: 'portal_licensing',
+            enabled: true
+          }
+        },
+        {
+          raw: {
+            name: 'nullable_attributes',
+            id: 'nullable_attributes',
+            enabled: true
+          }
+        },
+        {
+          raw: {
+            name: 'video_improvements',
+            id: 'video_improvements',
+            enabled: true
+          }
+        },
+        {
+          raw: {
+            name: 'notification_timeframe',
+            id: 'notification_timeframe',
+            enabled: true
+          }
+        },
+        {
+          raw: {
+            name: 'topic-auto-suggestions',
+            id: 'topic-auto-suggestions',
+            enabled: true
+          }
+        },
+        {
+          raw: {
+            name: 'insights',
+            id: 'insights',
+            enabled: true
+          }
+        },
+        {
+          raw: {
+            name: 'recommendations_phase3',
+            id: 'recommendations_phase3',
+            enabled: true
+          }
+        },
+        {
+          raw: {
+            name: 'enrolment_stream',
+            id: 'enrolment_stream',
+            enabled: false
+          }
+        }
+      ]
     },
-    jwt: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJnbzEudXNlciIsInZlciI6InYxOS4wMi4yMi4wIiwiZXhwIjoxNTc0OTE3OTI1LCJvYmplY3QiOnsidHlwZSI6InVzZXIiLCJjb250ZW50Ijp7ImlkIjo2MjkyMiwiaW5zdGFuY2UiOiJhY2NvdW50cy1kZXYuZ29jYXRhbHl6ZS5jb20iLCJwcm9maWxlX2lkIjoyMzY2MCwibWFpbCI6InNoYW5nemhpLnBhbkBnbzEuY29tIiwibmFtZSI6IlNoYW5nemhpIFBhbiBUZXN0Iiwicm9sZXMiOlsiQWRtaW4gb24gI0FjY291bnRzIiwiZGV2ZWxvcGVyIl0sImFjY291bnRzIjpbeyJpZCI6NjI5MjQsImluc3RhbmNlIjoic2hhbmd6aGlkZXYubXlnbzEuY29tIiwicG9ydGFsX2lkIjo1ODE5MjYsInByb2ZpbGVfaWQiOjEsIm5hbWUiOiJTaGFuZ3poaSBQYW4iLCJyb2xlcyI6WyJhZG1pbmlzdHJhdG9yIiwiU3R1ZGVudCJdfSx7ImlkIjo3NDc1NywiaW5zdGFuY2UiOiJzZXR0aW5naW5oZXJpdGFuY2V0ZXN0Lm15Z28xLmNvbSIsInBvcnRhbF9pZCI6NzQzMjcyLCJwYXJ0bmVyX3BvcnRhbF9pZCI6IjY5MzUzNSIsInByb2ZpbGVfaWQiOjEsIm5hbWUiOiJTaGFuZ3poaSBQYW4iLCJyb2xlcyI6WyJTdHVkZW50IiwiYWRtaW5pc3RyYXRvciJdfSx7ImlkIjo3NDgyMiwiaW5zdGFuY2UiOiJvbGRvbmJvYXJkLm15Z28xLmNvbSIsInBvcnRhbF9pZCI6NzQzNzg2LCJwcm9maWxlX2lkIjoxLCJuYW1lIjoiU2hhbmd6aGkgUGFuIiwicm9sZXMiOlsiU3R1ZGVudCIsImFkbWluaXN0cmF0b3IiXX0seyJpZCI6NzQ4MjcsImluc3RhbmNlIjoibmV3b25ib2FyZC5teWdvMS5jb20iLCJwb3J0YWxfaWQiOjc0Mzc4NywicHJvZmlsZV9pZCI6MSwibmFtZSI6IlNoYW5nemhpIFBhbiIsInJvbGVzIjpbIlN0dWRlbnQiLCJhZG1pbmlzdHJhdG9yIl19LHsiaWQiOjEwODY1MSwiaW5zdGFuY2UiOiJwdWJsaWMubXlnbzEuY29tIiwicG9ydGFsX2lkIjoyLCJwcm9maWxlX2lkIjo1OSwibmFtZSI6IlNoYW5nemhpIFBhbiIsInJvbGVzIjpbImFkbWluaXN0cmF0b3IiLCJTdHVkZW50Il19LHsiaWQiOjY2MTM2MiwiaW5zdGFuY2UiOiJkZXYubXlnbzEuY29tIiwicG9ydGFsX2lkIjoxMDMxMTYsInByb2ZpbGVfaWQiOjYyMjMsIm5hbWUiOiJTaGFuZ3poaSBQYW4iLCJyb2xlcyI6WyJhZG1pbmlzdHJhdG9yIiwiU3R1ZGVudCJdfSx7ImlkIjoyNDIxNzg1LCJpbnN0YW5jZSI6InFhLWZhZWY3OTE5OWQxOTZkOTIubXlnbzEuY29tIiwicG9ydGFsX2lkIjoyOTMxNTIzLCJwcm9maWxlX2lkIjo3LCJuYW1lIjoiU2hhbmd6aGkgUGFuIn0seyJpZCI6MjYzMTI3OCwiaW5zdGFuY2UiOiJlaC1nbzEtb25ib2FyZC10ZXN0My5teWdvMS5jb20iLCJwb3J0YWxfaWQiOjMyMTk5NzUsInBhcnRuZXJfcG9ydGFsX2lkIjoiOTUyNDkyNiIsInByb2ZpbGVfaWQiOjEsIm5hbWUiOiJTaGFuZ3poaSBQYW4gVGVzdCIsInJvbGVzIjpbIlN0dWRlbnQiLCJhZG1pbmlzdHJhdG9yIl19LHsiaWQiOjI4NDM1MjIsImluc3RhbmNlIjoicWEtNWVjMWNiNGNlNzExZGU4OS5teWdvMS5jb20iLCJwb3J0YWxfaWQiOjI5NjE3NzksInByb2ZpbGVfaWQiOjksIm5hbWUiOiJTaGFuZ3poaSBQYW4iLCJyb2xlcyI6WyJTdHVkZW50IiwibWFuYWdlciJdfSx7ImlkIjoyODg1MDg4LCJpbnN0YW5jZSI6InZpbm9saWEtMzMzLm15Z28xLmNvbSIsInBvcnRhbF9pZCI6MjkzNDQ0MSwicHJvZmlsZV9pZCI6NSwibmFtZSI6IlNoYW5nemhpIFBhbiIsInJvbGVzIjpbIlN0dWRlbnQiXX1dfX19.VbxfZeaQ_-6p_mY8N6cNkXlWu3cMHbTaob0skEE_5rj3x6ZoPGO3PqNI3H-3kGhg6s4v_7m1C3KEYhtKBFGoLqDl0qUahXmuCBK3xGZ07z-LIDLPnj1Yosdb8bzc7JxYxXsW6PgVQX9w2qjiVQU9P9tuo7Ui-JGpSi0JBJrhpwxWAwKD6DIYfBWFLN6Nr6MmiZCGhBj44Im8Fxu1L-cCLcVDed8oAzzRDXrzvUormueZxV3Y5bbV4qlWEmkPQsLKkOroh55TNqisd0Pn1IbPVBTWsNg0TzkGOV8JSaTnwyYpY-rFDrTHlZ1T_QKz92XKKsXbWccP1zq8bGRusKtqWg'
+    jwt: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJnbzEudXNlciIsInZlciI6InYxOS4wMi4yMi4wIiwiZXhwIjoxNTc2NzI2MTczLCJvYmplY3QiOnsidHlwZSI6InVzZXIiLCJjb250ZW50Ijp7ImlkIjo2MjkyMiwiaW5zdGFuY2UiOiJhY2NvdW50cy1kZXYuZ29jYXRhbHl6ZS5jb20iLCJwcm9maWxlX2lkIjoyMzY2MCwibWFpbCI6InNoYW5nemhpLnBhbkBnbzEuY29tIiwibmFtZSI6IlNoYW5nemhpIFBhbiBUZXN0Iiwicm9sZXMiOlsiQWRtaW4gb24gI0FjY291bnRzIiwiZGV2ZWxvcGVyIl0sImFjY291bnRzIjpbeyJpZCI6NjI5MjQsImluc3RhbmNlIjoic2hhbmd6aGlkZXYubXlnbzEuY29tIiwicG9ydGFsX2lkIjo1ODE5MjYsInByb2ZpbGVfaWQiOjEsIm5hbWUiOiJTaGFuZ3poaSBQYW4iLCJyb2xlcyI6WyJhZG1pbmlzdHJhdG9yIiwiU3R1ZGVudCJdfSx7ImlkIjo3NDc1NywiaW5zdGFuY2UiOiJzZXR0aW5naW5oZXJpdGFuY2V0ZXN0Lm15Z28xLmNvbSIsInBvcnRhbF9pZCI6NzQzMjcyLCJwYXJ0bmVyX3BvcnRhbF9pZCI6NjkzNTM1LCJwcm9maWxlX2lkIjoxLCJuYW1lIjoiU2hhbmd6aGkgUGFuIiwicm9sZXMiOlsiU3R1ZGVudCIsImFkbWluaXN0cmF0b3IiXX0seyJpZCI6NzQ4MjIsImluc3RhbmNlIjoib2xkb25ib2FyZC5teWdvMS5jb20iLCJwb3J0YWxfaWQiOjc0Mzc4NiwicHJvZmlsZV9pZCI6MSwibmFtZSI6IlNoYW5nemhpIFBhbiIsInJvbGVzIjpbIlN0dWRlbnQiLCJhZG1pbmlzdHJhdG9yIl19LHsiaWQiOjc0ODI3LCJpbnN0YW5jZSI6Im5ld29uYm9hcmQubXlnbzEuY29tIiwicG9ydGFsX2lkIjo3NDM3ODcsInByb2ZpbGVfaWQiOjEsIm5hbWUiOiJTaGFuZ3poaSBQYW4iLCJyb2xlcyI6WyJTdHVkZW50IiwiYWRtaW5pc3RyYXRvciJdfSx7ImlkIjoxMDg2NTEsImluc3RhbmNlIjoicHVibGljLm15Z28xLmNvbSIsInBvcnRhbF9pZCI6MiwicHJvZmlsZV9pZCI6NTksIm5hbWUiOiJTaGFuZ3poaSBQYW4iLCJyb2xlcyI6WyJhZG1pbmlzdHJhdG9yIiwiU3R1ZGVudCJdfSx7ImlkIjo2NjEzNjIsImluc3RhbmNlIjoiZGV2Lm15Z28xLmNvbSIsInBvcnRhbF9pZCI6MTAzMTE2LCJwcm9maWxlX2lkIjo2MjIzLCJuYW1lIjoiU2hhbmd6aGkgUGFuIiwicm9sZXMiOlsiYWRtaW5pc3RyYXRvciIsIlN0dWRlbnQiXX0seyJpZCI6MjQyMTc4NSwiaW5zdGFuY2UiOiJxYS1mYWVmNzkxOTlkMTk2ZDkyLm15Z28xLmNvbSIsInBvcnRhbF9pZCI6MjkzMTUyMywicHJvZmlsZV9pZCI6NywibmFtZSI6IlNoYW5nemhpIFBhbiJ9LHsiaWQiOjI2MzEyNzgsImluc3RhbmNlIjoiZWgtZ28xLW9uYm9hcmQtdGVzdDMubXlnbzEuY29tIiwicG9ydGFsX2lkIjozMjE5OTc1LCJwYXJ0bmVyX3BvcnRhbF9pZCI6OTUyNDkyNiwicHJvZmlsZV9pZCI6MSwibmFtZSI6IlNoYW5nemhpIFBhbiBUZXN0Iiwicm9sZXMiOlsiU3R1ZGVudCIsImFkbWluaXN0cmF0b3IiXX0seyJpZCI6Mjg0MzUyMiwiaW5zdGFuY2UiOiJxYS01ZWMxY2I0Y2U3MTFkZTg5Lm15Z28xLmNvbSIsInBvcnRhbF9pZCI6Mjk2MTc3OSwicHJvZmlsZV9pZCI6OSwibmFtZSI6IlNoYW5nemhpIFBhbiIsInJvbGVzIjpbIlN0dWRlbnQiLCJtYW5hZ2VyIl19LHsiaWQiOjI4ODUwODgsImluc3RhbmNlIjoidmlub2xpYS0zMzMubXlnbzEuY29tIiwicG9ydGFsX2lkIjoyOTM0NDQxLCJwcm9maWxlX2lkIjo1LCJuYW1lIjoiU2hhbmd6aGkgUGFuIiwicm9sZXMiOlsiU3R1ZGVudCJdfSx7ImlkIjo0NTExMDU2LCJpbnN0YW5jZSI6InZpbjExMS10ZXN0LWNvbXBhbnkubXlnbzEuY29tIiwicG9ydGFsX2lkIjo0MTQ0NzEzLCJwYXJ0bmVyX3BvcnRhbF9pZCI6MjU5MDYwMiwicHJvZmlsZV9pZCI6NiwibmFtZSI6IlNoYW5nemhpIFBhbiIsInJvbGVzIjpbIlN0dWRlbnQiXX1dfX19.DQSpLcCLKofyBkXJEAgoTreV1b1i2lBQyY6JFC4Pc9HVpy3Smh4dJGJgEGui8X4evJCeATRy63_FrjUV9UoQ4-hSFWEw0ZNLSAvzF9cGQCgXV9RWvLdZ8LaN0Xy3nUDw4UfEa4dPkVQUiHICCkmdHtmsb3EqQKLy0eQktgnk6JBUWBEvHzatwa3dgZ6Myhgj9PjKjFWxK6dsJ7GDh_p13EMcFmurBJx4l1giYJ7aa1VEH1i25wvBVPZfcK3XCxkbDPiAmfHeyTNuQnp7PRY0r27bjvsheFiv_YEaQopIh0wcrMXwV2bpajHa0X-WsUhh7zhJEoCMzH2wlxeilAJijA'
   }
 }

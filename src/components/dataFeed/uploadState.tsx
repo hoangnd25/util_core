@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { withI18n } from '@lingui/react';
+import { Trans, t } from '@lingui/macro';
 import {
   View,
   Text,
@@ -7,19 +9,29 @@ import {
   foundations,
   Button,
   Spinner,
-  Icon,
   Select,
   Banner,
   SelectDropdown,
   Skeleton,
   NotificationManager,
 } from '@go1d/go1d';
-import { injectIntl, FormattedMessage } from 'react-intl';
+import IconCheck from '@go1d/go1d/build/components/Icons/Check';
+import IconChevronDown from '@go1d/go1d/build/components/Icons/ChevronDown';
+import IconChevronLeft from '@go1d/go1d/build/components/Icons/ChevronLeft';
+import IconChevronUp from '@go1d/go1d/build/components/Icons/ChevronUp';
+import IconNotPassed from '@go1d/go1d/build/components/Icons/NotPassed';
+import IconUpload from '@go1d/go1d/build/components/Icons/Upload';
 import csvParser from 'papaparse';
-import { defineMessagesList } from '@src/utils/translation';
-import DataFeedService, { CsvData, CreateMappingPayload } from '@src/services/dataFeed';
-import { AWSCredential, MappingField, MappingData } from '@src/types/userDataFeed';
-import AWSConnectionDetail from '@src/components/awsConnectionDetail';
+import DataFeedService, { 
+  CsvData, 
+  CreateMappingPayload, 
+  AWSCredential, 
+  MappingField, 
+  MappingData 
+} from '@src/services/dataFeed';
+import AWSConnectionDetail from '@src/components/AwsConnectionDetail';
+import IconCheckbox from '@go1d/go1d/build/components/Icons/Checkbox';
+import IconInteractive from '@go1d/go1d/build/components/Icons/Interactive';
 
 interface CSVField {
   value: string;
@@ -27,15 +39,14 @@ interface CSVField {
 }
 
 interface Props {
-  intl: any;
   currentSession: any;
-  isEditing: boolean;
-  defaultStep: MappingStep;
-  awsCredential: AWSCredential;
-  mappingData: MappingData;
-  scrollToTop: () => void;
-  onCancel: () => void;
-  onDone: () => void;
+  isEditing?: boolean;
+  defaultStep?: MappingStep;
+  awsCredential?: AWSCredential;
+  mappingData?: MappingData;
+  scrollToTop?: () => void;
+  onCancel?: () => void;
+  onDone?: () => void;
 }
 
 interface State {
@@ -129,7 +140,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
 
   onReject(file: File) {
     if (file.type !== 'text/csv') {
-      const uploadError = this.props.intl.formatMessage(defineMessagesList().dataFeedUploadBlockErrorTextFileExtension, { fileName: file.name });
+      const uploadError = withI18n()(({ i18n }) => (i18n._(t`${file.name} is not a supported file type`)));
       this.setState({ uploadError });
     }
   }
@@ -186,7 +197,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
             this.setState({ awsCredential, touched: false });
 
             NotificationManager.success({
-              message: <View justifyContent="flex-start"><FormattedMessage id="dataFeed.mapping.successfully" defaultMessage="Update data mapping successfully." /></View>,
+              message: <View justifyContent="flex-start"><Trans>Update data mapping successfully."</Trans></View>,
               options: { lifetime: 3000, isOpen: true },
             });
           } else {
@@ -197,7 +208,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
           const { data } = mappingResult.response || {};
           const mappingError = data && data.errors
             ? data.errors[0].title
-            : this.props.intl.formatMessage(defineMessagesList().userDataFeedMappingFailedError);
+            : t`Failed to save your mapping, please try again or contact us for assistance`;
 
           this.setState({ isUploadingFailed: true, mappingError });
           scrollToTop();
@@ -225,8 +236,8 @@ class DataFeedUploadState extends React.Component<Props, State> {
 
   renderField(go1Field: MappingField) {
     const { csvFields: csvFieldsState, csvData, submitted } = this.state;
-    const skipOptionLabel = this.props.intl.formatMessage(defineMessagesList().userDataFeedMappingSkipField);
-    const selectFieldPlaceholder = this.props.intl.formatMessage(defineMessagesList().userDataFeedMappingSelectFieldPlaceholder);
+    const skipOptionLabel = withI18n()(({ i18n }) => (i18n._(t`Skip this field`)));
+    const selectFieldPlaceholder = t`Select a field`;
     const skipOptions = [{ value: '', label: skipOptionLabel }];
     const csvFields = csvFieldsState.length > 0 ? csvFieldsState : this.getMappedFields(csvData[0]);
 
@@ -248,7 +259,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
                       [foundations.breakpoints.sm]: { display: "none" },
                     }}
                   >
-                    <FormattedMessage id="userDataFeed.block.mapping.requiredLabel" defaultMessage="Required" />
+                    <Trans>Required</Trans>
                   </View>
 
                   <View css={{
@@ -261,7 +272,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
                 <View css={{
                   [foundations.breakpoints.sm]: { display: "none" },
                 }}>
-                  <FormattedMessage id="userDataFeed.block.mapping.optionalLabel" defaultMessage="Optional" />
+                  <Trans>Optional</Trans>
                 </View>
               )}
             </Text>
@@ -288,7 +299,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
 
           {submitted && go1Field.required && !go1Field.mappedField && (
             <Text color="danger" fontSize={1} marginTop={3}>
-              <FormattedMessage id="userDataFeed.block.mapping.requiredErrorMessage" defaultMessage="This field is required" />
+              <Trans>This field is required</Trans>
             </Text>
           )}
         </View>
@@ -314,7 +325,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
                 justifyContent="flex-start"
               >
                 <View flexDirection="row" alignItems="center">
-                  {go1Field.mappedField && <Icon name="Check" marginRight={3} />}
+                  {go1Field.mappedField && <IconCheck marginRight={3} />}
                   <Text
                     flexShrink={1}
                     flexGrow={1}
@@ -326,7 +337,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
                     }}
                   >
                     {go1Field.mappedField || (
-                      <Text><FormattedMessage id="userDataFeed.block.mapping.mapWith" defaultMessage="Map with" />...</Text>
+                      <Text><Trans>Map with</Trans>...</Text>
                     )}
                   </Text>
                 </View>
@@ -346,7 +357,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
             }}
           >
             <Text color="danger" fontSize={1} marginTop={3}>
-              <FormattedMessage id="userDataFeed.block.mapping.requiredErrorMessage" defaultMessage="This field is required" />
+              <Trans>This field is required</Trans>
             </Text>
           </View>
         )}
@@ -363,7 +374,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
 
     return (
       <>
-        <FormattedMessage id="userDataFeed.block.mapping.editingExternalIdTitle" defaultMessage="Unique identifier" />
+        <Trans>Unique identifier</Trans>
         <View flexDirection="row" flexWrap="wrap" borderColor="soft" paddingY={3}>
           {/* Mapping action on desktop */}
           <View
@@ -404,7 +415,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
                   justifyContent="flex-start"
                 >
                   <View flexDirection="row" alignItems="center">
-                    {current.value && <Icon name="Check" marginRight={3} />}
+                    {current.value && <IconCheckbox marginRight={3} />}
                     <Text
                       flexShrink={1}
                       flexGrow={1}
@@ -416,7 +427,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
                       }}
                     >
                       {current.label || (
-                        <Text><FormattedMessage id="userDataFeed.block.mapping.mapWith" defaultMessage="Map with" />...</Text>
+                        <Text><Trans>Map with</Trans>...</Text>
                       )}
                     </Text>
                   </View>
@@ -428,7 +439,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
         <Text
           color='subtle'
           fontSize={2}>
-          <FormattedMessage id="userDataFeed.block.mapping.editingExternalIdHelpText" defaultMessage="Set a field with a unique value as the unique identifier" />
+          <Trans>Set a field with a unique value as the unique identifier</Trans>
         </Text>
       </>
     )
@@ -456,7 +467,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
 
           <View flexDirection="row" justifyContent="flex-end" width="100%" marginTop={7}>
             <ButtonFilled color="accent" size="lg" onClick={() => onDone()}>
-              <FormattedMessage id="data.feed.upload.block.done.button" defaultMessage="Done" />
+              <Trans>Done</Trans>
             </ButtonFilled>
           </View>
         </>
@@ -483,20 +494,20 @@ class DataFeedUploadState extends React.Component<Props, State> {
                 }
               }}
             >
-              <Icon name="ChevronLeft" />
+              <IconChevronLeft />
               <Text fontSize={2} marginLeft={3}>
-                <FormattedMessage id="userDataFeed.block.mapping.edit.yourDataFeed" defaultMessage="Your data feed" />
+                <Trans>Your data feed</Trans>
               </Text>
             </View>
           )}
 
           <Text fontWeight="semibold" fontSize={4} marginBottom={3}>
-            {!isEditing && <FormattedMessage id="userDataFeed.block.mapping.title" defaultMessage="Create mapping rules" />}
-            {isEditing && <FormattedMessage id="userDataFeed.block.mapping.editingTitle" defaultMessage="Data mapping details" />}
+            {!isEditing && <Trans>Create mapping rules</Trans>}
+            {isEditing && <Trans>Data mapping details</Trans>}
           </Text>
           <Text marginTop={2}>
-            {!isEditing && <FormattedMessage id="userDataFeed.block.mapping.subTitle" defaultMessage="Map the fields in your CSV file to the portal fields" />}
-            {isEditing && <FormattedMessage id="userDataFeed.block.mapping.editingSubTitle" defaultMessage="You can edit your current mapping rules" />}
+            {!isEditing && <Trans>Map the fields in your CSV file to the portal fields</Trans>}
+            {isEditing && <Trans>You can edit your current mapping rules</Trans>}
           </Text>
 
           {go1Fields.length > 0 && (
@@ -515,7 +526,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
                 <View flexDirection="row" flexWrap="wrap" marginBottom={4}>
                   <View width={[5 / 6, 1 / 2, 1 / 2]}>
                     <Text fontSize={2} fontWeight="semibold" textTransform="uppercase" color="subtle">
-                      <FormattedMessage id="userDataFeed.block.mapping.portalFields" defaultMessage="Portal fields" />
+                      <Trans>Portal fields</Trans>
                     </Text>
                   </View>
 
@@ -531,7 +542,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
                         }
                       }}
                     >
-                      <FormattedMessage id="userDataFeed.block.mapping.csvFields" defaultMessage="CSV fields" />
+                      <Trans>CSV fields</Trans>
                     </Text>
                   </View>
                 </View>
@@ -568,10 +579,10 @@ class DataFeedUploadState extends React.Component<Props, State> {
                         }
                       }}
                     >
-                      <Icon name={showOptionalFields ? 'ChevronUp' : 'ChevronDown'} />
+                      {showOptionalFields ? <IconChevronUp /> : <IconChevronDown />}
                       <Text fontSize={2} marginLeft={3}>
-                        {!showOptionalFields && <FormattedMessage id="userDataFeed.block.mapping.showOptionalFields" defaultMessage="Show all optional fields" />}
-                        {showOptionalFields && <FormattedMessage id="userDataFeed.block.mapping.hideOptionalFields" defaultMessage="Hide all optional fields" />}
+                        {!showOptionalFields && <Trans>Show all optional fields</Trans>}
+                        {showOptionalFields && <Trans>Hide all optional fields</Trans>}
                       </Text>
                     </View>
                   </>
@@ -581,25 +592,25 @@ class DataFeedUploadState extends React.Component<Props, State> {
               <View flexDirection="row" justifyContent={isEditing ? "flex-end" : "space-between"} width="100%" marginTop={7}>
                 {!isEditing && (
                   <ButtonFilled size="lg" onClick={() => onCancel()}>
-                    <FormattedMessage id="userDataFeed.block.mapping.button.cancel" defaultMessage="Cancel" />
+                    <Trans>Cancel</Trans>
                   </ButtonFilled>
                 )}
 
                 {!isEditing && (
                   <ButtonFilled color="accent" size="lg" onClick={() => this.onMappingDone()}>
-                    <FormattedMessage id="userDataFeed.block.mapping.button.next" defaultMessage="Next" />
+                    <Trans>Next</Trans>
                   </ButtonFilled>
                 )}
 
                 {isEditing && !touched && (
                   <ButtonFilled color="accent" size="lg" onClick={() => onCancel()}>
-                    <FormattedMessage id="userDataFeed.block.mapping.button.done" defaultMessage="Done" />
+                    <Trans>Done</Trans>
                   </ButtonFilled>
                 )}
 
                 {isEditing && touched && (
                   <ButtonFilled color="accent" size="lg" onClick={() => this.onMappingDone()}>
-                    <FormattedMessage id="userDataFeed.block.mapping.button.update" defaultMessage="Update" />
+                    <Trans>Update</Trans>
                   </ButtonFilled>
                 )}
               </View>
@@ -618,10 +629,10 @@ class DataFeedUploadState extends React.Component<Props, State> {
     return (
       <>
         <Text fontWeight="semibold" fontSize={4} marginBottom={3}>
-          <FormattedMessage id="data.feed.upload.block.title" defaultMessage="Select file" />
+          <Trans>Select file</Trans>
         </Text>
         <Text marginTop={2}>
-          <FormattedMessage id="data.feed.upload.block.sub.title" defaultMessage="Browse for a CSV file to upload for setting up fields mapping rules." />
+          <Trans>Browse for a CSV file to upload for setting up fields mapping rules.</Trans>
         </Text>
 
         <View
@@ -662,7 +673,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
                     flexGrow={1}
                     paddingX={4}
                   >
-                    <Icon name="Interactive" marginRight={3} />
+                    <IconInteractive marginRight={3} />
 
                     <Text
                       flexShrink={1}
@@ -675,14 +686,14 @@ class DataFeedUploadState extends React.Component<Props, State> {
                     >
                       {
                         isDragActive
-                          ? <FormattedMessage id="data.feed.upload.block.uploader.dragging" defaultMessage="Drop it here" />
-                          : <FormattedMessage id="data.feed.upload.block.uploader.drag" defaultMessage="Drag and drop to upload" />
+                          ? <Trans>Drop it here</Trans>
+                          : <Trans>Drag and drop to upload</Trans>
                       }
                     </Text>
                   </View>
 
-                  <Button iconName="Upload">
-                    <FormattedMessage id="data.feed.upload.block.upload.choose.file" defaultMessage="Choose a file" />
+                  <Button icon={IconUpload}>
+                    <Trans>Choose a file</Trans>
                   </Button>
                 </View>
               )}
@@ -701,7 +712,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
               {isUploading && (
                 <View flexDirection="row">
                   <Spinner marginRight={3} size={3} />
-                  <Text color="subtle"><FormattedMessage id="data.feed.upload.block.uploading" defaultMessage="Uploading" />...</Text>
+                  <Text color="subtle"><Trans>Uploading</Trans>...</Text>
                 </View>
               )}
 
@@ -711,16 +722,16 @@ class DataFeedUploadState extends React.Component<Props, State> {
                   justifyContent="space-between"
                 >
                   <View flexDirection="row" alignItems="center">
-                    <Icon color="danger" name="NotPassed" marginRight={3} size={3} />
+                    <IconNotPassed color="danger" marginRight={3} size={3} />
                     <Text color="danger">
-                      <FormattedMessage id="data.feed.upload.block.upload.failed" defaultMessage="Upload failed" />
+                      <Trans>Upload failed</Trans>
                     </Text>
                   </View>
                   <Button
                     color="accent"
                     onClick={() => this.setState({ isShowUploader: true, uploadError: null })}
                   >
-                    <FormattedMessage id="data.feed.upload.block.upload.retry" defaultMessage="Retry" />
+                    <Trans>Retry</Trans>
                   </Button>
                 </View>
               )}
@@ -734,7 +745,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
 
         <View flexDirection="row" justifyContent="flex-start" width="100%" marginTop={7}>
           <ButtonFilled size="lg" onClick={() => onCancel()}>
-            <FormattedMessage id="data.feed.upload.block.cancel.button" defaultMessage="Cancel" />
+            <Trans>Cancel</Trans>
           </ButtonFilled>
         </View>
       </>
@@ -791,4 +802,4 @@ class DataFeedUploadState extends React.Component<Props, State> {
   }
 }
 
-export default injectIntl(DataFeedUploadState);
+export default DataFeedUploadState;

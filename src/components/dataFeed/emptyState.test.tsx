@@ -9,7 +9,7 @@ const fakeOnStart = jest.fn();
 const setup = (props = {}) => {
   return mount(
     <IntlProvider locale="en">
-      <DataFeedEmptyState onStart={fakeOnStart} intl={jest.fn()} {...props} />
+      <DataFeedEmptyState onStart={fakeOnStart} {...props} />
     </IntlProvider>
   );
 };

@@ -1,15 +1,15 @@
 import * as React from 'react';
 import dayjs from 'dayjs';
-import { Spinner, Text, View, Icon } from '@go1d/go1d';
-import { injectIntl, FormattedMessage } from 'react-intl';
-import DataFeedService from '@src/services/dataFeed';
-import { AWSCredential, MappingData } from '@src/types/userDataFeed';
-import { defineMessagesList } from '@src/utils/translation';
+import { Trans } from '@lingui/macro';
+import { Spinner, Text, View } from '@go1d/go1d';
+import IconEdit from '@go1d/go1d/build/components/Icons/Edit';
+import { SIDEBAR_MENUS } from '@src/constants';
 import withAuth from '@src/components/common/WithAuth';
-import withMasterPage, { MasterPageProps } from '@src/pages/masterPage';
-import AWSConnectionDetail from '@src/components/awsConnectionDetail';
-import DataFeedEmptyState from '@src/components/dataFeed/emptyState';
-import DataFeedUploadState, { MappingStep } from '@src/components/dataFeed/uploadState';
+import withIntegrations from '@src/components/common/WithIntegrations';
+import AWSConnectionDetail from '@src/components/AwsConnectionDetail';
+import DataFeedEmptyState from '@src/components/DataFeed/emptyState';
+import DataFeedUploadState, { MappingStep } from '@src/components/DataFeed/uploadState';
+import DataFeedService, { AWSCredential, MappingData } from '@src/services/dataFeed';
 
 export const dataFeedService = DataFeedService();
 
@@ -18,7 +18,7 @@ enum DataFeedState {
   Upload = 2,
 }
 
-interface Props extends MasterPageProps{
+interface Props {
   currentSession: any;
 }
 
@@ -39,23 +39,20 @@ export class UserDataFeed extends React.Component<Props, State> {
     mappingData: null,
   };
 
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     const { currentSession } = this.props;
     this.fetchData(currentSession.portal.id);
   }
 
   render() {
-    const { intl, currentSession } = this.props;
+    const { currentSession } = this.props;
     const { step, isLoading, isEditing, awsCredential, mappingData } = this.state;
-    const yourDataFeedTitle = intl.formatMessage(defineMessagesList().integrationUserDataFeedConnectionDetailTitle);
 
     if (isLoading) {
       return (
-        <Spinner size={3} />
+        <View minHeight="60vh" justifyContent="center" alignItems="center">
+          <Spinner size={3} />
+        </View>
       );
     }
 
@@ -63,7 +60,9 @@ export class UserDataFeed extends React.Component<Props, State> {
       return (
         <View minHeight="60vh">
           <View marginBottom={5}>
-            <Text element="h3" fontSize={4} fontWeight="semibold">{yourDataFeedTitle}</Text>
+            <Text element="h3" fontSize={4} fontWeight="semibold">
+              <Trans>Your data feed</Trans>
+            </Text>
           </View>
 
           {awsCredential && (
@@ -90,7 +89,7 @@ export class UserDataFeed extends React.Component<Props, State> {
             >
               <View flexGrow={1} flexShrink={1}>
                 <Text fontWeight="semibold" fontSize={3}>
-                  <FormattedMessage id="userDataFeed.block.mappingData.title" defaultMessage="Data Mapping" />
+                  <Trans>Data Mapping</Trans>
                 </Text>
 
                 {(mappingData.updated || mappingData.author) && (
@@ -100,7 +99,7 @@ export class UserDataFeed extends React.Component<Props, State> {
                 )}
               </View>
 
-              <Icon color="subtle" name="Edit" />
+              <IconEdit color="subtle" />
             </View>
           )}
         </View>
@@ -122,7 +121,7 @@ export class UserDataFeed extends React.Component<Props, State> {
             defaultStep={isEditing ? MappingStep.Mapping : undefined}
             onDone={() => this.fetchData(currentSession.portal.id)}
             onCancel={() => this.setState({step: DataFeedState.Empty, isEditing: false})}
-            scrollToTop={() => this.props.scrollToTop()}
+            scrollToTop={() => console.log()} // this.props.scrollToTop()
           />
         )}
       </View>
@@ -141,4 +140,4 @@ export class UserDataFeed extends React.Component<Props, State> {
   }
 }
 
-export default injectIntl(withAuth(withMasterPage(UserDataFeed, { parentPage: 'integration', childPage: 'user-data-feed' })));
+export default withAuth(withIntegrations(UserDataFeed, { active: SIDEBAR_MENUS.USER_DATA_FEED }));

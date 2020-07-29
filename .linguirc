@@ -1,5 +1,6 @@
 {
-  "localeDir": "src/locales/",
+  "sourceLocale": "en",
+  "localeDir": "src/locale/",
   "srcPathDirs": ["src/"],
   "format": "po",
   "srcPathIgnorePatterns": [

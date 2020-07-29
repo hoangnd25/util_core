@@ -6,6 +6,8 @@ import { CurrentSessionType } from '@src/types/user';
 import withAuth from '@src/components/common/WithAuth';
 import withIntegrations from '@src/components/common/WithIntegrations';
 import MicrosoftAzureService from '@src/services/microsoftAzure';
+import TabMenuNavigation from '@src/components/common/TabMenuNavigation';
+import ContentDistributorExport from '@src/components/ContentDistributorExport';
 
 interface Props {
   currentSession: CurrentSessionType;
@@ -16,7 +18,6 @@ interface State {
   sessionId?: string,
   error: any | null,
   connection: any | null,
-  redirectLink: string | null,
 }
 
 export const microsoftAzureService = MicrosoftAzureService();
@@ -26,7 +27,6 @@ export class MicrosoftAzurePage extends React.Component<Props,State> {
     isLoading: true,
     error: null,
     connection: null,
-    redirectLink: null,
   };
 
   componentDidMount() {
@@ -49,6 +49,7 @@ export class MicrosoftAzurePage extends React.Component<Props,State> {
   }
 
   public render() {
+    const { currentSession } = this.props;
     const { isLoading, error, connection } = this.state;
 
     if (isLoading) {
@@ -59,26 +60,33 @@ export class MicrosoftAzurePage extends React.Component<Props,State> {
       )
     }
     return (
-      <View alignItems="flex-start" paddingX={5}>
-        {error && (
-          <Banner type="danger" marginBottom={4}>
-            <Text>{error.message}</Text>
-            <Text>Support ID: {error.sessionId}</Text>
-          </Banner>
-        )}
-        {connection ? (<>
-          <Text>Your portal is connected with Microsoft Azure.</Text>
-        </>) : (<>
-          <Text>Your portal can be configured to enable login with Microsoft Azure.</Text>
-        </>)}
-        <ButtonFilled 
-          color="accent" 
-          marginTop={5}
-          onClick={this.handleConnect}
-        >
-          {connection ? `Reconnect with Microsoft Azure` : `Connect with Microsoft Azure` }
-        </ButtonFilled>
-      </View>
+      <TabMenuNavigation>
+        <View label="Connect">
+          <View alignItems="flex-start" paddingTop={5}>
+            {error && (
+              <Banner type="danger" marginBottom={4}>
+                <Text>{error.message}</Text>
+                <Text>Support ID: {error.sessionId}</Text>
+              </Banner>
+            )}
+            {connection ? (<>
+              <Text>Your portal is connected with Microsoft Azure.</Text>
+            </>) : (<>
+              <Text>Your portal can be configured to enable login with Microsoft Azure.</Text>
+            </>)}
+            <ButtonFilled 
+              color="accent" 
+              marginTop={5}
+              onClick={this.handleConnect}
+            >
+              {connection ? `Reconnect with Microsoft Azure` : `Connect with Microsoft Azure` }
+            </ButtonFilled>
+          </View>
+        </View>
+        <View label="Graph Connector Export">
+          <ContentDistributorExport targetName="graph-connector" portal={currentSession.portal} />
+        </View>
+      </TabMenuNavigation>
     );
   }
 

@@ -16,7 +16,7 @@ import { withCurrentSession } from '@src/components/common/WithAuth';
 import { CurrentSessionType } from '@src/types/user';
 import config, { getBaseUrl } from '@src/config';
 import initializeStore from '@src/store/configureStore';
-import { getLocale, messages } from '@src/locales';
+import { getLocale } from '@src/components/common/WithI18n';
 
 const cookies = new Cookies();
 const http = createHttp();
@@ -69,7 +69,7 @@ export class GO1App extends App<AppProps, any> {
     return (
       <AppContext.Provider value={context}>
         <ReduxProvider store={store}>
-          <IntlProvider locale={locale} messages={messages[locale]} onError={noOP}>
+          <IntlProvider locale={locale} onError={noOP}>
             <CommonProvider
               linkComponent={LinkComponent}
               accent={getNested(currentSession, 'portal.data.theme.primary', foundations.colors.accent)}

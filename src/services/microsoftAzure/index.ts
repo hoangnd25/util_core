@@ -38,7 +38,6 @@ class MicrosoftAzureService extends BaseService {
   public async getRedirectLink(portalDomain: string): Promise<(string)> {
     try {
       const { data } = await this.http.get(`sso/oauth/azure/portal/authorize?portal=${ portalDomain }`);
-      console.log(data);
       return data.redirectUrl;
     } catch (err) {
       console.log(err);

@@ -15,7 +15,7 @@ module.exports = {
     DOCKER_TAG: process.env.DOCKER_TAG,
     API_URL: process.env.API_URL,
     ENV: process.env.ENV,
-    LOGIN_REDIRECT_URL: process.env.ENV === 'local' ? '/r/app/base-app-demo/examples/protectedRoute/login' : '/user/login',
+    LOGIN_REDIRECT_URL: process.env.ENV === 'local' ? '/r/app/portal' : '/user/login',
   },
 
   webpack: (config, options) => {
@@ -68,6 +68,15 @@ module.exports = {
       }
       return entries;
     };
+
+    config.module.rules.push({
+      test: /\.po/,
+      use: [
+        {
+          loader: '@lingui/loader',
+        },
+      ],
+    });
 
     return config;
   }

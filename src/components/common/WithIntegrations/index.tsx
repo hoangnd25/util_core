@@ -5,6 +5,7 @@ import Layout from '@src/components/common/Layout/index';
 import { SIDEBAR_MENUS } from "@src/constants";
 import { GO1Portal } from '@src/types/user';
 import { View, Text } from '@go1d/go1d';
+import { getNested } from '@go1d/mine/utils';
 
 interface IntegrationPageOptions {
   pageTitle?: string;
@@ -28,8 +29,6 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
                 backgroundColor="background"
                 boxShadow="crisp"
                 flexGrow={1}
-                paddingX={4}
-                paddingY={5}
                 borderRadius={2}
                 padding={[5,5,6]}
                 minHeight="60vh"
@@ -46,7 +45,7 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
   getMenu = (i18n) => {
     const portal: GO1Portal = this.props.currentSession.portal;
     const allIntegrations = (portal && portal.configuration && portal.configuration.integrations) || {};
-    const featureToggles: any = {};
+    const featureToggles: any = portal.featureToggles;
     const enabledIntegrations = {} as any;
     Object.keys(allIntegrations).forEach(name => {
       enabledIntegrations[name] = !!allIntegrations[name].status;
@@ -56,15 +55,13 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
       {
         id: SIDEBAR_MENUS.ADDONS,
         title: i18n._(t`Addons`),
-        href: '/integrations',
-        isApiomLink: false,
+        href: 'app/integrations/addons',
+        isApiomLink: true,
         isVisible: true,
-        module: 'portal',
       },
       {
         id: SIDEBAR_MENUS.SCORM,
         title: featureToggles.xAPI ? i18n._(t`SCORM and xAPI`) : i18n._(t`Scorm`),
-        logo: featureToggles.xAPI ? '/assets/integrations/scorm' : '/assets/integrations/xAPI.png',
         href: featureToggles.xAPI ? '/integrations/scorm-and-xapi' : 'app/integrations/addon/scorm',
         isApiomLink: !featureToggles.xAPI,
         isVisible: !!enabledIntegrations.scorm,
@@ -73,7 +70,6 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
       {
         id: SIDEBAR_MENUS.AUTOPILOT,
         title: i18n._(t`Autopilot`),
-        logo: '/assets/integrations/autopilot.png',
         href: 'app/integrations/addon/autopilot',
         isApiomLink: true,
         isVisible: !!enabledIntegrations.autopilot,
@@ -81,7 +77,6 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
       {
         id: SIDEBAR_MENUS.STRIPE,
         title: i18n._(t`Stripe`),
-        logo: '/assets/integrations/stripe.png',
         href: 'app/integrations/addon/stripe',
         isApiomLink: true,
         isVisible: !!enabledIntegrations.stripe,
@@ -89,7 +84,6 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
       {
         id: SIDEBAR_MENUS.ZAPIER,
         title: i18n._(t`Zapier`),
-        logo: '/assets/integrations/zapier-logo.png',
         href: 'app/integrations/addon/zapier',
         isApiomLink: true,
         isVisible: !!enabledIntegrations.zapier,
@@ -193,7 +187,7 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
         title: i18n._(t`User Data Feed`),
         href: '/integrations/user-data-feed',
         isApiomLink: false,
-        isVisible: true,
+        isVisible: !!featureToggles['user-data-feed'] || getNested(portal, 'configuration.data_mapping'),
         module: 'portal',
       },
     ];

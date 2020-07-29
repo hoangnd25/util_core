@@ -5,19 +5,17 @@ import { View, Tab } from '@go1d/go1d';
 interface TabOptionProps {
   activeTab: string;
   label: string;
-  onClick: (label) => void;
+  onClick: (label:string) => void;
 }
 
-const TabOption = ({activeTab, label, onClick}: TabOptionProps) => {
-  return (
-    <Tab 
-      isSelected={activeTab === label ? true : false} 
-      onClick={() => onClick(label)}
-    >
-      {label}
-    </Tab>
-  );
-}
+const TabOption = ({activeTab, label, onClick}: TabOptionProps) => (
+  <Tab 
+    isSelected={activeTab === label} 
+    onClick={() => onClick(label)}
+  >
+    {label}
+  </Tab>
+)
 
 class TabMenuNavigation extends Component<{ children }, any> {
   static propTypes = {
@@ -29,7 +27,7 @@ class TabMenuNavigation extends Component<{ children }, any> {
     super(props);
 
     this.state = {
-      activeTab: this.props.children[0].props.label,
+      activeTab: props.children[0].props.label,
     };
   }
 
@@ -42,19 +40,20 @@ class TabMenuNavigation extends Component<{ children }, any> {
     const { activeTab } = this.state;
 
     return (
-      <View>
+      <>
         <View flexDirection="row" borderBottom={2} color="faded">
-          {children.map(child => {
-            const { label } = child.props;
-            return <TabOption activeTab={activeTab} key={label} label={label} onClick={this.onClickTabItem} />;
-          })}
+          {children.map(({ props:{ label } }) => (
+            <View marginBottom={-1}>
+              <TabOption activeTab={activeTab} key={label} label={label} onClick={this.onClickTabItem} />
+            </View>
+          ))}
         </View>
 
         {children.map(child => {
           if (child.props.label !== activeTab) return undefined;
           return child.props.children;
         })}
-      </View>
+      </>
     );
   }
 }

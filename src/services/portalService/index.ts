@@ -17,12 +17,18 @@ class PortalService extends BaseService {
 
   async fetchIntegrationConfiguration(portalName: string, integrationName: string): Promise<any> {
     const url = `portal/conf/${portalName}/integrations/${integrationName}`;
-    return await this.http.get(url).then(response => response.status === 200 ? response.data.data : []);
+    try {
+      const { status, data: { data } } = await this.http.get(url);
+      return status === 200 ? data : null;
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
   }
 
   async saveIntegrationConfiguration(portalName: string, integrationName: string, integrationSettings: any): Promise<any> {
     const url = `portal/conf/${portalName}/integrations/0/${integrationName}`;
-    return await this.http.post(url, { value: integrationSettings }).then(response => response.status === 204 ? response : null);
+    return this.http.post(url, { value: integrationSettings }).then(response => response.status === 204 ? response : null);
   }
 
 }

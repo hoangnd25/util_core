@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { withI18n } from '@lingui/react';
 import { Trans, t } from '@lingui/macro';
 import {
   View,
@@ -39,6 +38,7 @@ interface CSVField {
 }
 
 interface Props {
+  i18n?: any;
   currentSession: any;
   isEditing?: boolean;
   defaultStep?: MappingStep;
@@ -139,8 +139,9 @@ class DataFeedUploadState extends React.Component<Props, State> {
   }
 
   onReject(file: File) {
+    const { i18n } = this.props;
     if (file.type !== 'text/csv') {
-      const uploadError = withI18n()(({ i18n }) => (i18n._(t`${file.name} is not a supported file type`)));
+      const uploadError = i18n._(t`${file.name} is not a supported file type`);
       this.setState({ uploadError });
     }
   }
@@ -235,9 +236,10 @@ class DataFeedUploadState extends React.Component<Props, State> {
   }
 
   renderField(go1Field: MappingField) {
+    const { i18n } = this.props;
     const { csvFields: csvFieldsState, csvData, submitted } = this.state;
-    const skipOptionLabel = withI18n()(({ i18n }) => (i18n._(t`Skip this field`)));
-    const selectFieldPlaceholder = t`Select a field`;
+    const skipOptionLabel = i18n._(t`Skip this field`);
+    const selectFieldPlaceholder = i18n._(t`Select a field`);
     const skipOptions = [{ value: '', label: skipOptionLabel }];
     const csvFields = csvFieldsState.length > 0 ? csvFieldsState : this.getMappedFields(csvData[0]);
 

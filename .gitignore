@@ -30,7 +30,7 @@ coverage
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/
-src/locales/**/_build/
+src/locale/**/_build/
 
 # Dependency directories
 node_modules

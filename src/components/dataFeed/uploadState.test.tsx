@@ -2,6 +2,7 @@ import { mount } from 'enzyme';
 import * as React from 'react';
 import { IntlProvider } from 'react-intl';
 import DataFeedUploadState, { dataFeedService } from './uploadState';
+import withI18n from '../common/WithI18n';
 
 const scrollToTopFn = jest.fn();
 const fakeOnCancel = jest.fn();
@@ -79,13 +80,16 @@ const setup = (props = {}) => {
       },
     },
   };
+  const Component = withI18n(
+    <DataFeedUploadState
+      scrollToTop={scrollToTopFn}
+      onCancel={fakeOnCancel}
+      currentSession={currentSession}
+      {...props} />
+  )
   return mount(
     <IntlProvider locale="en">
-      <DataFeedUploadState
-        scrollToTop={scrollToTopFn}
-        onCancel={fakeOnCancel}
-        currentSession={currentSession}
-        {...props} />
+      <Component language="en" catalogs={{en:{}}} />
     </IntlProvider>
   );
 };

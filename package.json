@@ -1,7 +1,5 @@
 {
-  "name": "base-react-app",
-  "description": "",
-  "license": "ISC",
+  "name": "portal",
   "author": "",
   "version": "2.0.0",
   "scripts": {
@@ -48,9 +46,11 @@
     "@babel/core": "^7.10.1",
     "@go1d/babel-plugin-transform-go1d-imports": "^0.1.2",
     "@lingui/cli": "^2.9.1",
+    "@lingui/loader": "^2.9.1",
     "@lingui/macro": "^2.9.1",
     "@types/enzyme": "^3.10.3",
     "@types/jest": "^24.0.18",
+    "@types/lingui__react": "^2.8.2",
     "@types/lodash": "^4.14.146",
     "@types/node": "^12.7.8",
     "@types/react": "^16.9.4",

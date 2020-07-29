@@ -34,7 +34,7 @@ export default function withI18n(App, language = 'en') {
         ctx: { store },
       } = ctx;
 
-      const { currentSession } = store.getState();
+      const { currentSession } = store && store.getState();
       if (currentSession) {
         language = getLocale(currentSession);
       }

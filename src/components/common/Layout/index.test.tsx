@@ -14,7 +14,7 @@ const menuItem = {
   id: 'id',
   title: 'Test',
   href: '/test',
-  isApiom: true,
+  isApiomLink: true,
   isVisible: true,
 };
 
@@ -48,6 +48,6 @@ it('renders SideNav and wrapping container without crashing', () => {
   expect(wrapper.find("Head").length).toBe(1);
   expect(wrapper.find("LayoutWithSideNav").length).toBe(1);
 
-  const event = {target: {name: "Test", value: "id"}};
-  wrapper.find("Select").simulate('change', event);
+  const layoutSideNav = wrapper.find("LayoutWithSideNav");
+  (layoutSideNav.instance() as any).onChangeMenu({target: { value: 'id' }});
 });

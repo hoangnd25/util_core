@@ -43,8 +43,8 @@ class TabMenuNavigation extends Component<{ children }, any> {
       <>
         <View flexDirection="row" borderBottom={2} color="faded">
           {children.map(({ props:{ label } }) => (
-            <View marginBottom={-1}>
-              <TabOption activeTab={activeTab} key={label} label={label} onClick={this.onClickTabItem} />
+            <View key={label} marginBottom={-1}>
+              <TabOption activeTab={activeTab} label={label} onClick={this.onClickTabItem} />
             </View>
           ))}
         </View>

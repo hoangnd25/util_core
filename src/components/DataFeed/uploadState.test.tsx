@@ -2,7 +2,8 @@ import { mount } from 'enzyme';
 import * as React from 'react';
 import { IntlProvider } from 'react-intl';
 import DataFeedUploadState, { dataFeedService } from './uploadState';
-import withI18n from '../common/WithI18n';
+import { setupI18n } from '@lingui/core';
+import en from '@src/locale/en/messages';
 
 const scrollToTopFn = jest.fn();
 const fakeOnCancel = jest.fn();
@@ -50,6 +51,8 @@ const fakeMappingFields = [{
   weight: "74",
 }];
 
+const i18n = setupI18n({ language: 'en', catalogs: {en} });
+
 jest.mock("react-dropzone", () => ({
   default: (props: any) =>
     props.children({
@@ -80,16 +83,14 @@ const setup = (props = {}) => {
       },
     },
   };
-  const Component = withI18n(
-    <DataFeedUploadState
-      scrollToTop={scrollToTopFn}
-      onCancel={fakeOnCancel}
-      currentSession={currentSession}
-      {...props} />
-  )
   return mount(
     <IntlProvider locale="en">
-      <Component language="en" catalogs={{en:{}}} />
+      <DataFeedUploadState
+        i18n={i18n}
+        scrollToTop={scrollToTopFn}
+        onCancel={fakeOnCancel}
+        currentSession={currentSession}
+        {...props} />
     </IntlProvider>
   );
 };

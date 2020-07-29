@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Trans, t } from '@lingui/macro';
+import { I18n } from '@lingui/core';
 import {
   View,
   Text,
@@ -38,7 +39,7 @@ interface CSVField {
 }
 
 interface Props {
-  i18n?: any;
+  i18n?: I18n;
   currentSession: any;
   isEditing?: boolean;
   defaultStep?: MappingStep;

@@ -2,6 +2,7 @@ import { mount } from 'enzyme';
 import * as React from 'react';
 import { IntlProvider } from 'react-intl';
 import { AWSConnectionDetail } from '.';
+import { I18nProvider } from '@lingui/react';
 
 const fakeCredentials = {
   awsBucketUrl: 's3://cd22d769e7d5.credential.name',
@@ -12,7 +13,9 @@ const fakeCredentials = {
 const setup = (props?: any) => {
   return mount(
     <IntlProvider locale="en">
-      <AWSConnectionDetail {...props} awsCredential={fakeCredentials} />
+      <I18nProvider language="en" catalogs={{en: {messages:{}}}}>
+        <AWSConnectionDetail {...props} awsCredential={fakeCredentials} />
+      </I18nProvider>
     </IntlProvider>
   );
 };

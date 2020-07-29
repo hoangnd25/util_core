@@ -5,10 +5,10 @@ import { Provider as ReduxProvider } from 'react-redux';
 import configureMockStore from "redux-mock-store";
 import CommonProvider from '@go1d/mine/common/Provider';
 import { UserDataFeed, dataFeedService } from '@src/pages/r/app/portal/integrations/user-data-feed';
+import { setupI18n } from '@lingui/core';
+import en from '@src/locale/en/messages';
 
-const intlMock = {
-  formatMessage: jest.fn(),
-};
+const i18n = setupI18n({ language: 'en', catalogs: {en} });
 const mockComponent = () => <div />;
 
 beforeEach(() => {
@@ -52,7 +52,7 @@ const setup = (props = {}) => {
           accountId={123}
           portalId={123}
         >
-          <UserDataFeed {...componentProps} currentSession={currentSession} />
+          <UserDataFeed i18n={i18n} {...componentProps} currentSession={currentSession} />
         </CommonProvider>
       </IntlProvider>
     </ReduxProvider>

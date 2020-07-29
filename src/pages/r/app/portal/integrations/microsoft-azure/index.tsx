@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Router from 'next/router';
 import { Spinner, Text, View, ButtonFilled, Banner } from '@go1d/go1d';
 import { SIDEBAR_MENUS } from '@src/constants';
 import { CurrentSessionType } from '@src/types/user';
@@ -11,6 +10,7 @@ import ContentDistributorExport from '@src/components/ContentDistributorExport';
 
 interface Props {
   currentSession: CurrentSessionType;
+  router: any;
 }
 
 interface State {
@@ -30,7 +30,8 @@ export class MicrosoftAzurePage extends React.Component<Props,State> {
   };
 
   componentDidMount() {
-    const { error_code: errorCode, session_id: sessionId }: {error_code?:string, session_id?:string} = Router.query;
+    const { router: { query } } = this.props;
+    const { error_code: errorCode, session_id: sessionId }: {error_code?:string, session_id?:string} = query;
 
     if (errorCode) {
       const error = {

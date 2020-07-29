@@ -38,7 +38,7 @@ const setup = (props = {}) => {
     <ReduxProvider store={mockStore({ currentSession })}>
       <IntlProvider locale="en">
         <CommonProvider pushNavigationState={jest.fn()} apiUrl="api.go1.co" jwt="jwt" accountId={123} portalId={456}>
-          <MicrosoftAzurePage currentSession={currentSession} {...props} />
+          <MicrosoftAzurePage router={{ query: {}}} currentSession={currentSession} {...props} />
         </CommonProvider>
       </IntlProvider>
     </ReduxProvider>
@@ -64,9 +64,3 @@ it('Should render with connection', () => {
   // const hasApplicationID = ComponentWrapper.find('View[data-testid="scormAndXApi.hasApplicationID"]');
   // expect(hasApplicationID).not.toBeNull();
 });
-
-// it('Should render generate application id', () => {
-//   spyOn(microsoftAzureService, 'getRedirectLink').and.callFake(() => Promise.resolve());
-
-//   const ComponentWrapper = setup();
-// });

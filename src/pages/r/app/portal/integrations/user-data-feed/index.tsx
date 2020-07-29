@@ -10,6 +10,8 @@ import AWSConnectionDetail from '@src/components/AwsConnectionDetail';
 import DataFeedEmptyState from '@src/components/DataFeed/emptyState';
 import DataFeedUploadState, { MappingStep } from '@src/components/DataFeed/uploadState';
 import DataFeedService, { AWSCredential, MappingData } from '@src/services/dataFeed';
+import withI18n from '@src/components/common/WithI18n';
+import { I18n } from '@lingui/core';
 
 export const dataFeedService = DataFeedService();
 
@@ -20,6 +22,7 @@ enum DataFeedState {
 
 interface Props {
   currentSession: any;
+  i18n: I18n;
 }
 
 interface State {
@@ -45,7 +48,7 @@ export class UserDataFeed extends React.Component<Props, State> {
   }
 
   render() {
-    const { currentSession } = this.props;
+    const { currentSession, i18n } = this.props;
     const { step, isLoading, isEditing, awsCredential, mappingData } = this.state;
 
     if (isLoading) {
@@ -109,11 +112,12 @@ export class UserDataFeed extends React.Component<Props, State> {
     return (
       <View minHeight="60vh">
         {step === DataFeedState.Empty && (
-          <DataFeedEmptyState onStart={() => this.setState({step: DataFeedState.Upload})} />
+          <DataFeedEmptyState i18n={i18n} onStart={() => this.setState({step: DataFeedState.Upload})} />
         )}
 
         {step === DataFeedState.Upload && (
           <DataFeedUploadState
+            i18n={i18n}
             currentSession={currentSession}
             isEditing={isEditing}
             awsCredential={awsCredential}
@@ -140,4 +144,4 @@ export class UserDataFeed extends React.Component<Props, State> {
   }
 }
 
-export default withAuth(withIntegrations(UserDataFeed, { active: SIDEBAR_MENUS.USER_DATA_FEED }));
+export default withI18n(withAuth(withIntegrations(UserDataFeed, { active: SIDEBAR_MENUS.USER_DATA_FEED })));

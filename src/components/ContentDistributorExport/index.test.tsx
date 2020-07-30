@@ -29,7 +29,7 @@ it('Should render distributor for oracle', () => {
     setup('oracle');
 });
 
-it('Should render custom content total for oracle', async (done) => {
+it('Should render custom content total for oracle', (done) => {
   const mockCustomCollectionResponse = {
     default_collection: {
       id: '1583',
@@ -69,7 +69,7 @@ it('Should render custom content total for oracle', async (done) => {
   });
 });
 
-it('Should export content for oracle', async (done) => {
+it('Should export content for oracle', (done) => {
   const mockExportData = { portalId: '123', type: 'oracle' };
   const exportStatusMock = {
     timestamp: 1586391483247,

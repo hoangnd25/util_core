@@ -39,14 +39,14 @@ interface CSVField {
 }
 
 interface Props {
-  i18n?: I18n;
+  i18n: I18n;
   currentSession: any;
   isEditing?: boolean;
   defaultStep?: MappingStep;
   awsCredential?: AWSCredential;
   mappingData?: MappingData;
-  scrollToTop?: () => void;
-  onCancel?: () => void;
+  scrollToTop: () => void;
+  onCancel: () => void;
   onDone?: () => void;
 }
 

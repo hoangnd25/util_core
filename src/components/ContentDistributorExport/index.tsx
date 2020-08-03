@@ -208,7 +208,7 @@ export class ContentDistributorExport extends React.Component<Props, State> {
     const { portal } = this.props;
     const portalId = portal && parseInt(portal.id);
     const exportStatus = await contentDistributorService.getExportStatus(portalId);
-    if (exportStatus.status === 'complete') {
+    if (exportStatus && exportStatus.status === 'complete') {
       try {
         setInterval(async () => {
           this.getContentDistributorStatus();

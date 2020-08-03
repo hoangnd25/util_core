@@ -17,7 +17,9 @@ class ContentDistributorService extends BaseService {
 
   async getExportStatus(portalId: number): Promise<any> {
     const url = `content-distributor/status/${portalId}`
-    return this.http.get(url).then(response => response.status === 200 ? response.data : null);
+    return this.http.get(url)
+      .then(response => response.status === 200 ? response.data : null)
+      .catch(() => null);
   }
 
   async exportContent(portalId: number, integrationName: string): Promise<any> {

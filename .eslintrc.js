@@ -34,7 +34,6 @@ module.exports = {
   plugins: [
     'react',
     '@typescript-eslint',
-    'only-warn',
     'prettier',
     'jest'
   ],
@@ -43,10 +42,12 @@ module.exports = {
     'no-param-reassign': 'off',
     'no-underscore-dangle': 'off',
     'no-unused-vars': 'off', // https://github.com/typescript-eslint/typescript-eslint/issues/363
+    'no-restricted-imports': ["error", { "paths": [{ "name": "lodash", "message": "Please include lodash functions individually using import abc from 'lodash/abc';"}] }],
     'max-classes-per-file': 'off',
     'class-methods-use-this': 'off',
     'object-curly-spacing': 1,
     'prefer-promise-reject-errors': 'off',
+    'react/prefer-stateless-function': 'off',
     'react/prop-types': 'off',
     'react/no-danger': 'off',
     'react/jsx-props-no-spreading': 'off',
@@ -54,6 +55,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'react/jsx-filename-extension': 'off',
     'jsx-a11y/anchor-is-valid': 'off',
-    'jsx-a11y/html-has-lang': 'off'
+    'jsx-a11y/html-has-lang': 'off',
+    'import/no-extraneous-dependencies': 1,
   },
 };

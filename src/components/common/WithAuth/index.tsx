@@ -1,11 +1,13 @@
-import React from 'react';
-import Cookies from 'universal-cookie';
-import { connect } from "react-redux";
+import { getNested } from '@go1d/mine/utils';
+import { getConfigValue } from "@src/config";
+import { USER_UPDATE } from '@src/reducers/session';
 import { CurrentSessionType } from "@src/types/user";
-import UserService, { saveSession, removeSession } from '@src/services/userService';
-import { LoadingSpinner } from "@src/components/common/Suspense";
-import extractGo1Metadata from '@src/utils/helper';
-import featureToggleService from '@src/services/featureToggleService';
+import React from 'react';
+import { connect } from "react-redux";
+import Cookies from 'universal-cookie';
+import { AppContext } from 'next/app';
+import { LoadingSpinner } from "../Suspense";
+import UserService, { removeSession, saveSession } from './services/userService';
 
 /**
  * The following HOC is used to enable protected routes and inject the "currentSession" object in to the page
@@ -22,22 +24,16 @@ const WithAuthComponent = AppPage =>  class extends React.Component<any,any> {
   // check auth status and redirect to login if not
   public render() {
     const { currentSession } = this.props;
-    const isAuthenticated = currentSession && currentSession.authenticated === true;
-
-    if (isAuthenticated) {
-      if (currentSession.account && currentSession.account.isAdministrator) {
-        return <AppPage {...this.props} />;
-      }
-
-      if (typeof window !== 'undefined') {
-        window.location.assign('/p/#/app/dashboard');
-      }
-    } else if (typeof window !== 'undefined') {
-      const windowLocation = window.location;
-      windowLocation.assign(`${windowLocation.origin}/p/#/access/signin?redirectUrlAfterLogin=${windowLocation.href}`);
+    if (currentSession && currentSession.authenticated === true) {
+      return <AppPage {...this.props} />;
     }
+    if (typeof window !== 'undefined') {
+      window.location.assign(
+        `${getConfigValue('LOGIN_REDIRECT_URL', '/user/login')}?redirect_url=${encodeURIComponent(
+          window.location.pathname)}${encodeURIComponent(window.location.search)}`);
+    }
+    return <LoadingSpinner/>
 
-    return <LoadingSpinner />
   }
 };
 
@@ -58,29 +54,38 @@ export const withCurrentSession = (App, helpers) =>
   class Auth extends React.Component<any, any> {
         public static displayName = 'Authentication';
 
-        public static async getInitialProps(ctx) {
+        public static async getInitialProps(ctx: AppContext) {
           const { http } = helpers;
           const {
             router: { query },
-            ctx: { req },
+            ctx: { req, store },
           } = ctx;
           let appProps = {};
           let currentSession = null;
 
-          if (App.getInitialProps) {
-            appProps = await App.getInitialProps(ctx);
-          }
           // Only perform on server
           if (typeof window === 'undefined') {
             try {
+              const cookies = new Cookies(req.headers.cookie);
               currentSession = await UserService(http).performAuth(
-                new Cookies(req.headers.cookie),
-                query.oneTimeToken || null
+                getNested(cookies, 'cookies.go1', null),
+                query.oneTimeToken as string || null
               );
+              store.dispatch({
+                type: USER_UPDATE,
+                payload: {
+                  ...currentSession,
+                },
+              });
             } catch (err) {
               // Do nothing, Login failed on server side, either due wrong credentials or missing credentials
             }
           }
+
+          if (App.getInitialProps) {
+            appProps = await App.getInitialProps(ctx);
+          }
+
           return {
             ...appProps,
             currentSession
@@ -94,31 +99,33 @@ export const withCurrentSession = (App, helpers) =>
           };
         }
 
-        public async componentDidMount() {
+        public componentDidMount() {
           const { currentSession } = this.state;
-          const { router, router: { query, asPath, pathname } } = this.props;
+          const { router, router: { query, asPath, pathname }, store } = this.props;
           const { http } = helpers;
           const oneTimeToken = query.oneTimeToken || null;
           // Server side did not result in a login
           if (!currentSession) {
             // try login with local storage
             // Send one time token again on the frontend to log existing user out if oneTimeToken is invalid
-            try {
-              await UserService(http)
-                .performAuth(null, oneTimeToken)
-                .then(
-                  currentSessionData => {
-                    this.setState({ currentSession: currentSessionData });
-                    saveSession(currentSessionData as CurrentSessionType);
-                  },
-                  () => {
-                    removeSession();
-                    this.setState({ currentSession: { authenticated: false } });
-                  }
-                );
-            } catch (err) {
-              // Do nothing, Login failed
-            }
+            UserService(http)
+              .performAuth(null, oneTimeToken)
+              .then(
+                (currentSessionData: CurrentSessionType) => {
+                  this.setState({ currentSession: currentSessionData });
+                  saveSession(currentSessionData);
+                  store.dispatch({
+                    type: USER_UPDATE,
+                    payload: {
+                      ...currentSessionData,
+                    },
+                  });
+                },
+                err => {
+                  removeSession();
+                  this.setState({ currentSession: { authenticated: false } });
+                }
+              );
           } else if (currentSession.authenticated === true) {
             saveSession(currentSession);
           }
@@ -136,74 +143,4 @@ export const withCurrentSession = (App, helpers) =>
           // currentSession is saved to redux in withReduxStore.tsx
           return <App {...restProps} currentSession={currentSessionState} />;
         }
-  };
-
-/**
- * The following HOC is used to inject the "featureToggles" object
- */
-export const withFeatureToggles = (App, helpers) =>
-  class FeatureToggles extends React.Component<any, any> {
-    static displayName = 'FeatureToggles';
-
-    public static async getInitialProps(ctx) {
-      const { http } = helpers;
-      const {
-        ctx: { req },
-      } = ctx;
-      let appProps = {};
-      let featureToggles = {};
-
-      if (App.getInitialProps) {
-        appProps = await App.getInitialProps(ctx);
-      }
-
-      if (typeof window === 'undefined') {
-        try {
-          const go1Cookie = new Cookies(req.headers.cookie);
-          const { portalName } = extractGo1Metadata(go1Cookie);
-          featureToggles = await featureToggleService(http).getFeatures(portalName);
-        } catch(err) {}
-      }
-
-      return {
-        ...appProps,
-        featureToggles,
-      };
-    }
-
-    constructor(props) {
-      super(props);
-
-      this.state = {
-        featureToggles: props.featureToggles,
-      };
-    }
-
-    componentDidMount() {
-      this.fetchFeatureToggles();
-    }
-
-    render() {
-      const { featureToggles: featureTogglesState } = this.state;
-      const { featureToggles, ...restProps } = this.props;
-
-      if (featureTogglesState) {
-        return <App {...restProps} featureToggles={featureTogglesState} />;
-      }
-
-      return <App {...this.props} />;
-    }
-
-    private async fetchFeatureToggles() {
-      const { featureTogglesState } = this.state;
-
-      // Server side did not resolve `featureToggles`
-      if (!featureTogglesState) {
-        const { http } = helpers;
-        const { portalName } = extractGo1Metadata();
-        const featureToggles = await featureToggleService(http).getFeatures(portalName);
-
-        this.setState({ featureToggles });
-      }
-    }
   };

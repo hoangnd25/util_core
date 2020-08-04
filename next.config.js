@@ -1,6 +1,3 @@
-// jshint ignore: start
-// .env for local development constants only
-require('dotenv').config({ path: '.env', silent: true });
 const path = require('path');
 const useCDN = process.env.ENV !== 'local' && process.env.ENV !== 'test';
 const webpack = require("webpack");
@@ -18,28 +15,24 @@ module.exports = {
     DOCKER_TAG: process.env.DOCKER_TAG,
     API_URL: process.env.API_URL,
     ENV: process.env.ENV,
-    LOGIN_REDIRECT_URL: process.env.ENV === 'local' ? '/r/app/base-app-demo/examples/protectedRoute/login' : '/user/login',
+    LOGIN_REDIRECT_URL: process.env.ENV === 'local' ? '/r/app/portal' : '/user/login',
   },
 
   webpack: (config, options) => {
-
-    config.resolve.alias = config.resolve.alias || [];
-    // Setting @src as alias for ./src folder, so no ../../../../../ is needed anymore
-    // has to be done in eslintrc.js and tsconfig.json and .babelrc.js as well
-    config.resolve.alias['@src'] = path.resolve('./src');
-
     // Include node_modules for babel transformation
-    config.module.rules.push({
-      test: /\.js$/,
-      include: /node_modules/,
-      use: {
-        loader: 'babel-loader',
-        options: {
-          presets: ['@babel/preset-env'],
-          plugins: ['@babel/plugin-syntax-dynamic-import'],
+    if (!options.isServer) {
+      config.module.rules.push({
+        test: /\.js$/,
+        include: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'],
+            plugins: ['@babel/plugin-syntax-dynamic-import'],
+          },
         },
-      },
-    });
+      });
+    }
 
     // Add plugins
     config.plugins = config.plugins || []
@@ -75,6 +68,15 @@ module.exports = {
       }
       return entries;
     };
+
+    config.module.rules.push({
+      test: /\.po/,
+      use: [
+        {
+          loader: '@lingui/loader',
+        },
+      ],
+    });
 
     return config;
   }

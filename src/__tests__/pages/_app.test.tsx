@@ -43,7 +43,7 @@ it('heartbeat routes work', async () => {
 
 it('shows login state properly', () => {
   const store = mockStore(authenticatedStoreState);
-  const wrapper = setup({currentSession:currentSessionMock, reduxStore: store}) as any;
+  const wrapper = setup({currentSession:currentSessionMock, store: store}) as any;
   expect(wrapper.find("AppPage").length).toBe(1);
   expect(wrapper.find("NotificationContainer").length).toBe(1);
 });

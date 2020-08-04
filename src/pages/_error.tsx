@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { Container, Icon, Text, View } from '@go1d/go1d';
-import { FormattedMessage } from 'react-intl';
+import { Container, Text, View } from '@go1d/go1d';
+import { Trans } from '@lingui/macro';
+import IconGo1Logo from '@go1d/go1d/build/components/Icons/Go1Logo';
 
 function Error({ statusCode }) {
   return (
@@ -13,15 +14,11 @@ function Error({ statusCode }) {
         )}
         <View marginTop={5} flexDirection="row">
           <Text color="default" fontSize={6} fontWeight="semibold" lineHeight="paragraph">
-            <FormattedMessage id="Uh oh, that's a no" defaultMessage="Uh oh, that's a no" />
+            <Trans>Uh oh, that&apos;s a no</Trans>
           </Text>
-          <Icon
-            name="Go1Logo"
+          <IconGo1Logo
             color="default"
-            size={6}
-            style={{
-              marginTop: '17px',
-            }}
+            size={9}
             marginLeft={3}
           />
         </View>

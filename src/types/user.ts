@@ -1,13 +1,15 @@
+import { FeatureToggleModel } from "@go1d/go1d-exchange";
+
 export interface GO1Portal {
     id: string;
     title: string;
     configuration: any;
     data: any;
+    featureToggles: FeatureToggleModel[];
     files: {
         // eslint-disable-next-line
         dashboard_icon?: string;
     };
-    featureToggles: any;
 }
 
 export interface GO1Account {
@@ -30,6 +32,7 @@ export interface GO1User {
     avatar?: {
         url: string;
     };
+    locale?: string[];
 }
 
 export interface CurrentSessionType {

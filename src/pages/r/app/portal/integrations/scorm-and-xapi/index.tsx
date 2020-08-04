@@ -1,13 +1,15 @@
 import * as React from 'react';
+import { Trans } from '@lingui/macro';
 import { Spinner, Text, View, ButtonFilled, ButtonMinimal, foundations } from '@go1d/go1d';
-import { injectIntl, FormattedMessage } from 'react-intl';
+import { SIDEBAR_MENUS } from '@src/constants';
 import ScormService from '@src/services/scormService';
 import withAuth from '@src/components/common/WithAuth';
-import withMasterPage, { MasterPageProps } from "@src/pages/masterPage";
+import withIntegrations from '@src/components/common/WithIntegrations';
+import withI18n from '@src/components/common/WithI18n';
 
 export const scormService = ScormService();
 
-interface Props extends MasterPageProps{
+interface Props {
   currentSession: any;
 }
 
@@ -18,10 +20,6 @@ interface State {
 }
 
 export class ScormAndXapi extends React.Component<Props, State> {
-  constructor(props) {
-    super(props);
-  }
-
   state = {
     isLoading: true,
     isProcessing: false,
@@ -45,7 +43,7 @@ export class ScormAndXapi extends React.Component<Props, State> {
       <View minHeight="60vh">
         <View marginBottom={4}>
           <Text element="h3" fontSize={4} fontWeight="semibold">
-            <FormattedMessage id="integrationScormAndXApi.applicationID" defaultMessage="Application ID" />
+            <Trans>Application ID</Trans>
           </Text>
         </View>
 
@@ -53,13 +51,13 @@ export class ScormAndXapi extends React.Component<Props, State> {
           <View data-testid="scormAndXApi.hasApplicationID">
             <View marginBottom={6}>
               <Text>
-                <FormattedMessage id="integrationScormAndXApi.hasApplicationIDDesc" defaultMessage="This application ID can be used as a SCORM or xAPI provider. You can now download your content in SCORM or xAPI format from the Publish / Sharing menu found in the Settings section of each piece of training." />
+                <Trans>This application ID can be used as a SCORM or xAPI provider. You can now download your content in SCORM or xAPI format from the Publish / Sharing menu found in the Settings section of each piece of training.</Trans>
               </Text>
             </View>
 
             <View marginBottom={6}>
               <Text fontWeight="semibold" marginBottom={3}>
-                <FormattedMessage id="integrationScormAndXApi.applicationID" defaultMessage="Application ID" />
+                <Trans>Application ID</Trans>
               </Text>
 
               <View
@@ -94,7 +92,7 @@ export class ScormAndXapi extends React.Component<Props, State> {
 
             <View flexDirection="row">
               <ButtonMinimal size="lg" color="danger" onClick={() => this.updateApplicationId(true)} disabled={isProcessing}>
-                <FormattedMessage id="integrationScormAndXApi.removeApplicationID" defaultMessage="Remove Application ID" />
+                <Trans>Remove Application ID</Trans>
               </ButtonMinimal>
             </View>
           </View>
@@ -104,16 +102,16 @@ export class ScormAndXapi extends React.Component<Props, State> {
           <View data-testid="scormAndXApi.noApplicationID">
             <View marginBottom={6}>
               <Text>
-                <FormattedMessage id="integrationScormAndXApi.noApplicationIDDesc" defaultMessage="You are one click away from having the ability to export training as SCORM and xAPI enabled on your portal." />
+                <Trans>You are one click away from having the ability to export training as SCORM and xAPI enabled on your portal.</Trans>
               </Text>
               <Text>
-                <FormattedMessage id="integrationScormAndXApi.noApplicationIDGenerateAction" defaultMessage="Click Generate Application ID button below to create an application ID." />
+                <Trans>Click Generate Application ID button below to create an application ID.</Trans>
               </Text>
             </View>
 
             <View flexDirection="row">
               <ButtonFilled size="lg" color="accent" onClick={() => this.updateApplicationId()} disabled={isProcessing}>
-                <FormattedMessage id="integrationScormAndXApi.generateApplicationID" defaultMessage="Generate Application ID" />
+                <Trans>Generate Application ID</Trans>
               </ButtonFilled>
             </View>
           </View>
@@ -138,4 +136,4 @@ export class ScormAndXapi extends React.Component<Props, State> {
   }
 }
 
-export default injectIntl(withAuth(withMasterPage(ScormAndXapi, { parentPage: 'integration', childPage: 'scorm-and-xapi' })));
+export default withI18n(withAuth(withIntegrations(ScormAndXapi, { active: SIDEBAR_MENUS.SCORM_AND_XAPI })));

@@ -7,7 +7,6 @@ globalCSS();
 
 export default class extends Document<any> {
   public static async getInitialProps(ctx) {
-
     const initialProps = await Document.getInitialProps(ctx);
     const styles = extractCritical(initialProps.html);
     return { ...initialProps, ...styles };

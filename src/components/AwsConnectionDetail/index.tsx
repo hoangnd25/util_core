@@ -1,0 +1,196 @@
+import React from 'react';
+import dayjs from 'dayjs';
+import { Trans } from '@lingui/macro';
+import { Text, View, InputGroup, foundations, ButtonFilled, ButtonMinimal, Tooltip } from '@go1d/go1d';
+import IconCopy from '@go1d/go1d/build/components/Icons/Copy';
+import IconDanger from '@go1d/go1d/build/components/Icons/Danger';
+import CopyToClipboard from '@src/components/common/CopyToClipboard';
+import { AWSCredential } from '@src/services/dataFeed';
+
+interface Props {
+  awsCredential: AWSCredential;
+  backgroundColor?: string;
+  expandable?: boolean;
+}
+
+interface State {
+  expanded: boolean;
+  copied: boolean;
+}
+
+export class AWSConnectionDetail extends React.PureComponent<Props, State> {
+  state = {
+    expanded: false,
+    copied: false,
+  };
+
+  onCopyToClipboard(result: boolean) {
+    if (result) {
+      this.setState({ copied: true });
+    }
+  }
+
+  renderCopyButton(copied = false) {
+    const CopyButton = (
+      <ButtonFilled
+        border={1}
+        borderColor="faded"
+        color="soft"
+        icon={IconCopy}
+        transition="none"
+        minHeight="48"
+        css={{
+          borderTopLeftRadius: 0,
+          borderBottomLeftRadius: 0,
+          lineHeight: 48,
+          '&:hover': {
+            transform: 'translate(0, 0)',
+          },
+        }}
+      >
+        <Trans>Copy</Trans>
+      </ButtonFilled>
+    );
+
+    if (copied) {
+      return (
+        <Tooltip tip={<Trans>Copied!</Trans>}>{CopyButton}</Tooltip>
+      );
+    }
+    return CopyButton;
+  }
+
+  renderAWSField(fieldValue: string, isSecretField?: boolean) {
+    const { copied } = this.state;
+
+    return (
+      <InputGroup>
+        <View alignItems="center" flexDirection="row" width="100%">
+          <View
+            backgroundColor="background"
+            minHeight="48"
+            borderColor="faded"
+            borderRight={0}
+            border={1}
+            paddingX={4}
+            flexGrow={1}
+            flexShrink={1}
+            css={{
+              borderTopLeftRadius: foundations.spacing[2],
+              borderBottomLeftRadius: foundations.spacing[2],
+            }}
+          >
+            <Text
+              fontSize={3}
+              css={{
+                lineHeight: "46px",
+                overflow: "hidden",
+                position: "relative",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                top: isSecretField ? foundations.spacing[2] : 0,
+              }}
+            >{isSecretField ? '********************' : fieldValue}</Text>
+          </View>
+
+          <CopyToClipboard
+            text={fieldValue}
+            onCopy={(text, result) => this.onCopyToClipboard(result)}
+            onMouseOut={() => this.setState({ copied: false })}
+          >
+            {this.renderCopyButton(copied)}
+          </CopyToClipboard>
+        </View>
+      </InputGroup>
+    );
+  }
+
+  render() {
+    const { expanded } = this.state;
+    const { backgroundColor, awsCredential, expandable } = this.props;
+    const isConnectionDetailVisible = expandable ? expanded : true;
+
+    return (
+      <View
+        backgroundColor={backgroundColor}
+        borderColor={expandable ? "soft" : "transparent"}
+        border={expandable ? 1 : 0}
+        borderRadius={expandable ? 2 : 0}
+        padding={expandable ? 4 : 0}
+      >
+        <View flexDirection="row" alignItems="center">
+          <View flexGrow={1} flexShrink={1}>
+            <Text fontWeight="semibold" fontSize={expandable ? 3 : 4}>
+              <Trans>AWS Connection Details</Trans>
+            </Text>
+            <Text color="subtle" fontWeight="semibold" marginTop={2}>
+              <Trans>Integrate using the following details to keep your user records up to date</Trans>
+            </Text>
+          </View>
+
+          {expandable && (
+            <ButtonMinimal
+              data-testid="awsConnectionDetail.toggleButton"
+              color="accent"
+              onClick={() => this.setState({ expanded: !expanded })}
+            >
+              {!isConnectionDetailVisible ? <Trans>Show</Trans> : <Trans>Hide</Trans>}
+            </ButtonMinimal>
+          )}
+        </View>
+
+        {isConnectionDetailVisible && (
+          <View data-testid="awsConnectionDetail.fields" alignItems="flex-start">
+            <View data-testid="awsConnectionDetail.fieldBucketUrl" width={[1, 1, 3/5]} marginTop={6}>
+              <Text marginBottom={3}>
+                <Trans>Bucket URL</Trans>
+              </Text>
+
+              {this.renderAWSField(awsCredential.awsBucketUrl)}
+            </View>
+
+            <View data-testid="awsConnectionDetail.fieldAccessKeyId" width={[1, 1, 3/5]} marginTop={6}>
+              <Text marginBottom={3}>
+                <Trans>Access key</Trans>
+              </Text>
+
+              {this.renderAWSField(awsCredential.awsAccessKeyId, true)}
+            </View>
+
+            <View width="100%" marginTop={6}>
+              <View data-testid="awsConnectionDetail.fieldSecretKey" width={[1, 1, 3/5]}>
+                <Text marginBottom={3}>
+                  <Trans>Secret key</Trans>
+                </Text>
+
+                {awsCredential.isNew && (
+                  <View marginBottom={4} display="block">
+                    {this.renderAWSField(awsCredential.awsSecretKey, true)}
+                  </View>
+                )}
+              </View>
+
+              <View flexDirection="row" paddingBottom={4} width={awsCredential.isNew ? [1, 1, 3/5] : "100%"}>
+                <View marginRight={3} paddingTop={2}>
+                  <IconDanger color="warning" />
+                </View>
+
+                <View flexShrink={1} flexGrow={1}>
+                  <Text color="subtle">
+                    {!awsCredential.isNew ? (
+                      <Trans>Your secret key was created on {dayjs(awsCredential.awsCreatedDate).format('DD MMM YYYY')}. Please find where you have saved it.</Trans>
+                    ) : (
+                      <Trans>For security reason, you only see this key once and cannot be recovered it. Please copy and keep it somewhere safe but accessible.</Trans>
+                    )}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        )}
+      </View>
+    );
+  }
+}
+
+export default AWSConnectionDetail;

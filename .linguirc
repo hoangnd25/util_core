@@ -1,0 +1,10 @@
+{
+  "sourceLocale": "en",
+  "localeDir": "src/locale/",
+  "srcPathDirs": ["src/"],
+  "format": "po",
+  "srcPathIgnorePatterns": [
+    "/node_modules/",
+    "/.next/"
+  ]
+}

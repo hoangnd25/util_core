@@ -39,10 +39,12 @@ class LayoutWithSideNav extends React.PureComponent<WithSideNavProps, any> {
     return (
       <Select
         onChange={this.onChangeMenu}
-        options={menu.map(menu => {
+        options={menu
+          .filter(item => item.isVisible)
+          .map(item => {
           return {
-            value: menu.id,
-            label: menu.title,
+            value: item.id,
+            label: item.title,
           }
         })}
         defaultValue={active}
@@ -53,16 +55,18 @@ class LayoutWithSideNav extends React.PureComponent<WithSideNavProps, any> {
 
   renderDesktopMenus = () => {
     const { active, menu = [] } = this.props;
-    return menu.map(menu => {
-      const isActive = menu.id === active;
-      return menu.isVisible && (
+    return menu
+      .filter(item => item.isVisible)
+      .map(item => {
+      const isActive = item.id === active;
+      return item.isVisible && (
         <View
-          data-testid={menu.id}
-          module={menu.module}
-          key={`menu-${menu.id}`}
-          isApiomLink={menu.isApiomLink}
-          href={!isActive ? menu.href : null}
-          element={!isActive && menu.href ? CustomLink : View}
+          data-testid={item.id}
+          module={item.module}
+          key={`menu-${item.id}`}
+          isApiomLink={item.isApiomLink}
+          href={!isActive ? item.href : null}
+          element={!isActive && item.href ? CustomLink : View}
         >
           <View
             marginY={2}
@@ -79,7 +83,7 @@ class LayoutWithSideNav extends React.PureComponent<WithSideNavProps, any> {
                   color: foundations.colors.default,
                 }
               }}
-              >{menu.title}</Text>
+              >{item.title}</Text>
           </View>
         </View>
       );

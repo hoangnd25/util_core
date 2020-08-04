@@ -39,9 +39,7 @@ class LayoutWithSideNav extends React.PureComponent<WithSideNavProps, any> {
     return (
       <Select
         onChange={this.onChangeMenu}
-        options={menu
-          .filter(item => item.isVisible)
-          .map(item => {
+        options={menu.filter(item => item.isVisible).map(item => {
           return {
             value: item.id,
             label: item.title,
@@ -55,11 +53,9 @@ class LayoutWithSideNav extends React.PureComponent<WithSideNavProps, any> {
 
   renderDesktopMenus = () => {
     const { active, menu = [] } = this.props;
-    return menu
-      .filter(item => item.isVisible)
-      .map(item => {
+    return menu.filter(item => item.isVisible).map(item => {
       const isActive = item.id === active;
-      return item.isVisible && (
+      return (
         <View
           data-testid={item.id}
           module={item.module}

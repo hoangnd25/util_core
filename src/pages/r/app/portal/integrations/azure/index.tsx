@@ -86,7 +86,11 @@ export class MicrosoftAzurePage extends React.Component<Props,State> {
           </View>
         </View>
         <View label="Graph Connector Export">
-          <ContentDistributorExport targetName="graph-connector" portal={currentSession.portal} />
+          <ContentDistributorExport 
+            integrationName="azure" 
+            targetName="graph-connector" 
+            portal={currentSession.portal} 
+          />
         </View>
       </TabMenuNavigation>
     );

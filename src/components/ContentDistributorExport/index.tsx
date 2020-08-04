@@ -19,6 +19,7 @@ export const contentDistributorService = ContentDistributorService();
 export const portalService = PortalService();
 
 interface Props {
+  integrationName?: string;
   targetName: string;
   portal: GO1Portal;
 }
@@ -193,7 +194,11 @@ export class ContentDistributorExport extends React.Component<Props, State> {
   }
 
   private fetchAccountData() {
-    const { portal, targetName } = this.props;
+    const { portal, integrationName, targetName } = this.props;
+    if (integrationName && portal.configuration.integrations[integrationName]) {
+      return Promise.resolve(true);
+    }
+
     const portalName = portal && portal.title;
     return portalService.fetchIntegrationConfiguration(portalName, targetName);
   }

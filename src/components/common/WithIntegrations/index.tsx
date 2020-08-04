@@ -6,6 +6,7 @@ import { SIDEBAR_MENUS } from "@src/constants";
 import { GO1Portal } from '@src/types/user';
 import { View, Text } from '@go1d/go1d';
 import { getNested } from '@go1d/mine/utils';
+import { FeatureToggleModel } from '@go1d/go1d-exchange';
 
 interface IntegrationPageOptions {
   pageTitle?: string;
@@ -45,10 +46,15 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
   getMenu = (i18n) => {
     const portal: GO1Portal = this.props.currentSession.portal;
     const allIntegrations = (portal && portal.configuration && portal.configuration.integrations) || {};
-    const featureToggles: any = portal.featureToggles;
+    
     const enabledIntegrations = {} as any;
     Object.keys(allIntegrations).forEach(name => {
       enabledIntegrations[name] = !!allIntegrations[name].status;
+    });
+
+    const featureToggles = {} as any;
+    portal.featureToggles.forEach((feature: FeatureToggleModel) => {
+      featureToggles[feature.raw.name] = feature.raw.enabled;
     });
 
     return [
@@ -148,7 +154,7 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
         id: SIDEBAR_MENUS.MICROSOFT_AZURE,
         title: i18n._(t`Microsoft Azure`),
         logo: '/assets/integrations/Microsoft_Azure_Logo.png',
-        href: '/integrations/microsoft-azure',
+        href: '/integrations/azure',
         isApiomLink: false,
         isVisible: !!enabledIntegrations.azure,
         module: 'portal',

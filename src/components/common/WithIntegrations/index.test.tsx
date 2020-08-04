@@ -28,9 +28,9 @@ const currentSession = {
         }
       }
     },
-    featureToggles: {
-      xAPI: true
-    }
+    featureToggles: [
+      { raw: { name: 'xAPI', enabled: true } }
+    ]
   }
 }
 

@@ -14,6 +14,7 @@ import IconExport from '@go1d/go1d/build/components/Icons/Export';
 import { GO1Portal } from '@src/types/user';
 import PortalService from '@src/services/portalService';
 import ContentDistributorService from '@src/services/contentDistributorService';
+import IconRetry from '@go1d/go1d/build/components/Icons/Retry';
 
 export const contentDistributorService = ContentDistributorService();
 export const portalService = PortalService();
@@ -76,18 +77,18 @@ export class ContentDistributorExport extends React.Component<Props, State> {
     return (
       <View>
         <Text paddingY={[5, 6]} fontWeight="bold" fontSize={2}>
-          New Export
+          <Trans>New Export</Trans>
         </Text>
         <View paddingBottom={6}>
           {!accountData && (
             <View>
-              <Text color="subtle">Integration not connected. Check your account settings. </Text>
+              <Text color="subtle"><Trans>Integration not connected. Check your account settings.</Trans></Text>
             </View>
           )}
           {customContentCollection && customContentCollection.custom !== 0 && (
             <View>
               <Text color="subtle">
-                Resources to be exported
+                <Trans>Resources to be exported</Trans>
               </Text>
               <Text fontWeight="semibold" fontSize={3}>
                 {customContentCollection.custom}
@@ -97,10 +98,10 @@ export class ContentDistributorExport extends React.Component<Props, State> {
 
           {customContentCollection && customContentCollection.custom === 0 && (
             <View flexDirection={['column', 'row']}>
-              <Text color="subtle">No content added to custom selection for export. </Text>
+              <Text color="subtle"><Trans>No content added to custom selection for export.</Trans>&nbsp;</Text>
               <Link href="/p/#/app/custom-content-selection">
                 <Text paddingLeft={[0, 2]} paddingTop={[2, 0]} color="accent">
-                  Add more content to selection.
+                  <Trans>Add more content to selection.</Trans>
                 </Text>
               </Link>
             </View>
@@ -116,14 +117,14 @@ export class ContentDistributorExport extends React.Component<Props, State> {
               width="fit-content"
               onClick={() => this.contentDistributorExport(portal.id)}
             >
-              Export
+              <Trans>Export</Trans>
             </ButtonFilled>
 
             <View flexDirection={['column', 'row']} alignItems={['flex-start', 'center']}>
-              <Text color="subtle">Want more content? </Text>
+              <Text color="subtle"><Trans>Want more content?</Trans>&nbsp;</Text>
               <Link href="/p/#/app/custom-content-selection">
                 <Text paddingLeft={[0, 2]} paddingTop={[2, 0]} color="accent">
-                  Add them in the custom selection.
+                  <Trans>Add them in the custom selection.</Trans>
                 </Text>
               </Link>
             </View>
@@ -132,13 +133,13 @@ export class ContentDistributorExport extends React.Component<Props, State> {
         {exportStatus && (
           <View>
             <Text paddingTop={[6, 7]} paddingY={[5, 6]} fontWeight="bold" fontSize={2}>
-              Last Export
+              <Trans>Last Export</Trans>
             </Text>
 
             <View flexDirection={['column', 'row']} width="100%" marginBottom={[0, 6]}>
               <View width={['100%', '50%']}>
                 <Text paddingY={[2, 0]} color="subtle">
-                  Requested
+                  <Trans>Requested</Trans>
                 </Text>
                 <Text fontWeight="semibold">
                   {exportStatus.timestamp && this.timestampToDate(exportStatus.timestamp)}
@@ -169,7 +170,7 @@ export class ContentDistributorExport extends React.Component<Props, State> {
 
             <View flexDirection={['column', 'row']} width="100%">
               <View width={['100%', '50%']}>
-                <Text color="subtle">Resources exported</Text>
+                <Text color="subtle"><Trans>Resources exported</Trans></Text>
                 <Text fontWeight="semibold">
                   {exportStatus && exportStatus.done}
                 </Text>
@@ -181,7 +182,7 @@ export class ContentDistributorExport extends React.Component<Props, State> {
                 borderColor="soft"
                 width={['100%', '50%']}
               >
-                <Text color="subtle">Errors within export</Text>
+                <Text color="subtle"><Trans>Errors within export</Trans></Text>
                 <Text fontWeight="semibold">
                   {exportStatus.errors && exportStatus.errors.length}
                 </Text>
@@ -213,14 +214,10 @@ export class ContentDistributorExport extends React.Component<Props, State> {
     const { portal } = this.props;
     const portalId = portal && parseInt(portal.id);
     const exportStatus = await contentDistributorService.getExportStatus(portalId);
-    if (exportStatus && exportStatus.status === 'complete') {
-      try {
-        setInterval(async () => {
-          this.getContentDistributorStatus();
-        }, 10000);
-      } catch (e) {
-        console.log(e);
-      }
+    if (exportStatus && exportStatus.status !== 'completed') {
+      setTimeout(async () => {
+        this.getContentDistributorStatus();
+      }, 10000);
     }
     if (!exportStatus) {
       this.setState({ exportStatus: false });

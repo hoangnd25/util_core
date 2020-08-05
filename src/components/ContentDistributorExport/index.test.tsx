@@ -61,10 +61,12 @@ const setup = (isConnected, targetName) => {
   );
 };
 
-it('Should render export for oracle', async () => {
+it('Should render export for oracle', async (done) => {
   setup(true, 'oracle');
+  done();
 });
 
-it('Should render export for oracle not connected', async () => {
+it('Should render export for oracle not connected', async (done) => {
   setup(false, 'oracle');
+  done();
 });

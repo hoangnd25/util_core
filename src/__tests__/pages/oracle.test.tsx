@@ -10,9 +10,13 @@ import Adapter from 'enzyme-adapter-react-16';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-const intlMock = {
-  formatMessage: jest.fn(),
+const mockIntegrationDataResponse = {
+  domain: 'test domain',
+  username: 'testusername',
+  password: 'testpassword',
 };
+jest.spyOn(portalService, 'fetchIntegrationConfiguration').mockResolvedValue(mockIntegrationDataResponse);
+jest.spyOn(portalService, 'saveIntegrationConfiguration').mockResolvedValue(mockIntegrationDataResponse);
 
 const setup = (props = {}, isLoading = false) => {
   const componentProps = {
@@ -68,46 +72,26 @@ it('Should render without crashing', () => {
     setup();
 });
 
-it('Should get account data to portal config', async () => {
-  const mockIntegrationDataResponse = {
-    domain: 'test domain',
-    username: 'testusername',
-    password: 'testpassword',
-  };
-
+it('Should get account data to portal config', async (done) => {
   const Element = setup();
   const Page = Element.find(Oracle);
 
-  spyOn(portalService, 'fetchIntegrationConfiguration').and.callFake(() =>
-      Promise.resolve(mockIntegrationDataResponse)
-  );
   await (Page.instance() as any).fetchAccountData();
   Page.setState({ customContentCollection: true });
   expect(Page.state('isLoading')).toBeFalsy();
   expect(Page.state('accountData')).toEqual(mockIntegrationDataResponse);
   expect(Page.state('customContentCollection')).toBeTruthy();
+  done();
 });
 
-it('Should SAVE account data to portal config', async () => {
-  const mockIntegrationDataResponse = {
-    domain: 'Save Data Test',
-    username: 'testusername',
-    password: 'testpassword',
-  };
-
+it('Should SAVE account data to portal config', async (done) => {
   const Element = setup();
   const Page = Element.find(Oracle);
-
-  spyOn(portalService, 'saveIntegrationConfiguration').and.callFake(() =>
-      Promise.resolve(mockIntegrationDataResponse)
-  );
   await (Page.instance() as any).saveAccountData();
-  spyOn(portalService, 'fetchIntegrationConfiguration').and.callFake(() =>
-      Promise.resolve(mockIntegrationDataResponse)
-  );
   await (Page.instance() as any).fetchAccountData();
   expect(portalService.saveIntegrationConfiguration).toHaveBeenCalled();
   expect(portalService.fetchIntegrationConfiguration).toHaveBeenCalled();
   expect(Page.state('isLoading')).toBeFalsy();
   expect(Page.state('accountData')).toEqual(mockIntegrationDataResponse);
+  done();
 });

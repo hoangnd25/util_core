@@ -38,6 +38,8 @@ const setup = (props = {}) => {
 };
 
 it('Should render without crashing', async (done) => {
+  jest.spyOn(scormService, 'getApplicationId').mockResolvedValue('Existing Application ID');
+
   setup();
   done();
 });
@@ -52,7 +54,7 @@ it('Should render existing application id', async (done) => {
 });
 
 it('Should render generate application id', async (done) => {
-  jest.spyOn(scormService, 'getApplicationId').mockRejectedValue(true);
+  jest.spyOn(scormService, 'getApplicationId').mockResolvedValue(null);
 
   const ComponentWrapper = setup();
   const hasApplicationID = ComponentWrapper.find('View[data-testid="scormAndXApi.hasApplicationID"]');

@@ -47,13 +47,9 @@ const exportStatusMock = {
   status: 'queued',
 };
 
-beforeEach(() => {
-  spyOn(contentDistributorService, 'getCustomContent').and.callFake(() =>
-    Promise.resolve(mockCustomCollectionResponse)
-  );
-  spyOn(contentDistributorService, 'exportContent').and.callFake(() => Promise.resolve(mockExportData));
-  spyOn(contentDistributorService, 'getExportStatus').and.callFake(() => Promise.resolve(exportStatusMock));
-});
+jest.spyOn(contentDistributorService, 'getCustomContent').mockResolvedValue(mockCustomCollectionResponse);
+jest.spyOn(contentDistributorService, 'exportContent').mockResolvedValue(mockExportData);
+jest.spyOn(contentDistributorService, 'getExportStatus').mockResolvedValue(exportStatusMock);
 
 const setup = (isConnected, targetName) => {
   return mount(

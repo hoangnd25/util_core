@@ -68,8 +68,9 @@ const setup = (props = {}, isLoading = false) => {
     );
 };
 
-it('Should render without crashing', () => {
+it('Should render without crashing', async (done) => {
     setup();
+    done();
 });
 
 it('Should get account data to portal config', async (done) => {

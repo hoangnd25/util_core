@@ -60,8 +60,12 @@ it('Should render without crashing', () => {
   setup();
 });
 
-it('Should render with no connection', (done) => {
+it('Should render with no connection', async (done) => {
+  delete window.location;
+  window.location = { ...window.location, assign: jest.fn() };
+
   spyOn(microsoftAzureService, 'getConnection').and.callFake(() => Promise.resolve(null));
+  spyOn(microsoftAzureService, 'getRedirectLink').and.callFake(() => Promise.resolve('https://test.com'));
 
   const wrapper = setup();
   setImmediate(async () => {
@@ -70,62 +74,70 @@ it('Should render with no connection', (done) => {
 
     const Page = wrapper.find(MicrosoftAzurePage);
     await (Page.instance() as any).handleConnect();
+    expect(window.location.assign).toHaveBeenCalled();
     done();
   });
 });
 
-it('Should render with connection', () => {
+it('Should render with connection', (done) => {
   const wrapper = setup();
   setImmediate(() => {
     wrapper.update();
     expect(wrapper.find('ButtonFilled').text()).toEqual('Reconnect with Microsoft Azure');
+    done();
   });
 });
 
-it('Should render error message - SSO:PortalNotFound', () => {
+it('Should render error message - SSO:PortalNotFound', (done) => {
   const wrapper = setup({}, { error_code: 'SSO:PortalNotFound' });
   setImmediate(() => {
     wrapper.update();
     expect(wrapper.find('Banner').length).toBe(1);
+    done();
   });
 });
 
-it('Should render error message - SSO:UnknownIdentityProvider', () => {
+it('Should render error message - SSO:UnknownIdentityProvider', (done) => {
   const wrapper = setup({}, { error_code: 'SSO:UnknownIdentityProvider' });
   setImmediate(() => {
     wrapper.update();
     expect(wrapper.find('Banner').length).toBe(1);
+    done();
   });
 });
 
-it('Should render error message - SSO:PermissionDenied', () => {
+it('Should render error message - SSO:PermissionDenied', (done) => {
   const wrapper = setup({}, { error_code: 'SSO:PermissionDenied' });
   setImmediate(() => {
     wrapper.update();
     expect(wrapper.find('Banner').length).toBe(1);
+    done();
   });
 });
 
-it('Should render error message - SSO:InternalServerError', () => {
+it('Should render error message - SSO:InternalServerError', (done) => {
   const wrapper = setup({}, { error_code: 'SSO:InternalServerError' });
   setImmediate(() => {
     wrapper.update();
     expect(wrapper.find('Banner').length).toBe(1);
+    done();
   });
 });
 
-it('Should render error message - SSO:ProviderError', () => {
+it('Should render error message - SSO:ProviderError', (done) => {
   const wrapper = setup({}, { error_code: 'SSO:ProviderError' });
   setImmediate(() => {
     wrapper.update();
     expect(wrapper.find('Banner').length).toBe(1);
+    done();
   });
 });
 
-it('Should render error message - default', () => {
+it('Should render error message - default', (done) => {
   const wrapper = setup({}, { error_code: 'undefined' });
   setImmediate(() => {
     wrapper.update();
     expect(wrapper.find('Banner').length).toBe(1);
+    done();
   });
 });

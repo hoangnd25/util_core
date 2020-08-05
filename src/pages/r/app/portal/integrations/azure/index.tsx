@@ -47,7 +47,7 @@ export class MicrosoftAzurePage extends React.Component<Props,State> {
   handleConnect = async () => {
     const { currentSession: { portal } } = this.props;
     const url = await microsoftAzureService.getRedirectLink(portal.title);
-    window.location.href = url;
+    window.location.assign(url);
   }
 
   public render() {

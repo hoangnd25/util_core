@@ -35,12 +35,17 @@ export class ContentDistributorExport extends React.Component<Props, State> {
   };
 
   async componentDidMount() {
-    const customContentCollection = await this.fetchContentSelection();
-    this.getContentDistributorStatus();
-    this.setState({
-      customContentCollection, 
-      isLoading: false 
-    });
+    const { isConnected } = this.props;
+    if (isConnected) {
+      const customContentCollection = await this.fetchContentSelection();
+      this.getContentDistributorStatus();
+      this.setState({
+        customContentCollection, 
+        isLoading: false 
+      });
+    } else {
+      this.setState({ isLoading: false });
+    }
   }
 
   sentenceCase(status) {

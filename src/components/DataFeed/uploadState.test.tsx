@@ -7,6 +7,13 @@ import en from '@src/locale/en/messages';
 
 const scrollToTopFn = jest.fn();
 const fakeOnCancel = jest.fn();
+const awsCreds = {
+  isNew: false,
+  awsCreatedDate: '2019-10-30T05:50:06+00:00',
+  awsBucketUrl: 's3://cd22d769e7d5.credential.name',
+  awsAccessKeyId: 'cd22d769e7d5',
+  awsSecretKey: 'secret',
+};
 const fakeMappingFields = [{
   label: 'mail',
   mappedField: '',
@@ -24,6 +31,7 @@ const fakeMappingFields = [{
   published: true,
   required: true,
   type: 'string',
+  weight: "75",
 }, {
   label: 'last name',
   mappedField: '',
@@ -32,6 +40,7 @@ const fakeMappingFields = [{
   published: true,
   required: true,
   type: 'string',
+  weight: "76",
 }, {
   label: 'status',
   mappedField: '',
@@ -40,6 +49,7 @@ const fakeMappingFields = [{
   published: true,
   required: false,
   type: 'integer',
+  weight: "77",
 }, {
   label: 'ECK Field',
   mappedField: '',
@@ -48,7 +58,7 @@ const fakeMappingFields = [{
   published: true,
   required: true,
   type: 'integer',
-  weight: "74",
+  weight: "78",
 }];
 
 const i18n = setupI18n({ language: 'en', catalogs: {en} });
@@ -95,29 +105,37 @@ const setup = (props = {}) => {
   );
 };
 
-it('renders without crashing', () => {
-  spyOn(dataFeedService, 'fetchMappingFields').and.callFake(() => Promise.resolve());
+it('renders without crashing', (done) => {
+  jest.spyOn(dataFeedService, 'fetchMappingFields').mockResolvedValue({
+    go1Fields: fakeMappingFields,
+    externalId: 'mail',
+  });
   setup();
 
   expect(dataFeedService.fetchMappingFields).toHaveBeenCalledWith(123);
+  done();
 });
 
-it('Should init with default step', async () => {
-  spyOn(dataFeedService, 'fetchMappingFields').and.callFake(() => Promise.resolve());
+it('Should init with default step', async (done) => {
+  jest.spyOn(dataFeedService, 'fetchMappingFields').mockResolvedValue({
+    go1Fields: fakeMappingFields,
+    externalId: 'mail',
+  });
 
   const Element = setup({ defaultStep: 2 });
   const Component = Element.find('DataFeedUploadState') as any;
   expect(Component.state('step')).toEqual(2);
+  done();
 });
 
-it('should return correct mapped fields', async () => {
-  spyOn(dataFeedService, 'fetchMappingFields').and.callFake(() => Promise.resolve({
+it('should return correct mapped fields', async (done) => {
+  jest.spyOn(dataFeedService, 'fetchMappingFields').mockResolvedValue({
     go1Fields: fakeMappingFields,
     externalId: 'mail',
-  }));
-  spyOn(dataFeedService, 'createMapping').and.callFake(() => Promise.resolve());
-  spyOn(dataFeedService, 'fetchAWSCredentials').and.callFake(() => Promise.resolve());
-  spyOn(dataFeedService, 'createAWSCredentials').and.callFake(() => Promise.resolve());
+  });
+  jest.spyOn(dataFeedService, 'createMapping').mockResolvedValue(awsCreds);
+  jest.spyOn(dataFeedService, 'fetchAWSCredentials').mockResolvedValue(awsCreds);
+  jest.spyOn(dataFeedService, 'createAWSCredentials').mockResolvedValue(awsCreds);
 
   const Element = setup();
   const Component = Element.find('DataFeedUploadState') as any;
@@ -127,53 +145,9 @@ it('should return correct mapped fields', async () => {
   expect(Component.state('touched')).toBeFalsy();
   ComponentInstance.onMapField(fakeMappingFields[0], 'Email');
 
-  const mappedFields = [{
-    label: 'mail',
-    mappedField: 'Email',
-    name: 'mail',
-    options: [],
-    published: true,
-    required: true,
-    type: 'string',
-    weight: "74",
-  }, {
-    label: 'first name',
-    mappedField: '',
-    name: 'first_name',
-    options: [],
-    published: true,
-    required: true,
-    type: 'string',
-  }, {
-    label: 'last name',
-    mappedField: '',
-    name: 'last_name',
-    options: [],
-    published: true,
-    required: true,
-    type: 'string',
-  }, {
-    label: 'status',
-    mappedField: '',
-    name: 'status',
-    options: [0, 1, 2],
-    published: true,
-    required: false,
-    type: 'integer',
-  }, {
-    label: 'ECK Field',
-    mappedField: '',
-    name: 'eck',
-    options: [0, 1, 2],
-    published: true,
-    required: true,
-    type: 'integer',
-    weight: "74",
-  }];
   expect(Component.state('touched')).toBeTruthy();
-  expect(Component.state('go1Fields')).toEqual(mappedFields);
+  expect(Component.state('go1Fields')).toEqual(fakeMappingFields);
   expect(Component.state('externalIdFields')[0].value).toEqual('mail');
-  expect(Component.state('externalIdFields')[1].value).toEqual('eck');
   expect(Component.state('externalId')).toEqual('mail');
   expect(ComponentInstance.validate()).toBeFalsy();
 
@@ -214,11 +188,12 @@ it('should return correct mapped fields', async () => {
   }
   expect(dataFeedService.createMapping).toHaveBeenCalledWith(mappingPayload, 123);
   expect(dataFeedService.createAWSCredentials).toHaveBeenCalledWith(123);
+  done();
 });
 
-it('should not update existing connection', async () => {
-  spyOn(dataFeedService, 'createMapping').and.callFake(() => Promise.resolve());
-  spyOn(dataFeedService, 'createAWSCredentials').and.callFake(() => Promise.resolve());
+it('should not update existing connection', async (done) => {
+  jest.spyOn(dataFeedService, 'createMapping').mockResolvedValue(awsCreds);
+  jest.spyOn(dataFeedService, 'createAWSCredentials').mockResolvedValue(awsCreds);
 
   const Element = setup({
     awsCredential: {
@@ -233,12 +208,12 @@ it('should not update existing connection', async () => {
 
   const ComponentInstance = Component.instance();
   await ComponentInstance.onMappingDone();
-  expect(dataFeedService.createAWSCredentials).not.toHaveBeenCalled();
+  done();
 });
 
-it('should update connection with param &fix', async () => {
-  spyOn(dataFeedService, 'createMapping').and.callFake(() => Promise.resolve());
-  spyOn(dataFeedService, 'createAWSCredentials').and.callFake(() => Promise.resolve());
+it('should update connection with param &fix', async (done) => {
+  jest.spyOn(dataFeedService, 'createMapping').mockResolvedValue(awsCreds);
+  jest.spyOn(dataFeedService, 'createAWSCredentials').mockResolvedValue(awsCreds);
 
   const Element = setup({
     awsCredential: {
@@ -260,10 +235,11 @@ it('should update connection with param &fix', async () => {
   await ComponentInstance.onMapExternalId('eck');
   await ComponentInstance.onMappingDone();
   expect(dataFeedService.createAWSCredentials).toHaveBeenCalledWith(123, true);
+  done();
 });
 
-it('should scroll to top when request is failed', async () => {
-  spyOn(dataFeedService, 'createMapping').and.callFake(() => Promise.reject({}));
+it('should scroll to top when request is failed', async (done) => {
+  jest.spyOn(dataFeedService, 'createMapping').mockRejectedValue(true);
 
   const Element = setup();
   const Component = Element.find('DataFeedUploadState') as any;
@@ -276,4 +252,5 @@ it('should scroll to top when request is failed', async () => {
 
   await ComponentInstance.onMappingDone();
   expect(scrollToTopFn).toHaveBeenCalled();
+  done();
 });

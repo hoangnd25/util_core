@@ -19,7 +19,7 @@ jest.spyOn(microsoftAzureService, 'getConnection').mockResolvedValue({
   }
 });
 
-const setup = (props = {}, query = {}) => {
+const setup = (query = {}) => {
   const currentSession = {
     authenticated: true,
     portal: {
@@ -49,14 +49,14 @@ const setup = (props = {}, query = {}) => {
     <ReduxProvider store={mockStore({ currentSession })}>
       <IntlProvider locale="en">
         <CommonProvider pushNavigationState={jest.fn()} apiUrl="api.go1.co" jwt="jwt" accountId={123} portalId={456}>
-          <MicrosoftAzurePage router={{ query }} currentSession={currentSession} {...props} />
+          <MicrosoftAzurePage router={{ query }} currentSession={currentSession} />
         </CommonProvider>
       </IntlProvider>
     </ReduxProvider>
   );
 };
 
-it('Should render without crashing', () => {
+it('Should render without crashing', async () => {
   setup();
 });
 
@@ -79,7 +79,7 @@ it('Should render with no connection', async (done) => {
   });
 });
 
-it('Should render with connection', (done) => {
+it('Should render with connection', async (done) => {
   const wrapper = setup();
   setImmediate(() => {
     wrapper.update();
@@ -88,8 +88,8 @@ it('Should render with connection', (done) => {
   });
 });
 
-it('Should render error message - SSO:PortalNotFound', (done) => {
-  const wrapper = setup({}, { error_code: 'SSO:PortalNotFound' });
+it('Should render error message - SSO:PortalNotFound', async (done) => {
+  const wrapper = setup({ error_code: 'SSO:PortalNotFound' });
   setImmediate(() => {
     wrapper.update();
     expect(wrapper.find('Banner').length).toBe(1);
@@ -97,8 +97,8 @@ it('Should render error message - SSO:PortalNotFound', (done) => {
   });
 });
 
-it('Should render error message - SSO:UnknownIdentityProvider', (done) => {
-  const wrapper = setup({}, { error_code: 'SSO:UnknownIdentityProvider' });
+it('Should render error message - SSO:UnknownIdentityProvider', async (done) => {
+  const wrapper = setup({ error_code: 'SSO:UnknownIdentityProvider' });
   setImmediate(() => {
     wrapper.update();
     expect(wrapper.find('Banner').length).toBe(1);
@@ -106,8 +106,8 @@ it('Should render error message - SSO:UnknownIdentityProvider', (done) => {
   });
 });
 
-it('Should render error message - SSO:PermissionDenied', (done) => {
-  const wrapper = setup({}, { error_code: 'SSO:PermissionDenied' });
+it('Should render error message - SSO:PermissionDenied', async (done) => {
+  const wrapper = setup({ error_code: 'SSO:PermissionDenied' });
   setImmediate(() => {
     wrapper.update();
     expect(wrapper.find('Banner').length).toBe(1);
@@ -115,8 +115,8 @@ it('Should render error message - SSO:PermissionDenied', (done) => {
   });
 });
 
-it('Should render error message - SSO:InternalServerError', (done) => {
-  const wrapper = setup({}, { error_code: 'SSO:InternalServerError' });
+it('Should render error message - SSO:InternalServerError', async (done) => {
+  const wrapper = setup({ error_code: 'SSO:InternalServerError' });
   setImmediate(() => {
     wrapper.update();
     expect(wrapper.find('Banner').length).toBe(1);
@@ -124,8 +124,8 @@ it('Should render error message - SSO:InternalServerError', (done) => {
   });
 });
 
-it('Should render error message - SSO:ProviderError', (done) => {
-  const wrapper = setup({}, { error_code: 'SSO:ProviderError' });
+it('Should render error message - SSO:ProviderError', async (done) => {
+  const wrapper = setup({ error_code: 'SSO:ProviderError' });
   setImmediate(() => {
     wrapper.update();
     expect(wrapper.find('Banner').length).toBe(1);
@@ -133,8 +133,8 @@ it('Should render error message - SSO:ProviderError', (done) => {
   });
 });
 
-it('Should render error message - default', (done) => {
-  const wrapper = setup({}, { error_code: 'undefined' });
+it('Should render error message - default', async (done) => {
+  const wrapper = setup({ error_code: 'undefined' });
   setImmediate(() => {
     wrapper.update();
     expect(wrapper.find('Banner').length).toBe(1);

@@ -8,7 +8,18 @@ import { MicrosoftAzurePage, microsoftAzureService } from '@src/pages/r/app/port
 
 const mockStore = configureMockStore();
 
-const setup = (props = {}) => {
+jest.spyOn(microsoftAzureService, 'getConnection').mockResolvedValue({
+  id: '123',
+  name: 'test',
+  identifier: '123',
+  strategy: '',
+  provider: 'azure',
+  links: {
+    authorize: 'http://test.com'
+  }
+});
+
+const setup = (props = {}, query = {}) => {
   const currentSession = {
     authenticated: true,
     portal: {
@@ -38,7 +49,7 @@ const setup = (props = {}) => {
     <ReduxProvider store={mockStore({ currentSession })}>
       <IntlProvider locale="en">
         <CommonProvider pushNavigationState={jest.fn()} apiUrl="api.go1.co" jwt="jwt" accountId={123} portalId={456}>
-          <MicrosoftAzurePage router={{ query: {}}} currentSession={currentSession} {...props} />
+          <MicrosoftAzurePage router={{ query }} currentSession={currentSession} {...props} />
         </CommonProvider>
       </IntlProvider>
     </ReduxProvider>
@@ -49,18 +60,72 @@ it('Should render without crashing', () => {
   setup();
 });
 
-it('Should render with no connection', () => {
+it('Should render with no connection', (done) => {
   spyOn(microsoftAzureService, 'getConnection').and.callFake(() => Promise.resolve(null));
 
-  const ComponentWrapper = setup();
-  // const hasApplicationID = ComponentWrapper.find('View[data-testid="scormAndXApi.hasApplicationID"]');
-  // expect(hasApplicationID).not.toBeNull();
+  const wrapper = setup();
+  setImmediate(async () => {
+    wrapper.update();
+    expect(wrapper.find('ButtonFilled').text()).toEqual('Connect with Microsoft Azure');
+
+    const Page = wrapper.find(MicrosoftAzurePage);
+    await (Page.instance() as any).handleConnect();
+    done();
+  });
 });
 
 it('Should render with connection', () => {
-  spyOn(microsoftAzureService, 'getConnection').and.callFake(() => Promise.resolve({id: 123}));
+  const wrapper = setup();
+  setImmediate(() => {
+    wrapper.update();
+    expect(wrapper.find('ButtonFilled').text()).toEqual('Reconnect with Microsoft Azure');
+  });
+});
 
-  const ComponentWrapper = setup();
-  // const hasApplicationID = ComponentWrapper.find('View[data-testid="scormAndXApi.hasApplicationID"]');
-  // expect(hasApplicationID).not.toBeNull();
+it('Should render error message - SSO:PortalNotFound', () => {
+  const wrapper = setup({}, { error_code: 'SSO:PortalNotFound' });
+  setImmediate(() => {
+    wrapper.update();
+    expect(wrapper.find('Banner').length).toBe(1);
+  });
+});
+
+it('Should render error message - SSO:UnknownIdentityProvider', () => {
+  const wrapper = setup({}, { error_code: 'SSO:UnknownIdentityProvider' });
+  setImmediate(() => {
+    wrapper.update();
+    expect(wrapper.find('Banner').length).toBe(1);
+  });
+});
+
+it('Should render error message - SSO:PermissionDenied', () => {
+  const wrapper = setup({}, { error_code: 'SSO:PermissionDenied' });
+  setImmediate(() => {
+    wrapper.update();
+    expect(wrapper.find('Banner').length).toBe(1);
+  });
+});
+
+it('Should render error message - SSO:InternalServerError', () => {
+  const wrapper = setup({}, { error_code: 'SSO:InternalServerError' });
+  setImmediate(() => {
+    wrapper.update();
+    expect(wrapper.find('Banner').length).toBe(1);
+  });
+});
+
+it('Should render error message - SSO:ProviderError', () => {
+  const wrapper = setup({}, { error_code: 'SSO:ProviderError' });
+  setImmediate(() => {
+    wrapper.update();
+    expect(wrapper.find('Banner').length).toBe(1);
+  });
+});
+
+it('Should render error message - default', () => {
+  const wrapper = setup({}, { error_code: 'undefined' });
+  setImmediate(() => {
+    wrapper.update();
+    expect(wrapper.find('Banner').length).toBe(1);
+  });
 });

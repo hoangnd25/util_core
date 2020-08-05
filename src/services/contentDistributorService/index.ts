@@ -11,8 +11,9 @@ class ContentDistributorService extends BaseService {
 
   async getCustomContent(portalId: number): Promise<any> {
     const url = `collection-service/portal/${portalId}/collections/default/stats`
-    const { data } = await this.http.get(url);
-    return data;
+    return this.http.get(url)
+      .then(response => response.status === 200 ? response.data : null)
+      .catch(() => null);
   }
 
   async getExportStatus(portalId: number): Promise<any> {

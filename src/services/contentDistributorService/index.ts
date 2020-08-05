@@ -25,7 +25,9 @@ class ContentDistributorService extends BaseService {
 
   async exportContent(portalId: number, integrationName: string): Promise<any> {
     const url = `content-distributor/export`
-    return this.http.post(url, { portalId, type: integrationName }).then(response => response.status === 200 ? response.data : null);
+    return this.http.post(url, { portalId, type: integrationName })
+      .then(response => response.status === 200 ? response.data : null)
+      .catch(() => null);
   }
 }
 

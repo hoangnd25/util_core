@@ -40,11 +40,11 @@ const setup = (props = {}) => {
   );
 };
 
-it('Should render without crashing', () => {
+it('Should render without crashing', async () => {
   setup();
 });
 
-it('Should render existing application id', () => {
+it('Should render existing application id', async () => {
   spyOn(scormService, 'getApplicationId').and.callFake(() => Promise.resolve('Existing Application ID'));
 
   const ComponentWrapper = setup();
@@ -52,7 +52,7 @@ it('Should render existing application id', () => {
   expect(hasApplicationID).not.toBeNull();
 });
 
-it('Should render generate application id', () => {
+it('Should render generate application id', async () => {
   spyOn(scormService, 'getApplicationId').and.callFake(() => Promise.reject());
 
   const ComponentWrapper = setup();

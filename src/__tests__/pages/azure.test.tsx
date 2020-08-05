@@ -98,42 +98,6 @@ it('Should render error message - SSO:PortalNotFound', async (done) => {
   });
 });
 
-it('Should render error message - SSO:UnknownIdentityProvider', async (done) => {
-  const wrapper = setup({ error_code: 'SSO:UnknownIdentityProvider' });
-  setImmediate(() => {
-    wrapper.update();
-    expect(wrapper.find('Banner').length).toBe(1);
-    done();
-  });
-});
-
-it('Should render error message - SSO:PermissionDenied', async (done) => {
-  const wrapper = setup({ error_code: 'SSO:PermissionDenied' });
-  setImmediate(() => {
-    wrapper.update();
-    expect(wrapper.find('Banner').length).toBe(1);
-    done();
-  });
-});
-
-it('Should render error message - SSO:InternalServerError', async (done) => {
-  const wrapper = setup({ error_code: 'SSO:InternalServerError' });
-  setImmediate(() => {
-    wrapper.update();
-    expect(wrapper.find('Banner').length).toBe(1);
-    done();
-  });
-});
-
-it('Should render error message - SSO:ProviderError', async (done) => {
-  const wrapper = setup({ error_code: 'SSO:ProviderError' });
-  setImmediate(() => {
-    wrapper.update();
-    expect(wrapper.find('Banner').length).toBe(1);
-    done();
-  });
-});
-
 it('Should render error message - default', async (done) => {
   const wrapper = setup({ error_code: 'undefined' });
   setImmediate(() => {

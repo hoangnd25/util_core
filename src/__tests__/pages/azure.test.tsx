@@ -56,8 +56,9 @@ const setup = (query = {}) => {
   );
 };
 
-it('Should render without crashing', async () => {
+it('Should render without crashing', async (done) => {
   setup();
+  done();
 });
 
 it('Should render with no connection', async (done) => {

@@ -44,7 +44,7 @@ const mockCustomCollectionResponse = {
 const mockExportData = { portalId: '123', type: 'oracle' };
 const exportStatusMock = {
   timestamp: 1586391483247,
-  status: 'queued',
+  status: 'completed',
 };
 
 jest.spyOn(contentDistributorService, 'getCustomContent').mockResolvedValue(mockCustomCollectionResponse);

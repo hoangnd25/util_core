@@ -38,7 +38,7 @@ export class ContentDistributorExport extends React.Component<Props, State> {
     const { isConnected } = this.props;
     if (isConnected) {
       const customContentCollection = await this.fetchContentSelection();
-      this.getContentDistributorStatus();
+      await this.getContentDistributorStatus();
       this.setState({
         customContentCollection, 
         isLoading: false 

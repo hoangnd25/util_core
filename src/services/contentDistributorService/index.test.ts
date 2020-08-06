@@ -39,7 +39,7 @@ test('should return customContentSelection for portal', async (done) => {
 test('should return export status', async (done) => {
   const exportStatusMock = {
     "timestamp": 1586391483247,
-    "status": "queued"
+    "status": "completed"
   }
   mock.onGet('content-distributor/status/123').reply(200, exportStatusMock);
   const exportStatus = await contentDistributorService(http).getExportStatus(123);

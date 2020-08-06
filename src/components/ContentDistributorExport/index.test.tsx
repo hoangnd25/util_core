@@ -1,6 +1,6 @@
 import Enzyme, { mount, shallow } from 'enzyme';
 import * as React from 'react';
-import ContentDistributorExport, { contentDistributorService, portalService } from '.';
+import ContentDistributorExport, { contentDistributorService } from '.';
 
 const portalMock = {
   id: '123',
@@ -14,7 +14,7 @@ const portalMock = {
         domain: 'test domain',
         username: 'testusername',
         password: 'testpassword',
-      },
+      }
     },
   },
 };
@@ -40,9 +40,6 @@ const mockCustomCollectionResponse = {
   custom_share: 0,
   free: 15654,
 };
-const mockIntegrationConfiguration = {
-  status: true
-};
 
 const mockExportData = { portalId: '123', type: 'oracle' };
 const exportStatusMock = {
@@ -50,50 +47,22 @@ const exportStatusMock = {
   status: 'queued',
 };
 
-beforeEach(() => {
-  spyOn(portalService, 'fetchIntegrationConfiguration').and.callFake(() =>
-    Promise.resolve(mockIntegrationConfiguration)
-  );
-  spyOn(contentDistributorService, 'getCustomContent').and.callFake(() =>
-    Promise.resolve(mockCustomCollectionResponse)
-  );
-  spyOn(contentDistributorService, 'exportContent').and.callFake(() => Promise.resolve(mockExportData));
-  spyOn(contentDistributorService, 'getExportStatus').and.callFake(() => Promise.resolve(exportStatusMock));
-});
+jest.spyOn(contentDistributorService, 'getCustomContent').mockResolvedValue(mockCustomCollectionResponse);
+jest.spyOn(contentDistributorService, 'exportContent').mockResolvedValue(mockExportData);
+jest.spyOn(contentDistributorService, 'getExportStatus').mockResolvedValue(exportStatusMock);
 
-const setup = (targetName) => {
+const setup = (isConnected, targetName) => {
   return mount(
-    <ContentDistributorExport targetName={targetName} portal={portalMock} />
+    <ContentDistributorExport isConnected={isConnected} exportType={targetName} portal={portalMock} />
   );
 };
 
-it('Should render distributor for oracle', () => {
-  setup('oracle');
+it('Should render export for oracle', async (done) => {
+  setup(true, 'oracle');
+  done();
 });
 
-// it('Should render custom content total for oracle', (done) => {
-//   const wrapper = setup('oracle');
-//   setImmediate(() => {
-//     wrapper.update();
-//     expect(wrapper.state('isLoading')).toBeFalsy();
-//     expect(wrapper.state('customContentCollection')).toEqual(mockCustomCollectionResponse);
-//     done();
-//   });
-// });
-
-// it('Should export content for oracle', async () => {
-//   const wrapper = setup('oracle');
-//   await (wrapper.instance() as any).contentDistributorExport();
-//   await (wrapper.instance() as any).getContentDistributorStatus();
-//   expect(contentDistributorService.exportContent).toHaveBeenCalled();
-//   expect(wrapper.state('exportStatus')).toEqual(exportStatusMock);
-
-//   // setImmediate(async () => {
-//   //   wrapper.update();
-//   //   await (wrapper.instance() as any).contentDistributorExport();
-//   //   await (wrapper.instance() as any).getContentDistributorStatus();
-//   //   expect(contentDistributorService.exportContent).toHaveBeenCalled();
-//   //   expect(wrapper.state('exportStatus')).toEqual(exportStatusMock);
-//   //   done();
-//   // });
-// });
+it('Should render export for oracle not connected', async (done) => {
+  setup(false, 'oracle');
+  done();
+});

@@ -53,7 +53,7 @@ const setup = ({ pageTitle = 'Example', active = 'microsoft-azure' }) => {
 
 /** TEST SETUP END * */
 
-it('renders correctly', done => {
+it('renders correctly', async done => {
   const wrapper = setup({}) as any;
   setImmediate(() => {
     wrapper.update();

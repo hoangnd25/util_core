@@ -41,7 +41,7 @@ it('heartbeat routes work', async () => {
   expect(endMock.mock.calls[0][0]).toBe("Ok");
 });
 
-it('shows login state properly', () => {
+it('shows login state properly', async () => {
   const store = mockStore(authenticatedStoreState);
   const wrapper = setup({currentSession:currentSessionMock, store: store}) as any;
   expect(wrapper.find("AppPage").length).toBe(1);

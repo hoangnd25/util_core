@@ -15,20 +15,15 @@ export interface SSOConnectionDetails {
   }
 }
 
-export interface MicrosoftAzureIntegrationDetails {
-   status: number;
-   data: SSOConnectionDetails[];
-}
-
 class MicrosoftAzureService extends BaseService {
   constructor(http: HttpInstance = defaultHttp, go1CookieValue?: Cookies) {
     super(http, go1CookieValue);
   }
 
-  public async getConnection(portalDomain: string): Promise<MicrosoftAzureIntegrationDetails | null> {
+  public async getConnection(portalDomain: string): Promise<SSOConnectionDetails | null> {
     try {
       const { data } = await this.http.get(`sso/public/connections/${ portalDomain }`);
-      const azureConnection: MicrosoftAzureIntegrationDetails = data.find(ssoConnection => ssoConnection.provider === 'azure');
+      const azureConnection: SSOConnectionDetails = data.find(ssoConnection => ssoConnection.provider === 'azure');
       return azureConnection;
     } catch (err) {
       return null;
@@ -40,7 +35,6 @@ class MicrosoftAzureService extends BaseService {
       const { data } = await this.http.get(`sso/oauth/azure/portal/authorize?portal=${ portalDomain }`);
       return data.redirectUrl;
     } catch (err) {
-      console.log(err);
       return null;
     }
   }

@@ -2,7 +2,6 @@ import * as React from 'react';
 import moment from 'moment';
 import { Trans } from '@lingui/macro';
 import {
-  Spinner,
   Text,
   View,
   ButtonFilled,
@@ -12,52 +11,41 @@ import {
 } from '@go1d/go1d';
 import IconExport from '@go1d/go1d/build/components/Icons/Export';
 import { GO1Portal } from '@src/types/user';
-import PortalService from '@src/services/portalService';
 import ContentDistributorService from '@src/services/contentDistributorService';
 
 export const contentDistributorService = ContentDistributorService();
-export const portalService = PortalService();
 
 interface Props {
-  integrationName?: string;
-  targetName: string;
+  isConnected: boolean;
+  exportType: string;
   portal: GO1Portal;
 }
 
 interface State {
   isLoading: boolean;
-  accountData: any;
   customContentCollection: any;
-  exportContent: any;
   exportStatus: any;
 }
 
 export class ContentDistributorExport extends React.Component<Props, State> {
   state = {
     isLoading: true,
-    accountData: null,
     customContentCollection: null,
-    exportContent: null,
     exportStatus: null,
   };
 
   async componentDidMount() {
-    const [accountData, customContentCollection] = await Promise.all([
-      this.fetchAccountData(),
-      this.fetchContentSelection(),
-    ]);
-
-    this.setState({ 
-      accountData,
-      customContentCollection, 
-      isLoading: false 
-    });
-
-    this.getContentDistributorStatus();
-  }
-
-  timestampToDate(timestamp) {
-    return moment(timestamp).format('MMMM Do, YYYY h:mma');
+    const { isConnected } = this.props;
+    if (isConnected) {
+      const customContentCollection = await this.fetchContentSelection();
+      this.getContentDistributorStatus();
+      this.setState({
+        customContentCollection, 
+        isLoading: false 
+      });
+    } else {
+      this.setState({ isLoading: false });
+    }
   }
 
   sentenceCase(status) {
@@ -65,29 +53,33 @@ export class ContentDistributorExport extends React.Component<Props, State> {
   }
 
   render() {
-    const { isLoading, accountData, customContentCollection, exportStatus } = this.state;
-    const { portal } = this.props;
+    const { isLoading, customContentCollection, exportStatus } = this.state;
+    const { isConnected } = this.props;
 
     if (isLoading) {
-      // @TODO replace with skeleton
-      return <Spinner size={3} />;
+      return (<View paddingY={[5, 6]}>
+        <View backgroundColor="soft" height="22px" width="30%" marginBottom={5} />
+        <View backgroundColor="soft" height="15px" width="75%" marginY={2} />
+        <View backgroundColor="soft" height="15px" width="75%" marginY={2} />
+        <View backgroundColor="soft" height="44px" width="110px" marginTop={6} borderRadius={2} />
+      </View>)
     }
 
     return (
       <View>
         <Text paddingY={[5, 6]} fontWeight="bold" fontSize={2}>
-          New Export
+          <Trans>New Export</Trans>
         </Text>
         <View paddingBottom={6}>
-          {!accountData && (
+          {!isConnected && (
             <View>
-              <Text color="subtle">Integration not connected. Check your account settings. </Text>
+              <Text color="subtle"><Trans>Integration not connected. Check your account settings.</Trans></Text>
             </View>
           )}
           {customContentCollection && customContentCollection.custom !== 0 && (
             <View>
               <Text color="subtle">
-                Resources to be exported
+                <Trans>Resources to be exported</Trans>
               </Text>
               <Text fontWeight="semibold" fontSize={3}>
                 {customContentCollection.custom}
@@ -97,10 +89,10 @@ export class ContentDistributorExport extends React.Component<Props, State> {
 
           {customContentCollection && customContentCollection.custom === 0 && (
             <View flexDirection={['column', 'row']}>
-              <Text color="subtle">No content added to custom selection for export. </Text>
+              <Text color="subtle"><Trans>No content added to custom selection for export.</Trans>&nbsp;</Text>
               <Link href="/p/#/app/custom-content-selection">
                 <Text paddingLeft={[0, 2]} paddingTop={[2, 0]} color="accent">
-                  Add more content to selection.
+                  <Trans>Add more content to selection.</Trans>
                 </Text>
               </Link>
             </View>
@@ -114,16 +106,16 @@ export class ContentDistributorExport extends React.Component<Props, State> {
               icon={IconExport}
               color="accent"
               width="fit-content"
-              onClick={() => this.contentDistributorExport(portal.id)}
+              onClick={this.contentDistributorExport}
             >
-              Export
+              <Trans>Export</Trans>
             </ButtonFilled>
 
             <View flexDirection={['column', 'row']} alignItems={['flex-start', 'center']}>
-              <Text color="subtle">Want more content? </Text>
+              <Text color="subtle"><Trans>Want more content?</Trans>&nbsp;</Text>
               <Link href="/p/#/app/custom-content-selection">
                 <Text paddingLeft={[0, 2]} paddingTop={[2, 0]} color="accent">
-                  Add them in the custom selection.
+                  <Trans>Add them in the custom selection.</Trans>
                 </Text>
               </Link>
             </View>
@@ -132,16 +124,14 @@ export class ContentDistributorExport extends React.Component<Props, State> {
         {exportStatus && (
           <View>
             <Text paddingTop={[6, 7]} paddingY={[5, 6]} fontWeight="bold" fontSize={2}>
-              Last Export
+              <Trans>Last Export</Trans>
             </Text>
 
             <View flexDirection={['column', 'row']} width="100%" marginBottom={[0, 6]}>
               <View width={['100%', '50%']}>
-                <Text paddingY={[2, 0]} color="subtle">
-                  Requested
-                </Text>
+                <Text color="subtle"><Trans>Requested</Trans></Text>
                 <Text fontWeight="semibold">
-                  {exportStatus.timestamp && this.timestampToDate(exportStatus.timestamp)}
+                  {exportStatus.timestamp && moment(exportStatus.timestamp).format('MMMM Do, YYYY h:mma')}
                 </Text>
               </View>
 
@@ -152,14 +142,12 @@ export class ContentDistributorExport extends React.Component<Props, State> {
                 borderColor="soft"
                 width={['100%', '50%']}
               >
-                <Text color="subtle">Status</Text>
-                {exportStatus && exportStatus.status !== 'in-progress' && (
+                <Text color="subtle"><Trans>Status</Trans></Text>
+                {(exportStatus.status !== 'in-progress' || exportStatus.done === exportStatus.total) ? (
                   <Text fontWeight="semibold">
                     {exportStatus.status && this.sentenceCase(exportStatus.status)}
                   </Text>
-                )}
-
-                {exportStatus && exportStatus.status === 'in-progress' && (
+                ) : (
                   <View marginY={4}>
                     <LineProgress percent={(exportStatus.done / exportStatus.total) * 100} />
                   </View>
@@ -169,9 +157,9 @@ export class ContentDistributorExport extends React.Component<Props, State> {
 
             <View flexDirection={['column', 'row']} width="100%">
               <View width={['100%', '50%']}>
-                <Text color="subtle">Resources exported</Text>
+                <Text color="subtle"><Trans>Resources exported</Trans></Text>
                 <Text fontWeight="semibold">
-                  {exportStatus && exportStatus.done}
+                  {exportStatus.done}
                 </Text>
               </View>
               <View
@@ -181,7 +169,7 @@ export class ContentDistributorExport extends React.Component<Props, State> {
                 borderColor="soft"
                 width={['100%', '50%']}
               >
-                <Text color="subtle">Errors within export</Text>
+                <Text color="subtle"><Trans>Errors within export</Trans></Text>
                 <Text fontWeight="semibold">
                   {exportStatus.errors && exportStatus.errors.length}
                 </Text>
@@ -193,52 +181,34 @@ export class ContentDistributorExport extends React.Component<Props, State> {
     );
   }
 
-  private fetchAccountData() {
-    const { portal, integrationName, targetName } = this.props;
-    if (integrationName && portal.configuration.integrations[integrationName]) {
-      return Promise.resolve(true);
-    }
-
-    const portalName = portal && portal.title;
-    return portalService.fetchIntegrationConfiguration(portalName, targetName);
-  }
-
   private fetchContentSelection() {
-    const { portal } = this.props;
-    const portalId = portal && parseInt(portal.id);
-    return contentDistributorService.getCustomContent(portalId);
+    const { portal: { id } } = this.props;
+    return contentDistributorService.getCustomContent(parseInt(id));
   }
 
   private async getContentDistributorStatus() {
-    const { portal } = this.props;
-    const portalId = portal && parseInt(portal.id);
-    const exportStatus = await contentDistributorService.getExportStatus(portalId);
-    if (exportStatus && exportStatus.status === 'complete') {
-      try {
-        setInterval(async () => {
-          this.getContentDistributorStatus();
-        }, 10000);
-      } catch (e) {
-        console.log(e);
-      }
+    const { portal: { id } } = this.props;
+    const exportStatus = await contentDistributorService.getExportStatus(parseInt(id));
+    if (exportStatus && exportStatus.status !== 'completed') {
+      setTimeout(() => {
+        this.getContentDistributorStatus();
+      }, 10000);
     }
     if (!exportStatus) {
       this.setState({ exportStatus: false });
     } else this.setState({ exportStatus });
   }
 
-  private async contentDistributorExport(portalId) {
-    const { targetName } = this.props;
-    const exportContent = await contentDistributorService.exportContent(portalId, targetName);
-    if (exportContent.status) {
-      this.setState({ exportContent });
+  private contentDistributorExport = async () => {
+    const { exportType, portal } = this.props;
+    const { status } = await contentDistributorService.exportContent(parseInt(portal.id), exportType);
+    if (status) {
       NotificationManager.success({
         message: <Trans>Export requested.</Trans>,
         options: { lifetime: 3000, isOpen: true },
       });
       this.getContentDistributorStatus();
     } else {
-      this.setState({ exportContent: false });
       NotificationManager.danger({
         message: (
           <Trans>Unable to request export.</Trans>

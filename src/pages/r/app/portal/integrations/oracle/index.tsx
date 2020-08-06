@@ -74,7 +74,11 @@ export class Oracle extends React.Component<Props, any> {
             </View>
           </View>
           <View label="Export">
-            <ContentDistributorExport targetName="oracle" portal={currentSession.portal} />
+            <ContentDistributorExport 
+              isConnected={!!accountData}
+              exportType="oracle"
+              portal={currentSession.portal}
+            />
           </View>
         </TabMenuNavigation>
       </View>

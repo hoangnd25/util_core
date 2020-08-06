@@ -26,7 +26,7 @@ module.exports = {
     "!<rootDir>/src/pages/_document.tsx",
     "!<rootDir>/src/pages/_error.tsx"
   ],
-  setupFiles: ["<rootDir>/jest-setup.js"],
+  setupFiles: ["<rootDir>/jest-setup.js", "jest-localstorage-mock"],
   testRegex: TEST_REGEX,
   testEnvironment: 'jest-environment-jsdom-fourteen',
   testPathIgnorePatterns: ["<rootDir>/build/", "<rootDir>/.next/", "<rootDir>/node_modules/", "<rootDir>/src/locale/"],

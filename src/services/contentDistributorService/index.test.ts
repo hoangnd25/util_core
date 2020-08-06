@@ -8,7 +8,7 @@ const http = create();
 beforeEach(() => mock = new MockAdapter(http));
 afterEach(() => mock.reset());
 
-test('should return customContentSelection for portal', async () => {
+test('should return customContentSelection for portal', async (done) => {
   const mockCustomCollectionResponse = {
     "default_collection": {
       "id": "1583",
@@ -33,9 +33,10 @@ test('should return customContentSelection for portal', async () => {
   mock.onGet(`collection-service/portal/123/collections/default/stats`).reply(200, mockCustomCollectionResponse);
   const customCollection = await contentDistributorService(http).getCustomContent(123);
   expect(customCollection).toStrictEqual(mockCustomCollectionResponse);
+  done();
 });
 
-test('should return export status', async () => {
+test('should return export status', async (done) => {
   const exportStatusMock = {
     "timestamp": 1586391483247,
     "status": "queued"
@@ -43,11 +44,13 @@ test('should return export status', async () => {
   mock.onGet('content-distributor/status/123').reply(200, exportStatusMock);
   const exportStatus = await contentDistributorService(http).getExportStatus(123);
   expect(exportStatus).toStrictEqual(exportStatusMock);
+  done();
 });
 
-test('should export Custom Collection content', async () => {
+test('should export Custom Collection content', async (done) => {
   const mockExportData = { portalId: "123", type: "oracle" }
   mock.onPost('content-distributor/export').reply(200, mockExportData);
   const exportData = await contentDistributorService(http).exportContent(123, 'oracle');
   expect(exportData).toStrictEqual(mockExportData);
+  done();
 });

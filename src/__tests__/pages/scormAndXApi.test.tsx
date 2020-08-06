@@ -7,9 +7,6 @@ import CommonProvider from '@go1d/mine/common/Provider';
 import { ScormAndXapi as ScormAndXapiPage, scormService } from '@src/pages/r/app/portal/integrations/scorm-and-xapi';
 
 const mockStore = configureMockStore();
-const intlMock = {
-  formatMessage: jest.fn(),
-};
 
 const setup = (props = {}) => {
   const componentProps = {
@@ -40,22 +37,27 @@ const setup = (props = {}) => {
   );
 };
 
-it('Should render without crashing', () => {
+it('Should render without crashing', async (done) => {
+  jest.spyOn(scormService, 'getApplicationId').mockResolvedValue('Existing Application ID');
+
   setup();
+  done();
 });
 
-it('Should render existing application id', () => {
-  spyOn(scormService, 'getApplicationId').and.callFake(() => Promise.resolve('Existing Application ID'));
+it('Should render existing application id', async (done) => {
+  jest.spyOn(scormService, 'getApplicationId').mockResolvedValue('Existing Application ID');
 
   const ComponentWrapper = setup();
   const hasApplicationID = ComponentWrapper.find('View[data-testid="scormAndXApi.hasApplicationID"]');
   expect(hasApplicationID).not.toBeNull();
+  done();
 });
 
-it('Should render generate application id', () => {
-  spyOn(scormService, 'getApplicationId').and.callFake(() => Promise.reject());
+it('Should render generate application id', async (done) => {
+  jest.spyOn(scormService, 'getApplicationId').mockResolvedValue(null);
 
   const ComponentWrapper = setup();
   const hasApplicationID = ComponentWrapper.find('View[data-testid="scormAndXApi.hasApplicationID"]');
   expect(hasApplicationID).toHaveLength(0);
+  done();
 });

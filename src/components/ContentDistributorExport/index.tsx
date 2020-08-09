@@ -107,6 +107,7 @@ export class ContentDistributorExport extends React.Component<Props, State> {
               color="accent"
               width="fit-content"
               onClick={this.contentDistributorExport}
+              disabled={exportStatus && exportStatus.status === 'in-progress'}
             >
               <Trans>Export</Trans>
             </ButtonFilled>

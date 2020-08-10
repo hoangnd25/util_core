@@ -41,7 +41,7 @@ export default function withI18n(App, language = 'en') {
 
       const [props, catalog] = await Promise.all([
         App.getInitialProps ? App.getInitialProps(ctx) : {},
-        import(`@src/locale/${language}/messages.po`).then((m) => m.default),
+        import(`@src/locale/${language}/messages.po`).then((m) => m.default).catch(() => {}),
       ]);
 
       return {

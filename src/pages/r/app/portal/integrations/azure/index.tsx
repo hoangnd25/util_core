@@ -64,13 +64,13 @@ export class MicrosoftAzurePage extends React.Component<Props,State> {
     return (
       <TabMenuNavigation>
         <View label="Connect">
-          <View alignItems="flex-start" paddingTop={5}>
-            {error && (
-              <Banner type="danger" marginBottom={4}>
-                <Text>{error.message}</Text>
-                <Text>Support ID: {error.sessionId}</Text>
-              </Banner>
-            )}
+          {error && (
+            <Banner type="danger">
+              <Text>{error.message}</Text>
+              <Text>Support ID: {error.sessionId}</Text>
+            </Banner>
+          )}
+          <View alignItems="flex-start" paddingTop={4}>
             {connection ? (<>
               <Text>Your portal is connected with Microsoft Azure.</Text>
             </>) : (<>
@@ -117,7 +117,7 @@ export class MicrosoftAzurePage extends React.Component<Props,State> {
       case 'SSO:InternalServerError':
         return 'An unexpected error occurred. Please try again later.';
       case 'SSO:ProviderError':
-        return 'An unexpected error occurred. Please try again later.';
+        return 'Something went wrong. Please try connecting again.';
       default:
         return 'An unexpected error occurred. Please try again later.';
     }

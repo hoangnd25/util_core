@@ -8,6 +8,7 @@ import {
   Link,
   NotificationManager,
   LineProgress,
+  Banner,
 } from '@go1d/go1d';
 import IconExport from '@go1d/go1d/build/components/Icons/Export';
 import { GO1Portal } from '@src/types/user';
@@ -54,7 +55,7 @@ export class ContentDistributorExport extends React.Component<Props, State> {
 
   render() {
     const { isLoading, customContentCollection, exportStatus } = this.state;
-    const { isConnected } = this.props;
+    const { isConnected, exportType } = this.props;
 
     if (isLoading) {
       return (<View paddingY={[5, 6]}>
@@ -67,6 +68,13 @@ export class ContentDistributorExport extends React.Component<Props, State> {
 
     return (
       <View>
+        {exportType === "graph-connector" && (
+          <Banner type="note" maxWidth="840px">
+            <Text>
+              <Trans>By pushing your Go1 content to the Microsoft Graph, members of your organization will be able to find your Go1 content from Microsoft Search, in Microsoft products like Sharepoint, office.com, and Bing.</Trans>
+            </Text>
+          </Banner>
+        )}
         <Text paddingY={[5, 6]} fontWeight="bold" fontSize={2}>
           <Trans>New Export</Trans>
         </Text>
@@ -114,7 +122,7 @@ export class ContentDistributorExport extends React.Component<Props, State> {
 
             <View flexDirection={['column', 'row']} alignItems={['flex-start', 'center']}>
               <Text color="subtle"><Trans>Want more content?</Trans>&nbsp;</Text>
-              <Link href="/p/#/app/custom-content-selection">
+              <Link href="/r/app/content-selector">
                 <Text paddingLeft={[0, 2]} paddingTop={[2, 0]} color="accent">
                   <Trans>Add them in the custom selection.</Trans>
                 </Text>

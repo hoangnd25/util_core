@@ -124,7 +124,7 @@ export class ContentDistributorExport extends React.Component<Props, State> {
               <Text color="subtle"><Trans>Want more content?</Trans>&nbsp;</Text>
               <Link href="/r/app/content-selector">
                 <Text paddingLeft={[0, 2]} paddingTop={[2, 0]} color="accent">
-                  <Trans>Add them in the custom selection.</Trans>
+                  <Trans>Add more resources to your library.</Trans>
                 </Text>
               </Link>
             </View>

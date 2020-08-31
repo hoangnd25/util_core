@@ -152,7 +152,7 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
       },
       {
         id: SIDEBAR_MENUS.MICROSOFT_AZURE,
-        title: i18n._(t`Microsoft Azure`),
+        title: i18n._(t`Microsoft 365`),
         logo: '/assets/integrations/Microsoft_Azure_Logo.png',
         href: '/integrations/azure',
         isApiomLink: false,

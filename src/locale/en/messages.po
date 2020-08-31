@@ -26,8 +26,12 @@ msgid "Add more content to selection."
 msgstr "Add more content to selection."
 
 #: src/components/ContentDistributorExport/index.tsx:114
-msgid "Add them in the custom selection."
-msgstr "Add them in the custom selection."
+msgid "Add more resources to your library."
+msgstr "Add more resources to your library."
+
+#: src/components/ContentDistributorExport/index.tsx:114
+#~ msgid "Add them in the custom selection."
+#~ msgstr "Add them in the custom selection."
 
 #: src/components/common/WithIntegrations/index.tsx:25
 msgid "Addons"
@@ -187,8 +191,12 @@ msgid "Map with"
 msgstr ""
 
 #: src/components/common/WithIntegrations/index.tsx:117
-msgid "Microsoft Azure"
-msgstr ""
+msgid "Microsoft 365"
+msgstr "Microsoft 365"
+
+#: src/components/common/WithIntegrations/index.tsx:117
+#~ msgid "Microsoft Azure"
+#~ msgstr ""
 
 #: src/components/ContentDistributorExport/index.tsx:80
 msgid "New Export"

@@ -71,7 +71,7 @@ it('Should render with no connection', async (done) => {
   const wrapper = setup();
   setImmediate(async () => {
     wrapper.update();
-    expect(wrapper.find('ButtonFilled').text()).toEqual('Connect with Microsoft Azure');
+    expect(wrapper.find('ButtonFilled').text()).toEqual('Connect with Microsoft');
 
     const Page = wrapper.find(MicrosoftAzurePage);
     await (Page.instance() as any).handleConnect();
@@ -84,7 +84,7 @@ it('Should render with connection', async (done) => {
   const wrapper = setup();
   setImmediate(() => {
     wrapper.update();
-    expect(wrapper.find('ButtonFilled').text()).toEqual('Reconnect with Microsoft Azure');
+    expect(wrapper.find('ButtonFilled').text()).toEqual('Reconnect with Microsoft');
     done();
   });
 });

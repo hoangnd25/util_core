@@ -87,6 +87,10 @@ msgstr ""
 msgid "Click Generate Application ID button below to create an application ID."
 msgstr ""
 
+#: src/pages/r/app/portal/integrations/azure/index.tsx:69
+msgid "Connect with Microsoft"
+msgstr "Connect with Microsoft"
+
 #: src/components/AwsConnectionDetail/index.tsx:33
 msgid "Copied!"
 msgstr ""
@@ -221,6 +225,10 @@ msgstr ""
 #: src/components/DataFeed/uploadState.tsx:338
 msgid "Portal fields"
 msgstr ""
+
+#: src/pages/r/app/portal/integrations/azure/index.tsx:68
+msgid "Reconnect with Microsoft"
+msgstr "Reconnect with Microsoft"
 
 #: src/pages/r/app/portal/integrations/scorm-and-xapi/index.tsx:74
 msgid "Remove Application ID"
@@ -379,6 +387,14 @@ msgstr ""
 #: src/pages/r/app/portal/integrations/user-data-feed/index.tsx:56
 msgid "Your data feed"
 msgstr ""
+
+#: src/pages/r/app/portal/integrations/azure/index.tsx:64
+msgid "Your portal can be configured to enable login with Microsoft."
+msgstr "Your portal can be configured to enable login with Microsoft."
+
+#: src/pages/r/app/portal/integrations/azure/index.tsx:62
+msgid "Your portal is connected with Microsoft."
+msgstr "Your portal is connected with Microsoft."
 
 #: src/components/AwsConnectionDetail/index.tsx:116
 msgid "Your secret key was created on {0}. Please find where you have saved it."

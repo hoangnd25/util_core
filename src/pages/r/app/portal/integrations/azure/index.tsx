@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Spinner, Text, View, ButtonFilled, Banner } from '@go1d/go1d';
 import { SIDEBAR_MENUS } from '@src/constants';
 import { CurrentSessionType } from '@src/types/user';
+import { Trans } from '@lingui/macro';
 import withAuth from '@src/components/common/WithAuth';
 import withIntegrations from '@src/components/common/WithIntegrations';
 import MicrosoftAzureService from '@src/services/microsoftAzure';
@@ -72,16 +73,18 @@ export class MicrosoftAzurePage extends React.Component<Props,State> {
           )}
           <View alignItems="flex-start" paddingTop={4}>
             {connection ? (<>
-              <Text>Your portal is connected with Microsoft Azure.</Text>
+              <Text><Trans>Your portal is connected with Microsoft.</Trans></Text>
             </>) : (<>
-              <Text>Your portal can be configured to enable login with Microsoft Azure.</Text>
+              <Text><Trans>Your portal can be configured to enable login with Microsoft.</Trans></Text>
             </>)}
             <ButtonFilled 
               color="accent" 
               marginTop={5}
               onClick={this.handleConnect}
             >
-              {connection ? `Reconnect with Microsoft Azure` : `Connect with Microsoft Azure` }
+              {connection
+                ? <Text><Trans>Reconnect with Microsoft</Trans></Text>
+                : <Text><Trans>Connect with Microsoft</Trans></Text>}
             </ButtonFilled>
           </View>
         </View>

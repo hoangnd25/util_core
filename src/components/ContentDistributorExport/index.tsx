@@ -98,7 +98,7 @@ export class ContentDistributorExport extends React.Component<Props, State> {
           {customContentCollection && customContentCollection.custom === 0 && (
             <View flexDirection={['column', 'row']}>
               <Text color="subtle"><Trans>No content added to custom selection for export.</Trans>&nbsp;</Text>
-              <Link href="/p/#/app/custom-content-selection">
+              <Link href="/r/app/content-selector">
                 <Text paddingLeft={[0, 2]} paddingTop={[2, 0]} color="accent">
                   <Trans>Add more content to selection.</Trans>
                 </Text>

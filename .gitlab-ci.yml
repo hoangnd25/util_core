@@ -18,24 +18,18 @@ package:cdn:
   - export DOCKER_TAG=${CI_PIPELINE_ID}
   - npx s3-cli sync .next/ s3://apiomui-assets/assets/$DOCKER_TAG/_next/ --acl-public --add-header="Cache-Control:public, max-age=31536000, immutable"
 
-deploy:master:
+deploy:master:k8s:
   variables:
-    API_URL: "https://api-dev.go1.co"
-    CDN_PATH: "https://cdn.go1static.com/assets"
     ENV: "development"
     MEM: 128M
 
 deploy:qa:k8s:
   variables:
-    API_ENDPOINT: "https://api.qa.go1.cloud"
-    CDN_PATH: "https://cdn.go1static.com/assets"
     MEM_MIN: 64Mi
     MEM_MAX: 128Mi
 
 deploy:production:
   variables:
-    API_URL: "https://api.go1.co"
-    CDN_PATH: "https://cdn.go1static.com/assets"
     ENV: "production"
     MEM_MIN: 64Mi
     MEM_MAX: 128Mi

@@ -143,6 +143,22 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
         module: 'portal',
       },
       {
+        id: SIDEBAR_MENUS.MAS,
+        title: i18n._(t`Mas`),
+        href: '/integrations/Mas',
+        isApiomLink: false,
+        isVisible: !!enabledIntegrations.mas,
+        module: 'portal',
+      },
+      {
+        id: SIDEBAR_MENUS.NAS,
+        title: i18n._(t`Nas`),
+        href: '/integrations/Nas',
+        isApiomLink: false,
+        isVisible: !!enabledIntegrations.nas,
+        module: 'portal',
+      },
+      {
         id: SIDEBAR_MENUS.CANVAS_LMS,
         title: i18n._(t`Canvas`),
         logo: '/assets/integrations/canvas.png',

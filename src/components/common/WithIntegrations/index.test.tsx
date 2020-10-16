@@ -53,7 +53,7 @@ const setup = ({ pageTitle = 'Example', active = 'microsoft-azure' }, initialSta
 
 /** TEST SETUP END * */
 
-it('renders correctly', async done => {
+it('renders correctly', done => {
   const wrapper = setup({}) as any;
   setImmediate(() => {
     wrapper.update();
@@ -63,7 +63,7 @@ it('renders correctly', async done => {
   });
 });
 
-it('renders correctly in embeddedMode', async done => {
+it('renders correctly in embeddedMode', done => {
   const wrapper = setup({},{runtime:{embeddedMode:true}}) as any;
   setImmediate(() => {
     wrapper.update();

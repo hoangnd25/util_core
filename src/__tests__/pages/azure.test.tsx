@@ -5,8 +5,12 @@ import { Provider as ReduxProvider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import CommonProvider from '@go1d/mine/common/Provider';
 import { MicrosoftAzurePage, microsoftAzureService } from '@src/pages/r/app/portal/integrations/azure';
-
+import {contentDistributorService} from "@src/components/ContentDistributorExport";
+import {exportStatusMock,mockCustomCollectionResponse} from "@src/components/ContentDistributorExport/index.test";
 const mockStore = configureMockStore();
+
+jest.spyOn(contentDistributorService, 'getExportStatus').mockResolvedValue(exportStatusMock);
+jest.spyOn(contentDistributorService, 'getCustomContent').mockResolvedValue(mockCustomCollectionResponse);
 
 jest.spyOn(microsoftAzureService, 'getConnection').mockResolvedValue({
   id: '123',
@@ -56,12 +60,12 @@ const setup = (query = {}) => {
   );
 };
 
-it('Should render without crashing', async (done) => {
+it('Should render without crashing', (done) => {
   setup();
   done();
 });
 
-it('Should render with no connection', async (done) => {
+it('Should render with no connection', async () => {
   delete window.location;
   window.location = { ...window.location, assign: jest.fn() };
 
@@ -76,11 +80,10 @@ it('Should render with no connection', async (done) => {
     const Page = wrapper.find(MicrosoftAzurePage);
     await (Page.instance() as any).handleConnect();
     expect(window.location.assign).toHaveBeenCalled();
-    done();
   });
 });
 
-it('Should render with connection', async (done) => {
+it('Should render with connection', (done) => {
   const wrapper = setup();
   setImmediate(() => {
     wrapper.update();
@@ -89,7 +92,7 @@ it('Should render with connection', async (done) => {
   });
 });
 
-it('Should render error message - SSO:PortalNotFound', async (done) => {
+it('Should render error message - SSO:PortalNotFound', (done) => {
   const wrapper = setup({ error_code: 'SSO:PortalNotFound' });
   setImmediate(() => {
     wrapper.update();
@@ -98,7 +101,7 @@ it('Should render error message - SSO:PortalNotFound', async (done) => {
   });
 });
 
-it('Should render error message - default', async (done) => {
+it('Should render error message - default', (done) => {
   const wrapper = setup({ error_code: 'undefined' });
   setImmediate(() => {
     wrapper.update();

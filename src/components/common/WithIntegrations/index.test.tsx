@@ -24,7 +24,7 @@ const currentSession = {
     configuration: {
       integrations: {
         scorm: {
-          status: true 
+          status: true
         }
       }
     },
@@ -34,8 +34,8 @@ const currentSession = {
   }
 }
 
-const setup = ({ pageTitle = 'Example', active = 'microsoft-azure' }) => {
-  const store = mockStore(authenticatedStoreState);
+const setup = ({ pageTitle = 'Example', active = 'microsoft-azure' }, initialState = {}) => {
+  const store = mockStore({...authenticatedStoreState, ...initialState});
   Component = withIntegrations(App, {
     pageTitle,
     active
@@ -59,6 +59,15 @@ it('renders correctly', async done => {
     wrapper.update();
     expect(wrapper.find("LayoutWithSideNav").length).toBe(1);
     expect(wrapper.find("h1").text()).toBe('Example');
+    done();
+  });
+});
+
+it('renders correctly in embeddedMode', async done => {
+  const wrapper = setup({},{runtime:{embeddedMode:true}}) as any;
+  setImmediate(() => {
+    wrapper.update();
+    expect(wrapper.find("TopMenu").length).toBe(0);
     done();
   });
 });

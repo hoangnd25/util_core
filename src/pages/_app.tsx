@@ -8,6 +8,7 @@ import Router from "next/router";
 import App from 'next/app';
 import withRedux from 'next-redux-wrapper';
 import Cookies from 'universal-cookie';
+import { setRuntimeVariable } from '@src/reducers/runtime';
 import Suspense, { LoadingSpinner } from '@src/components/common/Suspense';
 import LinkComponent from '@src/components/common/Link';
 import AppContext from '@src/utils/appContext';
@@ -47,6 +48,12 @@ export class GO1App extends App<AppProps, any> {
     if (ctx && ctx.router && ctx.router.asPath && (ctx.router.asPath.indexOf("/healthz") !== -1 || ctx.router.asPath.indexOf("/container_status") !== -1)) {
       ctx.ctx.res.statusCode = 200;
       ctx.ctx.res.end("Ok");
+    }
+
+    const { ctx: { query = {}, store } } = ctx;
+    // Replace with External flag in JWT in near future
+    if(query.embedded === "true") {
+      store.dispatch(setRuntimeVariable({ name: "embeddedMode", value: true }));
     }
 
     let pageProps = {};

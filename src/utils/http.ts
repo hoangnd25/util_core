@@ -35,7 +35,6 @@ export default function create(opts: any = {}): HttpInstance {
 
   // Add logging interceptors to axios
   http.interceptors.request.use((reqConfig: AxiosRequestConfig) => {
-    console.log(reqConfig.url); //debugging
     log.request(
       `${reqConfig.method && reqConfig.method.toUpperCase()} ${reqConfig.url}`,
       reqConfig.params,

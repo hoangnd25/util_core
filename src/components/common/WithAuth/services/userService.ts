@@ -52,11 +52,7 @@ class UserService {
     } else if (__DEV__ && process.env.LOCAL_JWT) {
       // For local support .env JWT, will pick the first account returned by the server
       this.http.setJWT(process.env.LOCAL_JWT);
-      const params = {
-        portal: "presprespres.dev.go1.cloud",
-        uuid: "7fde8846-a2db-4c71-9b9d-db5cf9da5e16"
-      }
-      user = await this.getCurrentAccount(params);
+      user = await this.getCurrentAccount();
     }
 
     if (user !== null) {

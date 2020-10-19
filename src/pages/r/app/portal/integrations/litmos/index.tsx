@@ -1,0 +1,120 @@
+import * as React from 'react';
+import { Trans } from '@lingui/macro';
+import { View, Form, Field, TextInput, SubmitButton, NotificationManager, Provider } from '@go1d/go1d';
+import { colors } from '@go1d/go1d/build/foundations';
+import { CurrentSessionType } from '@src/types/user';
+import { SIDEBAR_MENUS } from '@src/constants';
+import withAuth from '@src/components/common/WithAuth';
+import withIntegrations from '@src/components/common/WithIntegrations';
+import PortalService from '@src/services/portalService';
+
+export const portalService = PortalService();
+
+interface Props {
+  currentSession: CurrentSessionType;
+}
+
+export class Litmos extends React.Component<Props, any> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: true,
+    };
+  }
+
+  componentDidMount() {
+    this.fetchAccountData();
+  }
+
+  render() {
+    const { accountData } = this.state;
+    const { currentSession } = this.props;
+
+    const theme = {
+      colors: {
+        ...colors,
+        accent: '#1A778F',
+        faded: '#CDE2E7',
+      },
+    };
+
+    return (
+      <Provider theme={theme as any}>
+        <View marginBottom={4} height="40vh">
+          <Form
+            initialValues={{
+              username: (accountData && accountData.username) || '',
+              password: (accountData && accountData.password) || '',
+              apikey: (accountData && accountData.apikey) || '',
+            }}
+            onSubmit={values => this.saveAccountData(values)}
+          >
+            <View marginTop={4}>
+              <Field
+                component={TextInput}
+                name="username"
+                label="Username"
+                viewCss={{ boxShadow: 'none' }}
+                size="sm"
+                required
+              />
+            </View>
+            <View marginTop={4}>
+              <Field
+                component={TextInput}
+                name="password"
+                label="Password"
+                viewCss={{ boxShadow: 'none' }}
+                size="sm"
+                required
+              />
+            </View>
+            <View marginTop={4}>
+              <Field
+                component={TextInput}
+                name="apikey"
+                label="Api Key"
+                viewCss={{ boxShadow: 'none' }}
+                size="sm"
+                required
+              />
+            </View>
+            <SubmitButton marginTop={6} width="fit-content">
+              Save
+            </SubmitButton>
+          </Form>
+        </View>
+      </Provider>
+    );
+  }
+
+  private async saveAccountData(integrationSettings) {
+    const { currentSession } = this.props;
+    const portalName = currentSession.portal && currentSession.portal.title;
+    const accountData = await portalService.saveIntegrationConfiguration(portalName, 'litmos', integrationSettings);
+
+    if (accountData.status === 204) {
+      this.setState({ accountData, isLoading: false });
+      this.fetchAccountData();
+      NotificationManager.success({
+        message: <Trans>Settings saved.</Trans>,
+        options: { lifetime: 3000, isOpen: true },
+      });
+    } else {
+      this.setState({ accountData: false, isLoading: false });
+      NotificationManager.danger({
+        message: <Trans>Settings failed to save.</Trans>,
+        options: { lifetime: 3000, isOpen: true },
+      });
+    }
+  }
+
+  private async fetchAccountData() {
+    const { currentSession } = this.props;
+    const portalName = currentSession.portal && currentSession.portal.title;
+    const accountData = await portalService.fetchIntegrationConfiguration(portalName, 'litmos');
+    this.setState({ accountData, isLoading: false });
+  }
+}
+
+export default withAuth(withIntegrations(Litmos, { active: SIDEBAR_MENUS.LITMOS }));

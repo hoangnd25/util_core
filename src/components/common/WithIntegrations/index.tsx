@@ -143,6 +143,14 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
         module: 'portal',
       },
       {
+        id: SIDEBAR_MENUS.LITMOS,
+        title: i18n._(t`Litmos`),
+        href: '/integrations/litmos',
+        isApiomLink: false,
+        isVisible: !!enabledIntegrations.litmos,
+        module: 'portal',
+      },
+      {
         id: SIDEBAR_MENUS.CANVAS_LMS,
         title: i18n._(t`Canvas`),
         logo: '/assets/integrations/canvas.png',

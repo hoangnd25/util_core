@@ -7,6 +7,8 @@ import CommonProvider from '@go1d/mine/common/Provider';
 import { Oracle, portalService } from '@src/pages/r/app/portal/integrations/oracle';
 
 import Adapter from 'enzyme-adapter-react-16';
+import {contentDistributorService} from "@src/components/ContentDistributorExport";
+import {exportStatusMock,mockCustomCollectionResponse} from "@src/components/ContentDistributorExport/index.test";
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -17,13 +19,15 @@ const mockIntegrationDataResponse = {
 };
 jest.spyOn(portalService, 'fetchIntegrationConfiguration').mockResolvedValue(mockIntegrationDataResponse);
 jest.spyOn(portalService, 'saveIntegrationConfiguration').mockResolvedValue(mockIntegrationDataResponse);
+jest.spyOn(contentDistributorService, 'getExportStatus').mockResolvedValue(exportStatusMock);
+jest.spyOn(contentDistributorService, 'getCustomContent').mockResolvedValue(mockCustomCollectionResponse);
 
 const setup = (props = {}, isLoading = false) => {
   const componentProps = {
     ...props,
     scrollToTop: jest.fn(),
   };
-  
+
   const currentSession = {
     authenticated: true,
     portal: {
@@ -68,12 +72,12 @@ const setup = (props = {}, isLoading = false) => {
     );
 };
 
-it('Should render without crashing', async (done) => {
+it('Should render without crashing', (done) => {
     setup();
     done();
 });
 
-it('Should get account data to portal config', async (done) => {
+it('Should get account data to portal config', async () => {
   const Element = setup();
   const Page = Element.find(Oracle);
 
@@ -82,10 +86,9 @@ it('Should get account data to portal config', async (done) => {
   expect(Page.state('isLoading')).toBeFalsy();
   expect(Page.state('accountData')).toEqual(mockIntegrationDataResponse);
   expect(Page.state('customContentCollection')).toBeTruthy();
-  done();
 });
 
-it('Should SAVE account data to portal config', async (done) => {
+it('Should SAVE account data to portal config', async () => {
   const Element = setup();
   const Page = Element.find(Oracle);
   await (Page.instance() as any).saveAccountData();
@@ -94,5 +97,4 @@ it('Should SAVE account data to portal config', async (done) => {
   expect(portalService.fetchIntegrationConfiguration).toHaveBeenCalled();
   expect(Page.state('isLoading')).toBeFalsy();
   expect(Page.state('accountData')).toEqual(mockIntegrationDataResponse);
-  done();
 });

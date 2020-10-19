@@ -19,7 +19,7 @@ const portalMock = {
   },
 };
 
-const mockCustomCollectionResponse = {
+export const mockCustomCollectionResponse = {
   default_collection: {
     id: '1583',
     type: 'default',
@@ -42,7 +42,7 @@ const mockCustomCollectionResponse = {
 };
 
 const mockExportData = { portalId: '123', type: 'oracle' };
-const exportStatusMock = {
+export const exportStatusMock = {
   timestamp: 1586391483247,
   status: 'completed',
 };
@@ -57,12 +57,10 @@ const setup = (isConnected, targetName) => {
   );
 };
 
-it('Should render export for oracle', async (done) => {
+it('Should render export for oracle', () => {
   setup(true, 'oracle');
-  done();
 });
 
-it('Should render export for oracle not connected', async (done) => {
+it('Should render export for oracle not connected', () => {
   setup(false, 'oracle');
-  done();
 });

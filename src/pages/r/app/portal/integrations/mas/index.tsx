@@ -23,18 +23,22 @@ export class Mas extends React.Component<Props, any> {
       colors: {
         ...colors,
         accent: '#1A778F',
-        faded: '#CDE2E7',
       },
     };
 
     return (
       <Provider theme={theme as any}>
-        <View flexDirection="column" minHeight="40vh">
-          <View flexDirection="column" width="100%" justifyContent="center" paddingTop={6}>
-            <CopyTextInput fieldName="Portal name" fieldValue={currentSession.portal.title} />
-            <CopyTextInput fieldName="Username" fieldValue="adp-admin@go1.com" />
-            <CopyTextInput fieldName="Password" fieldValue="+BravoEchoIndiaLima:" />
+        <View flexDirection="column" minHeight="40vh" paddingTop={4}>
+          <Text color="subtle">Use the generated credentials to complete the integration.</Text>
+          <View flexDirection="row" width="100%" justifyContent="space-between" paddingTop={3}>
+            <View width="48%">
+              <CopyTextInput fieldName="Username" fieldValue="adp-admin@go1.com" />
+            </View>
+            <View width="48%">
+              <CopyTextInput fieldName="Password" fieldValue="+BravoEchoIndiaLima:" />
+            </View>
           </View>
+          <CopyTextInput fieldName="Portal name" fieldValue={currentSession.portal.title} />
         </View>
       </Provider>
     );

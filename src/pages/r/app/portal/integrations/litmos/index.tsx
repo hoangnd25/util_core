@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Trans } from '@lingui/macro';
-import { View, Form, Field, TextInput, SubmitButton, NotificationManager, Provider } from '@go1d/go1d';
+import { View, Form, Field, TextInput, SubmitButton, NotificationManager, Provider, Spinner } from '@go1d/go1d';
 import { colors } from '@go1d/go1d/build/foundations';
 import { CurrentSessionType } from '@src/types/user';
 import { SIDEBAR_MENUS } from '@src/constants';
@@ -27,9 +27,7 @@ export class Litmos extends React.Component<Props, any> {
   }
 
   render() {
-    const { accountData } = this.state;
-    const { currentSession } = this.props;
-
+    const { accountData, isLoading } = this.state;
     const theme = {
       colors: {
         ...colors,
@@ -40,49 +38,55 @@ export class Litmos extends React.Component<Props, any> {
 
     return (
       <Provider theme={theme as any}>
-        <View marginBottom={4} height="40vh">
-          <Form
-            initialValues={{
-              username: (accountData && accountData.username) || '',
-              password: (accountData && accountData.password) || '',
-              apikey: (accountData && accountData.apikey) || '',
-            }}
-            onSubmit={values => this.saveAccountData(values)}
-          >
-            <View marginTop={4}>
-              <Field
-                component={TextInput}
-                name="username"
-                label="Username"
-                viewCss={{ boxShadow: 'none' }}
-                size="sm"
-                required
-              />
+        <View marginBottom={4} minHeight="40vh">
+          {isLoading ? (
+            <View minHeight="20vh" justifyContent="center" alignItems="center">
+              <Spinner size={6} />
             </View>
-            <View marginTop={4}>
-              <Field
-                component={TextInput}
-                name="password"
-                label="Password"
-                viewCss={{ boxShadow: 'none' }}
-                size="sm"
-                required
-              />
-            </View>
-            <View marginTop={4}>
-              <Field
-                component={TextInput}
-                name="apikey"
-                label="Api Key"
-                viewCss={{ boxShadow: 'none' }}
-                size="sm"
-                required
-              />
-            </View>
-            <SubmitButton marginTop={6} width="fit-content">
-              Save
-            </SubmitButton>
-          </Form>
+          ) : (
+            <Form
+              initialValues={{
+                username: (accountData && accountData.username) || '',
+                password: (accountData && accountData.password) || '',
+                apikey: (accountData && accountData.apikey) || '',
+              }}
+              onSubmit={values => this.saveAccountData(values)}
+            >
+              <View marginTop={4}>
+                <Field
+                  component={TextInput}
+                  name="username"
+                  label="Username"
+                  viewCss={{ boxShadow: 'none' }}
+                  size="sm"
+                  required
+                />
+              </View>
+              <View marginTop={4}>
+                <Field
+                  component={TextInput}
+                  name="password"
+                  label="Password"
+                  viewCss={{ boxShadow: 'none' }}
+                  size="sm"
+                  required
+                />
+              </View>
+              <View marginTop={4}>
+                <Field
+                  component={TextInput}
+                  name="apikey"
+                  label="Api key"
+                  viewCss={{ boxShadow: 'none' }}
+                  size="sm"
+                  required
+                />
+              </View>
+              <SubmitButton marginTop={6} width="fit-content">
+                Save
+              </SubmitButton>
+            </Form>
+          )}
         </View>
       </Provider>
     );
@@ -93,7 +97,7 @@ export class Litmos extends React.Component<Props, any> {
     const portalName = currentSession.portal && currentSession.portal.title;
     const accountData = await portalService.saveIntegrationConfiguration(portalName, 'litmos', integrationSettings);
 
-    if (accountData.status === 204) {
+    if (accountData) {
       this.setState({ accountData, isLoading: false });
       this.fetchAccountData();
       NotificationManager.success({

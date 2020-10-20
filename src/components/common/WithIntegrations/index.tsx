@@ -7,55 +7,60 @@ import { GO1Portal } from '@src/types/user';
 import { View, Text } from '@go1d/go1d';
 import { getNested } from '@go1d/mine/utils';
 import { FeatureToggleModel } from '@go1d/go1d-exchange';
+import { connect } from 'react-redux';
 
 interface IntegrationPageOptions {
   pageTitle?: string;
   active?: string;
 }
 
-const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) => class extends React.PureComponent<any,any> {
-  public render() {
-    return (
-      <I18n>
-        {({ i18n }) => {
-          const menu = this.getMenu(i18n);
-          return (
-            <Layout withTopNav withSideNav={{title: 'Integrations', menu, active}} wrappingContainer containerProps>
-              {pageTitle && (
-                <View marginBottom={5}>
-                  <Text element="h1" fontSize={4} fontWeight="semibold">{pageTitle}</Text>
+const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) => {
+  class WithIntegrationsCmp extends React.PureComponent<any,any> {
+    displayName: "WithIntegrations";
+    public render() {
+      const {runtimeSettings: {embeddedMode = false}} = this.props;
+      return (
+        <I18n>
+          {({i18n}) => {
+            const menu = this.getMenu(i18n);
+            return (
+              <Layout withTopNav={!embeddedMode} withSideNav={!embeddedMode && {title: 'Integrations', menu, active}}
+                      wrappingContainer={!embeddedMode} containerProps>
+                {pageTitle && (
+                  <View marginBottom={5}>
+                    <Text element="h1" fontSize={4} fontWeight="semibold">{pageTitle}</Text>
+                  </View>
+                )}
+                <View
+                  backgroundColor="background"
+                  boxShadow="crisp"
+                  flexGrow={1}
+                  borderRadius={2}
+                  padding={[5, 5, 6]}
+                  minHeight="60vh"
+                >
+                  <AppPage menu={menu} {...this.props} />
                 </View>
-              )}
-              <View
-                backgroundColor="background"
-                boxShadow="crisp"
-                flexGrow={1}
-                borderRadius={2}
-                padding={[5,5,6]}
-                minHeight="60vh"
-              >
-                <AppPage menu={menu} {...this.props} />
-              </View>
-            </Layout>
-          )
-        }}
-      </I18n>
-    );
-  }
+              </Layout>
+            )
+          }}
+        </I18n>
+      );
+    }
 
-  getMenu = (i18n) => {
-    const portal: GO1Portal = this.props.currentSession.portal;
-    const allIntegrations = (portal && portal.configuration && portal.configuration.integrations) || {};
-    
-    const enabledIntegrations = {} as any;
-    Object.keys(allIntegrations).forEach(name => {
-      enabledIntegrations[name] = !!allIntegrations[name].status;
-    });
+    getMenu = (i18n) => {
+      const portal: GO1Portal = this.props.currentSession.portal;
+      const allIntegrations = (portal && portal.configuration && portal.configuration.integrations) || {};
 
-    const featureToggles = {} as any;
-    portal.featureToggles.forEach((feature: FeatureToggleModel) => {
-      featureToggles[feature.raw.name] = feature.raw.enabled;
-    });
+      const enabledIntegrations = {} as any;
+      Object.keys(allIntegrations).forEach(name => {
+        enabledIntegrations[name] = !!allIntegrations[name].status;
+      });
+
+      const featureToggles = {} as any;
+      portal.featureToggles.forEach((feature: FeatureToggleModel) => {
+        featureToggles[feature.raw.name] = feature.raw.enabled;
+      });
 
     return [
       {
@@ -206,6 +211,10 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
       },
     ];
   }
+  const mapStateToProps = state => ({
+    runtimeSettings: state.runtime,
+  });
+  return connect(mapStateToProps, null)(WithIntegrationsCmp);
 }
 
 export default WithIntegrations;

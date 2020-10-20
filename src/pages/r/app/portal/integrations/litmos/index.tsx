@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Trans } from '@lingui/macro';
-import { View, Form, Field, TextInput, SubmitButton, NotificationManager, Provider, Spinner } from '@go1d/go1d';
+import { View, Form, Field, TextInput, SubmitButton, NotificationManager, Provider, Spinner, Text } from '@go1d/go1d';
 import { colors } from '@go1d/go1d/build/foundations';
 import { CurrentSessionType } from '@src/types/user';
 import { SIDEBAR_MENUS } from '@src/constants';
@@ -32,7 +32,6 @@ export class Litmos extends React.Component<Props, any> {
       colors: {
         ...colors,
         accent: '#1A778F',
-        faded: '#CDE2E7',
       },
     };
 
@@ -52,25 +51,28 @@ export class Litmos extends React.Component<Props, any> {
               }}
               onSubmit={values => this.saveAccountData(values)}
             >
-              <View marginTop={4}>
-                <Field
-                  component={TextInput}
-                  name="username"
-                  label="Username"
-                  viewCss={{ boxShadow: 'none' }}
-                  size="sm"
-                  required
-                />
-              </View>
-              <View marginTop={4}>
-                <Field
-                  component={TextInput}
-                  name="password"
-                  label="Password"
-                  viewCss={{ boxShadow: 'none' }}
-                  size="sm"
-                  required
-                />
+              <Text color="subtle">Enter your credentials to complete this integration.</Text>
+              <View marginTop={4} flexDirection="row" justifyContent="space-between" paddingTop={3}>
+                <View width="48%">
+                  <Field
+                    component={TextInput}
+                    name="username"
+                    label="Username"
+                    viewCss={{ boxShadow: 'none' }}
+                    size="sm"
+                    required
+                  />
+                </View>
+                <View width="48%">
+                  <Field
+                    component={TextInput}
+                    name="password"
+                    label="Password"
+                    viewCss={{ boxShadow: 'none' }}
+                    size="sm"
+                    required
+                  />
+                </View>
               </View>
               <View marginTop={4}>
                 <Field

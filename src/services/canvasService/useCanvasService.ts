@@ -4,20 +4,27 @@ import CanvasService, { CanvasIntegrationDetails } from '@src/services/canvasSer
 type useCanvasServiceOptions = {
   portalId: string
   portalName: string
+  query: any
 }
 type UpdateSettingReponse = {
   isError?: boolean
   message: string
   redirectUrl?: string
 }
-export const useCanvasService = ({ portalId, portalName }: useCanvasServiceOptions) => {
-  const canvasService = useMemo(() => CanvasService(), [])
 
+export const canvasService = CanvasService()
+export const useCanvasService = ({ portalId, portalName, query }: useCanvasServiceOptions) => {
   const [connection, setConnection] = useState<CanvasIntegrationDetails>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
 
+  const { error_code, session_id } = query
   useEffect(() => {
+    if(error_code) return setError({
+      sessionId: session_id,
+      message: mapErrorMessage(error_code),
+    })
+
     canvasService
       .getConfig(portalId)
       .then(data => {
@@ -37,7 +44,7 @@ export const useCanvasService = ({ portalId, portalName }: useCanvasServiceOptio
         setError(error)
         setIsLoading(false)
       })
-  }, [portalId])
+  }, [error_code, session_id, portalId])
 
   const connectCanvasConnection = async (settings: CanvasIntegrationDetails): Promise<UpdateSettingReponse> => {
     if(!settings.domain
@@ -112,5 +119,22 @@ export const useCanvasService = ({ portalId, portalName }: useCanvasServiceOptio
     connectCanvasConnection,
     updateCanvasConnection,
     deleteCanvasConnection,
+  }
+}
+
+const mapErrorMessage = (errorCode: string): string => {
+  switch (errorCode) {
+    case 'SSO:PortalNotFound':
+      return 'Portal details could not be found. Please contact your Administrator to setup Single Sign On for your portal';
+    case 'SSO:UnknownIdentityProvider':
+      return 'The Identity Provider is currently not available. Please contact your Administrator.';
+    case 'SSO:PermissionDenied':
+      return 'Permission Denied. Your account does not have access. Please contact your Administrator.';
+    case 'SSO:InternalServerError':
+      return 'An unexpected error occurred. Please try again later.';
+    case 'SSO:ProviderError':
+      return 'Something went wrong. Please try connecting again.';
+    default:
+      return 'An unexpected error occurred. Please try again later.';
   }
 }

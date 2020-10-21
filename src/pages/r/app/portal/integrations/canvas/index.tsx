@@ -13,14 +13,15 @@ type CanvasLMSPageProps = {
 }
 
 export const CanvasLMSPage: React.FC<CanvasLMSPageProps> = ({
-  currentSession: { portal: { id, title }}
+  currentSession: { portal: { id, title }},
+  router: { query }
 }) => {
   const {
     connection, isLoading, error,
     connectCanvasConnection,
     updateCanvasConnection,
     deleteCanvasConnection
-  } = useCanvasService({ portalId: id, portalName: title })
+  } = useCanvasService({ portalId: id, portalName: title, query })
 
   const onConnectHandle = async (values, actions) => {
     const { isError, message, redirectUrl } = await connectCanvasConnection(values)

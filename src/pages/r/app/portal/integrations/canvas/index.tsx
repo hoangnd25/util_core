@@ -121,7 +121,7 @@ const notify = (type: 'success' | 'danger', message: string) => {
       options: { lifetime: 3000, isOpen: true },
     })
   }
-  else if(type === 'danger') {
+  else {
     NotificationManager.danger({
       message,
       options: { lifetime: 3000, isOpen: true },

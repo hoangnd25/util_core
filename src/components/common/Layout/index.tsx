@@ -22,7 +22,9 @@ const Index = ({ children, title="GO1", wrappingContainer, withTopNav, withSideN
               }}>
                 <View flexDirection={["column", "row"]} alignItems={["initial", "flex-start"]}>
                   <WithSideNav {...withSideNav} />
-                  <View flexGrow={1}>{children}</View>
+                  <View flexGrow={1} maxWidth={['100%', 'calc(100% - 220px)']}>
+                  {children}
+                  </View>
                 </View>
               </View>
             ) : children}

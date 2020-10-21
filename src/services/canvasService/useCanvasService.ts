@@ -22,7 +22,6 @@ export const useCanvasService = ({ portalId, portalName }: useCanvasServiceOptio
       .getConfig(portalId)
       .then(data => {
         const currentConnection = data[0]
-        console.log(currentConnection)
         if(currentConnection) {
           setConnection({
             connected: currentConnection.enabled === '1',

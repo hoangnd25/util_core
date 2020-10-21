@@ -37,7 +37,7 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
                   flexGrow={1}
                   borderRadius={2}
                   padding={[5, 5, 6]}
-                  minHeight="60vh"
+                  minHeight={embeddedMode ? "200px" : "60vh"}
                 >
                   <AppPage menu={menu} {...this.props} />
                 </View>

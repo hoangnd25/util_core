@@ -18,6 +18,8 @@ export const SIDEBAR_MENUS = {
   DEVELOPER: 'sidebar.integrations-developers',
   USER_DATA_FEED: 'sidebar.integrations-user-data-feed',
   ORACLE: 'sidebar.integrations-oracle',
+  MAS: 'sidebar.integrations-mas',
+  NAS: 'sidebar.integrations-nas',
   LITMOS: 'sidebar.integrations-litmos',
 };
 

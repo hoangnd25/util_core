@@ -38,7 +38,7 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
                   flexGrow={1}
                   borderRadius={2}
                   padding={[5, 5, 6]}
-                  minHeight="60vh"
+                  minHeight={embeddedMode ? "200px" : "60vh"}
                 >
                   <AppPage menu={menu} {...this.props} />
                 </View>
@@ -154,6 +154,22 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
           href: '/integrations/litmos',
           isApiomLink: false,
           isVisible: !!enabledIntegrations.litmos,
+          module: 'portal',
+        },
+        {
+          id: SIDEBAR_MENUS.MAS,
+          title: i18n._(t`Mas`),
+          href: '/integrations/Mas',
+          isApiomLink: false,
+          isVisible: !!enabledIntegrations.mas,
+          module: 'portal',
+        },
+        {
+          id: SIDEBAR_MENUS.NAS,
+          title: i18n._(t`Nas`),
+          href: '/integrations/Nas',
+          isApiomLink: false,
+          isVisible: !!enabledIntegrations.nas,
           module: 'portal',
         },
         {

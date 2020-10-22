@@ -19,7 +19,8 @@ export const SIDEBAR_MENUS = {
   USER_DATA_FEED: 'sidebar.integrations-user-data-feed',
   ORACLE: 'sidebar.integrations-oracle',
   MAS: 'sidebar.integrations-mas',
-  NAS: 'sidebar.integrations-nas'
+  NAS: 'sidebar.integrations-nas',
+  LITMOS: 'sidebar.integrations-litmos',
 };
 
 export default SIDEBAR_MENUS;

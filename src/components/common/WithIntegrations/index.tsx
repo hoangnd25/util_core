@@ -17,6 +17,7 @@ interface IntegrationPageOptions {
 const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) => {
   class WithIntegrationsCmp extends React.PureComponent<any,any> {
     displayName: "WithIntegrations";
+
     public render() {
       const {runtimeSettings: {embeddedMode = false}} = this.props;
       return (
@@ -62,6 +63,7 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
         featureToggles[feature.raw.name] = feature.raw.enabled;
       });
 
+<<<<<<< src/components/common/WithIntegrations/index.tsx
     return [
       {
         id: SIDEBAR_MENUS.ADDONS,
@@ -161,6 +163,14 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
         href: '/integrations/Nas',
         isApiomLink: false,
         isVisible: !!enabledIntegrations.nas,
+        module: 'portal',
+      },
+      {
+        id: SIDEBAR_MENUS.LITMOS,
+        title: i18n._(t`Litmos`),
+        href: '/integrations/litmos',
+        isApiomLink: false,
+        isVisible: !!enabledIntegrations.litmos,
         module: 'portal',
       },
       {

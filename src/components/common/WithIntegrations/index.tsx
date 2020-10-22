@@ -63,7 +63,6 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
         featureToggles[feature.raw.name] = feature.raw.enabled;
       });
 
-<<<<<<< src/components/common/WithIntegrations/index.tsx
     return [
       {
         id: SIDEBAR_MENUS.ADDONS,

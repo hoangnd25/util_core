@@ -47,7 +47,6 @@ export class Litmos extends React.Component<Props, any> {
               initialValues={{
                 username: (accountData && accountData.username) || '',
                 password: (accountData && accountData.password) || '',
-                apikey: (accountData && accountData.apikey) || '',
               }}
               onSubmit={values => this.saveAccountData(values)}
             >
@@ -73,16 +72,6 @@ export class Litmos extends React.Component<Props, any> {
                     required
                   />
                 </View>
-              </View>
-              <View marginTop={4}>
-                <Field
-                  component={TextInput}
-                  name="apikey"
-                  label="Api key"
-                  viewCss={{ boxShadow: 'none' }}
-                  size="sm"
-                  required
-                />
               </View>
               <SubmitButton marginTop={6} width="fit-content">
                 Save

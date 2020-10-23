@@ -52,8 +52,10 @@ export default class JwtRefresh {
 
     try {
       this.processing = true;
-      const res = await this.http.get(this.queryPath, { headers: { Authorization: `Bearer ${sessionToken}` } });
-
+      const res = await this.http.get(this.queryPath, { headers: { Authorization: `Bearer ${sessionToken}` } }).catch(()=> {});
+      if (!res) {
+        return;
+      }
       this.setStorage('jwt', res.data.jwt, true);
     } finally {
       this.processing = false;

@@ -17,7 +17,10 @@ export const SIDEBAR_MENUS = {
   SINGLE_SIGN_ON: 'sidebar.integrations-single-sign-on',
   DEVELOPER: 'sidebar.integrations-developers',
   USER_DATA_FEED: 'sidebar.integrations-user-data-feed',
-  ORACLE: 'sidebar.integrations-oracle'
+  ORACLE: 'sidebar.integrations-oracle',
+  MAS: 'sidebar.integrations-mas',
+  NAS: 'sidebar.integrations-nas',
+  LITMOS: 'sidebar.integrations-litmos',
 };
 
 export default SIDEBAR_MENUS;

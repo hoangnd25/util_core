@@ -31,11 +31,10 @@ const setup = (props: any = {}) => {
 
 const checkAuthStatus = currentSession => {
   expect(currentSession).toMatchObject(currentSessionMock);
-  expect(JSON.parse(localStorage.getItem('jwt'))).toBe(currentSessionMock.jwt);
-  expect(JSON.parse(localStorage.getItem('uuid'))).toBe(currentSessionMock.user.uuid);
-  expect(JSON.parse(localStorage.getItem('active-instance'))).toBe(parseInt(currentSessionMock.portal.id,10));
-  expect(JSON.parse(localStorage.getItem('active-instance-domain'))).toBe(currentSessionMock.portal.title);
-
+  expect(localStorage.getItem('jwt')).toBe(currentSessionMock.jwt);
+  expect(localStorage.getItem('uuid')).toBe(currentSessionMock.user.uuid);
+  expect(parseInt(localStorage.getItem('active-instance'))).toBe(parseInt(currentSessionMock.portal.id,10));
+  expect(localStorage.getItem('active-instance-domain')).toBe(currentSessionMock.portal.title);
 };
 /** TEST SETUP END * */
 

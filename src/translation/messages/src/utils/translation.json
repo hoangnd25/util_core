@@ -1,0 +1,122 @@
+[
+  {
+    "id": "data.feed.empty.block.title",
+    "defaultMessage": "No Data Yet"
+  },
+  {
+    "id": "data.feed.empty.block.action.text",
+    "defaultMessage": "Get started"
+  },
+  {
+    "id": "data.feed.upload.block.error.text.file.extension",
+    "defaultMessage": "{fileName} is not a supported file type"
+  },
+  {
+    "id": "userDataFeed.block.mapping.skipField",
+    "defaultMessage": "Skip this field"
+  },
+  {
+    "id": "userDataFeed.block.mapping.selectAField",
+    "defaultMessage": "Select a field"
+  },
+  {
+    "id": "userDataFeed.block.mapping.failedError",
+    "defaultMessage": "Failed to save your mapping, please try again or contact us for assistance"
+  },
+  {
+    "id": "integrationUserDataFeed.sidebarTitle",
+    "defaultMessage": "Integrations"
+  },
+  {
+    "id": "integrationDefault.pageTitle",
+    "defaultMessage": "Portal settings"
+  },
+  {
+    "id": "integrationScormAndXApi.pageTitle",
+    "defaultMessage": "SCORM and xAPI"
+  },
+  {
+    "id": "integrationOracle.pageTitle",
+    "defaultMessage": "Oracle"
+  },
+  {
+    "id": "integrationUserDataFeed.pageTitle",
+    "defaultMessage": "User data feed"
+  },
+  {
+    "id": "integrationUserDataFeed.connectionDetailTitle",
+    "defaultMessage": "Your data feed"
+  },
+  {
+    "id": "awsConnectionDetail.Copied",
+    "defaultMessage": "Copied!"
+  },
+  {
+    "id": "sidebar.integrations-addons",
+    "defaultMessage": "Add-ons"
+  },
+  {
+    "id": "sidebar.integrations-scorm",
+    "defaultMessage": "SCORM"
+  },
+  {
+    "id": "sidebar.integrations-scorm-and-xapi",
+    "defaultMessage": "SCORM and xAPI"
+  },
+  {
+    "id": "sidebar.integrations-autopilot",
+    "defaultMessage": "Autopilot"
+  },
+  {
+    "id": "sidebar.integrations-stripe",
+    "defaultMessage": "Stripe"
+  },
+  {
+    "id": "sidebar.integrations-zapier",
+    "defaultMessage": "Zapier"
+  },
+  {
+    "id": "sidebar.integrations-lti-provider",
+    "defaultMessage": "LTI Provider"
+  },
+  {
+    "id": "sidebar.integrations-vettrak",
+    "defaultMessage": "Vettrak"
+  },
+  {
+    "id": "sidebar.integrations-wisenet",
+    "defaultMessage": "Wisenet"
+  },
+  {
+    "id": "sidebar.integrations-xero",
+    "defaultMessage": "Xero"
+  },
+  {
+    "id": "sidebar.integrations-successfactors",
+    "defaultMessage": "SuccessFactors"
+  },
+  {
+    "id": "sidebar.integrations-azure",
+    "defaultMessage": "Microsoft Azure"
+  },
+  {
+    "id": "sidebar.integrations-course-catalog",
+    "defaultMessage": "Course Catalog"
+  },
+  {
+    "id": "sidebar.integrations-single-sign-on",
+    "defaultMessage": "Single Sign-On"
+  },
+  {
+    "id": "sidebar.integrations-developers",
+    "defaultMessage": "Developers"
+  },
+  {
+    "id": "sidebar.integrations-user-data-feed",
+    "defaultMessage": "User Data Feed"
+  },
+  {
+    "id": "sidebar.integrations-oracle",
+    "defaultMessage": "Oracle"
+  }
+]

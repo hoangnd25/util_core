@@ -1,0 +1,42 @@
+[
+  {
+    "id": "awsConnectionDetail.buttonCopy",
+    "defaultMessage": "Copy"
+  },
+  {
+    "id": "awsConnectionDetail.title",
+    "defaultMessage": "AWS Connection Details"
+  },
+  {
+    "id": "awsConnectionDetail.description",
+    "defaultMessage": "Integrate using the following details to keep your user records up to date"
+  },
+  {
+    "id": "awsConnectionDetail.toggleConnectionShow",
+    "defaultMessage": "Show"
+  },
+  {
+    "id": "awsConnectionDetail.toggleConnectionHide",
+    "defaultMessage": "Hide"
+  },
+  {
+    "id": "awsConnectionDetail.fieldBucketURL",
+    "defaultMessage": "Bucket URL"
+  },
+  {
+    "id": "awsConnectionDetail.fieldAccessKey",
+    "defaultMessage": "Access key"
+  },
+  {
+    "id": "awsConnectionDetail.fieldSecretKey",
+    "defaultMessage": "Secret key"
+  },
+  {
+    "id": "awsConnectionDetail.fieldSecretKeyDescStored",
+    "defaultMessage": "Your secret key was created on {date}. Please find where you have saved it."
+  },
+  {
+    "id": "awsConnectionDetail.fieldSecretKeyDescNew",
+    "defaultMessage": "For security reason, you only see this key once and cannot be recovered it. Please copy and keep it somewhere safe but accessible."
+  }
+]

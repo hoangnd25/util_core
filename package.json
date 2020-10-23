@@ -87,7 +87,7 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-mock-store": "^1.5.3",
     "ts-jest": "^25.5.1",
-    "typescript": "^3.6.3",
+    "typescript": "^3.9.7",
     "webpack-bundle-analyzer": "^3.5.2"
   },
   "keywords": [],

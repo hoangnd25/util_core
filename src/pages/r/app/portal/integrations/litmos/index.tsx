@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Trans } from '@lingui/macro';
-import { View, Form, Field, TextInput, SubmitButton, NotificationManager, Provider, Spinner, Text } from '@go1d/go1d';
+import { View, Form, Field, TextInput, SubmitButton, NotificationManager, Provider, Spinner, Text, PasswordInput  } from '@go1d/go1d';
 import { colors } from '@go1d/go1d/build/foundations';
 import { CurrentSessionType } from '@src/types/user';
 import { SIDEBAR_MENUS } from '@src/constants';
@@ -64,7 +64,7 @@ export class Litmos extends React.Component<Props, any> {
                 </View>
                 <View width="48%">
                   <Field
-                    component={TextInput}
+                    component={PasswordInput}
                     name="password"
                     label="Password"
                     viewCss={{ boxShadow: 'none' }}

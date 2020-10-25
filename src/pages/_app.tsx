@@ -72,6 +72,11 @@ export class GO1App extends App<AppProps, any> {
       return <LoadingSpinner />;
     }
 
+    // Make sure front end http instance has jwt set.
+    if (currentSession.jwt) {
+      http.setJWT(currentSession.jwt);
+    }
+
     const locale = getLocale(currentSession);
     return (
       <AppContext.Provider value={context}>

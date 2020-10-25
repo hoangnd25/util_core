@@ -7,14 +7,14 @@ import { SIDEBAR_MENUS } from '@src/constants';
 import withAuth from '@src/components/common/WithAuth';
 import withIntegrations from '@src/components/common/WithIntegrations';
 import PortalService from '@src/services/portalService';
-
-export const portalService = PortalService();
+import AppContext from '@src/utils/appContext';
 
 interface Props {
   currentSession: CurrentSessionType;
 }
 
 export class Litmos extends React.Component<Props, any> {
+  context!: React.ContextType<typeof AppContext>;
   constructor(props) {
     super(props);
     this.state = {
@@ -85,7 +85,10 @@ export class Litmos extends React.Component<Props, any> {
 
   private async saveAccountData(integrationSettings) {
     const { currentSession } = this.props;
+    const { http } = this.context;
     const portalName = currentSession.portal && currentSession.portal.title;
+
+    const portalService = PortalService(http);
     const accountData = await portalService.saveIntegrationConfiguration(portalName, 'litmos', integrationSettings);
 
     if (accountData) {
@@ -106,10 +109,13 @@ export class Litmos extends React.Component<Props, any> {
 
   private async fetchAccountData() {
     const { currentSession } = this.props;
+    const { http } = this.context;
     const portalName = currentSession.portal && currentSession.portal.title;
+    const portalService = PortalService(http);
     const accountData = await portalService.fetchIntegrationConfiguration(portalName, 'litmos');
     this.setState({ accountData, isLoading: false });
   }
 }
+Litmos.contextType = AppContext;
 
 export default withAuth(withIntegrations(Litmos, { active: SIDEBAR_MENUS.LITMOS }));

@@ -6,21 +6,21 @@ import WithIntegrations from '@src/components/common/WithIntegrations';
 import { Spinner, View, Text, Link, Form, Field, TextInput, SubmitButton, Banner, ButtonFilled, NotificationManager } from '@go1d/go1d';
 import { useCanvasService } from '@src/services/canvasService/useCanvasService';
 import { CanvasIntegrationDetails } from '@src/services/canvasService';
-import { useRouter } from 'next/router';
-
 type CanvasLMSPageProps = {
   currentSession: CurrentSessionType
+  router: any
 }
 
-export const CanvasLMSPage: React.FC<CanvasLMSPageProps> = ({ currentSession: { portal: { id, title }}}) => {
-  const { query } = useRouter()
-
+export const CanvasLMSPage: React.FC<CanvasLMSPageProps> = ({
+  currentSession: { portal: { id, title }},
+  router
+}) => {
   const {
     connection, isLoading, error,
     connectCanvasConnection,
     updateCanvasConnection,
     deleteCanvasConnection
-  } = useCanvasService({ portalId: id, portalName: title, query })
+  } = useCanvasService({ portalId: id, portalName: title, router })
 
   const onConnectHandle = async (values, actions) => {
     const { isError, message, redirectUrl } = await connectCanvasConnection(values)

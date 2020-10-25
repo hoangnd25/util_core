@@ -4,7 +4,7 @@ import CanvasService, { CanvasIntegrationDetails } from '@src/services/canvasSer
 type useCanvasServiceOptions = {
   portalId: string
   portalName: string
-  query: any
+  router: any
 }
 type UpdateSettingReponse = {
   isError?: boolean
@@ -13,12 +13,12 @@ type UpdateSettingReponse = {
 }
 
 export const canvasService = CanvasService()
-export const useCanvasService = ({ portalId, portalName, query }: useCanvasServiceOptions) => {
+export const useCanvasService = ({ portalId, portalName, router }: useCanvasServiceOptions) => {
   const [connection, setConnection] = useState<CanvasIntegrationDetails>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  const { error_code, session_id } = query
+  const { error_code, session_id } = router?.query ?? {}
   useEffect(() => {
     if(error_code) return setError({
       sessionId: session_id,

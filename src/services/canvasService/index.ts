@@ -46,15 +46,7 @@ class CanvasService extends BaseService {
   }
 
   private retrieveAuthUrl(portalName: string): Promise<{data: {redirectUrl: string}}> {
-    const jwt = localStorage.getItem('jwt')
-    return this.http.get(
-      `sso/oauth/canvas/portal/authorize?portal=${portalName}`,
-      {
-        headers: {
-          Authorization: `Bearer ${jwt}`,
-        },
-      }
-    )
+    return this.http.get(`sso/oauth/canvas/portal/authorize?portal=${portalName}`)
   }
 
   public async getConfig(portalId: string): Promise<ConnectionDetails[]> {
@@ -63,7 +55,6 @@ class CanvasService extends BaseService {
   }
 
   public setConfig(portalId: string, portalName: string, settings: CanvasIntegrationDetails): Promise<{ redirectUrl: string }> {
-    const jwt = localStorage.getItem('jwt')
     return this.http
       .post(
         `sso/v2/connections`,
@@ -81,11 +72,6 @@ class CanvasService extends BaseService {
             client_secret: settings.client_secret,
           },
         },
-        {
-          headers: {
-            Authorization: `Bearer ${jwt}`,
-          }
-        }
       )
       .then(() => this.retrieveAuthUrl(portalName))
       .then(({ data: { redirectUrl }}) => ({ redirectUrl }))
@@ -97,7 +83,6 @@ class CanvasService extends BaseService {
     connectionId: number,
     settings: CanvasIntegrationDetails
   ): Promise<{ redirectUrl: string }> {
-    const jwt = localStorage.getItem('jwt')
     return this.http
       .put(
         `sso/v2/connections/${connectionId}`,
@@ -110,18 +95,12 @@ class CanvasService extends BaseService {
             ...settings,
           },
         },
-        {
-          headers: {
-            Authorization: `Bearer ${jwt}`,
-          }
-        },
       )
       .then(() => this.retrieveAuthUrl(portalName))
       .then(({ data: { redirectUrl }}) => ({ redirectUrl }))
   }
 
   public deleteConfig(portalId: string, connectionId: number, settings: CanvasIntegrationDetails): Promise<void> {
-    const jwt = localStorage.getItem('jwt')
     return this.http
       .put(
         `sso/v2/connections/${connectionId}`,
@@ -134,11 +113,6 @@ class CanvasService extends BaseService {
             ...settings,
           },
         },
-        {
-          headers: {
-            Authorization: `Bearer ${jwt}`,
-          }
-        }
       )
   }
 }

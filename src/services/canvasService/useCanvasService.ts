@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import CanvasService, { CanvasIntegrationDetails } from '@src/services/canvasService';
 
 type useCanvasServiceOptions = {

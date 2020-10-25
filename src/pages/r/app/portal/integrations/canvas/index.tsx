@@ -3,7 +3,7 @@ import { CurrentSessionType } from '@src/types/user';
 import { SIDEBAR_MENUS } from '@src/constants';
 import withAuth from '@src/components/common/WithAuth';
 import WithIntegrations from '@src/components/common/WithIntegrations';
-import { Spinner, View, Text, Link, Form, Field, TextInput, SubmitButton, Button, Banner, ButtonFilled, NotificationManager } from '@go1d/go1d';
+import { Spinner, View, Text, Link, Form, Field, TextInput, SubmitButton, Banner, ButtonFilled, NotificationManager } from '@go1d/go1d';
 import { useCanvasService } from '@src/services/canvasService/useCanvasService';
 import { CanvasIntegrationDetails } from '@src/services/canvasService';
 import { useRouter } from 'next/router';

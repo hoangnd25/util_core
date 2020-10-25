@@ -1,4 +1,8 @@
+export interface RuntimeSettings {
+    embeddedMode: boolean
+}
+
 export interface ReduxState {
-    runtime: any;
+    runtime: RuntimeSettings;
     currentSession: any;
 }

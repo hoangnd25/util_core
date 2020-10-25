@@ -4,7 +4,9 @@ import configureStore from './configureStore';
 test('should have store', () => {
   const store = configureStore(
     {
-      runtime: {},
+      runtime: {
+        embeddedMode: false
+      },
       currentSession: {}
     },
     {

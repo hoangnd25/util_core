@@ -47,6 +47,9 @@ class UserService {
     // try one time login tokens
     if (oneTimeLoginToken) {
       user = await this.getCurrentAccountWithOTT(oneTimeLoginToken);
+      if (user.jwt) {
+        this.http.setJWT(user.jwt);
+      }
       // local developer mode
       // eslint-disable-next-line
     } else if (__DEV__ && process.env.LOCAL_JWT) {

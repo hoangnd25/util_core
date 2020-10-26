@@ -1,0 +1,26 @@
+[
+  {
+    "id": "integrationScormAndXApi.applicationID",
+    "defaultMessage": "Application ID"
+  },
+  {
+    "id": "integrationScormAndXApi.hasApplicationIDDesc",
+    "defaultMessage": "This application ID can be used as a SCORM or xAPI provider. You can now download your content in SCORM or xAPI format from the Publish / Sharing menu found in the Settings section of each piece of training."
+  },
+  {
+    "id": "integrationScormAndXApi.removeApplicationID",
+    "defaultMessage": "Remove Application ID"
+  },
+  {
+    "id": "integrationScormAndXApi.noApplicationIDDesc",
+    "defaultMessage": "You are one click away from having the ability to export training as SCORM and xAPI enabled on your portal."
+  },
+  {
+    "id": "integrationScormAndXApi.noApplicationIDGenerateAction",
+    "defaultMessage": "Click Generate Application ID button below to create an application ID."
+  },
+  {
+    "id": "integrationScormAndXApi.generateApplicationID",
+    "defaultMessage": "Generate Application ID"
+  }
+]

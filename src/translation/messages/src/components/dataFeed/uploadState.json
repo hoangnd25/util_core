@@ -1,0 +1,122 @@
+[
+  {
+    "id": "dataFeed.mapping.successfully",
+    "defaultMessage": "Update data mapping successfully."
+  },
+  {
+    "id": "userDataFeed.block.mapping.requiredLabel",
+    "defaultMessage": "Required"
+  },
+  {
+    "id": "userDataFeed.block.mapping.optionalLabel",
+    "defaultMessage": "Optional"
+  },
+  {
+    "id": "userDataFeed.block.mapping.requiredErrorMessage",
+    "defaultMessage": "This field is required"
+  },
+  {
+    "id": "userDataFeed.block.mapping.mapWith",
+    "defaultMessage": "Map with"
+  },
+  {
+    "id": "userDataFeed.block.mapping.editingExternalIdTitle",
+    "defaultMessage": "Unique identifier"
+  },
+  {
+    "id": "userDataFeed.block.mapping.editingExternalIdHelpText",
+    "defaultMessage": "Set a field with a unique value as the unique identifier"
+  },
+  {
+    "id": "data.feed.upload.block.done.button",
+    "defaultMessage": "Done"
+  },
+  {
+    "id": "userDataFeed.block.mapping.edit.yourDataFeed",
+    "defaultMessage": "Your data feed"
+  },
+  {
+    "id": "userDataFeed.block.mapping.title",
+    "defaultMessage": "Create mapping rules"
+  },
+  {
+    "id": "userDataFeed.block.mapping.editingTitle",
+    "defaultMessage": "Data mapping details"
+  },
+  {
+    "id": "userDataFeed.block.mapping.subTitle",
+    "defaultMessage": "Map the fields in your CSV file to the portal fields"
+  },
+  {
+    "id": "userDataFeed.block.mapping.editingSubTitle",
+    "defaultMessage": "You can edit your current mapping rules"
+  },
+  {
+    "id": "userDataFeed.block.mapping.portalFields",
+    "defaultMessage": "Portal fields"
+  },
+  {
+    "id": "userDataFeed.block.mapping.csvFields",
+    "defaultMessage": "CSV fields"
+  },
+  {
+    "id": "userDataFeed.block.mapping.showOptionalFields",
+    "defaultMessage": "Show all optional fields"
+  },
+  {
+    "id": "userDataFeed.block.mapping.hideOptionalFields",
+    "defaultMessage": "Hide all optional fields"
+  },
+  {
+    "id": "userDataFeed.block.mapping.button.cancel",
+    "defaultMessage": "Cancel"
+  },
+  {
+    "id": "userDataFeed.block.mapping.button.next",
+    "defaultMessage": "Next"
+  },
+  {
+    "id": "userDataFeed.block.mapping.button.done",
+    "defaultMessage": "Done"
+  },
+  {
+    "id": "userDataFeed.block.mapping.button.update",
+    "defaultMessage": "Update"
+  },
+  {
+    "id": "data.feed.upload.block.title",
+    "defaultMessage": "Select file"
+  },
+  {
+    "id": "data.feed.upload.block.sub.title",
+    "defaultMessage": "Browse for a CSV file to upload for setting up fields mapping rules."
+  },
+  {
+    "id": "data.feed.upload.block.uploader.dragging",
+    "defaultMessage": "Drop it here"
+  },
+  {
+    "id": "data.feed.upload.block.uploader.drag",
+    "defaultMessage": "Drag and drop to upload"
+  },
+  {
+    "id": "data.feed.upload.block.upload.choose.file",
+    "defaultMessage": "Choose a file"
+  },
+  {
+    "id": "data.feed.upload.block.uploading",
+    "defaultMessage": "Uploading"
+  },
+  {
+    "id": "data.feed.upload.block.upload.failed",
+    "defaultMessage": "Upload failed"
+  },
+  {
+    "id": "data.feed.upload.block.upload.retry",
+    "defaultMessage": "Retry"
+  },
+  {
+    "id": "data.feed.upload.block.cancel.button",
+    "defaultMessage": "Cancel"
+  }
+]

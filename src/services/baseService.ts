@@ -58,7 +58,7 @@ class BaseService {
       uuid: undefined,
       instanceId: undefined,
       portalId: undefined,
-      portalNam: undefined,
+      portalName: undefined,
     }
   }
 }

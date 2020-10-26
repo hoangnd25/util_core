@@ -1,6 +1,7 @@
 export function setLocal(key: string, value: any): void {
   try {
-    window.localStorage.setItem(key, JSON.stringify(value));
+    const parsedValue = typeof value === 'string' ? value : JSON.stringify(value)
+    window.localStorage.setItem(key, parsedValue);
   } catch (e) {
     // Do Nothing
   }

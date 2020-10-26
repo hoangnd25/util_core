@@ -37,7 +37,7 @@ export class Litmos extends React.Component<Props, any> {
 
     return (
       <Provider theme={theme as any}>
-        <View marginBottom={4} minHeight="40vh">
+        <View marginBottom={4} minHeight="40vh" css={{ marginTop: '-16px'}}>
           {isLoading ? (
             <View minHeight="20vh" justifyContent="center" alignItems="center">
               <Spinner size={6} />
@@ -51,14 +51,13 @@ export class Litmos extends React.Component<Props, any> {
               onSubmit={values => this.saveAccountData(values)}
             >
               <Text color="subtle">Enter your credentials to complete this integration.</Text>
-              <View marginTop={4} flexDirection="row" justifyContent="space-between" paddingTop={3}>
+              <View marginTop={4} flexDirection="row" justifyContent="space-between" >
                 <View width="48%">
                   <Field
                     component={TextInput}
                     name="username"
                     label="Username"
                     viewCss={{ boxShadow: 'none' }}
-                    size="sm"
                     required
                   />
                 </View>
@@ -68,12 +67,11 @@ export class Litmos extends React.Component<Props, any> {
                     name="password"
                     label="Password"
                     viewCss={{ boxShadow: 'none' }}
-                    size="sm"
                     required
                   />
                 </View>
               </View>
-              <SubmitButton marginTop={6} width="fit-content">
+              <SubmitButton marginTop={4} width="fit-content">
                 Save
               </SubmitButton>
             </Form>

@@ -38,8 +38,8 @@ export const useCanvasService = ({ portalId, portalName, router }: useCanvasServ
             client_id: currentConnection.configuration.client_id,
             client_secret: currentConnection.configuration.client_secret,
           })
-          setIsLoading(false)
         }
+        setIsLoading(false)
       })
       .catch(error => {
         setError(error)

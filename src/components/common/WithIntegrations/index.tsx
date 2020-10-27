@@ -176,9 +176,10 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
           id: SIDEBAR_MENUS.CANVAS_LMS,
           title: i18n._(t`Canvas`),
           logo: '/assets/integrations/canvas.png',
-          href: 'app/integrations/addon/canvas',
-          isApiomLink: true,
+          href: '/integrations/canvas',
+          isApiomLink: false,
           isVisible: !!enabledIntegrations.canvas,
+          module: 'portal',
         },
         {
           id: SIDEBAR_MENUS.MICROSOFT_AZURE,

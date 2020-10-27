@@ -15,6 +15,14 @@ export const CanvasLMSPage: React.FC<CanvasLMSPageProps> = ({
   currentSession: { portal: { id, title }},
   router
 }) => {
+
+  const sso_authorize_status = process.browser ? Boolean(router.query.sso_authorize_status) : false
+  React.useEffect(() => {
+    if(sso_authorize_status) {
+      notify('success', 'authorized successfully')
+    }
+  }, [sso_authorize_status])
+
   const {
     connection, isLoading, error,
     connectCanvasConnection,

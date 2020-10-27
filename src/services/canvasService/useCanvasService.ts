@@ -29,6 +29,7 @@ export const useCanvasService = ({ portalId, portalName, router }: useCanvasServ
     canvasService
       .getConfig(portalId)
       .then(data => {
+        setIsLoading(false)
         const currentConnection = data[0]
         if(currentConnection) {
           setConnection({
@@ -38,7 +39,6 @@ export const useCanvasService = ({ portalId, portalName, router }: useCanvasServ
             client_id: currentConnection.configuration.client_id,
             client_secret: currentConnection.configuration.client_secret,
           })
-          setIsLoading(false)
         }
       })
       .catch(error => {

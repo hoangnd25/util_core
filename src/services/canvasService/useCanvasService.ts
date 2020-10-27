@@ -17,8 +17,9 @@ export const useCanvasService = ({ portalId, portalName, router }: useCanvasServ
   const [connection, setConnection] = useState<CanvasIntegrationDetails>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
+  
 
-  const { error_code, session_id } = router?.query ?? {}
+  const { error_code, session_id } = process.browser ? router?.query : {} as any
   useEffect(() => {
     if(error_code) return setError({
       sessionId: session_id,

@@ -41,8 +41,8 @@ test('should return export status', async (done) => {
     "timestamp": 1586391483247,
     "status": "completed"
   }
-  mock.onGet('content-distributor/status/123').reply(200, exportStatusMock);
-  const exportStatus = await contentDistributorService(http).getExportStatus(123);
+  mock.onGet('content-distributor/status/123?type=sap').reply(200, exportStatusMock);
+  const exportStatus = await contentDistributorService(http).getExportStatus(123, "sap");
   expect(exportStatus).toStrictEqual(exportStatusMock);
   done();
 });

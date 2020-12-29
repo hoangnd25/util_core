@@ -14,6 +14,7 @@ import {
   SelectDropdown,
   Skeleton,
   NotificationManager,
+  Link,
 } from '@go1d/go1d';
 import IconCheck from '@go1d/go1d/build/components/Icons/Check';
 import IconChevronDown from '@go1d/go1d/build/components/Icons/ChevronDown';
@@ -174,7 +175,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
     this.setState({ submitted: true });
 
     if (this.validate()) {
-      const { isEditing, scrollToTop, currentSession, awsCredential: awsCredentialProp } = this.props;
+      const { isEditing, scrollToTop, currentSession, awsCredential: awsCredentialProp, i18n } = this.props;
       const { externalId } = this.state;
       const portalId = currentSession.portal && currentSession.portal.id;
       const payload: CreateMappingPayload = {
@@ -210,9 +211,12 @@ class DataFeedUploadState extends React.Component<Props, State> {
           const { data } = mappingResult.response || {};
           const mappingError = data && data.errors
             ? data.errors[0].title
-            : t`Failed to save your mapping, please try again or contact us for assistance`;
-
-          this.setState({ isUploadingFailed: true, mappingError });
+            : i18n._(t`Failed to save your mapping, please try again or contact us for assistance`);
+          if (mappingError.indexOf('date_value') > -1) {
+            this.setState({ uploadError: i18n._(t`Invalid date format. Please edit your file follow this format: YYYY-MM-DD`), step: MappingStep.Upload, isShowUploader: true });
+          } else {
+            this.setState({ isUploadingFailed: true, mappingError });
+          }
           scrollToTop();
         });
     }
@@ -635,16 +639,17 @@ class DataFeedUploadState extends React.Component<Props, State> {
           <Trans>Select file</Trans>
         </Text>
         <Text marginTop={2}>
-          <Trans>Browse for a CSV file to upload for setting up fields mapping rules.</Trans>
+          <Trans>Browse for a CSV file to upload for setting up fields mapping rules. For reference, please download <Text color="accent"><Link
+            href="/sample-csv.csv">sample CSV file</Link></Text> to check the column format</Trans>
         </Text>
 
         <View
           border={1}
-          borderColor="faded"
+          borderColor={uploadError ? 'danger' : 'faded'}
           borderRadius={2}
           backgroundColor="faint"
           marginTop={6}
-          width={[1, 1, 3 / 5]}
+          width={[1, 1, 4 / 5]}
           css={{
             borderWidth: '1px',
             borderStyle: 'solid',
@@ -742,7 +747,7 @@ class DataFeedUploadState extends React.Component<Props, State> {
           )}
 
           {uploadError && (
-            <Text marginTop={2} color="danger">{uploadError}</Text>
+            <Text data-testid="UploadError" marginTop={2} color="danger">{uploadError}</Text>
           )}
         </View>
 

@@ -33,7 +33,7 @@ msgstr "Add more resources to your library."
 #~ msgid "Add them in the custom selection."
 #~ msgstr "Add them in the custom selection."
 
-#: src/components/common/WithIntegrations/index.tsx:25
+#: src/components/common/WithIntegrations/index.tsx:27
 msgid "Addons"
 msgstr ""
 
@@ -42,11 +42,11 @@ msgstr ""
 msgid "Application ID"
 msgstr ""
 
-#: src/components/common/WithIntegrations/index.tsx:40
+#: src/components/common/WithIntegrations/index.tsx:42
 msgid "Autopilot"
 msgstr ""
 
-#: src/components/common/WithIntegrations/index.tsx:126
+#: src/components/common/WithIntegrations/index.tsx:153
 msgid "Azure B2C"
 msgstr ""
 
@@ -55,8 +55,12 @@ msgstr ""
 #~ msgstr ""
 
 #: src/components/DataFeed/uploadState.tsx:410
-msgid "Browse for a CSV file to upload for setting up fields mapping rules."
-msgstr ""
+#~ msgid "Browse for a CSV file to upload for setting up fields mapping rules."
+#~ msgstr ""
+
+#: src/components/DataFeed/uploadState.tsx:415
+msgid "Browse for a CSV file to upload for setting up fields mapping rules. For reference, please download <0><1>sample CSV file</1></0> to check the column format"
+msgstr "Browse for a CSV file to upload for setting up fields mapping rules. For reference, please download <0><1>sample CSV file</1></0> to check the column format"
 
 #: src/components/AwsConnectionDetail/index.tsx:84
 msgid "Bucket URL"
@@ -66,20 +70,20 @@ msgstr ""
 msgid "By pushing your Go1 content to the Microsoft Graph, members of your organization will be able to find your Go1 content from Microsoft Search, in Microsoft products like Sharepoint, office.com, and Bing."
 msgstr "By pushing your Go1 content to the Microsoft Graph, members of your organization will be able to find your Go1 content from Microsoft Search, in Microsoft products like Sharepoint, office.com, and Bing."
 
-#: src/components/DataFeed/uploadState.tsx:348
+#: src/components/DataFeed/uploadState.tsx:353
 msgid "CSV fields"
 msgstr ""
 
-#: src/components/DataFeed/uploadState.tsx:383
-#: src/components/DataFeed/uploadState.tsx:468
+#: src/components/DataFeed/uploadState.tsx:388
+#: src/components/DataFeed/uploadState.tsx:473
 msgid "Cancel"
 msgstr ""
 
-#: src/components/common/WithIntegrations/index.tsx:109
+#: src/components/common/WithIntegrations/index.tsx:135
 msgid "Canvas"
 msgstr ""
 
-#: src/components/DataFeed/uploadState.tsx:436
+#: src/components/DataFeed/uploadState.tsx:441
 msgid "Choose a file"
 msgstr ""
 
@@ -99,11 +103,11 @@ msgstr ""
 msgid "Copy"
 msgstr ""
 
-#: src/components/common/WithIntegrations/index.tsx:134
+#: src/components/common/WithIntegrations/index.tsx:161
 msgid "Course Catalog"
 msgstr ""
 
-#: src/components/DataFeed/uploadState.tsx:317
+#: src/components/DataFeed/uploadState.tsx:322
 msgid "Create mapping rules"
 msgstr ""
 
@@ -111,24 +115,24 @@ msgstr ""
 msgid "Data Mapping"
 msgstr ""
 
-#: src/components/DataFeed/uploadState.tsx:318
+#: src/components/DataFeed/uploadState.tsx:323
 msgid "Data mapping details"
 msgstr ""
 
-#: src/components/common/WithIntegrations/index.tsx:148
+#: src/components/common/WithIntegrations/index.tsx:175
 msgid "Developer"
 msgstr ""
 
-#: src/components/DataFeed/uploadState.tsx:296
-#: src/components/DataFeed/uploadState.tsx:391
+#: src/components/DataFeed/uploadState.tsx:301
+#: src/components/DataFeed/uploadState.tsx:396
 msgid "Done"
 msgstr ""
 
-#: src/components/DataFeed/uploadState.tsx:431
+#: src/components/DataFeed/uploadState.tsx:436
 msgid "Drag and drop to upload"
 msgstr ""
 
-#: src/components/DataFeed/uploadState.tsx:430
+#: src/components/DataFeed/uploadState.tsx:435
 msgid "Drop it here"
 msgstr ""
 
@@ -165,7 +169,7 @@ msgstr ""
 msgid "Hide"
 msgstr ""
 
-#: src/components/DataFeed/uploadState.tsx:375
+#: src/components/DataFeed/uploadState.tsx:380
 msgid "Hide all optional fields"
 msgstr ""
 
@@ -177,7 +181,11 @@ msgstr ""
 msgid "Integration not connected. Check your account settings."
 msgstr "Integration not connected. Check your account settings."
 
-#: src/components/common/WithIntegrations/index.tsx:61
+#: src/components/DataFeed/uploadState.tsx:146
+msgid "Invalid date format. Please edit your file follow this format: YYY-MM-DD"
+msgstr "Invalid date format. Please edit your file follow this format: YYY-MM-DD"
+
+#: src/components/common/WithIntegrations/index.tsx:63
 msgid "LTI Provider"
 msgstr ""
 
@@ -185,16 +193,24 @@ msgstr ""
 msgid "Last Export"
 msgstr "Last Export"
 
-#: src/components/DataFeed/uploadState.tsx:321
+#: src/components/common/WithIntegrations/index.tsx:111
+msgid "Litmos"
+msgstr "Litmos"
+
+#: src/components/DataFeed/uploadState.tsx:326
 msgid "Map the fields in your CSV file to the portal fields"
 msgstr ""
 
-#: src/components/DataFeed/uploadState.tsx:227
-#: src/components/DataFeed/uploadState.tsx:275
+#: src/components/DataFeed/uploadState.tsx:232
+#: src/components/DataFeed/uploadState.tsx:280
 msgid "Map with"
 msgstr ""
 
-#: src/components/common/WithIntegrations/index.tsx:117
+#: src/components/common/WithIntegrations/index.tsx:119
+msgid "Mas"
+msgstr "Mas"
+
+#: src/components/common/WithIntegrations/index.tsx:144
 msgid "Microsoft 365"
 msgstr "Microsoft 365"
 
@@ -202,11 +218,15 @@ msgstr "Microsoft 365"
 #~ msgid "Microsoft Azure"
 #~ msgstr ""
 
+#: src/components/common/WithIntegrations/index.tsx:127
+msgid "Nas"
+msgstr "Nas"
+
 #: src/components/ContentDistributorExport/index.tsx:80
 msgid "New Export"
 msgstr "New Export"
 
-#: src/components/DataFeed/uploadState.tsx:387
+#: src/components/DataFeed/uploadState.tsx:392
 msgid "Next"
 msgstr ""
 
@@ -214,15 +234,15 @@ msgstr ""
 msgid "No content added to custom selection for export."
 msgstr "No content added to custom selection for export."
 
-#: src/components/DataFeed/uploadState.tsx:195
+#: src/components/DataFeed/uploadState.tsx:200
 msgid "Optional"
 msgstr ""
 
-#: src/components/common/WithIntegrations/index.tsx:101
+#: src/components/common/WithIntegrations/index.tsx:103
 msgid "Oracle"
 msgstr ""
 
-#: src/components/DataFeed/uploadState.tsx:338
+#: src/components/DataFeed/uploadState.tsx:343
 msgid "Portal fields"
 msgstr ""
 
@@ -238,7 +258,7 @@ msgstr ""
 msgid "Requested"
 msgstr "Requested"
 
-#: src/components/DataFeed/uploadState.tsx:184
+#: src/components/DataFeed/uploadState.tsx:189
 msgid "Required"
 msgstr ""
 
@@ -250,15 +270,15 @@ msgstr "Resources exported"
 msgid "Resources to be exported"
 msgstr "Resources to be exported"
 
-#: src/components/DataFeed/uploadState.tsx:458
+#: src/components/DataFeed/uploadState.tsx:463
 msgid "Retry"
 msgstr ""
 
-#: src/components/common/WithIntegrations/index.tsx:32
+#: src/components/common/WithIntegrations/index.tsx:34
 msgid "SCORM and xAPI"
 msgstr ""
 
-#: src/components/common/WithIntegrations/index.tsx:32
+#: src/components/common/WithIntegrations/index.tsx:34
 msgid "Scorm"
 msgstr ""
 
@@ -266,22 +286,24 @@ msgstr ""
 msgid "Secret key"
 msgstr ""
 
-#: src/components/DataFeed/uploadState.tsx:168
+#: src/components/DataFeed/uploadState.tsx:173
 msgid "Select a field"
 msgstr ""
 
-#: src/components/DataFeed/uploadState.tsx:407
+#: src/components/DataFeed/uploadState.tsx:412
 msgid "Select file"
 msgstr ""
 
-#: src/components/DataFeed/uploadState.tsx:283
+#: src/components/DataFeed/uploadState.tsx:288
 msgid "Set a field with a unique value as the unique identifier"
 msgstr ""
 
+#: src/pages/r/app/portal/integrations/litmos/index.tsx:76
 #: src/pages/r/app/portal/integrations/oracle/index.tsx:86
 msgid "Settings failed to save."
 msgstr ""
 
+#: src/pages/r/app/portal/integrations/litmos/index.tsx:69
 #: src/pages/r/app/portal/integrations/oracle/index.tsx:79
 msgid "Settings saved."
 msgstr ""
@@ -290,15 +312,15 @@ msgstr ""
 msgid "Show"
 msgstr ""
 
-#: src/components/DataFeed/uploadState.tsx:374
+#: src/components/DataFeed/uploadState.tsx:379
 msgid "Show all optional fields"
 msgstr ""
 
-#: src/components/common/WithIntegrations/index.tsx:141
+#: src/components/common/WithIntegrations/index.tsx:168
 msgid "Single Sign On"
 msgstr ""
 
-#: src/components/DataFeed/uploadState.tsx:167
+#: src/components/DataFeed/uploadState.tsx:172
 msgid "Skip this field"
 msgstr ""
 
@@ -306,11 +328,11 @@ msgstr ""
 msgid "Status"
 msgstr "Status"
 
-#: src/components/common/WithIntegrations/index.tsx:47
+#: src/components/common/WithIntegrations/index.tsx:49
 msgid "Stripe"
 msgstr ""
 
-#: src/components/common/WithIntegrations/index.tsx:93
+#: src/components/common/WithIntegrations/index.tsx:95
 msgid "Success Factors"
 msgstr ""
 
@@ -318,8 +340,8 @@ msgstr ""
 msgid "This application ID can be used as a SCORM or xAPI provider. You can now download your content in SCORM or xAPI format from the Publish / Sharing menu found in the Settings section of each piece of training."
 msgstr ""
 
-#: src/components/DataFeed/uploadState.tsx:210
-#: src/components/DataFeed/uploadState.tsx:238
+#: src/components/DataFeed/uploadState.tsx:215
+#: src/components/DataFeed/uploadState.tsx:243
 msgid "This field is required"
 msgstr ""
 
@@ -331,11 +353,11 @@ msgstr ""
 msgid "Unable to request export."
 msgstr ""
 
-#: src/components/DataFeed/uploadState.tsx:250
+#: src/components/DataFeed/uploadState.tsx:255
 msgid "Unique identifier"
 msgstr ""
 
-#: src/components/DataFeed/uploadState.tsx:395
+#: src/components/DataFeed/uploadState.tsx:400
 msgid "Update"
 msgstr ""
 
@@ -343,19 +365,19 @@ msgstr ""
 msgid "Update data mapping successfully.\""
 msgstr ""
 
-#: src/components/DataFeed/uploadState.tsx:454
+#: src/components/DataFeed/uploadState.tsx:459
 msgid "Upload failed"
 msgstr ""
 
-#: src/components/DataFeed/uploadState.tsx:447
+#: src/components/DataFeed/uploadState.tsx:452
 msgid "Uploading"
 msgstr ""
 
-#: src/components/common/WithIntegrations/index.tsx:155
+#: src/components/common/WithIntegrations/index.tsx:182
 msgid "User Data Feed"
 msgstr ""
 
-#: src/components/common/WithIntegrations/index.tsx:69
+#: src/components/common/WithIntegrations/index.tsx:71
 msgid "VETTRAK"
 msgstr ""
 
@@ -363,11 +385,11 @@ msgstr ""
 msgid "Want more content?"
 msgstr "Want more content?"
 
-#: src/components/common/WithIntegrations/index.tsx:77
+#: src/components/common/WithIntegrations/index.tsx:79
 msgid "Wisenet"
 msgstr ""
 
-#: src/components/common/WithIntegrations/index.tsx:85
+#: src/components/common/WithIntegrations/index.tsx:87
 msgid "Xero"
 msgstr ""
 
@@ -375,7 +397,7 @@ msgstr ""
 msgid "You are one click away from having the ability to export training as SCORM and xAPI enabled on your portal."
 msgstr ""
 
-#: src/components/DataFeed/uploadState.tsx:322
+#: src/components/DataFeed/uploadState.tsx:327
 msgid "You can edit your current mapping rules"
 msgstr ""
 
@@ -383,7 +405,7 @@ msgstr ""
 msgid "You don’t have a S3 folder. Start creating your folder and set up mapping rules."
 msgstr ""
 
-#: src/components/DataFeed/uploadState.tsx:312
+#: src/components/DataFeed/uploadState.tsx:317
 #: src/pages/r/app/portal/integrations/user-data-feed/index.tsx:56
 msgid "Your data feed"
 msgstr ""
@@ -400,7 +422,7 @@ msgstr "Your portal is connected with Microsoft."
 msgid "Your secret key was created on {0}. Please find where you have saved it."
 msgstr ""
 
-#: src/components/common/WithIntegrations/index.tsx:54
+#: src/components/common/WithIntegrations/index.tsx:56
 msgid "Zapier"
 msgstr ""
 

@@ -254,3 +254,22 @@ it('should scroll to top when request is failed', async (done) => {
   expect(scrollToTopFn).toHaveBeenCalled();
   done();
 });
+
+it('should show date validation when date format is wrong', async (done) => {
+  jest.spyOn(dataFeedService, 'createMapping').mockRejectedValue({ response: { data: { errors: [{ title: 'date_value' }]  } } });
+
+  const Element = setup();
+  const Component = Element.find('DataFeedUploadState') as any;
+  Component.setState({ go1Fields: fakeMappingFields });
+
+  const ComponentInstance = Component.instance();
+  ComponentInstance.onMapField(fakeMappingFields[0], 'Email');
+  ComponentInstance.onMapField(fakeMappingFields[1], 'First Name');
+  ComponentInstance.onMapField(fakeMappingFields[2], 'Last Name');
+
+  await ComponentInstance.onMappingDone();
+  Component.update();
+  const UploadErrorComponent = Element.findWhere((n) => n.prop('data-testid') === 'UploadError').at(0);
+  expect(UploadErrorComponent.text()).toEqual('Invalid date format. Please edit your file follow this format: YYYY-MM-DD')
+  done();
+});

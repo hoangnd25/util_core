@@ -2,20 +2,27 @@ import * as React from 'react';
 import { Trans, t } from '@lingui/macro';
 import { I18n } from '@lingui/react';
 import Layout from '@src/components/common/Layout/index';
-import { SIDEBAR_MENUS } from "@src/constants";
-import { GO1Portal } from '@src/types/user';
+import { SIDEBAR_MENUS_INTEGRATIONS } from "@src/constants";
+import { CurrentSessionType } from '@src/types/user';
 import { View, Text } from '@go1d/go1d';
 import { getNested } from '@go1d/mine/utils';
 import { FeatureToggleModel } from '@go1d/go1d-exchange';
 import { connect } from 'react-redux';
+import { RuntimeSettings } from '@src/types/reducers'
 
 interface IntegrationPageOptions {
   pageTitle?: string;
   active?: string;
 }
 
+interface WithIntegrationsCmpProps {
+  runtimeSettings: RuntimeSettings
+  currentSession?: CurrentSessionType; 
+}
+
+
 const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) => {
-  class WithIntegrationsCmp extends React.PureComponent<any,any> {
+  class WithIntegrationsCmp extends React.PureComponent<WithIntegrationsCmpProps, {}> {
     displayName: "WithIntegrations";
 
     public render() {
@@ -50,7 +57,7 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
     }
 
     getMenu = (i18n) => {
-      const portal: GO1Portal = this.props.currentSession.portal;
+      const { currentSession: { portal } } = this.props
       const allIntegrations = (portal && portal.configuration && portal.configuration.integrations) || {};
 
       const enabledIntegrations = {} as any;
@@ -65,14 +72,14 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
 
       return [
         {
-          id: SIDEBAR_MENUS.ADDONS,
+          id: SIDEBAR_MENUS_INTEGRATIONS.ADDONS,
           title: i18n._(t`Addons`),
           href: 'app/integrations/addons',
           isApiomLink: true,
           isVisible: true,
         },
         {
-          id: SIDEBAR_MENUS.SCORM,
+          id: SIDEBAR_MENUS_INTEGRATIONS.SCORM,
           title: featureToggles.xAPI ? i18n._(t`SCORM and xAPI`) : i18n._(t`Scorm`),
           href: featureToggles.xAPI ? '/integrations/scorm-and-xapi' : 'app/integrations/addon/scorm',
           isApiomLink: !featureToggles.xAPI,
@@ -80,28 +87,28 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
           module: featureToggles.xAPI ? 'portal' : undefined,
         },
         {
-          id: SIDEBAR_MENUS.AUTOPILOT,
+          id: SIDEBAR_MENUS_INTEGRATIONS.AUTOPILOT,
           title: i18n._(t`Autopilot`),
           href: 'app/integrations/addon/autopilot',
           isApiomLink: true,
           isVisible: !!enabledIntegrations.autopilot,
         },
         {
-          id: SIDEBAR_MENUS.STRIPE,
+          id: SIDEBAR_MENUS_INTEGRATIONS.STRIPE,
           title: i18n._(t`Stripe`),
           href: 'app/integrations/addon/stripe',
           isApiomLink: true,
           isVisible: !!enabledIntegrations.stripe,
         },
         {
-          id: SIDEBAR_MENUS.ZAPIER,
+          id: SIDEBAR_MENUS_INTEGRATIONS.ZAPIER,
           title: i18n._(t`Zapier`),
           href: 'app/integrations/addon/zapier',
           isApiomLink: true,
           isVisible: !!enabledIntegrations.zapier,
         },
         {
-          id: SIDEBAR_MENUS.LTI_PROVIDER,
+          id: SIDEBAR_MENUS_INTEGRATIONS.LTI_PROVIDER,
           title: i18n._(t`LTI Provider`),
           logo: '/assets/integrations/lti-provider.png',
           href: 'app/integrations/addon/ltiprovider',
@@ -109,7 +116,7 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
           isVisible: !!enabledIntegrations.ltiprovider,
         },
         {
-          id: SIDEBAR_MENUS.VETTRAK,
+          id: SIDEBAR_MENUS_INTEGRATIONS.VETTRAK,
           title: i18n._(t`VETTRAK`),
           logo: '/assets/integrations/vettrak.png',
           href: 'app/integrations/addon/vettrak',
@@ -117,7 +124,7 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
           isVisible: !!enabledIntegrations.vettrak,
         },
         {
-          id: SIDEBAR_MENUS.WISENET,
+          id: SIDEBAR_MENUS_INTEGRATIONS.WISENET,
           title: i18n._(t`Wisenet`),
           logo: '/assets/integrations/wisenet.gif',
           href: 'app/integrations/addon/wisenet',
@@ -125,7 +132,7 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
           isVisible: !!(enabledIntegrations.wisenet && featureToggles.wisenet),
         },
         {
-          id: SIDEBAR_MENUS.XERO,
+          id: SIDEBAR_MENUS_INTEGRATIONS.XERO,
           title: i18n._(t`Xero`),
           logo: '/assets/integrations/xero-logo.png',
           href: 'app/integrations/addon/xero',
@@ -133,7 +140,7 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
           isVisible: !!(enabledIntegrations.xero && featureToggles.xero),
         },
         {
-          id: SIDEBAR_MENUS.SUCCESS_FACTORS,
+          id: SIDEBAR_MENUS_INTEGRATIONS.SUCCESS_FACTORS,
           title: i18n._(t`Success Factors`),
           logo: '/assets/integrations/successfactors.png',
           href: 'app/integrations/addon/successfactors',
@@ -141,7 +148,7 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
           isVisible: !!enabledIntegrations.successfactors,
         },
         {
-          id: SIDEBAR_MENUS.ORACLE,
+          id: SIDEBAR_MENUS_INTEGRATIONS.ORACLE,
           title: i18n._(t`Oracle`),
           href: '/integrations/oracle',
           isApiomLink: false,
@@ -149,7 +156,7 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
           module: 'portal',
         },
         {
-          id: SIDEBAR_MENUS.LITMOS,
+          id: SIDEBAR_MENUS_INTEGRATIONS.LITMOS,
           title: i18n._(t`Litmos`),
           href: '/integrations/litmos',
           isApiomLink: false,
@@ -157,7 +164,7 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
           module: 'portal',
         },
         {
-          id: SIDEBAR_MENUS.MAS,
+          id: SIDEBAR_MENUS_INTEGRATIONS.MAS,
           title: i18n._(t`Mas`),
           href: '/integrations/Mas',
           isApiomLink: false,
@@ -165,7 +172,7 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
           module: 'portal',
         },
         {
-          id: SIDEBAR_MENUS.NAS,
+          id: SIDEBAR_MENUS_INTEGRATIONS.NAS,
           title: i18n._(t`Nas`),
           href: '/integrations/Nas',
           isApiomLink: false,
@@ -173,7 +180,7 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
           module: 'portal',
         },
         {
-          id: SIDEBAR_MENUS.CANVAS_LMS,
+          id: SIDEBAR_MENUS_INTEGRATIONS.CANVAS_LMS,
           title: i18n._(t`Canvas`),
           logo: '/assets/integrations/canvas.png',
           href: '/integrations/canvas',
@@ -182,7 +189,7 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
           module: 'portal',
         },
         {
-          id: SIDEBAR_MENUS.MICROSOFT_AZURE,
+          id: SIDEBAR_MENUS_INTEGRATIONS.MICROSOFT_AZURE,
           title: i18n._(t`Microsoft 365`),
           logo: '/assets/integrations/Microsoft_Azure_Logo.png',
           href: '/integrations/azure',
@@ -191,7 +198,7 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
           module: 'portal',
         },
         {
-          id: SIDEBAR_MENUS.AZURE_B2C,
+          id: SIDEBAR_MENUS_INTEGRATIONS.AZURE_B2C,
           title: i18n._(t`Azure B2C`),
           logo: '/assets/integrations/Azure-AD-B2C-Logo.png',
           href: 'app/integrations/addon/azureb2c',
@@ -199,28 +206,28 @@ const WithIntegrations = (AppPage, {pageTitle, active}: IntegrationPageOptions) 
           isVisible: !!enabledIntegrations.azureb2c,
         },
         {
-          id: SIDEBAR_MENUS.COURSE_CATALOG,
+          id: SIDEBAR_MENUS_INTEGRATIONS.COURSE_CATALOG,
           title: i18n._(t`Course Catalog`),
           href: 'app/integrations/embed',
           isApiomLink: true,
           isVisible: true,
         },
         {
-          id: SIDEBAR_MENUS.SINGLE_SIGN_ON,
+          id: SIDEBAR_MENUS_INTEGRATIONS.SINGLE_SIGN_ON,
           title: i18n._(t`Single Sign On`),
           href: featureToggles.cs_tool ? 'app/integrations/sso-saml' : 'app/integrations/sso',
           isApiomLink: true,
           isVisible: true,
         },
         {
-          id: SIDEBAR_MENUS.DEVELOPER,
+          id: SIDEBAR_MENUS_INTEGRATIONS.DEVELOPER,
           title: i18n._(t`Developer`),
           href: 'app/integrations/developer',
           isApiomLink: true,
           isVisible: true,
         },
         {
-          id: SIDEBAR_MENUS.USER_DATA_FEED,
+          id: SIDEBAR_MENUS_INTEGRATIONS.USER_DATA_FEED,
           title: i18n._(t`User Data Feed`),
           href: '/integrations/user-data-feed',
           isApiomLink: false,

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { View, Text, Provider, Spinner } from '@go1d/go1d';
 import { colors } from '@go1d/go1d/build/foundations';
 import { CurrentSessionType } from '@src/types/user';
-import { SIDEBAR_MENUS } from '@src/constants';
+import { SIDEBAR_MENUS_INTEGRATIONS } from '@src/constants';
 import withAuth from '@src/components/common/WithAuth';
 import withIntegrations from '@src/components/common/WithIntegrations';
 import AppContext from '@src/utils/appContext';
@@ -87,4 +87,4 @@ export class Mas extends React.Component<Props, any> {
 }
 
 Mas.contextType = AppContext;
-export default withAuth(withIntegrations(Mas, { active: SIDEBAR_MENUS.MAS }));
+export default withAuth(withIntegrations(Mas, { active: SIDEBAR_MENUS_INTEGRATIONS.MAS }));

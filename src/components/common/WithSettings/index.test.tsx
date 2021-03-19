@@ -8,7 +8,7 @@ import { I18nProvider } from '@lingui/react';
 import en from '@src/locale/en/messages';
 import LinkComponent from '@src/components/common/Link';
 import authenticatedStoreState from '@src/store/mocks/authenticatedStore';
-import withIntegrations from '.';
+import withSettings from '.';
 import { CurrentSessionType } from '@src/types/user';
 
 /** TEST SETUP * */
@@ -38,9 +38,9 @@ const currentSession = {
   authenticated: true,
 } as CurrentSessionType;
 
-const setup = ({ pageTitle = 'Example', active = 'microsoft-azure' }, initialState = {}) => {
+const setup = ({ pageTitle = 'Theme', active = 'theme' }, initialState = {}) => {
   const store = mockStore({ ...authenticatedStoreState, ...initialState });
-  Component = withIntegrations(App, {
+  Component = withSettings(App, {
     pageTitle,
     active,
   });
@@ -57,14 +57,14 @@ const setup = ({ pageTitle = 'Example', active = 'microsoft-azure' }, initialSta
 
 /** TEST SETUP END * */
 
-it('WithIntegrations: renders correctly', async () => { 
+it('WithSettings: renders correctly', async () => { 
   const wrapper = setup({});
   await Promise.resolve();
   expect(wrapper.find('LayoutWithSideNav').length).toBe(1);
-  expect(wrapper.find('h1').text()).toBe('Example');
+  expect(wrapper.find('h1').text()).toBe('Theme');
 })
 
-it('WithIntegrations: renders correctly in embeddedMode', async () => {
+it('WithSettings: renders correctly in embeddedMode', async () => {
   const wrapper = setup({}, { runtime: { embeddedMode: true } });
   await Promise.resolve();
   expect(wrapper.find('TopMenu').length).toBe(0);

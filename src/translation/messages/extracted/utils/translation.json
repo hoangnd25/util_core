@@ -5,7 +5,7 @@
   },
   {
     "id": "data.feed.empty.block.action.text",
-    "defaultMessage": "Start"
+    "defaultMessage": "Get started"
   },
   {
     "id": "data.feed.upload.block.error.text.file.extension",
@@ -28,8 +28,16 @@
     "defaultMessage": "Integrations"
   },
   {
+    "id": "integrationDefault.pageTitle",
+    "defaultMessage": "Portal settings"
+  },
+  {
     "id": "integrationScormAndXApi.pageTitle",
     "defaultMessage": "SCORM and xAPI"
+  },
+  {
+    "id": "integrationOracle.pageTitle",
+    "defaultMessage": "Oracle"
   },
   {
     "id": "integrationUserDataFeed.pageTitle",
@@ -106,5 +114,9 @@
   {
     "id": "sidebar.integrations-user-data-feed",
     "defaultMessage": "User Data Feed"
+  },
+  {
+    "id": "sidebar.integrations-oracle",
+    "defaultMessage": "Oracle"
   }
 ]

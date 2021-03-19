@@ -3,7 +3,7 @@ import { Trans } from '@lingui/macro';
 import { View, Form, Field, TextInput, SubmitButton, NotificationManager, Provider, Spinner, Text, PasswordInput  } from '@go1d/go1d';
 import { colors } from '@go1d/go1d/build/foundations';
 import { CurrentSessionType } from '@src/types/user';
-import { SIDEBAR_MENUS } from '@src/constants';
+import { SIDEBAR_MENUS_INTEGRATIONS } from '@src/constants';
 import withAuth from '@src/components/common/WithAuth';
 import withIntegrations from '@src/components/common/WithIntegrations';
 import PortalService from '@src/services/portalService';
@@ -116,4 +116,4 @@ export class Litmos extends React.Component<Props, any> {
 }
 Litmos.contextType = AppContext;
 
-export default withAuth(withIntegrations(Litmos, { active: SIDEBAR_MENUS.LITMOS }));
+export default withAuth(withIntegrations(Litmos, { active: SIDEBAR_MENUS_INTEGRATIONS.LITMOS }));

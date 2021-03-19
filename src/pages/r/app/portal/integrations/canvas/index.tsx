@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { CurrentSessionType } from '@src/types/user';
-import { SIDEBAR_MENUS } from '@src/constants';
+import { SIDEBAR_MENUS_INTEGRATIONS } from '@src/constants';
 import withAuth from '@src/components/common/WithAuth';
 import WithIntegrations from '@src/components/common/WithIntegrations';
 import { Spinner, View, Text, Link, Form, Field, TextInput, SubmitButton, Banner, ButtonFilled, NotificationManager } from '@go1d/go1d';
@@ -120,7 +120,7 @@ export const CanvasLMSPage: React.FC<CanvasLMSPageProps> = ({
   )
 }
 
-export default withAuth(WithIntegrations(CanvasLMSPage, { active: SIDEBAR_MENUS.CANVAS_LMS }))
+export default withAuth(WithIntegrations(CanvasLMSPage, { active: SIDEBAR_MENUS_INTEGRATIONS.CANVAS_LMS }))
 
 const notify = (type: 'success' | 'danger', message: string) => {
   if(type === 'success') {

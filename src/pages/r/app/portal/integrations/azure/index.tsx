@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Spinner, Text, View, ButtonFilled, Banner } from '@go1d/go1d';
-import { SIDEBAR_MENUS } from '@src/constants';
+import { SIDEBAR_MENUS_INTEGRATIONS } from '@src/constants';
 import { CurrentSessionType } from '@src/types/user';
 import { Trans } from '@lingui/macro';
 import withAuth from '@src/components/common/WithAuth';
@@ -127,4 +127,4 @@ export class MicrosoftAzurePage extends React.Component<Props,State> {
   }
 }
 
-export default withAuth(withIntegrations(MicrosoftAzurePage, { active: SIDEBAR_MENUS.MICROSOFT_AZURE }));
+export default withAuth(withIntegrations(MicrosoftAzurePage, { active: SIDEBAR_MENUS_INTEGRATIONS.MICROSOFT_AZURE }));

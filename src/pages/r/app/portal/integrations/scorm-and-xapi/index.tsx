@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Trans } from '@lingui/macro';
 import { Spinner, Text, View, ButtonFilled, ButtonMinimal, foundations } from '@go1d/go1d';
-import { SIDEBAR_MENUS } from '@src/constants';
+import { SIDEBAR_MENUS_INTEGRATIONS } from '@src/constants';
 import ScormService from '@src/services/scormService';
 import withAuth from '@src/components/common/WithAuth';
 import withIntegrations from '@src/components/common/WithIntegrations';
@@ -136,4 +136,4 @@ export class ScormAndXapi extends React.Component<Props, State> {
   }
 }
 
-export default withI18n(withAuth(withIntegrations(ScormAndXapi, { active: SIDEBAR_MENUS.SCORM_AND_XAPI })));
+export default withI18n(withAuth(withIntegrations(ScormAndXapi, { active: SIDEBAR_MENUS_INTEGRATIONS.SCORM_AND_XAPI })));

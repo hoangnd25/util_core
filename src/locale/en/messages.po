@@ -46,7 +46,7 @@ msgstr ""
 msgid "Autopilot"
 msgstr ""
 
-#: src/components/common/WithIntegrations/index.tsx:153
+#: src/components/common/WithIntegrations/index.tsx:152
 msgid "Azure B2C"
 msgstr ""
 
@@ -91,6 +91,10 @@ msgstr ""
 msgid "Click Generate Application ID button below to create an application ID."
 msgstr ""
 
+#: src/components/common/WithSettings/index.tsx:38
+msgid "Configuration"
+msgstr "Configuration"
+
 #: src/pages/r/app/portal/integrations/azure/index.tsx:69
 msgid "Connect with Microsoft"
 msgstr "Connect with Microsoft"
@@ -103,13 +107,21 @@ msgstr ""
 msgid "Copy"
 msgstr ""
 
-#: src/components/common/WithIntegrations/index.tsx:161
+#: src/components/common/WithIntegrations/index.tsx:160
 msgid "Course Catalog"
 msgstr ""
 
 #: src/components/DataFeed/uploadState.tsx:322
 msgid "Create mapping rules"
 msgstr ""
+
+#: src/components/common/WithSettings/index.tsx:55
+msgid "Customise available portal content"
+msgstr "Customise available portal content"
+
+#: src/components/common/WithSettings/index.tsx:39
+msgid "Dashboard, menu & other options"
+msgstr "Dashboard, menu & other options"
 
 #: src/pages/r/app/portal/integrations/user-data-feed/index.tsx:65
 msgid "Data Mapping"
@@ -119,7 +131,7 @@ msgstr ""
 msgid "Data mapping details"
 msgstr ""
 
-#: src/components/common/WithIntegrations/index.tsx:175
+#: src/components/common/WithIntegrations/index.tsx:174
 msgid "Developer"
 msgstr ""
 
@@ -173,6 +185,14 @@ msgstr ""
 msgid "Hide all optional fields"
 msgstr ""
 
+#: src/components/common/WithSettings/index.tsx:47
+msgid "Improve portal recommendations"
+msgstr "Improve portal recommendations"
+
+#: src/components/common/WithSettings/index.tsx:63
+msgid "In-app messaging and emails"
+msgstr "In-app messaging and emails"
+
 #: src/components/AwsConnectionDetail/index.tsx:72
 msgid "Integrate using the following details to keep your user records up to date"
 msgstr ""
@@ -180,10 +200,6 @@ msgstr ""
 #: src/components/ContentDistributorExport/index.tsx:84
 msgid "Integration not connected. Check your account settings."
 msgstr "Integration not connected. Check your account settings."
-
-#: src/components/DataFeed/uploadState.tsx:146
-msgid "Invalid date format. Please edit your file follow this format: YYY-MM-DD"
-msgstr "Invalid date format. Please edit your file follow this format: YYY-MM-DD"
 
 #: src/components/common/WithIntegrations/index.tsx:63
 msgid "LTI Provider"
@@ -197,7 +213,11 @@ msgstr "Last Export"
 msgid "Litmos"
 msgstr "Litmos"
 
-#: src/components/DataFeed/uploadState.tsx:326
+#: src/components/common/WithSettings/index.tsx:30
+msgid "Logo, images, colours..."
+msgstr "Logo, images, colours..."
+
+#: src/components/DataFeed/uploadState.tsx:321
 msgid "Map the fields in your CSV file to the portal fields"
 msgstr ""
 
@@ -210,7 +230,7 @@ msgstr ""
 msgid "Mas"
 msgstr "Mas"
 
-#: src/components/common/WithIntegrations/index.tsx:144
+#: src/components/common/WithIntegrations/index.tsx:143
 msgid "Microsoft 365"
 msgstr "Microsoft 365"
 
@@ -234,7 +254,11 @@ msgstr ""
 msgid "No content added to custom selection for export."
 msgstr "No content added to custom selection for export."
 
-#: src/components/DataFeed/uploadState.tsx:200
+#: src/components/common/WithSettings/index.tsx:62
+msgid "Notifications"
+msgstr "Notifications"
+
+#: src/components/DataFeed/uploadState.tsx:195
 msgid "Optional"
 msgstr ""
 
@@ -242,9 +266,29 @@ msgstr ""
 msgid "Oracle"
 msgstr ""
 
-#: src/components/DataFeed/uploadState.tsx:343
+#: src/components/common/WithSettings/index.tsx:70
+msgid "Plan and Billing"
+msgstr "Plan and Billing"
+
+#: src/components/common/WithSettings/index.tsx:54
+msgid "Portal Content Selection"
+msgstr "Portal Content Selection"
+
+#: src/components/common/WithSettings/index.tsx:21
+msgid "Portal Information"
+msgstr "Portal Information"
+
+#: src/components/DataFeed/uploadState.tsx:338
 msgid "Portal fields"
 msgstr ""
+
+#: src/components/common/WithSettings/index.tsx:71
+msgid "Portal subscription plan and payment details"
+msgstr "Portal subscription plan and payment details"
+
+#: src/components/common/WithSettings/index.tsx:46
+msgid "Recommendations"
+msgstr "Recommendations"
 
 #: src/pages/r/app/portal/integrations/azure/index.tsx:68
 msgid "Reconnect with Microsoft"
@@ -308,6 +352,10 @@ msgstr ""
 msgid "Settings saved."
 msgstr ""
 
+#: src/components/common/WithSettings/index.tsx:78
+msgid "Setup Account"
+msgstr "Setup Account"
+
 #: src/components/AwsConnectionDetail/index.tsx:77
 msgid "Show"
 msgstr ""
@@ -316,17 +364,25 @@ msgstr ""
 msgid "Show all optional fields"
 msgstr ""
 
-#: src/components/common/WithIntegrations/index.tsx:168
+#: src/components/common/WithIntegrations/index.tsx:167
 msgid "Single Sign On"
 msgstr ""
 
-#: src/components/DataFeed/uploadState.tsx:172
+#: src/components/common/WithSettings/index.tsx:22
+msgid "Site name, welcome message..."
+msgstr "Site name, welcome message..."
+
+#: src/components/DataFeed/uploadState.tsx:167
 msgid "Skip this field"
 msgstr ""
 
 #: src/components/ContentDistributorExport/index.tsx:133
 msgid "Status"
 msgstr "Status"
+
+#: src/components/common/WithSettings/index.tsx:79
+msgid "Steps to configure your portal"
+msgstr "Steps to configure your portal"
 
 #: src/components/common/WithIntegrations/index.tsx:49
 msgid "Stripe"
@@ -335,6 +391,10 @@ msgstr ""
 #: src/components/common/WithIntegrations/index.tsx:95
 msgid "Success Factors"
 msgstr ""
+
+#: src/components/common/WithSettings/index.tsx:29
+msgid "Theme"
+msgstr "Theme"
 
 #: src/pages/r/app/portal/integrations/scorm-and-xapi/index.tsx:46
 msgid "This application ID can be used as a SCORM or xAPI provider. You can now download your content in SCORM or xAPI format from the Publish / Sharing menu found in the Settings section of each piece of training."
@@ -373,7 +433,7 @@ msgstr ""
 msgid "Uploading"
 msgstr ""
 
-#: src/components/common/WithIntegrations/index.tsx:182
+#: src/components/common/WithIntegrations/index.tsx:181
 msgid "User Data Feed"
 msgstr ""
 

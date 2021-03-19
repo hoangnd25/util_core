@@ -1,4 +1,4 @@
-export const SIDEBAR_MENUS = {
+export const SIDEBAR_MENUS_INTEGRATIONS = {
   ADDONS: 'sidebar.integrations-addons',
   SCORM: 'sidebar.integrations-scorm',
   SCORM_AND_XAPI: 'sidebar.integrations-scorm-and-xapi',
@@ -23,4 +23,13 @@ export const SIDEBAR_MENUS = {
   LITMOS: 'sidebar.integrations-litmos',
 };
 
-export default SIDEBAR_MENUS;
+export const SIDEBAR_MENUS_SETTINGS = {
+  PORTAL_INFORMATION: 'sidebar.settings-portal-information',
+  THEME: 'sidebar.settings-theme',
+  CONFIGURATION: 'sidebar.settings-configuration',
+  RECOMMENDATIONS: 'sidebar.settings-recommendations',
+  PORTAL_CONTENT_SELECTION: 'sidebar.settings-portal-content-selection',
+  NOTIFICATIONS: 'sidebar.settings-notifications',
+  PLAN_AND_BILLING: 'sidebar.settings-plan-and-billing',
+  SETUP_ACCOUNT: 'sidebar.settings-setup-account',
+};

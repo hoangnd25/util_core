@@ -10,7 +10,7 @@ import {
 } from '@go1d/go1d';
 import IconCheck from '@go1d/go1d/build/components/Icons/Check';
 import { CurrentSessionType } from '@src/types/user';
-import { SIDEBAR_MENUS } from '@src/constants';
+import { SIDEBAR_MENUS_INTEGRATIONS } from '@src/constants';
 import withAuth from '@src/components/common/WithAuth';
 import withIntegrations from '@src/components/common/WithIntegrations';
 import TabMenuNavigation from '@src/components/common/TabMenuNavigation';
@@ -120,4 +120,4 @@ export class Oracle extends React.Component<Props, any> {
   }
 }
 
-export default withAuth(withIntegrations(Oracle, { active: SIDEBAR_MENUS.ORACLE }));
+export default withAuth(withIntegrations(Oracle, { active: SIDEBAR_MENUS_INTEGRATIONS.ORACLE }));

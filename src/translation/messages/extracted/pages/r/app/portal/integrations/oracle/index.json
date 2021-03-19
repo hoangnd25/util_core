@@ -1,0 +1,18 @@
+[
+  {
+    "id": "Notification settings success container",
+    "defaultMessage": "Settings saved."
+  },
+  {
+    "id": "Notification settings fail container",
+    "defaultMessage": "Settings failed to save."
+  },
+  {
+    "id": "Notification export success container",
+    "defaultMessage": "Export requested."
+  },
+  {
+    "id": "Notification export fail container",
+    "defaultMessage": "Unable to request export."
+  }
+]

@@ -101,7 +101,7 @@ it('processes localStorage login correctly', done => {
 
 it('Test withAuth redirects if no login state', () => {
   delete window.location;
-  global.window.location = { assign: jest.fn() };
+  window.location = { assign: jest.fn() } as any;
   const store = mockStore(unauthenticatedStoreState);
   const Component = withAuth(App);
   const wrapper = mount(<IntlProvider locale="en"  defaultLocale="en" onError={()=> {}}>
@@ -118,7 +118,7 @@ it('Test withAuth redirects if no login state', () => {
 
 it('Test withAuth no redirects if login state', () => {
   delete window.location;
-  global.window.location = { assign: jest.fn() };
+  window.location = { assign: jest.fn() } as any;
   const store = mockStore(authenticatedStoreState);
   const Component = withAuth(App);
   Component.getInitialProps({ router: { query: {} }, ctx: { req:{} } });

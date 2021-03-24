@@ -79,6 +79,7 @@ class LayoutWithSideNav extends React.PureComponent<WithSideNavProps, any> {
                   borderColor={isActive ? 'accent' : 'transparent'}
                   borderLeft={3}
                   paddingLeft={4}
+                  backgroundColor="L400"
                   css={{
                     '&:hover': {
                       borderLeft: '3px solid',
@@ -86,10 +87,10 @@ class LayoutWithSideNav extends React.PureComponent<WithSideNavProps, any> {
                     },
                   }}
                 >
-                  <Text color={isActive ? 'accent' : foundations.colors.default} fontWeight="bold" fontSize={2}>
+                  <Text color={isActive ? 'accent' : foundations.colors.default} fontWeight="semibold" fontSize={2}>
                     {item.title}
                   </Text>
-                  <Text color={foundations.colors.subtle} fontSize={1} fontWeight="semibold">
+                  <Text color={foundations.colors.subtle} fontSize={1} fontWeight="normal">
                     {item.subtitle}
                   </Text>
                 </View>

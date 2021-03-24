@@ -5,9 +5,6 @@ import { CurrentSessionType } from '@src/types/user';
 import { Trans } from '@lingui/macro';
 import withAuth from '@src/components/common/WithAuth';
 import withSettings from '@src/components/common/WithSettings';
-import MicrosoftAzureService from '@src/services/microsoftAzure';
-import TabMenuNavigation from '@src/components/common/TabMenuNavigation';
-import ContentDistributorExport from '@src/components/ContentDistributorExport';
 
 interface Props {
   currentSession: CurrentSessionType;
@@ -39,4 +36,4 @@ export class ThemeSettingsPage extends React.Component<Props, State> {
   }
 }
 
-export default withAuth(withSettings(ThemeSettingsPage, { pageTitle: 'Theme', active: SIDEBAR_MENUS_SETTINGS.THEME }));
+export default withAuth(withSettings(ThemeSettingsPage, { pageTitle: 'Theme and Customisation', active: SIDEBAR_MENUS_SETTINGS.THEME }));

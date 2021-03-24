@@ -38,7 +38,7 @@ const WithSettings = (AppPage, { pageTitle, active }: SettingsPageOptions) => {
                 containerProps
               >
                 {pageTitle && (
-                  <View marginBottom={6} marginLeft={6}>
+                  <View marginBottom={6} marginLeft={[0, 0, 6]}>
                     <Text element="h1" fontSize={4} fontWeight="semibold">
                       {pageTitle}
                     </Text>
@@ -47,8 +47,8 @@ const WithSettings = (AppPage, { pageTitle, active }: SettingsPageOptions) => {
                 <View
                   backgroundColor="background"
                   flexGrow={1}
-                  borderRadius={2}
-                  marginLeft={6}
+                  borderRadius={5}
+                  marginLeft={[0, 0, 6]}
                   padding={[5, 5, 6]}
                   minHeight={embeddedMode ? '200px' : '60vh'}
                 >
@@ -69,15 +69,15 @@ const WithSettings = (AppPage, { pageTitle, active }: SettingsPageOptions) => {
         {
           id: SIDEBAR_MENUS_SETTINGS.PORTAL_INFORMATION,
           title: i18n._(t`Portal Information`),
-          subtitle: i18n._(t`Site name, welcome message...`),
+          subtitle: i18n._(t`Portal info, legal and login config`),
           href: 'app/settings/information',
           isApiomLink: true,
           isVisible: true,
         },
         {
           id: SIDEBAR_MENUS_SETTINGS.THEME,
-          title: i18n._(t`Theme`),
-          subtitle: i18n._(t`Logo, images, colours...`),
+          title: i18n._(t`Theme and Customisation`),
+          subtitle: i18n._(t`Brand, message customisation and certificates`),
           href: 'app/settings/theme',
           isApiomLink: false,
           isVisible: true,
@@ -86,7 +86,7 @@ const WithSettings = (AppPage, { pageTitle, active }: SettingsPageOptions) => {
         {
           id: SIDEBAR_MENUS_SETTINGS.CONFIGURATION,
           title: i18n._(t`Configuration`),
-          subtitle: i18n._(t`Dashboard, menu & other options`),
+          subtitle: i18n._(t`Dashboard, menu and other options`),
           href: 'app/settings/configuration',
           isApiomLink: true,
           isVisible: true,
@@ -118,14 +118,14 @@ const WithSettings = (AppPage, { pageTitle, active }: SettingsPageOptions) => {
         {
           id: SIDEBAR_MENUS_SETTINGS.PLAN_AND_BILLING,
           title: i18n._(t`Plan and Billing`),
-          subtitle: i18n._(t`Portal subscription plan and payment details`),
+          subtitle: i18n._(t`Subscription plan and payment details`),
           href: 'app/settings/portal-billing/subscription',
           isApiomLink: true,
           isVisible: true,
         },
         {
           id: SIDEBAR_MENUS_SETTINGS.SETUP_ACCOUNT,
-          title: i18n._(t`Setup Account`),
+          title: i18n._(t`Setup Portal`),
           subtitle: i18n._(t`Steps to configure your portal`),
           href: 'app/settings/setup-portal',
           isApiomLink: true,

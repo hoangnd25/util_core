@@ -1,8 +1,9 @@
 import { createContext } from 'react';
+import { HttpInstance } from './http';
 
 interface AppContextType {
     cookies: any;
-    http: any;
+    http: HttpInstance;
 }
 
 const AppContext = createContext<AppContextType>({

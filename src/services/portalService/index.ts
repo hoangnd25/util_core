@@ -27,6 +27,10 @@ class PortalService extends BaseService {
       .catch(() => null)
   }
 
+  async save<T = any>(portal: string, payload: T) {
+    const { data } = await this.http.post<{status: 'OK'}>(`/portal/${portal}`, payload);
+    return data;
+  }
 }
 
 export default function (http?: HttpInstance) {

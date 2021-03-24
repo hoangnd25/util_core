@@ -29,6 +29,7 @@ const setup = (query = {}) => {
     portal: {
       id: '123',
       title: 'test.mygo1.com',
+      mail: 'test@go1.com',
       data: {},
       featureToggles: [],
       files: {},
@@ -45,6 +46,7 @@ const setup = (query = {}) => {
     account: {
       id: 123,
       isAdministrator: true,
+      mail: 'test@go1.com',
       uuid: '00000000-0000-0000-00000000',
     },
   };

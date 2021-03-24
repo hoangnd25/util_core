@@ -9,7 +9,7 @@ import { CurrentSessionType } from '@src/types/user'
 import { RuntimeSettings } from '@src/types/reducers'
 
 interface SettingsPageOptions {
-  pageTitle?: string;
+  pageTitle?: React.ReactNode;
   active?: string;
 }
 
@@ -38,7 +38,7 @@ const WithSettings = (AppPage, { pageTitle, active }: SettingsPageOptions) => {
                 containerProps
               >
                 {pageTitle && (
-                  <View marginBottom={6} marginLeft={6}>
+                  <View marginBottom={6}>
                     <Text element="h1" fontSize={4} fontWeight="semibold">
                       {pageTitle}
                     </Text>
@@ -48,7 +48,6 @@ const WithSettings = (AppPage, { pageTitle, active }: SettingsPageOptions) => {
                   backgroundColor="background"
                   flexGrow={1}
                   borderRadius={2}
-                  marginLeft={6}
                   padding={[5, 5, 6]}
                   minHeight={embeddedMode ? '200px' : '60vh'}
                 >

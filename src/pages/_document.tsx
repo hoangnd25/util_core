@@ -1,6 +1,6 @@
 import { globalCSS } from '@go1d/go1d';
 import { extractCritical } from 'emotion-server';
-import Document, { Head, Main, NextScript } from 'next/document';
+import Document, { Head, Html, Main, NextScript } from 'next/document';
 import * as React from 'react';
 
 globalCSS();
@@ -19,11 +19,10 @@ export default class extends Document<any> {
 
     public render() {
       return (
-        <html>
+        <Html>
           <Head>
             <meta charSet="utf-8" />
             <meta httpEquiv="x-ua-compatible" content="ie=edge" />
-            <link href="https://fonts.googleapis.com/css?family=Muli:300,400,400i,600,700" rel="stylesheet" />
             <style dangerouslySetInnerHTML={{ __html: this.globalCss }} />
             <style dangerouslySetInnerHTML={{ __html: this.props.css }} />
           </Head>
@@ -31,7 +30,7 @@ export default class extends Document<any> {
             <Main />
             <NextScript />
           </body>
-        </html>
+        </Html>
       );
     }
 }

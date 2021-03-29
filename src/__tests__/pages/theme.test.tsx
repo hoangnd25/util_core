@@ -1,17 +1,10 @@
-import Enzyme, { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import * as React from 'react';
-import { IntlProvider } from 'react-intl';
 import { Provider as ReduxProvider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
-import CommonProvider from '@go1d/mine/common/Provider';
-import Adapter from 'enzyme-adapter-react-16';
 import { ThemeSettingsPage } from '@src/pages/r/app/portal/settings/theme';
 
-Enzyme.configure({ adapter: new Adapter() });
-
-
-
-const setup = (props = {}, isLoading = false) => {
+const setup = (props = {}) => {
   const componentProps = {
     ...props,
     scrollToTop: jest.fn(),
@@ -28,35 +21,29 @@ const setup = (props = {}, isLoading = false) => {
       configuration: {},
       },
     account: {
-      id: 123,
+      id: 1,
+      mail: 'test@go1.com',
       isAdministrator: true,
-      uuid: '00000000-0000-0000-00000000',
+      uuid: 'uuid',
     },
   };
 
   const mockStore = configureMockStore();
 
-    return mount(
-      <ReduxProvider store={mockStore({ currentSession })}>
-        <IntlProvider locale="en">
-          <CommonProvider
-            pushNavigationState={jest.fn()}
-            apiUrl="api.go1.co"
-            jwt="jwt"
-            accountId={123}
-            portalId={456}
-          >
-            <ThemeSettingsPage currentSession={currentSession} {...componentProps} />
-          </CommonProvider>
-        </IntlProvider>
-      </ReduxProvider>
-    );
+  const wrapper = shallow(
+    <ReduxProvider store={mockStore({ currentSession })}>
+      <ThemeSettingsPage currentSession={currentSession} {...componentProps} />
+    </ReduxProvider>
+  ).shallow().shallow();
+
+  return {
+    wrapper,
+    props,
+  }
 };
 
 it('Should render without crashing', () => {
-    const ComponentWrapper = setup();
-    expect(ComponentWrapper.find('View[data-testid="theme_settings_page"]').length).toBe(1);
+    const { wrapper } = setup();
+    
+    expect(wrapper.find('View[data-testid="theme_settings_page"]').length).toBe(1);
 });
-
-
-

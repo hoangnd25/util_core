@@ -14,6 +14,7 @@ export interface GO1Portal {
 
 export interface GO1Account {
     id: number;
+    mail: string;
     uuid: string;
     roles?: string[];
     instance?: GO1Portal;
@@ -22,6 +23,7 @@ export interface GO1Account {
 export interface GO1User {
     id: number;
     uuid: string;
+    mail: string;
     roles?: string[];
     accounts?: GO1Account[];
     jwt: string;

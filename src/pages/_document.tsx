@@ -14,7 +14,7 @@ export default class extends Document<any> {
 
     public globalCss = `
   body {
-    background: #F1F6F9;
+    background: #F7F8F8;
   }`;
 
     public render() {

@@ -46,13 +46,17 @@ msgstr ""
 msgid "Autopilot"
 msgstr ""
 
-#: src/components/common/WithIntegrations/index.tsx:152
+#: src/components/common/WithIntegrations/index.tsx:153
 msgid "Azure B2C"
 msgstr ""
 
 #: src/pages/r/app/base-app-demo/examples/linkComponent/index.tsx:10
 #~ msgid "Back to Overview"
 #~ msgstr ""
+
+#: src/components/common/WithSettings/index.tsx:27
+msgid "Brand, message customisation and certificates"
+msgstr "Brand, message customisation and certificates"
 
 #: src/components/DataFeed/uploadState.tsx:410
 #~ msgid "Browse for a CSV file to upload for setting up fields mapping rules."
@@ -91,7 +95,7 @@ msgstr ""
 msgid "Click Generate Application ID button below to create an application ID."
 msgstr ""
 
-#: src/components/common/WithSettings/index.tsx:38
+#: src/components/common/WithSettings/index.tsx:35
 msgid "Configuration"
 msgstr "Configuration"
 
@@ -107,7 +111,7 @@ msgstr ""
 msgid "Copy"
 msgstr ""
 
-#: src/components/common/WithIntegrations/index.tsx:160
+#: src/components/common/WithIntegrations/index.tsx:161
 msgid "Course Catalog"
 msgstr ""
 
@@ -115,13 +119,17 @@ msgstr ""
 msgid "Create mapping rules"
 msgstr ""
 
-#: src/components/common/WithSettings/index.tsx:55
+#: src/components/common/WithSettings/index.tsx:52
 msgid "Customise available portal content"
 msgstr "Customise available portal content"
 
 #: src/components/common/WithSettings/index.tsx:39
-msgid "Dashboard, menu & other options"
-msgstr "Dashboard, menu & other options"
+#~ msgid "Dashboard, menu & other options"
+#~ msgstr "Dashboard, menu & other options"
+
+#: src/components/common/WithSettings/index.tsx:36
+msgid "Dashboard, menu and other options"
+msgstr "Dashboard, menu and other options"
 
 #: src/pages/r/app/portal/integrations/user-data-feed/index.tsx:65
 msgid "Data Mapping"
@@ -131,7 +139,7 @@ msgstr ""
 msgid "Data mapping details"
 msgstr ""
 
-#: src/components/common/WithIntegrations/index.tsx:174
+#: src/components/common/WithIntegrations/index.tsx:175
 msgid "Developer"
 msgstr ""
 
@@ -185,11 +193,11 @@ msgstr ""
 msgid "Hide all optional fields"
 msgstr ""
 
-#: src/components/common/WithSettings/index.tsx:47
+#: src/components/common/WithSettings/index.tsx:44
 msgid "Improve portal recommendations"
 msgstr "Improve portal recommendations"
 
-#: src/components/common/WithSettings/index.tsx:63
+#: src/components/common/WithSettings/index.tsx:60
 msgid "In-app messaging and emails"
 msgstr "In-app messaging and emails"
 
@@ -200,6 +208,10 @@ msgstr ""
 #: src/components/ContentDistributorExport/index.tsx:84
 msgid "Integration not connected. Check your account settings."
 msgstr "Integration not connected. Check your account settings."
+
+#: src/components/DataFeed/uploadState.tsx:146
+msgid "Invalid date format. Please edit your file follow this format: YYYY-MM-DD"
+msgstr "Invalid date format. Please edit your file follow this format: YYYY-MM-DD"
 
 #: src/components/common/WithIntegrations/index.tsx:63
 msgid "LTI Provider"
@@ -214,10 +226,10 @@ msgid "Litmos"
 msgstr "Litmos"
 
 #: src/components/common/WithSettings/index.tsx:30
-msgid "Logo, images, colours..."
-msgstr "Logo, images, colours..."
+#~ msgid "Logo, images, colours..."
+#~ msgstr "Logo, images, colours..."
 
-#: src/components/DataFeed/uploadState.tsx:321
+#: src/components/DataFeed/uploadState.tsx:326
 msgid "Map the fields in your CSV file to the portal fields"
 msgstr ""
 
@@ -230,7 +242,7 @@ msgstr ""
 msgid "Mas"
 msgstr "Mas"
 
-#: src/components/common/WithIntegrations/index.tsx:143
+#: src/components/common/WithIntegrations/index.tsx:144
 msgid "Microsoft 365"
 msgstr "Microsoft 365"
 
@@ -254,11 +266,11 @@ msgstr ""
 msgid "No content added to custom selection for export."
 msgstr "No content added to custom selection for export."
 
-#: src/components/common/WithSettings/index.tsx:62
+#: src/components/common/WithSettings/index.tsx:59
 msgid "Notifications"
 msgstr "Notifications"
 
-#: src/components/DataFeed/uploadState.tsx:195
+#: src/components/DataFeed/uploadState.tsx:200
 msgid "Optional"
 msgstr ""
 
@@ -266,27 +278,31 @@ msgstr ""
 msgid "Oracle"
 msgstr ""
 
-#: src/components/common/WithSettings/index.tsx:70
+#: src/components/common/WithSettings/index.tsx:67
 msgid "Plan and Billing"
 msgstr "Plan and Billing"
 
-#: src/components/common/WithSettings/index.tsx:54
+#: src/components/common/WithSettings/index.tsx:51
 msgid "Portal Content Selection"
 msgstr "Portal Content Selection"
 
-#: src/components/common/WithSettings/index.tsx:21
+#: src/components/common/WithSettings/index.tsx:18
 msgid "Portal Information"
 msgstr "Portal Information"
 
-#: src/components/DataFeed/uploadState.tsx:338
+#: src/components/DataFeed/uploadState.tsx:343
 msgid "Portal fields"
 msgstr ""
 
-#: src/components/common/WithSettings/index.tsx:71
-msgid "Portal subscription plan and payment details"
-msgstr "Portal subscription plan and payment details"
+#: src/components/common/WithSettings/index.tsx:19
+msgid "Portal info, legal and login config"
+msgstr "Portal info, legal and login config"
 
-#: src/components/common/WithSettings/index.tsx:46
+#: src/components/common/WithSettings/index.tsx:71
+#~ msgid "Portal subscription plan and payment details"
+#~ msgstr "Portal subscription plan and payment details"
+
+#: src/components/common/WithSettings/index.tsx:43
 msgid "Recommendations"
 msgstr "Recommendations"
 
@@ -353,8 +369,12 @@ msgid "Settings saved."
 msgstr ""
 
 #: src/components/common/WithSettings/index.tsx:78
-msgid "Setup Account"
-msgstr "Setup Account"
+#~ msgid "Setup Account"
+#~ msgstr "Setup Account"
+
+#: src/components/common/WithSettings/index.tsx:75
+msgid "Setup Portal"
+msgstr "Setup Portal"
 
 #: src/components/AwsConnectionDetail/index.tsx:77
 msgid "Show"
@@ -364,15 +384,15 @@ msgstr ""
 msgid "Show all optional fields"
 msgstr ""
 
-#: src/components/common/WithIntegrations/index.tsx:167
+#: src/components/common/WithIntegrations/index.tsx:168
 msgid "Single Sign On"
 msgstr ""
 
 #: src/components/common/WithSettings/index.tsx:22
-msgid "Site name, welcome message..."
-msgstr "Site name, welcome message..."
+#~ msgid "Site name, welcome message..."
+#~ msgstr "Site name, welcome message..."
 
-#: src/components/DataFeed/uploadState.tsx:167
+#: src/components/DataFeed/uploadState.tsx:172
 msgid "Skip this field"
 msgstr ""
 
@@ -380,7 +400,7 @@ msgstr ""
 msgid "Status"
 msgstr "Status"
 
-#: src/components/common/WithSettings/index.tsx:79
+#: src/components/common/WithSettings/index.tsx:76
 msgid "Steps to configure your portal"
 msgstr "Steps to configure your portal"
 
@@ -388,13 +408,21 @@ msgstr "Steps to configure your portal"
 msgid "Stripe"
 msgstr ""
 
+#: src/components/common/WithSettings/index.tsx:68
+msgid "Subscription plan and payment details"
+msgstr "Subscription plan and payment details"
+
 #: src/components/common/WithIntegrations/index.tsx:95
 msgid "Success Factors"
 msgstr ""
 
 #: src/components/common/WithSettings/index.tsx:29
-msgid "Theme"
-msgstr "Theme"
+#~ msgid "Theme"
+#~ msgstr "Theme"
+
+#: src/components/common/WithSettings/index.tsx:26
+msgid "Theme and Customisation"
+msgstr "Theme and Customisation"
 
 #: src/pages/r/app/portal/integrations/scorm-and-xapi/index.tsx:46
 msgid "This application ID can be used as a SCORM or xAPI provider. You can now download your content in SCORM or xAPI format from the Publish / Sharing menu found in the Settings section of each piece of training."
@@ -433,7 +461,7 @@ msgstr ""
 msgid "Uploading"
 msgstr ""
 
-#: src/components/common/WithIntegrations/index.tsx:181
+#: src/components/common/WithIntegrations/index.tsx:182
 msgid "User Data Feed"
 msgstr ""
 

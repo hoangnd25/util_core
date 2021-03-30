@@ -17,9 +17,9 @@
     "type-check": "tsc"
   },
   "dependencies": {
-    "@go1d/go1d": "^3.0.3",
+    "@go1d/go1d": "^3.0.5",
     "@go1d/go1d-exchange": "^0.2.95",
-    "@go1d/mine": "^1.0.1",
+    "@go1d/mine": "^1.0.3",
     "@lingui/react": "^2.9.1",
     "@types/redux-mock-store": "^1.0.2",
     "axios": "^0.19.0",

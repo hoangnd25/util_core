@@ -5,7 +5,7 @@ import { SIDEBAR_MENUS_SETTINGS } from '@src/constants';
 import { CurrentSessionType } from '@src/types/user';
 import { Trans } from '@lingui/macro';
 import withAuth from '@src/components/common/WithAuth';
-import withSettings from '@src/components/common/WithSettings';
+import WithApiom from '@src/components/common/WithApiom';
 import AppContext from '@src/utils/appContext';
 import axios from "axios";
 import { FormikConfig } from 'formik';
@@ -52,7 +52,7 @@ export class ThemeSettingsPage extends React.Component<Props, State> {
 
     const { currentSession: { portal } } = this.props;
     // @ts-ignore then should add to exchange model
-    const featuredImage: string = portal.files.feature_image;
+    const featuredImage: string = portal.files?.feature_image;
 
     this.state = {
       isSaving: false,
@@ -172,9 +172,4 @@ export class ThemeSettingsPage extends React.Component<Props, State> {
 
 ThemeSettingsPage.contextType = AppContext
 
-export default withAuth(
-  withSettings(
-    ThemeSettingsPage, 
-    { pageTitle: <Trans>Theme and customization</Trans>, active: SIDEBAR_MENUS_SETTINGS.THEME }
-  )
-);
+export default withAuth(WithApiom(ThemeSettingsPage, { pageTitle: <Trans>Theme and customization</Trans>, active: SIDEBAR_MENUS_SETTINGS.THEME, menuType: "Settings" },  ));

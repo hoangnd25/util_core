@@ -4,10 +4,10 @@ import { SIDEBAR_MENUS_INTEGRATIONS } from '@src/constants';
 import { CurrentSessionType } from '@src/types/user';
 import { Trans } from '@lingui/macro';
 import withAuth from '@src/components/common/WithAuth';
-import withIntegrations from '@src/components/common/WithIntegrations';
 import MicrosoftAzureService from '@src/services/microsoftAzure';
 import TabMenuNavigation from '@src/components/common/TabMenuNavigation';
 import ContentDistributorExport from '@src/components/ContentDistributorExport';
+import WithApiom from '@src/components/common/WithApiom';
 
 interface Props {
   currentSession: CurrentSessionType;
@@ -127,4 +127,4 @@ export class MicrosoftAzurePage extends React.Component<Props,State> {
   }
 }
 
-export default withAuth(withIntegrations(MicrosoftAzurePage, { active: SIDEBAR_MENUS_INTEGRATIONS.MICROSOFT_AZURE }));
+export default withAuth(WithApiom(MicrosoftAzurePage, { active: SIDEBAR_MENUS_INTEGRATIONS.MICROSOFT_AZURE }));

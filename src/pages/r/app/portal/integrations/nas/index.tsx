@@ -4,10 +4,10 @@ import { colors } from '@go1d/go1d/build/foundations';
 import { CurrentSessionType } from '@src/types/user';
 import { SIDEBAR_MENUS_INTEGRATIONS } from '@src/constants';
 import withAuth from '@src/components/common/WithAuth';
-import withIntegrations from '@src/components/common/WithIntegrations';
 import AppContext from '@src/utils/appContext';
 import CopyTextInput from '@src/components/common/CopyTextInput';
 import AuthService from "@src/services/authService";
+import WithApiom from '@src/components/common/WithApiom';
 
 interface Props {
   currentSession: CurrentSessionType;
@@ -89,4 +89,4 @@ export class Nas extends React.Component<Props, any> {
 }
 
 Nas.contextType = AppContext;
-export default withAuth(withIntegrations(Nas, { active: SIDEBAR_MENUS_INTEGRATIONS.NAS }));
+export default withAuth(WithApiom(Nas, { active: SIDEBAR_MENUS_INTEGRATIONS.NAS , menuType: "Integrations"}));

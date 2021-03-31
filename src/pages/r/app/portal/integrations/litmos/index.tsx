@@ -5,7 +5,7 @@ import { colors } from '@go1d/go1d/build/foundations';
 import { CurrentSessionType } from '@src/types/user';
 import { SIDEBAR_MENUS_INTEGRATIONS } from '@src/constants';
 import withAuth from '@src/components/common/WithAuth';
-import withIntegrations from '@src/components/common/WithIntegrations';
+import WithApiom from '@src/components/common/WithApiom';
 import PortalService from '@src/services/portalService';
 import AppContext from '@src/utils/appContext';
 
@@ -116,4 +116,4 @@ export class Litmos extends React.Component<Props, any> {
 }
 Litmos.contextType = AppContext;
 
-export default withAuth(withIntegrations(Litmos, { active: SIDEBAR_MENUS_INTEGRATIONS.LITMOS }));
+export default withAuth(WithApiom(Litmos, { active: SIDEBAR_MENUS_INTEGRATIONS.LITMOS }));

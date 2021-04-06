@@ -8,7 +8,7 @@ import en from '@src/locale/en/messages';
 import LinkComponent from '@src/components/common/Link';
 import authenticatedStoreState from '@src/store/mocks/authenticatedStore';
 import { CurrentSessionType } from '@src/types/user';
-import withApiom from '.';
+import withApiom from '@src/components/common/WithApiom'
 import ScormAndXapi from '@src/pages/r/app/portal/integrations/scorm-and-xapi';
 import Theme, { ThemeSettingsPage } from '@src/pages/r/app/portal/settings/theme';
 import MenuOptions from './menus';
@@ -82,10 +82,10 @@ it('withApiom: Integrations menu renders correctly', async () => {
   const wrapper = setup(ScormAndXapi, { pageTitle: 'Example', active: 'microsoft-azure', menuType: 'Integrations' });
   await Promise.resolve();
   const PageInstance = wrapper.find(ScormAndXapi) as any;
+  const sideMenuInstance = PageInstance.find('LayoutWithSideNav')
   const sideMenu = PageInstance.props().menu[0];
   expect(sideMenu).toEqual(integrationsMenuMock);
-  expect(wrapper.find('LayoutWithSideNav').length).toBe(1);
-  expect(wrapper.find('h1').text()).toBe('Example');
+  expect(sideMenuInstance.length).toBe(1);
 });
 
 it('withApiom: Integrations menu renders correctly in embeddedMode', async () => {
@@ -105,10 +105,10 @@ it('withApiom: Settings menu renders correctly', async () => {
   const wrapper = setup(Theme, { pageTitle: 'Example', active: 'theme', menuType: 'Settings' });
   await Promise.resolve();
   const PageInstance = wrapper.find(ThemeSettingsPage) as any;
+  const sideMenuInstance = PageInstance.find('LayoutWithSideNav')
   const sideMenu = PageInstance.props().menu[0];
   expect(sideMenu).toEqual(settingsMenuMock);
-  expect(wrapper.find('LayoutWithSideNav').length).toBe(1);
-  expect(wrapper.find('h1').text()).toBe('Example');
+  expect(sideMenuInstance.length).toBe(1);
 });
 
 it('withApiom: Settings menu renders correctly in embeddedMode', async () => {

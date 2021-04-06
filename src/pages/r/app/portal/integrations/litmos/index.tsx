@@ -116,4 +116,4 @@ export class Litmos extends React.Component<Props, any> {
 }
 Litmos.contextType = AppContext;
 
-export default withAuth(withApiom(Litmos, { active: SIDEBAR_MENUS_INTEGRATIONS.LITMOS }));
+export default withAuth(withApiom(Litmos, { active: SIDEBAR_MENUS_INTEGRATIONS.LITMOS, menuType: "Integrations" }));

@@ -121,7 +121,7 @@ export const CanvasLMSPage: React.FC<CanvasLMSPageProps> = ({
   )
 }
 
-export default withAuth(withApiom(CanvasLMSPage, { active: SIDEBAR_MENUS_INTEGRATIONS.CANVAS_LMS }))
+export default withAuth(withApiom(CanvasLMSPage, { active: SIDEBAR_MENUS_INTEGRATIONS.CANVAS_LMS, menuType: "Integrations" }))
 
 const notify = (type: 'success' | 'danger', message: string) => {
   if(type === 'success') {

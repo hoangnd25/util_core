@@ -8,9 +8,9 @@ import en from '@src/locale/en/messages';
 import LinkComponent from '@src/components/common/Link';
 import authenticatedStoreState from '@src/store/mocks/authenticatedStore';
 import { CurrentSessionType } from '@src/types/user';
-import withApiom from '@src/components/common/WithApiom'
+import withApiom from '@src/components/common/WithApiom';
 import ScormAndXapi from '@src/pages/r/app/portal/integrations/scorm-and-xapi';
-import Theme, { ThemeSettingsPage } from '@src/pages/r/app/portal/settings/theme';
+import ThemeSettingsPage from '@src/pages/r/app/portal/settings/theme';
 import MenuOptions from './menus';
 
 /** TEST SETUP * */
@@ -79,10 +79,10 @@ const setup = (App, props, initialState = {}) => {
 /** TEST SETUP END * */
 
 it('withApiom: Integrations menu renders correctly', async () => {
-  const wrapper = setup(ScormAndXapi, { pageTitle: 'Example', active: 'microsoft-azure', menuType: 'Integrations' });
+  const wrapper = setup(ScormAndXapi, { pageTitle: 'Example', active: 'sidebar.integrations-scorm_and_api', menuType: 'Integrations' });
   await Promise.resolve();
   const PageInstance = wrapper.find(ScormAndXapi) as any;
-  const sideMenuInstance = PageInstance.find('LayoutWithSideNav')
+  const sideMenuInstance = PageInstance.find('LayoutWithSideNav');
   const sideMenu = PageInstance.props().menu[0];
   expect(sideMenu).toEqual(integrationsMenuMock);
   expect(sideMenuInstance.length).toBe(1);
@@ -91,7 +91,7 @@ it('withApiom: Integrations menu renders correctly', async () => {
 it('withApiom: Integrations menu renders correctly in embeddedMode', async () => {
   const wrapper = setup(
     ScormAndXapi,
-    { pageTitle: 'Example', active: 'microsoft-azure', menuType: 'Integrations' },
+    { pageTitle: 'Example', active: 'sidebar.integrations-scorm_and_api', menuType: 'Integrations' },
     { runtime: { embeddedMode: true } }
   );
   await Promise.resolve();
@@ -101,20 +101,10 @@ it('withApiom: Integrations menu renders correctly in embeddedMode', async () =>
   expect(wrapper.find('TopMenu').length).toBe(0);
 });
 
-it('withApiom: Settings menu renders correctly', async () => {
-  const wrapper = setup(Theme, { pageTitle: 'Example', active: 'theme', menuType: 'Settings' });
-  await Promise.resolve();
-  const PageInstance = wrapper.find(ThemeSettingsPage) as any;
-  const sideMenuInstance = PageInstance.find('LayoutWithSideNav')
-  const sideMenu = PageInstance.props().menu[0];
-  expect(sideMenu).toEqual(settingsMenuMock);
-  expect(sideMenuInstance.length).toBe(1);
-});
-
 it('withApiom: Settings menu renders correctly in embeddedMode', async () => {
   const wrapper = setup(
-    Theme,
-    { pageTitle: 'Example', active: 'theme', menuType: 'Settings' },
+    ThemeSettingsPage,
+    { pageTitle: 'Example', active: 'sidebar.settings-theme', menuType: 'Settings' },
     { runtime: { embeddedMode: true } }
   );
   await Promise.resolve();
@@ -122,4 +112,18 @@ it('withApiom: Settings menu renders correctly in embeddedMode', async () => {
   const sideMenu = PageInstance.props().menu[0];
   expect(sideMenu).toEqual(settingsMenuMock);
   expect(wrapper.find('TopMenu').length).toBe(0);
+});
+
+it('withApiom: Settings menu renders correctly', async () => {
+  const wrapper = setup(ThemeSettingsPage, {
+    pageTitle: 'Examples',
+    active: 'sidebar.settings-theme',
+    menuType: 'Settings',
+  });
+  await Promise.resolve();
+  const PageInstance = wrapper.find(ThemeSettingsPage) as any;
+  const sideMenuInstance = PageInstance.find('LayoutWithSideNav');
+  const sideMenu = PageInstance.props().menu[0];
+  expect(sideMenu).toEqual(settingsMenuMock);  
+  expect(sideMenuInstance.length).toBe(1);
 });

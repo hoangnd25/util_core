@@ -47,7 +47,7 @@ const withApiom = (AppPage, { pageTitle, active, menuType }: withApiomPageOption
       return (
         <Layout
           withTopNav={!embeddedMode}
-          withSideNav={!embeddedMode && { title: pageTitle, menu, active }}
+          withSideNav={!embeddedMode && { menu, active }}
           wrappingContainer={!embeddedMode}
           containerProps
         >

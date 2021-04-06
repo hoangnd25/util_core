@@ -127,4 +127,4 @@ export class MicrosoftAzurePage extends React.Component<Props,State> {
   }
 }
 
-export default withAuth(withApiom(MicrosoftAzurePage, { active: SIDEBAR_MENUS_INTEGRATIONS.MICROSOFT_AZURE }));
+export default withAuth(withApiom(MicrosoftAzurePage, { active: SIDEBAR_MENUS_INTEGRATIONS.MICROSOFT_AZURE, menuType: "Integrations" }));

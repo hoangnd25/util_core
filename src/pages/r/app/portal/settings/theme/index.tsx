@@ -1,175 +1,104 @@
-import * as React from 'react';
-import { Spinner, Text, View, ButtonFilled, ImageUploader, Form, Field, SubmitButton } from '@go1d/go1d';
-import CloudinaryService from "@go1d/mine/services/cloudinary"
+import React, { ReactNode } from 'react';
 import { SIDEBAR_MENUS_SETTINGS } from '@src/constants';
-import { CurrentSessionType } from '@src/types/user';
-import { Trans } from '@lingui/macro';
 import withAuth from '@src/components/common/WithAuth';
 import withApiom from '@src/components/common/WithApiom';
+import { View, NotificationContainer, NotificationManager } from '@go1d/go1d';
+import { CurrentSessionType } from '@src/types/user';
+import createPortalService from '@src/services/portalService';
+import CloudinaryService from '@go1d/mine/services/cloudinary';
 import AppContext from '@src/utils/appContext';
-import axios from "axios";
-import { FormikConfig } from 'formik';
-import PortalService from '@src/services/portalService';
-import { ThemeBlockMaker } from '@src/components/ThemeBlockMaker';
+import axios, { CancelToken } from 'axios';
+import ThemeSettingsForm, { FormValues } from '@src/components/Settings/Theme/Form';
+import { Trans } from '@lingui/macro';
 
-const FEATURED_IMAGE_RATIO = 1;
-
-interface HeaderMakerProps {
-  title: React.ReactNode
-}
-
-export const HeaderMaker: React.FunctionComponent<HeaderMakerProps> = ({
-  title,
-  children,
-}) => {
-  return (
-    <View marginBottom={5} flexDirection="row" justifyContent="space-between" alignItems="center">
-      <Text element="h1" fontSize={3} fontWeight="semibold">
-        {title}
-      </Text>
-      {children}
-    </View>
-  )
-}
-export interface Props {
+export interface ThemeSettingsPageProps {
   currentSession: CurrentSessionType;
 }
 
-interface Fields {
-  featuredImage: string | Blob;
-}
 interface State {
   isSaving: boolean;
-  fields: Fields;
-  error: string | null;
 }
 
-export class ThemeSettingsPage extends React.Component<Props, State> {
+export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, State> {
   context: React.ContextType<typeof AppContext>;
 
-  constructor(props: Props) {
+  constructor(props: ThemeSettingsPageProps) {
     super(props);
-
-    const { currentSession: { portal } } = this.props;
-    // @ts-ignore then should add to exchange model
-    const featuredImage: string = portal.files?.feature_image;
 
     this.state = {
       isSaving: false,
-      fields: {
-        featuredImage,
-      },
-      error: null,
     };
   }
-  
-  handleFieldChange = (e: any) => {
-    const { name, value } = e.target;
 
-    this.setField(name, value);
-  }
+  handleImageUpload = (image: File | Blob, cancelTokenSource?: CancelToken) => {
+    const {
+      currentSession: { account },
+    } = this.props;
 
-  setField = <K extends keyof Fields, T>(name: K, value: Fields[K]) => {
-    this.setState((prev) => ({
-      ...prev,
-      fields: {
-        ...prev.fields,
-        [name]: value,
-      }
-    }))
-  }
+    const { http } = this.context;
+    const cloudinaryService = new CloudinaryService(http);
 
-  handleSubmit: FormikConfig<Fields>['onSubmit'] = async (_values, form) => {
-    const { currentSession: { account, portal } } = this.props
-    const { fields } = this.state;
+    const cancelToken = cancelTokenSource || axios.CancelToken.source();
 
-    // user has selected a different image
-    if (fields.featuredImage instanceof Blob) {
-      this.setState({ isSaving: true });
-
-      const { http } = this.context;
-      const cloudinaryService = new CloudinaryService(http);
-      const portalService = PortalService(http);
-
-      // not sure why values doesn't change???
-      // console.log(fields.featuredImage, values);
-      const { CancelToken } = axios;
-      const source = CancelToken.source();
-
-      const featuredImageUrl = await cloudinaryService.uploadImage({
-        file: fields.featuredImage as File,
+    return cloudinaryService.uploadImage(
+      {
+        file: image as File,
         mail: account.mail,
-      }, source.token);
+      },
+      cancelToken
+    );
+  };
 
-      await portalService.save(portal.title, {
-        'files.feature_image': featuredImageUrl,
-      });
+  handleError = (message: ReactNode) => {
+    NotificationManager.warning({
+      message,
+      options: {
+        lifetime: 3000,
+        isOpen: true,
+      },
+    });
+  };
 
-      // clearance
-      // this will help to prevent from saving many times until user has moved the image
-      this.setField('featuredImage', featuredImageUrl);
-      this.setState({ isSaving: false });
+  handleSave = async (fields: FormValues) => {
+    const {
+      currentSession: { portal },
+    } = this.props;
+    const { http } = this.context;
+    const portalService = createPortalService(http);
+
+    this.setState({ isSaving: true });
+
+    try {
+      await portalService.save(portal.title, fields);
+    } catch (savingError) {
+      this.handleError(<Trans>An unexpected error has occurred, please try again.</Trans>);
+      console.error(savingError);
     }
 
-    form.setSubmitting(false);
-  }
-
-  handleCropImage = (field: keyof Fields, croppedImage: Blob) => {
-    const { fields } = this.state;
-    // Make sure this callback is only changed as we changed image
-    if (typeof fields.featuredImage !== 'string') {
-      this.setField(field, croppedImage);
-    }
-  }
+    this.setState({ isSaving: false });
+  };
 
   public render() {
-    const { fields, isSaving } = this.state;
+    const { isSaving } = this.state;
+    const {
+      currentSession: { portal },
+    } = this.props;
 
     return (
       <View data-testid="theme_settings_page">
-        <Form initialValues={fields} onSubmit={this.handleSubmit}>
-          <HeaderMaker title={<Trans>Brand</Trans>}>
-            <ButtonFilled>
-              <Trans>Preview brand</Trans>
-            </ButtonFilled>
-          </HeaderMaker>
-
-          <ThemeBlockMaker 
-            title={<Trans>Featured image</Trans>} 
-            description={<Trans>Used in sign up and login pages. For best results, upload an image in X:Y ratio. The image can also be repositioned.</Trans>}
-          >
-            <View padding={4} borderRadius={2} border={1} borderColor="delicate" css={{
-              borderStyle: 'dashed',
-            }}>
-              <Field 
-                name="featuredImage" 
-                allowCrop
-                hideLabel
-                component={ImageUploader} 
-                height={400} 
-                onChange={this.handleFieldChange} 
-                cropConfig={{
-                  aspect: FEATURED_IMAGE_RATIO,
-                  onCrop: this.handleCropImage.bind(this, 'featuredImage'),
-                }}
-              />
-            </View>
-          </ThemeBlockMaker>
-
-          <View flexDirection="row" marginTop={5}>
-            <SubmitButton color="accent" flexDirection="row" alignItems="center">
-              <View flexDirection="row" alignItems="center">
-                {isSaving && <Spinner color="white" marginRight={2} />}
-                <Trans>Save</Trans>
-              </View>
-            </SubmitButton>
-          </View>
-        </Form>
+        <NotificationContainer />
+        <ThemeSettingsForm
+          portal={portal}
+          isSaving={isSaving}
+          onSave={this.handleSave}
+          onUpload={this.handleImageUpload}
+          onError={this.handleError}
+        />
       </View>
     );
   }
 }
 
-ThemeSettingsPage.contextType = AppContext
+ThemeSettingsPage.contextType = AppContext;
 
 export default withAuth(withApiom(ThemeSettingsPage, { pageTitle: <Trans>Theme and customization</Trans>, active: SIDEBAR_MENUS_SETTINGS.THEME, menuType: "Settings" },  ));

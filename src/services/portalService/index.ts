@@ -33,6 +33,6 @@ class PortalService extends BaseService {
   }
 }
 
-export default function (http?: HttpInstance) {
+export default function createPortalService (http?: HttpInstance) {
   return new PortalService(http);
 }

@@ -5,7 +5,7 @@ import { SIDEBAR_MENUS_SETTINGS } from '@src/constants';
 import { CurrentSessionType } from '@src/types/user';
 import { Trans } from '@lingui/macro';
 import withAuth from '@src/components/common/WithAuth';
-import WithApiom from '@src/components/common/WithApiom';
+import withApiom from '@src/components/common/WithApiom';
 import AppContext from '@src/utils/appContext';
 import axios from "axios";
 import { FormikConfig } from 'formik';
@@ -172,4 +172,4 @@ export class ThemeSettingsPage extends React.Component<Props, State> {
 
 ThemeSettingsPage.contextType = AppContext
 
-export default withAuth(WithApiom(ThemeSettingsPage, { pageTitle: <Trans>Theme and customization</Trans>, active: SIDEBAR_MENUS_SETTINGS.THEME, menuType: "Settings" },  ));
+export default withAuth(withApiom(ThemeSettingsPage, { pageTitle: <Trans>Theme and customization</Trans>, active: SIDEBAR_MENUS_SETTINGS.THEME, menuType: "Settings" },  ));

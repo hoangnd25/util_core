@@ -7,22 +7,22 @@ import { RuntimeSettings } from '@src/types/reducers';
 import MenuOptions from './menus';
 import  withI18n from '@src/components/common/WithI18n';
 
-interface WithApiomPageOptions {
+interface withApiomPageOptions {
   pageTitle?: React.ReactNode;
   active?: string;
   menuType?: string;
 }
 
-interface WithApiomCmpProps {
+interface withApiomCmpProps {
   runtimeSettings: RuntimeSettings;
   currentSession?: CurrentSessionType;
   i18n: any;
 }
 
 export const menuOptions = new MenuOptions();
-const WithApiom = (AppPage, { pageTitle, active, menuType }: WithApiomPageOptions) => {
-  class WithApiomCmp extends React.PureComponent<WithApiomCmpProps, {}> {
-    displayName: 'WithApiom';
+const withApiom = (AppPage, { pageTitle, active, menuType }: withApiomPageOptions) => {
+  class WithApiomCmp extends React.PureComponent<withApiomCmpProps, {}> {
+    displayName: 'withApiom';
 
     public render() {
       const {
@@ -78,4 +78,4 @@ const WithApiom = (AppPage, { pageTitle, active, menuType }: WithApiomPageOption
   return connect(mapStateToProps, null)(withI18n(WithApiomCmp));
 };
 
-export default WithApiom;
+export default withApiom;

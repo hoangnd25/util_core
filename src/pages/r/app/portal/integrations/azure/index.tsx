@@ -7,7 +7,7 @@ import withAuth from '@src/components/common/WithAuth';
 import MicrosoftAzureService from '@src/services/microsoftAzure';
 import TabMenuNavigation from '@src/components/common/TabMenuNavigation';
 import ContentDistributorExport from '@src/components/ContentDistributorExport';
-import WithApiom from '@src/components/common/WithApiom';
+import withApiom from '@src/components/common/WithApiom';
 
 interface Props {
   currentSession: CurrentSessionType;
@@ -127,4 +127,4 @@ export class MicrosoftAzurePage extends React.Component<Props,State> {
   }
 }
 
-export default withAuth(WithApiom(MicrosoftAzurePage, { active: SIDEBAR_MENUS_INTEGRATIONS.MICROSOFT_AZURE }));
+export default withAuth(withApiom(MicrosoftAzurePage, { active: SIDEBAR_MENUS_INTEGRATIONS.MICROSOFT_AZURE }));

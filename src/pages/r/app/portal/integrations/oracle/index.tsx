@@ -15,7 +15,7 @@ import withAuth from '@src/components/common/WithAuth';
 import TabMenuNavigation from '@src/components/common/TabMenuNavigation';
 import PortalService from '@src/services/portalService';
 import ContentDistributorExport from '@src/components/ContentDistributorExport';
-import WithApiom from '@src/components/common/WithApiom';
+import withApiom from '@src/components/common/WithApiom';
 
 export const portalService = PortalService();
 
@@ -120,4 +120,4 @@ export class Oracle extends React.Component<Props, any> {
   }
 }
 
-export default withAuth(WithApiom(Oracle, { active: SIDEBAR_MENUS_INTEGRATIONS.ORACLE, menuType: "Integrations" }));
+export default withAuth(withApiom(Oracle, { active: SIDEBAR_MENUS_INTEGRATIONS.ORACLE, menuType: "Integrations" }));

@@ -5,7 +5,7 @@ import withAuth from '@src/components/common/WithAuth';
 import { Spinner, View, Text, Link, Form, Field, TextInput, SubmitButton, Banner, ButtonFilled, NotificationManager } from '@go1d/go1d';
 import { useCanvasService } from '@src/services/canvasService/useCanvasService';
 import { CanvasIntegrationDetails } from '@src/services/canvasService';
-import WithApiom from '@src/components/common/WithApiom';
+import withApiom from '@src/components/common/WithApiom';
 
 type CanvasLMSPageProps = {
   currentSession: CurrentSessionType
@@ -121,7 +121,7 @@ export const CanvasLMSPage: React.FC<CanvasLMSPageProps> = ({
   )
 }
 
-export default withAuth(WithApiom(CanvasLMSPage, { active: SIDEBAR_MENUS_INTEGRATIONS.CANVAS_LMS }))
+export default withAuth(withApiom(CanvasLMSPage, { active: SIDEBAR_MENUS_INTEGRATIONS.CANVAS_LMS }))
 
 const notify = (type: 'success' | 'danger', message: string) => {
   if(type === 'success') {

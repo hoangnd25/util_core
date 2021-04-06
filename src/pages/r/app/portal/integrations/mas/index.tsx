@@ -7,7 +7,7 @@ import withAuth from '@src/components/common/WithAuth';
 import AppContext from '@src/utils/appContext';
 import CopyTextInput from '@src/components/common/CopyTextInput';
 import AuthService from '@src/services/authService';
-import WithApiom from '@src/components/common/WithApiom';
+import withApiom from '@src/components/common/WithApiom';
 
 interface Props {
   currentSession: CurrentSessionType;
@@ -87,4 +87,4 @@ export class Mas extends React.Component<Props, any> {
 }
 
 Mas.contextType = AppContext;
-export default withAuth(WithApiom(Mas, { active: SIDEBAR_MENUS_INTEGRATIONS.MAS, menuType: 'Integrations' }));
+export default withAuth(withApiom(Mas, { active: SIDEBAR_MENUS_INTEGRATIONS.MAS, menuType: 'Integrations' }));

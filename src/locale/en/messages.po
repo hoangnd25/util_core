@@ -34,7 +34,6 @@ msgstr "Add more resources to your library."
 #~ msgstr "Add them in the custom selection."
 
 #: src/components/common/WithApiom/menus.ts:90
-#: src/components/common/WithIntegrations/index.tsx:27
 msgid "Addons"
 msgstr ""
 
@@ -44,12 +43,10 @@ msgid "Application ID"
 msgstr ""
 
 #: src/components/common/WithApiom/menus.ts:105
-#: src/components/common/WithIntegrations/index.tsx:42
 msgid "Autopilot"
 msgstr ""
 
 #: src/components/common/WithApiom/menus.ts:216
-#: src/components/common/WithIntegrations/index.tsx:153
 msgid "Azure B2C"
 msgstr ""
 
@@ -62,7 +59,6 @@ msgid "Brand"
 msgstr "Brand"
 
 #: src/components/common/WithApiom/menus.ts:19
-#: src/components/common/WithSettings/index.tsx:27
 msgid "Brand, message customisation and certificates"
 msgstr "Brand, message customisation and certificates"
 
@@ -92,7 +88,6 @@ msgid "Cancel"
 msgstr ""
 
 #: src/components/common/WithApiom/menus.ts:198
-#: src/components/common/WithIntegrations/index.tsx:135
 msgid "Canvas"
 msgstr ""
 
@@ -105,7 +100,6 @@ msgid "Click Generate Application ID button below to create an application ID."
 msgstr ""
 
 #: src/components/common/WithApiom/menus.ts:27
-#: src/components/common/WithSettings/index.tsx:35
 msgid "Configuration"
 msgstr "Configuration"
 
@@ -122,7 +116,6 @@ msgid "Copy"
 msgstr ""
 
 #: src/components/common/WithApiom/menus.ts:224
-#: src/components/common/WithIntegrations/index.tsx:161
 msgid "Course Catalog"
 msgstr ""
 
@@ -131,7 +124,6 @@ msgid "Create mapping rules"
 msgstr ""
 
 #: src/components/common/WithApiom/menus.ts:44
-#: src/components/common/WithSettings/index.tsx:52
 msgid "Customise available portal content"
 msgstr "Customise available portal content"
 
@@ -140,7 +132,6 @@ msgstr "Customise available portal content"
 #~ msgstr "Dashboard, menu & other options"
 
 #: src/components/common/WithApiom/menus.ts:28
-#: src/components/common/WithSettings/index.tsx:36
 msgid "Dashboard, menu and other options"
 msgstr "Dashboard, menu and other options"
 
@@ -153,7 +144,6 @@ msgid "Data mapping details"
 msgstr ""
 
 #: src/components/common/WithApiom/menus.ts:238
-#: src/components/common/WithIntegrations/index.tsx:175
 msgid "Developer"
 msgstr ""
 
@@ -212,12 +202,10 @@ msgid "Hide all optional fields"
 msgstr ""
 
 #: src/components/common/WithApiom/menus.ts:36
-#: src/components/common/WithSettings/index.tsx:44
 msgid "Improve portal recommendations"
 msgstr "Improve portal recommendations"
 
 #: src/components/common/WithApiom/menus.ts:52
-#: src/components/common/WithSettings/index.tsx:60
 msgid "In-app messaging and emails"
 msgstr "In-app messaging and emails"
 
@@ -234,7 +222,6 @@ msgid "Invalid date format. Please edit your file follow this format: YYYY-MM-DD
 msgstr "Invalid date format. Please edit your file follow this format: YYYY-MM-DD"
 
 #: src/components/common/WithApiom/menus.ts:126
-#: src/components/common/WithIntegrations/index.tsx:63
 msgid "LTI Provider"
 msgstr ""
 
@@ -243,7 +230,6 @@ msgid "Last Export"
 msgstr "Last Export"
 
 #: src/components/common/WithApiom/menus.ts:174
-#: src/components/common/WithIntegrations/index.tsx:111
 msgid "Litmos"
 msgstr "Litmos"
 
@@ -261,12 +247,10 @@ msgid "Map with"
 msgstr ""
 
 #: src/components/common/WithApiom/menus.ts:182
-#: src/components/common/WithIntegrations/index.tsx:119
 msgid "Mas"
 msgstr "Mas"
 
 #: src/components/common/WithApiom/menus.ts:207
-#: src/components/common/WithIntegrations/index.tsx:144
 msgid "Microsoft 365"
 msgstr "Microsoft 365"
 
@@ -275,7 +259,6 @@ msgstr "Microsoft 365"
 #~ msgstr ""
 
 #: src/components/common/WithApiom/menus.ts:190
-#: src/components/common/WithIntegrations/index.tsx:127
 msgid "Nas"
 msgstr "Nas"
 
@@ -292,7 +275,6 @@ msgid "No content added to custom selection for export."
 msgstr "No content added to custom selection for export."
 
 #: src/components/common/WithApiom/menus.ts:51
-#: src/components/common/WithSettings/index.tsx:59
 msgid "Notifications"
 msgstr "Notifications"
 
@@ -301,22 +283,18 @@ msgid "Optional"
 msgstr ""
 
 #: src/components/common/WithApiom/menus.ts:166
-#: src/components/common/WithIntegrations/index.tsx:103
 msgid "Oracle"
 msgstr ""
 
 #: src/components/common/WithApiom/menus.ts:59
-#: src/components/common/WithSettings/index.tsx:67
 msgid "Plan and Billing"
 msgstr "Plan and Billing"
 
 #: src/components/common/WithApiom/menus.ts:43
-#: src/components/common/WithSettings/index.tsx:51
 msgid "Portal Content Selection"
 msgstr "Portal Content Selection"
 
 #: src/components/common/WithApiom/menus.ts:10
-#: src/components/common/WithSettings/index.tsx:18
 msgid "Portal Information"
 msgstr "Portal Information"
 
@@ -325,7 +303,6 @@ msgid "Portal fields"
 msgstr ""
 
 #: src/components/common/WithApiom/menus.ts:11
-#: src/components/common/WithSettings/index.tsx:19
 msgid "Portal info, legal and login config"
 msgstr "Portal info, legal and login config"
 
@@ -338,7 +315,6 @@ msgid "Preview brand"
 msgstr "Preview brand"
 
 #: src/components/common/WithApiom/menus.ts:35
-#: src/components/common/WithSettings/index.tsx:43
 msgid "Recommendations"
 msgstr "Recommendations"
 
@@ -371,7 +347,6 @@ msgid "Retry"
 msgstr ""
 
 #: src/components/common/WithApiom/menus.ts:97
-#: src/components/common/WithIntegrations/index.tsx:34
 msgid "SCORM and xAPI"
 msgstr ""
 
@@ -380,7 +355,6 @@ msgid "Save"
 msgstr "Save"
 
 #: src/components/common/WithApiom/menus.ts:97
-#: src/components/common/WithIntegrations/index.tsx:34
 msgid "Scorm"
 msgstr ""
 
@@ -415,7 +389,6 @@ msgstr ""
 #~ msgstr "Setup Account"
 
 #: src/components/common/WithApiom/menus.ts:67
-#: src/components/common/WithSettings/index.tsx:75
 msgid "Setup Portal"
 msgstr "Setup Portal"
 
@@ -428,7 +401,6 @@ msgid "Show all optional fields"
 msgstr ""
 
 #: src/components/common/WithApiom/menus.ts:231
-#: src/components/common/WithIntegrations/index.tsx:168
 msgid "Single Sign On"
 msgstr ""
 
@@ -445,22 +417,18 @@ msgid "Status"
 msgstr "Status"
 
 #: src/components/common/WithApiom/menus.ts:68
-#: src/components/common/WithSettings/index.tsx:76
 msgid "Steps to configure your portal"
 msgstr "Steps to configure your portal"
 
 #: src/components/common/WithApiom/menus.ts:112
-#: src/components/common/WithIntegrations/index.tsx:49
 msgid "Stripe"
 msgstr ""
 
 #: src/components/common/WithApiom/menus.ts:60
-#: src/components/common/WithSettings/index.tsx:68
 msgid "Subscription plan and payment details"
 msgstr "Subscription plan and payment details"
 
 #: src/components/common/WithApiom/menus.ts:158
-#: src/components/common/WithIntegrations/index.tsx:95
 msgid "Success Factors"
 msgstr ""
 
@@ -469,7 +437,6 @@ msgstr ""
 #~ msgstr "Theme"
 
 #: src/components/common/WithApiom/menus.ts:18
-#: src/components/common/WithSettings/index.tsx:26
 msgid "Theme and Customisation"
 msgstr "Theme and Customisation"
 
@@ -519,12 +486,10 @@ msgid "Used in sign up and login pages. For best results, upload an image in X:Y
 msgstr "Used in sign up and login pages. For best results, upload an image in X:Y ratio. The image can also be repositioned."
 
 #: src/components/common/WithApiom/menus.ts:245
-#: src/components/common/WithIntegrations/index.tsx:182
 msgid "User Data Feed"
 msgstr ""
 
 #: src/components/common/WithApiom/menus.ts:134
-#: src/components/common/WithIntegrations/index.tsx:71
 msgid "VETTRAK"
 msgstr ""
 
@@ -533,12 +498,10 @@ msgid "Want more content?"
 msgstr "Want more content?"
 
 #: src/components/common/WithApiom/menus.ts:142
-#: src/components/common/WithIntegrations/index.tsx:79
 msgid "Wisenet"
 msgstr ""
 
 #: src/components/common/WithApiom/menus.ts:150
-#: src/components/common/WithIntegrations/index.tsx:87
 msgid "Xero"
 msgstr ""
 
@@ -572,7 +535,6 @@ msgid "Your secret key was created on {0}. Please find where you have saved it."
 msgstr ""
 
 #: src/components/common/WithApiom/menus.ts:119
-#: src/components/common/WithIntegrations/index.tsx:56
 msgid "Zapier"
 msgstr ""
 

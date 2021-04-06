@@ -11,7 +11,7 @@ import DataFeedUploadState, { MappingStep } from '@src/components/DataFeed/uploa
 import DataFeedService, { AWSCredential, MappingData } from '@src/services/dataFeed';
 import withI18n from '@src/components/common/WithI18n';
 import { I18n } from '@lingui/core';
-import WithApiom from '@src/components/common/WithApiom';
+import withApiom from '@src/components/common/WithApiom';
 
 export const dataFeedService = DataFeedService();
 
@@ -144,4 +144,4 @@ export class UserDataFeed extends React.Component<Props, State> {
   }
 }
 
-export default withI18n(withAuth(WithApiom(UserDataFeed, { active: SIDEBAR_MENUS_INTEGRATIONS.USER_DATA_FEED, menuType: "Integrations" })));
+export default withI18n(withAuth(withApiom(UserDataFeed, { active: SIDEBAR_MENUS_INTEGRATIONS.USER_DATA_FEED, menuType: "Integrations" })));

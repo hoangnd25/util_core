@@ -8,7 +8,7 @@ import en from '@src/locale/en/messages';
 import LinkComponent from '@src/components/common/Link';
 import authenticatedStoreState from '@src/store/mocks/authenticatedStore';
 import { CurrentSessionType } from '@src/types/user';
-import WithApiom from '.';
+import withApiom from '.';
 import ScormAndXapi from '@src/pages/r/app/portal/integrations/scorm-and-xapi';
 import Theme, { ThemeSettingsPage } from '@src/pages/r/app/portal/settings/theme';
 import MenuOptions from './menus';
@@ -61,7 +61,7 @@ const i18nProps = {
 const setup = (App, props, initialState = {}) => {
   const store = mockStore({ ...authenticatedStoreState, ...initialState });
 
-  Component = WithApiom(App, {
+  Component = withApiom(App, {
     ...props,
   });
 
@@ -78,7 +78,7 @@ const setup = (App, props, initialState = {}) => {
 
 /** TEST SETUP END * */
 
-it('WithApiom: Integrations menu renders correctly', async () => {
+it('withApiom: Integrations menu renders correctly', async () => {
   const wrapper = setup(ScormAndXapi, { pageTitle: 'Example', active: 'microsoft-azure', menuType: 'Integrations' });
   await Promise.resolve();
   const PageInstance = wrapper.find(ScormAndXapi) as any;
@@ -88,7 +88,7 @@ it('WithApiom: Integrations menu renders correctly', async () => {
   expect(wrapper.find('h1').text()).toBe('Example');
 });
 
-it.only('WithApiom: Integrations menu renders correctly in embeddedMode', async () => {
+it('withApiom: Integrations menu renders correctly in embeddedMode', async () => {
   const wrapper = setup(
     ScormAndXapi,
     { pageTitle: 'Example', active: 'microsoft-azure', menuType: 'Integrations' },
@@ -101,7 +101,7 @@ it.only('WithApiom: Integrations menu renders correctly in embeddedMode', async 
   expect(wrapper.find('TopMenu').length).toBe(0);
 });
 
-it('WithApiom: Settings menu renders correctly', async () => {
+it('withApiom: Settings menu renders correctly', async () => {
   const wrapper = setup(Theme, { pageTitle: 'Example', active: 'theme', menuType: 'Settings' });
   await Promise.resolve();
   const PageInstance = wrapper.find(ThemeSettingsPage) as any;
@@ -111,7 +111,7 @@ it('WithApiom: Settings menu renders correctly', async () => {
   expect(wrapper.find('h1').text()).toBe('Example');
 });
 
-it('WithApiom: Settings menu renders correctly in embeddedMode', async () => {
+it('withApiom: Settings menu renders correctly in embeddedMode', async () => {
   const wrapper = setup(
     Theme,
     { pageTitle: 'Example', active: 'theme', menuType: 'Settings' },

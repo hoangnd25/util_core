@@ -62,12 +62,11 @@ class LayoutWithSideNav extends React.PureComponent<WithSideNavProps, any> {
       .map(item => {
         const isActive = item.id === active;
         return (
-          <Theme.Consumer>
+          <Theme.Consumer key={`menu-${item.id}`}>
             {({ colors }) => (
               <View
                 data-testid={item.id}
                 module={item.module}
-                key={`menu-${item.id}`}
                 isApiomLink={item.isApiomLink}
                 href={!isActive ? item.href : null}
                 element={!isActive && item.href ? CustomLink : View}

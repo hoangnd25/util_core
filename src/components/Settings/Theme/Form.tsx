@@ -13,15 +13,16 @@ export interface FormValues {
 }
 
 export interface ThemeSettingsFormProps {
-  portal?: Partial<GO1Portal>;
+  portal: GO1Portal;
   isSaving?: boolean;
-  onSave?: (values: unknown) => Promise<void>;
-  onUpload?: (image?: File | Blob | null) => Promise<string | undefined>;
+  onSave: (values: object) => Promise<void>;
+  onUpload: (image?: File | Blob | null) => Promise<string | undefined>;
   onError?: (message: ReactNode) => void;
 }
 
-const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
-  const { portal, isSaving, onSave, onUpload, onError } = props;
+const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = ({
+  portal, isSaving, onSave, onUpload, onError
+}) => {
   const [featuredImageCropped, setFeaturedImageCropped] = useState<Blob | undefined>();
 
   const uploadOrDeleteImage = async (
@@ -44,39 +45,45 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
   };
 
   const handleSubmit: FormikConfig<FormValues>['onSubmit'] = async (values, actions) => {
-    let toSaveObject = {};
     try {
       const [logo, featuredImage] = await Promise.all([
         uploadOrDeleteImage(values.logo),
         uploadOrDeleteImage(values.featuredImage, featuredImageCropped),
       ]);
 
-      toSaveObject = {
-        ...toSaveObject,
+      const toSaveObject = {
         ...(logo !== undefined && { 'files.logo': logo }),
-        ...(featuredImage !== undefined && { 'files.feature_image': featuredImage }),
+        ...(featuredImage !== undefined && { 'files.login_background': featuredImage }),
       };
-    } catch (uploadingError) {
-      onError?.(<Trans>Upload image failed</Trans>);
-      actions.setSubmitting(false);
-      return;
-    }
 
-    await onSave?.(toSaveObject);
-    actions.setSubmitting(false);
+      if (featuredImage) {
+        actions.setFieldValue('featuredImage', featuredImage);
+      }
+
+      await onSave(toSaveObject);
+
+    } catch (error) {
+      if (__DEV__) {
+        console.log(error);
+      }
+      onError?.(<Trans>Upload image failed</Trans>);
+    } finally {
+      actions.setSubmitting(false);
+    }    
   };
 
   return (
     <Form
       initialValues={{
-        logo: portal?.files?.logo,
-        featuredImage: portal?.files?.feature_image, // eslint-disable-line camelcase
+        logo: portal.files?.logo,
+        featuredImage: portal.files?.login_background, // eslint-disable-line camelcase
       }}
       onSubmit={handleSubmit}
     >
       <SectionBrand isSaving={isSaving} onFeaturedImageCropped={setFeaturedImageCropped} />
       <SectionLogin />
       <SectionSignup />
+      
       <View flexDirection="row">
         <SubmitButton color="accent" flexDirection="row" alignItems="center">
           <View flexDirection="row" alignItems="center">

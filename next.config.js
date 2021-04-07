@@ -42,7 +42,9 @@ module.exports = {
       new webpack.DefinePlugin({
       __DEV__: process.env.ENV === 'local',
     }));
-    config.plugins.push(new LodashModuleReplacementPlugin);
+    config.plugins.push(new LodashModuleReplacementPlugin({
+      paths: true
+    }));
 
     // only create stats on local
     if(process.env.ENV === 'local') {

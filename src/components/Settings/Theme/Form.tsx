@@ -6,10 +6,15 @@ import { GO1Portal } from '@src/types/user';
 import SectionBrand from './SectionBrand';
 import SectionLogin from './SectionLogin';
 import SectionSignup from './SectionSignup';
+import { getFieldsValues, getInitialValues } from './formHelper';
 
 export interface FormValues {
   logo?: File | null;
   featuredImage?: File | null;
+  loginTitle?: string;
+  loginDescription?: string;
+  signupTitle?: string;
+  signupDescription?: string;
 }
 
 export interface ThemeSettingsFormProps {
@@ -20,9 +25,20 @@ export interface ThemeSettingsFormProps {
   onError?: (message: ReactNode) => void;
 }
 
-const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = ({
-  portal, isSaving, onSave, onUpload, onError
-}) => {
+const LOGIN_SIGNUP_FIELDS_MAPPING = {
+  loginTitle: 'configuration.login_tagline',
+  loginDescription: 'configuration.login_secondary_tagline',
+  signupTitle: 'configuration.signup_tagline',
+  signupDescription: 'configuration.signup_secondary_tagline',
+};
+
+const UPLOAD_FIELDS_MAPPING = {
+  logo: 'files.logo',
+  featuredImage: 'files.login_background',
+};
+
+const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
+  const { portal, isSaving, onSave, onUpload, onError } = props;
   const [featuredImageCropped, setFeaturedImageCropped] = useState<Blob | undefined>();
 
   const uploadOrDeleteImage = async (
@@ -52,8 +68,9 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = ({
       ]);
 
       const toSaveObject = {
-        ...(logo !== undefined && { 'files.logo': logo }),
-        ...(featuredImage !== undefined && { 'files.login_background': featuredImage }),
+        ...(logo !== undefined && { [UPLOAD_FIELDS_MAPPING[logo]]: logo }),
+        ...(featuredImage !== undefined && { [UPLOAD_FIELDS_MAPPING[featuredImage]]: featuredImage }),
+        ...getFieldsValues(LOGIN_SIGNUP_FIELDS_MAPPING, values, portal),
       };
 
       if (featuredImage) {
@@ -61,7 +78,6 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = ({
       }
 
       await onSave(toSaveObject);
-
     } catch (error) {
       if (__DEV__) {
         console.log(error);
@@ -69,21 +85,24 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = ({
       onError?.(<Trans>Upload image failed</Trans>);
     } finally {
       actions.setSubmitting(false);
-    }    
+    }
   };
 
   return (
     <Form
-      initialValues={{
-        logo: portal.files?.logo,
-        featuredImage: portal.files?.login_background, // eslint-disable-line camelcase
-      }}
+      initialValues={getInitialValues(
+        {
+          ...UPLOAD_FIELDS_MAPPING,
+          ...LOGIN_SIGNUP_FIELDS_MAPPING,
+        },
+        portal
+      )}
       onSubmit={handleSubmit}
     >
       <SectionBrand isSaving={isSaving} onFeaturedImageCropped={setFeaturedImageCropped} />
       <SectionLogin />
       <SectionSignup />
-      
+
       <View flexDirection="row">
         <SubmitButton color="accent" flexDirection="row" alignItems="center">
           <View flexDirection="row" alignItems="center">

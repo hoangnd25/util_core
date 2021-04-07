@@ -17,9 +17,12 @@ const setup = (props = {}) => {
       title: 'test.mygo1.com',
       data: {},
       featureToggles: [],
-      files: {},
-      configuration: {},
+      files: {
+        logo: 'https://logo.jpg',
+        feature_image: 'https://featured-image.jpg',
       },
+      configuration: {},
+    },
     account: {
       id: 1,
       mail: 'test@go1.com',
@@ -34,16 +37,18 @@ const setup = (props = {}) => {
     <ReduxProvider store={mockStore({ currentSession })}>
       <ThemeSettingsPage currentSession={currentSession} {...componentProps} />
     </ReduxProvider>
-  ).shallow().shallow();
+  )
+    .shallow()
+    .shallow();
 
   return {
     wrapper,
     props,
-  }
+  };
 };
 
 it('Should render without crashing', () => {
-    const { wrapper } = setup();
-    
-    expect(wrapper.find('View[data-testid="theme_settings_page"]').length).toBe(1);
+  const { wrapper } = setup();
+
+  expect(wrapper.find('View[data-testid="theme_settings_page"]').length).toBe(1);
 });

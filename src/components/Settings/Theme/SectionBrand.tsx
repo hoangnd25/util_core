@@ -44,6 +44,7 @@ const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropp
           <Field component={ImageUploadSlat} name="logo" hideLabel required disabled={isSaving} />
         </DashedBorder>
       </SettingsBlockMaker>
+      
       <SettingsBlockMaker
         title={<Trans>Featured image</Trans>}
         description={

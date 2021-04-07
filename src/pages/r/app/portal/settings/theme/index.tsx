@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { SIDEBAR_MENUS_SETTINGS } from '@src/constants';
 import withAuth from '@src/components/common/WithAuth';
-import withSettings from '@src/components/common/WithSettings';
+import withApiom from '@src/components/common/WithApiom';
 import { View, NotificationContainer, NotificationManager } from '@go1d/go1d';
 import { CurrentSessionType } from '@src/types/user';
 import createPortalService from '@src/services/portalService';
@@ -104,9 +104,4 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
 
 ThemeSettingsPage.contextType = AppContext;
 
-export default withAuth(
-  withSettings(ThemeSettingsPage, {
-    pageTitle: <Trans>Theme and customization</Trans>,
-    active: SIDEBAR_MENUS_SETTINGS.THEME,
-  })
-);
+export default withAuth(withApiom(ThemeSettingsPage, { pageTitle: <Trans>Theme and customization</Trans>, active: SIDEBAR_MENUS_SETTINGS.THEME, menuType: "Settings" },  ));

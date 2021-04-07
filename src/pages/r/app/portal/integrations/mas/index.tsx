@@ -4,10 +4,10 @@ import { colors } from '@go1d/go1d/build/foundations';
 import { CurrentSessionType } from '@src/types/user';
 import { SIDEBAR_MENUS_INTEGRATIONS } from '@src/constants';
 import withAuth from '@src/components/common/WithAuth';
-import withIntegrations from '@src/components/common/WithIntegrations';
 import AppContext from '@src/utils/appContext';
 import CopyTextInput from '@src/components/common/CopyTextInput';
 import AuthService from '@src/services/authService';
+import withApiom from '@src/components/common/WithApiom';
 
 interface Props {
   currentSession: CurrentSessionType;
@@ -87,4 +87,4 @@ export class Mas extends React.Component<Props, any> {
 }
 
 Mas.contextType = AppContext;
-export default withAuth(withIntegrations(Mas, { active: SIDEBAR_MENUS_INTEGRATIONS.MAS }));
+export default withAuth(withApiom(Mas, { active: SIDEBAR_MENUS_INTEGRATIONS.MAS, menuType: 'Integrations' }));

@@ -2,10 +2,11 @@ import * as React from 'react';
 import { CurrentSessionType } from '@src/types/user';
 import { SIDEBAR_MENUS_INTEGRATIONS } from '@src/constants';
 import withAuth from '@src/components/common/WithAuth';
-import WithIntegrations from '@src/components/common/WithIntegrations';
 import { Spinner, View, Text, Link, Form, Field, TextInput, SubmitButton, Banner, ButtonFilled, NotificationManager } from '@go1d/go1d';
 import { useCanvasService } from '@src/services/canvasService/useCanvasService';
 import { CanvasIntegrationDetails } from '@src/services/canvasService';
+import withApiom from '@src/components/common/WithApiom';
+
 type CanvasLMSPageProps = {
   currentSession: CurrentSessionType
   router: any
@@ -120,7 +121,7 @@ export const CanvasLMSPage: React.FC<CanvasLMSPageProps> = ({
   )
 }
 
-export default withAuth(WithIntegrations(CanvasLMSPage, { active: SIDEBAR_MENUS_INTEGRATIONS.CANVAS_LMS }))
+export default withAuth(withApiom(CanvasLMSPage, { active: SIDEBAR_MENUS_INTEGRATIONS.CANVAS_LMS, menuType: "Integrations" }))
 
 const notify = (type: 'success' | 'danger', message: string) => {
   if(type === 'success') {

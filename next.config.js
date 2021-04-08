@@ -23,9 +23,23 @@ module.exports = {
   webpack: (config, options) => {
     // Include node_modules for babel transformation
     if (!options.isServer) {
+      const needRecompiling4IE = [
+        '@go1d',
+        'query-string',
+        'react-dev-utils',
+        'split-on-first',
+        'ansi-styles',
+        'strict-uri-encode',
+        'debug',
+        'dotenv',
+        'map-obj',
+      ];
       config.module.rules.push({
-        test: /\.js$/,
-        include: /node_modules/,
+        test: /\.(js|ts)$/,
+        include: [
+          new RegExp(`node_modules/${needRecompiling4IE.join('|')}`),
+          // /node_modules\/(?!(core-js)\/).*/
+        ],
         use: {
           loader: 'babel-loader',
           options: {

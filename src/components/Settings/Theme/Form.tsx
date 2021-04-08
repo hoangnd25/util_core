@@ -68,8 +68,8 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
       ]);
 
       const toSaveObject = {
-        ...(logo !== undefined && { [UPLOAD_FIELDS_MAPPING[logo]]: logo }),
-        ...(featuredImage !== undefined && { [UPLOAD_FIELDS_MAPPING[featuredImage]]: featuredImage }),
+        ...(logo !== undefined && { [UPLOAD_FIELDS_MAPPING.logo]: logo }),
+        ...(featuredImage !== undefined && { [UPLOAD_FIELDS_MAPPING.featuredImage]: featuredImage }),
         ...getFieldsValues(LOGIN_SIGNUP_FIELDS_MAPPING, values, portal),
       };
 

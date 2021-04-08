@@ -30,6 +30,7 @@
     "formik": "^1.5.8",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
+    "lodash-webpack-plugin": "^0.11.5",
     "next": "^10.0.9",
     "next-redux-wrapper": "^5.0.0",
     "papaparse": "^5.2.0",
@@ -39,7 +40,9 @@
     "react-redux": "^7.1.1",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
-    "universal-cookie": "^4.0.2"
+    "stats-webpack-plugin": "^0.7.0",
+    "universal-cookie": "^4.0.2",
+    "webpack": "^4.41.0"
   },
   "devDependencies": {
     "@babel/core": "^7.10.1",
@@ -86,7 +89,6 @@
     "jest-junit": "^12.0.0",
     "jest-localstorage-mock": "^2.4.3",
     "lint-staged": "8.1.5",
-    "lodash-webpack-plugin": "^0.11.5",
     "prettier": "^1.18.2",
     "prettier-package-json": "2.1.0",
     "redux-devtools-extension": "^2.13.8",
@@ -95,7 +97,6 @@
     "ts-jest": "^25.5.1",
     "typescript": "^3.9.9",
     "wait-for-expect": "^3.0.2",
-    "webpack": "^4.41.0",
     "webpack-bundle-analyzer": "^3.5.2"
   },
   "keywords": [],

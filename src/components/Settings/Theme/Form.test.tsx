@@ -44,7 +44,7 @@ const setup = (props?: ThemeSettingsFormProps) => {
 };
 
 beforeEach(() => {
-  global.URL.revokeObjectURL = jest.fn();
+  window.URL.revokeObjectURL = jest.fn();
 });
 
 it('Should render with correct fields', () => {

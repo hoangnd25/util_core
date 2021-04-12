@@ -7,6 +7,7 @@ import SectionBrand from './SectionBrand';
 import SectionLogin from './SectionLogin';
 import SectionSignup from './SectionSignup';
 import { getFieldsValues, getInitialValues } from './formHelper';
+import SectionCertificate from './SectionCertificate';
 
 export interface FormValues {
   logo?: File | null;
@@ -15,6 +16,10 @@ export interface FormValues {
   loginDescription?: string;
   signupTitle?: string;
   signupDescription?: string;
+  portalColor?: string;
+  signatureImage?: File | null;
+  signatureName?: string;
+  signatureTitle?: string;
 }
 
 export interface ThemeSettingsFormProps {
@@ -25,20 +30,24 @@ export interface ThemeSettingsFormProps {
   onError?: (message: ReactNode) => void;
 }
 
-const LOGIN_SIGNUP_FIELDS_MAPPING = {
+const BRANDS_FIELDS_MAPPING = {
   loginTitle: 'configuration.login_tagline',
   loginDescription: 'configuration.login_secondary_tagline',
   signupTitle: 'configuration.signup_tagline',
   signupDescription: 'configuration.signup_secondary_tagline',
+  portalColor: { readPath: 'data.theme.primary', savePath: 'theme.primary' },
+  signatureTitle: 'configuration.signature_title',
+  signatureName: 'configuration.signature_name',
 };
 
 const UPLOAD_FIELDS_MAPPING = {
   logo: 'files.logo',
   featuredImage: 'files.login_background',
+  signatureImage: 'configuration.signature_image'
 };
 
-const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
-  const { portal, isSaving, onSave, onUpload, onError } = props;
+export const useThemeSettingsFormHandler = (props: ThemeSettingsFormProps) => {
+  const { portal, onSave, onUpload, onError } = props;
   const [featuredImageCropped, setFeaturedImageCropped] = useState<Blob | undefined>();
 
   const uploadOrDeleteImage = async (
@@ -62,15 +71,17 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
 
   const handleSubmit: FormikConfig<FormValues>['onSubmit'] = async (values, actions) => {
     try {
-      const [logo, featuredImage] = await Promise.all([
+      const [logo, signatureImage, featuredImage] = await Promise.all([
         uploadOrDeleteImage(values.logo),
+        uploadOrDeleteImage(values.signatureImage),
         uploadOrDeleteImage(values.featuredImage, featuredImageCropped),
       ]);
 
       const toSaveObject = {
         ...(logo !== undefined && { [UPLOAD_FIELDS_MAPPING.logo]: logo }),
+        ...(signatureImage !== undefined && { [UPLOAD_FIELDS_MAPPING.signatureImage]: signatureImage }),
         ...(featuredImage !== undefined && { [UPLOAD_FIELDS_MAPPING.featuredImage]: featuredImage }),
-        ...getFieldsValues(LOGIN_SIGNUP_FIELDS_MAPPING, values, portal),
+        ...getFieldsValues({ ...BRANDS_FIELDS_MAPPING }, values, portal),
       };
 
       if (featuredImage) {
@@ -88,12 +99,23 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
     }
   };
 
+  return {
+    handleSubmit,
+    featuredImageCropped,
+    setFeaturedImageCropped,
+  };
+};
+
+const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
+  const { portal, isSaving } = props;
+  const { handleSubmit, setFeaturedImageCropped } = useThemeSettingsFormHandler(props);
+
   return (
     <Form
-      initialValues={getInitialValues(
+      initialValues={getInitialValues<FormValues>(
         {
           ...UPLOAD_FIELDS_MAPPING,
-          ...LOGIN_SIGNUP_FIELDS_MAPPING,
+          ...BRANDS_FIELDS_MAPPING,
         },
         portal
       )}
@@ -102,6 +124,7 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
       <SectionBrand isSaving={isSaving} onFeaturedImageCropped={setFeaturedImageCropped} />
       <SectionLogin />
       <SectionSignup />
+      <SectionCertificate />
 
       <View flexDirection="row">
         <SubmitButton color="accent" flexDirection="row" alignItems="center">

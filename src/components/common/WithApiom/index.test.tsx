@@ -9,7 +9,7 @@ import LinkComponent from '@src/components/common/Link';
 import authenticatedStoreState from '@src/store/mocks/authenticatedStore';
 import { CurrentSessionType } from '@src/types/user';
 import withApiom from '@src/components/common/WithApiom';
-import ScormAndXapi from '@src/pages/r/app/portal/integrations/scorm-and-xapi';
+import ScormAndXapi, { scormService } from '@src/pages/r/app/portal/integrations/scorm-and-xapi';
 import ThemeSettingsPage from '@src/pages/r/app/portal/settings/theme';
 import MenuOptions from './menus';
 
@@ -75,6 +75,10 @@ const setup = (App, props, initialState = {}) => {
     </CommonProvider>
   );
 };
+
+beforeEach(() => {
+  jest.spyOn(scormService, 'getApplicationId').mockResolvedValue('Existing Application ID');
+})
 
 /** TEST SETUP END * */
 

@@ -1,54 +1,37 @@
 import { getFieldsValues, getInitialValues } from './formHelper';
 
+const portal = {
+  user_id: '1',
+  user_name: 'test_user',
+};
+
+const simpleMapping = {
+  userId: 'portal.user_id',
+};
+
+const customMapping = {
+  userId: { readPath: 'portal.user_id', savePath: 'portal_user_id' },
+};
+
 it('Should get correct fields values', () => {
-  expect(
-    getFieldsValues(
-      {
-        userId: 'portal.user_id',
-      },
-      { userId: '2' },
-      {
-        portal: {
-          user_id: '1',
-          user_name: 'test_user',
-        },
-      }
-    )
-  ).toStrictEqual({
+  expect(getFieldsValues(simpleMapping, { userId: '2' }, { portal })).toStrictEqual({
     'portal.user_id': '2',
   });
+
+  expect(getFieldsValues(customMapping, { userId: '2' }, { portal })).toStrictEqual({ portal_user_id: '2' });
 });
 
 it('Should ignore unchanged fields values', () => {
-  expect(
-    getFieldsValues(
-      {
-        userId: 'portal.user_id',
-      },
-      { userId: '1' },
-      {
-        portal: {
-          user_id: '1',
-        },
-      }
-    )
-  ).toStrictEqual({});
+  expect(getFieldsValues(simpleMapping, { userId: '1' }, { portal })).toStrictEqual({});
+  expect(getFieldsValues(customMapping, { userId: '1' }, { portal })).toStrictEqual({});
 });
 
 it('Should get correct initial values', () => {
-  expect(
-    getInitialValues(
-      {
-        userId: 'portal.user_id',
-      },
-      {
-        portal: {
-          user_id: '1',
-          user_name: 'test_user',
-        },
-      }
-    )
-  ).toStrictEqual({
+  expect(getInitialValues(simpleMapping, { portal })).toStrictEqual({
+    userId: '1',
+  });
+
+  expect(getInitialValues(customMapping, { portal })).toStrictEqual({
     userId: '1',
   });
 });

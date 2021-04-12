@@ -1,4 +1,3 @@
-/* global __DEV__ */
 import Cookies from 'universal-cookie';
 import { HttpInstance } from '@src/utils/http';
 import { getNested } from '@go1d/mine/utils';

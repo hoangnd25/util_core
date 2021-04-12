@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import { SIDEBAR_MENUS_SETTINGS } from '@src/constants';
 import withAuth from '@src/components/common/WithAuth';
 import withApiom from '@src/components/common/WithApiom';
-import { View, NotificationContainer, NotificationManager } from '@go1d/go1d';
+import { View, NotificationManager } from '@go1d/go1d';
 import { CurrentSessionType } from '@src/types/user';
 import createPortalService from '@src/services/portalService';
 import CloudinaryService from '@go1d/mine/services/cloudinary';
@@ -19,6 +19,10 @@ interface State {
   isSaving: boolean;
 }
 
+const ToastOptions = {
+  lifetime: 3000,
+  isOpen: true,
+};
 export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, State> {
   context: React.ContextType<typeof AppContext>;
 
@@ -37,9 +41,10 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
 
     const { http } = this.context;
     const cloudinaryService = new CloudinaryService(http);
-
     const cancelToken = cancelTokenSource || axios.CancelToken.source();
 
+    this.setState({ isSaving: true });
+    
     return cloudinaryService.uploadImage(
       {
         file: image as File,
@@ -52,10 +57,7 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
   handleError = (message: ReactNode) => {
     NotificationManager.warning({
       message,
-      options: {
-        lifetime: 3000,
-        isOpen: true,
-      },
+      options: ToastOptions,
     });
   };
 
@@ -70,6 +72,10 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
 
     try {
       await portalService.save(portal.title, fields);
+
+      this.toastSuccess(
+        <Trans>Theme settings were saved</Trans>
+      );
     } catch (error) {
       this.handleError(<Trans>An unexpected error has occurred, please try again.</Trans>);
 
@@ -81,6 +87,13 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
     this.setState({ isSaving: false });
   };
 
+  toastSuccess(message: ReactNode) {
+    NotificationManager.success({
+      message,
+      options: ToastOptions,
+    });
+  }
+
   public render() {
     const { isSaving } = this.state;
     const {
@@ -89,7 +102,6 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
 
     return (
       <View data-testid="theme_settings_page">
-        <NotificationContainer />
         <ThemeSettingsForm
           portal={portal}
           isSaving={isSaving}

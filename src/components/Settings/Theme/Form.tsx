@@ -1,5 +1,5 @@
-import { Form, Spinner, SubmitButton, View } from '@go1d/go1d';
-import { FunctionComponent, ReactNode, useState } from 'react';
+import { Form, Spinner, SubmitButton, Theme, View } from '@go1d/go1d';
+import { FunctionComponent, ReactNode, useContext, useState } from 'react';
 import { Trans } from '@lingui/macro';
 import { FormikConfig } from 'formik';
 import { GO1Portal } from '@src/types/user';
@@ -110,15 +110,21 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
   const { portal, isSaving } = props;
   const { handleSubmit, setFeaturedImageCropped } = useThemeSettingsFormHandler(props);
 
+  const theme = useContext(Theme);
+  const initialValues = getInitialValues<FormValues>(
+    {
+      ...UPLOAD_FIELDS_MAPPING,
+      ...BRANDS_FIELDS_MAPPING,
+    },
+    portal
+  )
+
   return (
     <Form
-      initialValues={getInitialValues<FormValues>(
-        {
-          ...UPLOAD_FIELDS_MAPPING,
-          ...BRANDS_FIELDS_MAPPING,
-        },
-        portal
-      )}
+      initialValues={{
+        ...initialValues,
+        portalColor: initialValues.portalColor || theme.colors.accent
+      }}
       onSubmit={handleSubmit}
     >
       <SectionBrand isSaving={isSaving} onFeaturedImageCropped={setFeaturedImageCropped} />

@@ -3,10 +3,17 @@ import * as React from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import { ThemeSettingsPage } from '@src/pages/r/app/portal/settings/theme';
+import { CurrentSessionType } from '@src/types/user';
+import { WithRouterProps } from 'next/dist/client/with-router';
 
 const setup = (props = {}) => {
   const componentProps = {
     ...props,
+    router: {
+      pathname: '/',
+    } as WithRouterProps['router'],
+    
+    dispatch: jest.fn(),
     scrollToTop: jest.fn(),
   };
 
@@ -29,7 +36,7 @@ const setup = (props = {}) => {
       isAdministrator: true,
       uuid: 'uuid',
     },
-  };
+  } as CurrentSessionType;
 
   const mockStore = configureMockStore();
 

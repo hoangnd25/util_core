@@ -2,8 +2,9 @@ import { ButtonFilled, ColorPicker as BaseColorPicker, Field, ImageUploader, Ima
 import { t, Trans } from '@lingui/macro';
 import { I18n } from '@lingui/react';
 import SettingsBlockMaker from '@src/components/Settings/SettingsBlockMaker';
+import { usePrevious } from '@src/hooks/usePrevious';
 import { FormikHandlers } from 'formik';
-import { FunctionComponent } from 'react';
+import React, { FunctionComponent } from 'react';
 import SettingsFormSection from '../SettingsFormSection';
 
 const FEATURED_IMAGE_RATIO = 1;
@@ -24,7 +25,7 @@ const DashedBorder: FunctionComponent = ({ children }) => (
 
 interface Props {
   isSaving?: boolean;
-  onFeaturedImageCropped?: (image: Blob) => void;
+  onFeaturedImageCropped?: (image: Blob | undefined) => void;
 }
 
 const ColorPicker: FunctionComponent<{
@@ -46,6 +47,27 @@ const ColorPicker: FunctionComponent<{
 );
 
 const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropped }) => {
+  const [hasInteracted, setHasInteracted] = React.useState<boolean>(false);
+  const prevIsSaving = usePrevious(isSaving);
+
+  React.useEffect(() => {
+    // reset after having saved which means switch from `true` => `false`
+    if (typeof prevIsSaving !== 'undefined' && isSaving !== prevIsSaving && !isSaving) {
+      setHasInteracted(false);
+      onFeaturedImageCropped(undefined);
+    }
+  }, [isSaving]);
+
+  function handleInteractionStart() {
+    setHasInteracted(true);
+  }
+
+  function handleCrop(file: Blob) {
+    if (hasInteracted) {
+      onFeaturedImageCropped(file);
+    }
+  }
+
   return (
     <I18n>
       {({ i18n }) => (
@@ -84,6 +106,7 @@ const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropp
           >
             <DashedBorder>
               <Field
+                id="featuredImage"
                 name="featuredImage"
                 allowCrop
                 hideLabel
@@ -91,7 +114,8 @@ const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropp
                 height={400}
                 cropConfig={{
                   aspect: FEATURED_IMAGE_RATIO,
-                  onCrop: onFeaturedImageCropped,
+                  onCrop: handleCrop,
+                  onInteractionStart: handleInteractionStart,
                 }}
               />
             </DashedBorder>

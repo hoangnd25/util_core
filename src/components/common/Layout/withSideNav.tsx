@@ -67,7 +67,6 @@ class LayoutWithSideNav extends React.PureComponent<WithSideNavProps, any> {
               <View
                 data-testid={item.id}
                 module={item.module}
-                isApiomLink={item.isApiomLink}
                 href={!isActive ? item.href : null}
                 element={!isActive && item.href ? CustomLink : View}
                 width={['0', 230, 230]}

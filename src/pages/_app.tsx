@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { Provider as ReduxProvider } from 'react-redux';
-import { IntlProvider } from 'react-intl';
-import { NotificationContainer, globalCSS, foundations } from '@go1d/go1d';
+import { Provider as ReduxProvider, useSelector } from 'react-redux';
+import { NotificationContainer, foundations } from '@go1d/go1d';
 import { getNested } from '@go1d/mine/utils';
 import CommonProvider from '@go1d/mine/common/Provider';
 import Router from "next/router";
@@ -15,13 +14,12 @@ import AppContext from '@src/utils/appContext';
 import createHttp from '@src/utils/http';
 import { withCurrentSession } from '@src/components/common/WithAuth';
 import { CurrentSessionType } from '@src/types/user';
-import config, { getBaseUrl } from '@src/config';
+import config from '@src/config';
 import initializeStore from '@src/store/configureStore';
-import { getLocale } from '@src/components/common/WithI18n';
+import { ReduxState } from '@src/types/reducers';
 
 const cookies = new Cookies();
 const http = createHttp();
-const noOP = () => null;
 
 const context = {
   cookies,
@@ -77,31 +75,40 @@ export class GO1App extends App<AppProps, any> {
       http.setJWT(currentSession.jwt);
     }
 
-    const locale = getLocale(currentSession);
     return (
       <AppContext.Provider value={context}>
         <ReduxProvider store={store}>
-          <IntlProvider locale={locale} onError={noOP}>
-            <CommonProvider
-              linkComponent={LinkComponent}
-              accent={getNested(currentSession, 'portal.data.theme.primary', foundations.colors.accent)}
-              // logo={getNested(currentSession, 'portal.files.logo', null)}
-              pushNavigationState={Router.push}
-              apiUrl={config.apiEndpoint}
-              jwt={currentSession.jwt}
-              accountId={getNested(currentSession, "account.id", undefined)}
-              portalId={parseInt(getNested(currentSession,"portal.id", undefined), 10) }
-            >
-              <Suspense>
-                <Component router={Router} {...pageProps} />
-                <NotificationContainer />
-              </Suspense>
-            </CommonProvider>
-          </IntlProvider>
+          {/* This component should connect to redux (`currentSession`) instead of just rendering once with props returned from server */}
+          <Main>
+            <Suspense>
+              <Component router={Router} {...pageProps} />
+              <NotificationContainer />
+            </Suspense>
+          </Main>
         </ReduxProvider>
       </AppContext.Provider>
     );
   }
+}
+
+const Main: React.FunctionComponent = ({ children }) => {
+  const currentSession = useSelector<ReduxState, ReduxState['currentSession']>((state) => {
+    return state.currentSession;
+  });
+
+  return (
+    <CommonProvider
+        linkComponent={LinkComponent}
+        accent={getNested(currentSession, 'portal.data.theme.primary', foundations.colors.accent)}
+        pushNavigationState={Router.push}
+        apiUrl={config.apiEndpoint}
+        jwt={currentSession.jwt}
+        accountId={getNested(currentSession, "account.id", undefined)}
+        portalId={parseInt(getNested(currentSession,"portal.id", undefined), 10) }
+      >
+        {children}
+      </CommonProvider>
+  )
 }
 
 export default withRedux(initializeStore)(withCurrentSession(GO1App, {

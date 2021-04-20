@@ -1,3 +1,4 @@
+import { CurrentSessionType } from '@src/types/user';
 import axios from 'axios';
 import configureStore from './configureStore';
 
@@ -7,7 +8,7 @@ test('should have store', () => {
       runtime: {
         embeddedMode: false
       },
-      currentSession: {}
+      currentSession: {} as CurrentSessionType,
     },
     {
       http: axios.create() as any,

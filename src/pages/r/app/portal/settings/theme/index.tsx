@@ -10,8 +10,11 @@ import AppContext from '@src/utils/appContext';
 import axios, { CancelToken } from 'axios';
 import ThemeSettingsForm from '@src/components/Settings/Theme/Form';
 import { Trans } from '@lingui/macro';
+import { WithRouterProps } from 'next/dist/client/with-router';
+import { DispatchProp } from 'react-redux';
+import { USER_UPDATE } from '@src/reducers/session';
 
-export interface ThemeSettingsPageProps {
+export interface ThemeSettingsPageProps extends WithRouterProps, DispatchProp {
   currentSession: CurrentSessionType;
 }
 
@@ -61,6 +64,31 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
     });
   };
 
+  refreshSession = (fields: object) => {
+    const { dispatch, currentSession } = this.props;
+
+    if (currentSession) {
+      const { portal } = currentSession;
+      
+      dispatch({
+        type: USER_UPDATE,
+        payload: {
+          ...currentSession,
+          portal: {
+            ...portal,
+            data: {
+              ...portal.data,
+              theme: {
+                ...portal.data.theme,
+                primary: fields['theme.primary'],
+              }
+            }
+          }
+        },
+      }) 
+    }
+  }
+
   handleSave = async (fields: object) => {
     const {
       currentSession: { portal },
@@ -72,10 +100,12 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
 
     try {
       await portalService.save(portal.title, fields);
+      this.refreshSession(fields);
 
       this.toastSuccess(
-        <Trans>Theme settings were saved</Trans>
+        <Trans>The settings have been saved.</Trans>
       );
+
     } catch (error) {
       this.handleError(<Trans>An unexpected error has occurred, please try again.</Trans>);
 

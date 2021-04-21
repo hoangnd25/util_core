@@ -23,17 +23,19 @@ const DashedBorder: FunctionComponent = ({ children }) => (
 interface Props {
   isSaving?: boolean;
   onFeaturedImageCropped?: (image: Blob) => void;
+  upgradedLogin?: boolean;
 }
 
-const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropped }) => {
+const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropped, upgradedLogin }) => {
   return (
     <SettingsFormSection
       title={<Trans>Brand</Trans>}
       actionButton={
+        upgradedLogin && (
         <ButtonFilled>
           <Trans>Preview brand</Trans>
         </ButtonFilled>
-      }
+        )}
     >
       <SettingsBlockMaker
         marginBottom={5}

@@ -18,10 +18,11 @@ export interface ThemeSettingsFormProps {
   onSave?: (values: unknown) => Promise<void>;
   onUpload?: (image?: File | Blob | null) => Promise<string | undefined>;
   onError?: (message: ReactNode) => void;
+  upgradedLogin?: boolean;
 }
 
 const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
-  const { portal, isSaving, onSave, onUpload, onError } = props;
+  const { portal, isSaving, onSave, onUpload, onError, upgradedLogin } = props;
   const [featuredImageCropped, setFeaturedImageCropped] = useState<Blob | undefined>();
 
   const uploadOrDeleteImage = async (
@@ -74,9 +75,13 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
       }}
       onSubmit={handleSubmit}
     >
-      <SectionBrand isSaving={isSaving} onFeaturedImageCropped={setFeaturedImageCropped} />
-      <SectionLogin />
-      <SectionSignup />
+      <SectionBrand isSaving={isSaving} onFeaturedImageCropped={setFeaturedImageCropped} upgradedLogin={upgradedLogin} />
+      {upgradedLogin && (
+        <View>
+          <SectionLogin />
+          <SectionSignup />
+        </View>
+      )}
       <View flexDirection="row">
         <SubmitButton color="accent" flexDirection="row" alignItems="center">
           <View flexDirection="row" alignItems="center">

@@ -10,6 +10,7 @@ import AppContext from '@src/utils/appContext';
 import axios, { CancelToken } from 'axios';
 import ThemeSettingsForm, { FormValues } from '@src/components/Settings/Theme/Form';
 import { Trans } from '@lingui/macro';
+import UpgradeBanner from '@src/components/Settings/Theme/UpgradeBanner';
 
 export interface ThemeSettingsPageProps {
   currentSession: CurrentSessionType;
@@ -17,6 +18,7 @@ export interface ThemeSettingsPageProps {
 
 interface State {
   isSaving: boolean;
+  upgradedLogin: boolean;
 }
 
 export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, State> {
@@ -27,6 +29,7 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
 
     this.state = {
       isSaving: false,
+      upgradedLogin: false,
     };
   }
 
@@ -78,8 +81,14 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
     this.setState({ isSaving: false });
   };
 
+  isPortalLoginUpgraded = (val) => {
+    console.log(val)
+    this.setState({ upgradedLogin: val})
+  }
+
+
   public render() {
-    const { isSaving } = this.state;
+    const { isSaving, upgradedLogin } = this.state;
     const {
       currentSession: { portal },
     } = this.props;
@@ -87,13 +96,17 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
     return (
       <View data-testid="theme_settings_page">
         <NotificationContainer />
-        <ThemeSettingsForm
-          portal={portal}
-          isSaving={isSaving}
-          onSave={this.handleSave}
-          onUpload={this.handleImageUpload}
-          onError={this.handleError}
-        />
+        <UpgradeBanner upgradedLogin={this.isPortalLoginUpgraded}/>
+        
+          <ThemeSettingsForm
+            portal={portal}
+            isSaving={isSaving}
+            onSave={this.handleSave}
+            onUpload={this.handleImageUpload}
+            onError={this.handleError}
+            upgradedLogin={upgradedLogin}
+          />
+        
       </View>
     );
   }

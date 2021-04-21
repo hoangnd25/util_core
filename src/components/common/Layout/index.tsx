@@ -4,7 +4,7 @@ import { View, Container, foundations } from '@go1d/go1d';
 import WithTopNav from './withTopNav';
 import WithSideNav, { WithSideNavProps } from './withSideNav';
 
-const Index = ({ children, title="GO1", wrappingContainer, withTopNav, withSideNav, containerProps } : { children: React.ReactNode, title?: string, wrappingContainer?: boolean, withTopNav?: boolean, withSideNav?: WithSideNavProps, containerProps?: any }) => {
+const Index = ({ children, title="Go1", wrappingContainer, withTopNav, withSideNav, containerProps } : { children: React.ReactNode, title?: string, wrappingContainer?: boolean, withTopNav?: boolean, withSideNav?: WithSideNavProps, containerProps?: any }) => {
   return (
       <>
         <Head>

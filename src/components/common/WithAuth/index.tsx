@@ -1,5 +1,5 @@
 import { getNested } from '@go1d/mine/utils';
-import { getConfigValue } from "@src/config";
+import { getBaseUrl, getConfigValue } from "@src/config";
 import { USER_UPDATE } from '@src/reducers/session';
 import { CurrentSessionType } from "@src/types/user";
 import React from 'react';
@@ -29,7 +29,7 @@ const WithAuthComponent = AppPage =>  class extends React.Component<any,any> {
     }
     if (typeof window !== 'undefined') {
       window.location.assign(
-        `${getConfigValue('LOGIN_REDIRECT_URL', '/user/login')}?redirect_url=${encodeURIComponent(
+        `${getConfigValue('LOGIN_REDIRECT_URL', '/login')}?redirect_url=${encodeURIComponent(
           window.location.pathname)}${encodeURIComponent(window.location.search)}`);
     }
     return <LoadingSpinner/>
@@ -124,10 +124,13 @@ export const withCurrentSession = (App, helpers) =>
                 err => {
                   removeSession();
                   this.setState({ currentSession: { authenticated: false } });
+                  router.push(`${getBaseUrl()}/access-denied`)
                 }
               );
-          } else if (currentSession.authenticated === true) {
+            } else if (currentSession.authenticated === true && currentSession.account.isAdministrator && !currentSession.account.isContentAdministrator) {
             saveSession(currentSession);
+            } else {
+            router.push(`${getBaseUrl()}/access-denied`)
           }
 
           if (oneTimeToken) {

@@ -12,6 +12,7 @@ import unauthenticatedStoreState from '@src/store/mocks/unauthenticatedStore';
 import withAuth, { withCurrentSession } from './index';
 import LinkComponent from "../Link/index";
 import { loginResponseMock, currentSessionMock } from "./mocks/authMocks";
+import Router from 'next/router';
 
 /** TEST SETUP * */
 let Component;
@@ -21,12 +22,26 @@ class App extends React.Component {
 }
 const http = createHttp();
 
+
+
+jest.mock('next/router', () => ({
+  Router() {
+    return {
+      route: '',
+      pathname: '',
+      query: '',
+      asPath: '',
+      push: jest.fn(),
+    };
+  },
+}));
+
 const mockStore = configureStore([]);
 const defaultStore = mockStore();
 
 const setup = (props: any = {}) => {
   Component = withCurrentSession(App, { http });
-  return mount(<Component router={{ query: { oneTimeToken:"aaa" }, replace :() => {}, asPath: { replace :() => {} } }} store={defaultStore} {...props}/>);
+  return mount(<Component router={{ query: { oneTimeToken:"aaa" }, push: () => jest.fn(), replace :() => {}, asPath: { replace :() => {} } }} store={defaultStore} {...props}/>);
 };
 
 const checkAuthStatus = currentSession => {

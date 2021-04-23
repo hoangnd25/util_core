@@ -136,7 +136,7 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
         <SubmitButton color="accent" flexDirection="row" alignItems="center">
           <View flexDirection="row" alignItems="center">
             {isSaving && <Spinner color="white" marginRight={2} />}
-            <Trans>Save</Trans>
+            <Trans>Save changes</Trans>
           </View>
         </SubmitButton>
       </View>

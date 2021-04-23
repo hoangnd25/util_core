@@ -127,10 +127,11 @@ export const withCurrentSession = (App, helpers) =>
                   router.push(`${getBaseUrl()}/access-denied`)
                 }
               );
+              
             } else if (currentSession.authenticated === true && currentSession.account.isAdministrator && !currentSession.account.isContentAdministrator) {
             saveSession(currentSession);
             } else {
-            router.push(`${getBaseUrl()}/access-denied`)
+            // router.push(`${getBaseUrl()}/access-denied`)
           }
 
           if (oneTimeToken) {

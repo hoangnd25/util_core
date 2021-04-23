@@ -11,6 +11,7 @@ import axios, { CancelToken } from 'axios';
 import ThemeSettingsForm, { FormValues } from '@src/components/Settings/Theme/Form';
 import { Trans } from '@lingui/macro';
 import UpgradeBanner from '@src/components/Settings/Theme/UpgradeBanner';
+import beam from '@src/utils/tracking';
 
 export interface ThemeSettingsPageProps {
   currentSession: CurrentSessionType;
@@ -82,7 +83,6 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
   };
 
   isPortalLoginUpgraded = (val) => {
-    console.log(val)
     this.setState({ upgradedLogin: val})
   }
 
@@ -97,7 +97,6 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
       <View data-testid="theme_settings_page">
         <NotificationContainer />
         <UpgradeBanner upgradedLogin={this.isPortalLoginUpgraded}/>
-        
           <ThemeSettingsForm
             portal={portal}
             isSaving={isSaving}
@@ -106,7 +105,6 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
             onError={this.handleError}
             upgradedLogin={upgradedLogin}
           />
-        
       </View>
     );
   }

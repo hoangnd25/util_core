@@ -5,25 +5,50 @@ import Image from 'next/image';
 import PortalService from '@src/services/portalService';
 import { connect } from 'react-redux';
 import { mapCurrentSessionToProps } from '@src/components/common/WithAuth';
+import beam from '@src/utils/tracking';
 
 export const portalService = PortalService();
 const UpgradeBanner = props => {
   const [showBanner, setShowBanner] = useState(false);
-  
+
   const {
-    currentSession: { portal },
+    currentSession: { portal, user },
   } = props;
 
   useEffect(() => {
-    portalService
-      .fetchPortalConfig(portal.title)
-      .then(resp => resp.configuration?.login_version !== 'peach' && setShowBanner(true));
-      passUpgradedLoginStatus();
+    portalService.fetchPortalConfig(portal.title).then(resp => {
+      beam.setContext({
+        application: {
+          repo: 'apps/go1-portal',
+          page: 'settings/theme',
+        },
+      });
+      beam.identify(user, portal);
+
+      if (resp.configuration?.login_version !== 'peach') {
+        setShowBanner(true);
+        beam.startSession('go1-portal.loginVersion.portalNeedsToUpgrade', {});
+        passUpgradedLoginStatus();
+      }
+    }),
+      () => {
+        beam.endSession();
+      };
   }, []);
 
   const passUpgradedLoginStatus = () => {
     props.upgradedLogin(showBanner);
-  }
+  };
+
+  const submitUpgradedStatus = () => {
+    beam.track({
+      type: 'go1-portal.loginVersion.submitPortalUpgrade',
+    });
+    portalService.savePortalConfig(portal.title, { 'configuration.login_version': 'peach' }).then(() => {
+      setShowBanner(false), passUpgradedLoginStatus();
+      beam.endSession();
+    });
+  };
 
   return (
     <View>
@@ -41,11 +66,7 @@ const UpgradeBanner = props => {
                 marginTop={4}
                 width="fit-content"
                 border={1}
-                onClick={() => (
-                  portalService.savePortalConfig(portal.title, { 'configuration.login_version': 'peach' }),
-                  setShowBanner(false),
-                  passUpgradedLoginStatus()
-                )}
+                onClick={submitUpgradedStatus}
                 css={{ borderColor: foundations.colors.faded, color: foundations.colors.default }}
               >
                 <Trans>Upgrade now</Trans>

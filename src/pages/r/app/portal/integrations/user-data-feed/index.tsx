@@ -5,13 +5,13 @@ import { Spinner, Text, View } from '@go1d/go1d';
 import IconEdit from '@go1d/go1d/build/components/Icons/Edit';
 import { SIDEBAR_MENUS_INTEGRATIONS } from '@src/constants';
 import withAuth from '@src/components/common/WithAuth';
-import withIntegrations from '@src/components/common/WithIntegrations';
 import AWSConnectionDetail from '@src/components/AwsConnectionDetail';
 import DataFeedEmptyState from '@src/components/DataFeed/emptyState';
 import DataFeedUploadState, { MappingStep } from '@src/components/DataFeed/uploadState';
 import DataFeedService, { AWSCredential, MappingData } from '@src/services/dataFeed';
 import withI18n from '@src/components/common/WithI18n';
 import { I18n } from '@lingui/core';
+import withApiom from '@src/components/common/WithApiom';
 
 export const dataFeedService = DataFeedService();
 
@@ -144,4 +144,4 @@ export class UserDataFeed extends React.Component<Props, State> {
   }
 }
 
-export default withI18n(withAuth(withIntegrations(UserDataFeed, { active: SIDEBAR_MENUS_INTEGRATIONS.USER_DATA_FEED })));
+export default withI18n(withAuth(withApiom(UserDataFeed, { active: SIDEBAR_MENUS_INTEGRATIONS.USER_DATA_FEED, menuType: "Integrations" })));

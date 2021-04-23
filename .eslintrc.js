@@ -18,6 +18,7 @@ module.exports = {
     React: 'writable',
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
+    __DEV__: 'readonly',
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -59,5 +60,6 @@ module.exports = {
     'jsx-a11y/html-has-lang': 'off',
     'import/no-extraneous-dependencies': 1,
     'import/extensions': 'off',
+    "no-redeclare": "off",
   },
 };

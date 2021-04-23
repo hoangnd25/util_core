@@ -1,19 +1,22 @@
 import React, { ReactNode } from 'react';
 import { SIDEBAR_MENUS_SETTINGS } from '@src/constants';
 import withAuth from '@src/components/common/WithAuth';
-import withSettings from '@src/components/common/WithSettings';
-import { View, NotificationContainer, NotificationManager } from '@go1d/go1d';
+import withApiom from '@src/components/common/WithApiom';
+import { View, NotificationManager } from '@go1d/go1d';
 import { CurrentSessionType } from '@src/types/user';
 import createPortalService from '@src/services/portalService';
 import CloudinaryService from '@go1d/mine/services/cloudinary';
 import AppContext from '@src/utils/appContext';
 import axios, { CancelToken } from 'axios';
-import ThemeSettingsForm, { FormValues } from '@src/components/Settings/Theme/Form';
+import ThemeSettingsForm from '@src/components/Settings/Theme/Form';
 import { Trans } from '@lingui/macro';
 import UpgradeBanner from '@src/components/Settings/Theme/UpgradeBanner';
 import beam from '@src/utils/tracking';
+import { WithRouterProps } from 'next/dist/client/with-router';
+import { DispatchProp } from 'react-redux';
+import { USER_UPDATE } from '@src/reducers/session';
 
-export interface ThemeSettingsPageProps {
+export interface ThemeSettingsPageProps extends WithRouterProps, DispatchProp {
   currentSession: CurrentSessionType;
 }
 
@@ -22,6 +25,10 @@ interface State {
   upgradedLogin: boolean;
 }
 
+const ToastOptions = {
+  lifetime: 3000,
+  isOpen: true,
+};
 export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, State> {
   context: React.ContextType<typeof AppContext>;
 
@@ -41,9 +48,10 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
 
     const { http } = this.context;
     const cloudinaryService = new CloudinaryService(http);
-
     const cancelToken = cancelTokenSource || axios.CancelToken.source();
 
+    this.setState({ isSaving: true });
+    
     return cloudinaryService.uploadImage(
       {
         file: image as File,
@@ -56,14 +64,36 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
   handleError = (message: ReactNode) => {
     NotificationManager.warning({
       message,
-      options: {
-        lifetime: 3000,
-        isOpen: true,
-      },
+      options: ToastOptions,
     });
   };
 
-  handleSave = async (fields: FormValues) => {
+  refreshSession = (fields: object) => {
+    const { dispatch, currentSession } = this.props;
+
+    if (currentSession) {
+      const { portal } = currentSession;
+      
+      dispatch({
+        type: USER_UPDATE,
+        payload: {
+          ...currentSession,
+          portal: {
+            ...portal,
+            data: {
+              ...portal.data,
+              theme: {
+                ...portal.data.theme,
+                primary: fields['theme.primary'],
+              }
+            }
+          }
+        },
+      }) 
+    }
+  }
+
+  handleSave = async (fields: object) => {
     const {
       currentSession: { portal },
     } = this.props;
@@ -74,9 +104,18 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
 
     try {
       await portalService.save(portal.title, fields);
-    } catch (savingError) {
+      this.refreshSession(fields);
+
+      this.toastSuccess(
+        <Trans>The settings have been saved.</Trans>
+      );
+
+    } catch (error) {
       this.handleError(<Trans>An unexpected error has occurred, please try again.</Trans>);
-      console.error(savingError);
+
+      if (__DEV__) {
+        console.error(error);
+      }
     }
 
     this.setState({ isSaving: false });
@@ -85,7 +124,13 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
   isPortalLoginUpgraded = (val) => {
     this.setState({ upgradedLogin: val})
   }
-
+  
+  toastSuccess(message: ReactNode) {
+    NotificationManager.success({
+      message,
+      options: ToastOptions,
+    });
+  }
 
   public render() {
     const { isSaving, upgradedLogin } = this.state;
@@ -95,7 +140,6 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
 
     return (
       <View data-testid="theme_settings_page">
-        <NotificationContainer />
         <UpgradeBanner upgradedLogin={this.isPortalLoginUpgraded}/>
           <ThemeSettingsForm
             portal={portal}
@@ -112,9 +156,4 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
 
 ThemeSettingsPage.contextType = AppContext;
 
-export default withAuth(
-  withSettings(ThemeSettingsPage, {
-    pageTitle: <Trans>Theme and customization</Trans>,
-    active: SIDEBAR_MENUS_SETTINGS.THEME,
-  })
-);
+export default withAuth(withApiom(ThemeSettingsPage, { pageTitle: <Trans>Theme and customization</Trans>, active: SIDEBAR_MENUS_SETTINGS.THEME, menuType: "Settings" },  ));

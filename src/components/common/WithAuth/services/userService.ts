@@ -1,11 +1,14 @@
 import Cookies from 'universal-cookie';
-import { FeatureToggleModel, FeatureToggleService } from "@go1d/go1d-exchange";
+import { FeatureToggleModel, FeatureToggleService, } from "@go1d/go1d-exchange";
 import { GO1Account, GO1Portal, GO1User, CurrentSessionType } from '@src/types/user';
 import { getStorage, setStorage, removeStorage } from '@src/utils/storage';
 import intersection from "@src/utils/intersection";
 import { HttpInstance } from '@src/utils/http';
 
 const AUTH_COOKIE_NAME = 'go1';
+export const STORED_ACTIVE_INSTANCE_PROPERTY = 'active-instance-domain';
+export const STORED_UUID_PROPERTY = 'uuid';
+export const STORED_JWT_PROPERTY = 'jwt';
 
 export function saveSession(currentSession: CurrentSessionType) {
   // only perform browser side
@@ -13,7 +16,7 @@ export function saveSession(currentSession: CurrentSessionType) {
     setStorage('jwt', currentSession.jwt, true);
     setStorage('uuid', currentSession.user.uuid, true);
     setStorage('active-instance', parseInt(currentSession.portal.id, 10), true);
-    setStorage('active-instance-domain', currentSession.portal.title, true);
+    setStorage(STORED_ACTIVE_INSTANCE_PROPERTY, currentSession.portal.title, true);
     const cookies = new Cookies();
     cookies.set(
       AUTH_COOKIE_NAME,
@@ -25,15 +28,14 @@ export function saveSession(currentSession: CurrentSessionType) {
 }
 
 export function removeSession() {
-  removeStorage('jwt');
-  removeStorage('uuid');
+  removeStorage(STORED_JWT_PROPERTY);
+  removeStorage(STORED_UUID_PROPERTY);
   removeStorage('active-instance');
-  removeStorage('active-instance-domain');
+  removeStorage(STORED_ACTIVE_INSTANCE_PROPERTY);
   const cookies = new Cookies();
   cookies.remove(AUTH_COOKIE_NAME, { path: '/' });
 }
 
-/* istanbul ignore file  */
 class UserService {
   public http: HttpInstance = null ;
 
@@ -71,9 +73,9 @@ class UserService {
       [uuid, instanceId, instanceName, jwt] = go1CookieValue.split(':');
     } else {
       // Fallback to localStorage if Cookie doesn't exist
-      jwt = getStorage('jwt');
-      uuid = getStorage('uuid');
-      instanceName = getStorage('active-instance-domain');
+      jwt = getStorage(STORED_JWT_PROPERTY);
+      uuid = getStorage(STORED_UUID_PROPERTY);
+      instanceName = getStorage(STORED_ACTIVE_INSTANCE_PROPERTY);
     }
     // No login information found
     if (!jwt || !uuid) {

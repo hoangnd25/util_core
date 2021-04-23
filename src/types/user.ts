@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { FeatureToggleModel } from '@go1d/go1d-exchange';
 
 export interface GO1Portal {
@@ -7,9 +8,10 @@ export interface GO1Portal {
   data: any;
   featureToggles: FeatureToggleModel[];
   files?: {
-    dashboard_icon?: string; // eslint-disable-line camelcase
-    logo?: string; // eslint-disable-line camelcase
-    feature_image?: string; // eslint-disable-line camelcase
+    dashboard_icon?: string;
+    login_background?: string;
+    logo?: string;
+    feature_image?: string;
   };
 }
 

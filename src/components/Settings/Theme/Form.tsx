@@ -1,28 +1,54 @@
-import { Form, Spinner, SubmitButton, View } from '@go1d/go1d';
-import { FunctionComponent, ReactNode, useState } from 'react';
+import { Form, Spinner, SubmitButton, Theme, View } from '@go1d/go1d';
+import { FunctionComponent, ReactNode, useContext, useState } from 'react';
 import { Trans } from '@lingui/macro';
 import { FormikConfig } from 'formik';
 import { GO1Portal } from '@src/types/user';
 import SectionBrand from './SectionBrand';
 import SectionLogin from './SectionLogin';
 import SectionSignup from './SectionSignup';
+import { getFieldsValues, getInitialValues } from './formHelper';
+import SectionCertificate from './SectionCertificate';
 
 export interface FormValues {
   logo?: File | null;
   featuredImage?: File | null;
+  loginTitle?: string;
+  loginDescription?: string;
+  signupTitle?: string;
+  signupDescription?: string;
+  portalColor?: string;
+  signatureImage?: File | null;
+  signatureName?: string;
+  signatureTitle?: string;
 }
 
 export interface ThemeSettingsFormProps {
-  portal?: Partial<GO1Portal>;
+  portal: GO1Portal;
   isSaving?: boolean;
-  onSave?: (values: unknown) => Promise<void>;
-  onUpload?: (image?: File | Blob | null) => Promise<string | undefined>;
+  onSave: (values: object) => Promise<void>;
+  onUpload: (image?: File | Blob | null) => Promise<string | undefined>;
   onError?: (message: ReactNode) => void;
   upgradedLogin?: boolean;
 }
 
-const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
-  const { portal, isSaving, onSave, onUpload, onError, upgradedLogin } = props;
+const BRANDS_FIELDS_MAPPING = {
+  loginTitle: 'configuration.login_tagline',
+  loginDescription: 'configuration.login_secondary_tagline',
+  signupTitle: 'configuration.signup_tagline',
+  signupDescription: 'configuration.signup_secondary_tagline',
+  portalColor: { readPath: 'data.theme.primary', savePath: 'theme.primary' },
+  signatureTitle: 'configuration.signature_title',
+  signatureName: 'configuration.signature_name',
+};
+
+const UPLOAD_FIELDS_MAPPING = {
+  logo: 'files.logo',
+  featuredImage: 'files.login_background',
+  signatureImage: 'configuration.signature_image'
+};
+
+export const useThemeSettingsFormHandler = (props: ThemeSettingsFormProps) => {
+  const { portal, onSave, onUpload, onError } = props;
   const [featuredImageCropped, setFeaturedImageCropped] = useState<Blob | undefined>();
 
   const uploadOrDeleteImage = async (
@@ -45,33 +71,60 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
   };
 
   const handleSubmit: FormikConfig<FormValues>['onSubmit'] = async (values, actions) => {
-    let toSaveObject = {};
     try {
-      const [logo, featuredImage] = await Promise.all([
+      const [logo, signatureImage, featuredImage] = await Promise.all([
         uploadOrDeleteImage(values.logo),
+        uploadOrDeleteImage(values.signatureImage),
         uploadOrDeleteImage(values.featuredImage, featuredImageCropped),
       ]);
 
-      toSaveObject = {
-        ...toSaveObject,
-        ...(logo !== undefined && { 'files.logo': logo }),
-        ...(featuredImage !== undefined && { 'files.feature_image': featuredImage }),
+      const toSaveObject = {
+        ...(logo !== undefined && { [UPLOAD_FIELDS_MAPPING.logo]: logo }),
+        ...(signatureImage !== undefined && { [UPLOAD_FIELDS_MAPPING.signatureImage]: signatureImage }),
+        ...(featuredImage !== undefined && { [UPLOAD_FIELDS_MAPPING.featuredImage]: featuredImage }),
+        ...getFieldsValues({ ...BRANDS_FIELDS_MAPPING }, values, portal),
       };
-    } catch (uploadingError) {
-      onError?.(<Trans>Upload image failed</Trans>);
-      actions.setSubmitting(false);
-      return;
-    }
 
-    await onSave?.(toSaveObject);
-    actions.setSubmitting(false);
+      if (featuredImage) {
+        actions.setFieldValue('featuredImage', featuredImage);
+      }
+
+      await onSave(toSaveObject);
+    } catch (error) {
+      if (__DEV__) {
+        console.log(error);
+      }
+      onError?.(<Trans>Upload image failed</Trans>);
+    } finally {
+      actions.setSubmitting(false);
+    }
   };
+
+  return {
+    handleSubmit,
+    featuredImageCropped,
+    setFeaturedImageCropped,
+  };
+};
+
+const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
+  const { portal, isSaving, upgradedLogin } = props;
+  const { handleSubmit, setFeaturedImageCropped } = useThemeSettingsFormHandler(props);
+
+  const theme = useContext(Theme);
+  const initialValues = getInitialValues<FormValues>(
+    {
+      ...UPLOAD_FIELDS_MAPPING,
+      ...BRANDS_FIELDS_MAPPING,
+    },
+    portal
+  )
 
   return (
     <Form
       initialValues={{
-        logo: portal?.files?.logo,
-        featuredImage: portal?.files?.feature_image, // eslint-disable-line camelcase
+        ...initialValues,
+        portalColor: initialValues.portalColor || theme.colors.accent
       }}
       onSubmit={handleSubmit}
     >
@@ -86,7 +139,7 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
         <SubmitButton color="accent" flexDirection="row" alignItems="center">
           <View flexDirection="row" alignItems="center">
             {isSaving && <Spinner color="white" marginRight={2} />}
-            <Trans>Save</Trans>
+            <Trans>Save changes</Trans>
           </View>
         </SubmitButton>
       </View>

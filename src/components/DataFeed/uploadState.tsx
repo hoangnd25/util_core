@@ -684,8 +684,6 @@ class DataFeedUploadState extends React.Component<Props, State> {
                     <IconInteractive marginRight={3} />
 
                     <Text
-                      flexShrink={1}
-                      flexGrow={1}
                       css={{
                         overflow: "hidden",
                         whiteSpace: "nowrap",

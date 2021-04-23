@@ -7,7 +7,7 @@ interface sessionAction {
     payload: any;
 }
 
-export const sessionDefaultState = null;
+export const sessionDefaultState = {};
 
 // Reducers
 export function sessionReducer(state = sessionDefaultState, action: sessionAction) {

@@ -2,6 +2,7 @@ import { ReduxState } from '@src/types/reducers';
 //
 // enviroment variables or custom keys in Native objects
 //
+
 declare const __DEV__: boolean;
 
 declare interface Window {
@@ -36,5 +37,6 @@ declare global {
       assign: Function;
     };
   }
+  
   const __DEV__: boolean;
 }

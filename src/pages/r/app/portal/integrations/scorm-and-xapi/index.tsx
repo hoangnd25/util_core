@@ -4,7 +4,7 @@ import { Spinner, Text, View, ButtonFilled, ButtonMinimal, foundations } from '@
 import { SIDEBAR_MENUS_INTEGRATIONS } from '@src/constants';
 import ScormService from '@src/services/scormService';
 import withAuth from '@src/components/common/WithAuth';
-import withIntegrations from '@src/components/common/WithIntegrations';
+import withApiom from '@src/components/common/WithApiom';
 import withI18n from '@src/components/common/WithI18n';
 
 export const scormService = ScormService();
@@ -136,4 +136,4 @@ export class ScormAndXapi extends React.Component<Props, State> {
   }
 }
 
-export default withI18n(withAuth(withIntegrations(ScormAndXapi, { active: SIDEBAR_MENUS_INTEGRATIONS.SCORM_AND_XAPI })));
+export default withI18n(withAuth(withApiom(ScormAndXapi, { active: SIDEBAR_MENUS_INTEGRATIONS.SCORM_AND_XAPI, menuType: "Integrations" })));

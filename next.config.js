@@ -18,14 +18,29 @@ module.exports = {
     LOGIN_REDIRECT_URL: process.env.ENV === 'local' ? '/r/app/portal' : '/user/login',
     AUTH_URL: process.env.AUTH_URL,
     AUTH_CLIENT_ID: process.env.AUTH_CLIENT_ID,
+    BEAM_URL: process.env.BEAM_URL,
   },
 
   webpack: (config, options) => {
     // Include node_modules for babel transformation
     if (!options.isServer) {
+      const needRecompiling4IE = [
+        '@go1d',
+        'query-string',
+        'react-dev-utils',
+        'split-on-first',
+        'ansi-styles',
+        'strict-uri-encode',
+        'debug',
+        'dotenv',
+        'map-obj',
+      ];
       config.module.rules.push({
-        test: /\.js$/,
-        include: /node_modules/,
+        test: /\.(js|ts)$/,
+        include: [
+          new RegExp(`node_modules/${needRecompiling4IE.join('|')}`),
+          // /node_modules\/(?!(core-js)\/).*/
+        ],
         use: {
           loader: 'babel-loader',
           options: {
@@ -42,7 +57,9 @@ module.exports = {
       new webpack.DefinePlugin({
       __DEV__: process.env.ENV === 'local',
     }));
-    config.plugins.push(new LodashModuleReplacementPlugin);
+    config.plugins.push(new LodashModuleReplacementPlugin({
+      paths: true
+    }));
 
     // only create stats on local
     if(process.env.ENV === 'local') {

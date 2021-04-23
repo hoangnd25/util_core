@@ -1,6 +1,6 @@
 import { globalCSS } from '@go1d/go1d';
 import { extractCritical } from 'emotion-server';
-import Document, { Html, Head, Main, NextScript } from 'next/document';
+import Document, { Head, Html, Main, NextScript } from 'next/document';
 import * as React from 'react';
 
 globalCSS();

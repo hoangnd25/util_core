@@ -1,7 +1,7 @@
 import { Banner, View, Text, ButtonMinimal, foundations } from '@go1d/go1d';
 import { Trans } from '@lingui/macro';
 import { useState, useEffect } from 'react';
-// import Image from 'next/image';
+import Image from 'next/image';
 import PortalService from '@src/services/portalService';
 import { connect } from 'react-redux';
 import { mapCurrentSessionToProps } from '@src/components/common/WithAuth';
@@ -74,7 +74,7 @@ const UpgradeBanner = props => {
             </View>
 
             <View flexGrow={1}>
-              {/* <Image src="/Login_banner.png" alt="Go1_login" width="224" height="164"></Image> */}
+              <Image src="/Login_banner.png" alt="Go1_login" width="224" height="164"></Image>
             </View>
           </View>
         </Banner>

@@ -12,10 +12,10 @@ import IconCheck from '@go1d/go1d/build/components/Icons/Check';
 import { CurrentSessionType } from '@src/types/user';
 import { SIDEBAR_MENUS_INTEGRATIONS } from '@src/constants';
 import withAuth from '@src/components/common/WithAuth';
-import withIntegrations from '@src/components/common/WithIntegrations';
 import TabMenuNavigation from '@src/components/common/TabMenuNavigation';
 import PortalService from '@src/services/portalService';
 import ContentDistributorExport from '@src/components/ContentDistributorExport';
+import withApiom from '@src/components/common/WithApiom';
 
 export const portalService = PortalService();
 
@@ -120,4 +120,4 @@ export class Oracle extends React.Component<Props, any> {
   }
 }
 
-export default withAuth(withIntegrations(Oracle, { active: SIDEBAR_MENUS_INTEGRATIONS.ORACLE }));
+export default withAuth(withApiom(Oracle, { active: SIDEBAR_MENUS_INTEGRATIONS.ORACLE, menuType: "Integrations" }));

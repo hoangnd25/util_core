@@ -16,7 +16,7 @@ export interface MenuItem {
 }
 
 export interface WithSideNavProps {
-  title?: string;
+  title?: React.ReactNode;
   active?: string;
   menu: MenuItem[];
 }
@@ -67,7 +67,6 @@ class LayoutWithSideNav extends React.PureComponent<WithSideNavProps, any> {
               <View
                 data-testid={item.id}
                 module={item.module}
-                isApiomLink={item.isApiomLink}
                 href={!isActive ? item.href : null}
                 element={!isActive && item.href ? CustomLink : View}
                 width={['0', 230, 230]}
@@ -101,16 +100,8 @@ class LayoutWithSideNav extends React.PureComponent<WithSideNavProps, any> {
   };
 
   render() {
-    const { title } = this.props;
     return (
       <View marginBottom={5} marginRight={[0, 6, 6]}>
-        {title && (
-          <View marginBottom={3}>
-            <Text element="h3" fontWeight="semibold" fontSize={3}>
-              {title}
-            </Text>
-          </View>
-        )}
 
         <View display={['flex', 'none', 'none']}>{this.renderMobileMenus()}</View>
 

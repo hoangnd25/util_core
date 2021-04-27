@@ -135,6 +135,7 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
           <SectionSignup />
         </View>
       )}
+      <SectionCertificate />
       <View flexDirection="row">
         <SubmitButton color="accent" flexDirection="row" alignItems="center">
           <View flexDirection="row" alignItems="center">

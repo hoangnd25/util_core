@@ -111,7 +111,7 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
       );
 
     } catch (error) {
-      this.handleError(<Trans>An unexpected error has occurred, please try again.</Trans>);
+      this.handleError(<Trans>An unexpected error has occurred. Please try again.</Trans>);
 
       if (__DEV__) {
         console.error(error);

@@ -17,8 +17,9 @@ class CustomLink extends React.PureComponent<any> {
     } = this.props;
 
     let externalLink = true;
-    const baseURL = (module && modulesInApp[module]) ? modulesInApp[module].baseURL : '';
-    const composedLink = `${baseURL}${isApiomLink ? '/p/#/' : ''}${prefix}${prefix ? "/" : ""}${href}`;
+    const baseURL = module && modulesInApp[module] ? modulesInApp[module].baseURL : '';
+    const composedLink = `${baseURL}${isApiomLink ? '/p/#/' : ''}${prefix}${prefix ? '/' : ''}${href}`;
+
     // Check if url is within this APP
     availableModules.forEach(moduleName => {
       if (composedLink.indexOf(modulesInApp[moduleName].baseURL) === 0) {

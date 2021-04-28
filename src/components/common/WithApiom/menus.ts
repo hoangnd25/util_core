@@ -20,7 +20,7 @@ class MenuOptions {
         id: SIDEBAR_MENUS_SETTINGS.THEME,
         title: i18n._(t`Theme and Customisation`),
         subtitle: i18n._(t`Brand, message customisation and certificates`),
-        href: 'app/settings/theme',
+        href: '/settings/theme',
         isApiomLink: false,
         isVisible: true,
         module: 'portal',

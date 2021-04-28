@@ -1,7 +1,7 @@
 import * as React from 'react';
-import Router from "next/router";
+import Router from 'next/router';
 import { getBaseUrl } from '@src/config';
-import withAuth from '@src/components/common/WithAuth'
+import withAuth from '@src/components/common/WithAuth';
 
 class IndexRedirect extends React.Component<any, any> {
   public componentDidMount() {
@@ -9,7 +9,7 @@ class IndexRedirect extends React.Component<any, any> {
     if (currentSession?.account.isAdministrator && !currentSession?.account.isContentAdministrator) {
       Router.push(getBaseUrl());
     } else {
-      Router.push(`${getBaseUrl()}/access-denied`)
+      Router.push(`${getBaseUrl()}/access-denied`);
     }
   }
 

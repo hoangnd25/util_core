@@ -38,7 +38,7 @@ const INPUT = {
 const setup = (props?: ThemeSettingsFormProps) => {
   return mount(
     <I18nProvider language="en" catalogs={{ en: { messages: {} } }}>
-      <ThemeSettingsForm {...props} upgradedLogin={true}/>
+      <ThemeSettingsForm {...props} upgradedLogin={true} />
     </I18nProvider>
   );
 };
@@ -53,9 +53,9 @@ it('Should render with correct fields', () => {
     onUpload: jest.fn(),
     portal: defaultPortal as GO1Portal,
   });
-    Object.entries(INPUT).forEach(([_, selector]) => {
-      expect(wrapper.find(selector)).toHaveLength(1);
-    }); 
+  Object.entries(INPUT).forEach(([_, selector]) => {
+    expect(wrapper.find(selector)).toHaveLength(1);
+  });
 });
 
 it('Should ignore unchanged fields for submit', async done => {

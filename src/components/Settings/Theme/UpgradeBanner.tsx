@@ -30,10 +30,8 @@ const UpgradeBanner = props => {
         beam.startSession('go1-portal.loginVersion.portalNeedsToUpgrade', {});
         passUpgradedLoginStatus();
       }
-    }),
-      () => {
-        beam.endSession();
-      };
+    });
+    return beam.endSession();
   }, []);
 
   const passUpgradedLoginStatus = () => {
@@ -83,4 +81,7 @@ const UpgradeBanner = props => {
   );
 };
 
-export default connect(mapCurrentSessionToProps, null)(UpgradeBanner);
+export default connect(
+  mapCurrentSessionToProps,
+  null
+)(UpgradeBanner);

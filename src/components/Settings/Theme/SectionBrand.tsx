@@ -38,12 +38,14 @@ const ColorPicker: FunctionComponent<{
   <BaseColorPicker
     {...props}
     color={value}
-    onChange={newColor => onChange?.({
-      target: {
-        name,
-        value: newColor,
-      },
-    })}
+    onChange={newColor =>
+      onChange?.({
+        target: {
+          name,
+          value: newColor,
+        },
+      })
+    }
   />
 );
 
@@ -76,10 +78,11 @@ const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropp
           title={<Trans>Brand</Trans>}
           actionButton={
             upgradedLogin && (
-            <ButtonFilled>
-              <Trans>Preview brand</Trans>
-            </ButtonFilled>
-            )}
+              <ButtonFilled>
+                <Trans>Preview brand</Trans>
+              </ButtonFilled>
+            )
+          }
         >
           <SettingsBlockMaker
             marginBottom={5}

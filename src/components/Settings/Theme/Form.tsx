@@ -44,7 +44,7 @@ const BRANDS_FIELDS_MAPPING = {
 const UPLOAD_FIELDS_MAPPING = {
   logo: 'files.logo',
   featuredImage: 'files.login_background',
-  signatureImage: 'configuration.signature_image'
+  signatureImage: 'configuration.signature_image',
 };
 
 export const useThemeSettingsFormHandler = (props: ThemeSettingsFormProps) => {
@@ -118,17 +118,21 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
       ...BRANDS_FIELDS_MAPPING,
     },
     portal
-  )
+  );
 
   return (
     <Form
       initialValues={{
         ...initialValues,
-        portalColor: initialValues.portalColor || theme.colors.accent
+        portalColor: initialValues.portalColor || theme.colors.accent,
       }}
       onSubmit={handleSubmit}
     >
-      <SectionBrand isSaving={isSaving} onFeaturedImageCropped={setFeaturedImageCropped} upgradedLogin={upgradedLogin} />
+      <SectionBrand
+        isSaving={isSaving}
+        onFeaturedImageCropped={setFeaturedImageCropped}
+        upgradedLogin={upgradedLogin}
+      />
       {upgradedLogin && (
         <View>
           <SectionLogin />

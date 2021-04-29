@@ -41,6 +41,7 @@ const setup = (query = {}) => {
             username: 'testusername',
             password: 'testpassword',
           },
+          login_version: 'peach',
         },
       },
     },

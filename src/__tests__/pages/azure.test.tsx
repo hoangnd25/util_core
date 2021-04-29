@@ -1,6 +1,7 @@
 import { mount } from 'enzyme';
 import * as React from 'react';
 import { IntlProvider } from 'react-intl';
+import { Banner } from '@go1d/go1d';
 import { Provider as ReduxProvider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import CommonProvider from '@go1d/mine/common/Provider';
@@ -98,7 +99,7 @@ it('Should render error message - SSO:PortalNotFound', (done) => {
   const wrapper = setup({ error_code: 'SSO:PortalNotFound' });
   setImmediate(() => {
     wrapper.update();
-    expect(wrapper.find('Banner').length).toBe(1);
+    expect(wrapper.find(Banner).length).toBe(1);
     done();
   });
 });
@@ -107,7 +108,7 @@ it('Should render error message - default', (done) => {
   const wrapper = setup({ error_code: 'undefined' });
   setImmediate(() => {
     wrapper.update();
-    expect(wrapper.find('Banner').length).toBe(1);
+    expect(wrapper.find(Banner).length).toBe(1);
     done();
   });
 });

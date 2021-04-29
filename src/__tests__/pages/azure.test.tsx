@@ -34,16 +34,7 @@ const setup = (query = {}) => {
       data: {},
       featureToggles: [],
       files: {},
-      configuration: {
-        integrations: {
-          oracle: {
-            domain: 'test domain',
-            username: 'testusername',
-            password: 'testpassword',
-          },
-        },
-        login_version: 'peach',
-      },
+      configuration: {},
     },
     account: {
       id: 123,

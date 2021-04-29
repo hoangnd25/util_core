@@ -25,7 +25,7 @@ const UpgradeBanner = props => {
       });
       beam.identify(user, portal);
 
-      if (resp.configuration?.login_version !== 'peach') {
+      if (resp.configuration && resp.configuration.login_version !== 'peach') {
         setShowBanner(true);
         beam.startSession('go1-portal.loginVersion.portalNeedsToUpgrade', {});
         passUpgradedLoginStatus();

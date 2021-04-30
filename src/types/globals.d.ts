@@ -37,6 +37,6 @@ declare global {
       assign: Function;
     };
   }
-  
+  // eslint-disable-next-line
   const __DEV__: boolean;
 }

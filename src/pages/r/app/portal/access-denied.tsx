@@ -3,8 +3,13 @@ import { Text, View, ButtonFilled, foundations } from '@go1d/go1d';
 import { Trans } from '@lingui/macro';
 import Layout from '@src/components/common/Layout'
 import withAuth from '@src/components/common/WithAuth'
+import { CurrentSessionType } from '@src/types/user';
 
-function AccessDenied(props) {
+interface AccessDeniedProps {
+ currentSession: CurrentSessionType
+}
+
+const AccessDenied = (props : AccessDeniedProps) => {
   const { currentSession: { portal } } = props
 
   return (

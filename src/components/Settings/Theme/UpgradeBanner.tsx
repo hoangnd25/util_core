@@ -6,9 +6,16 @@ import PortalService from '@src/services/portalService';
 import { connect } from 'react-redux';
 import { mapCurrentSessionToProps } from '@src/components/common/WithAuth';
 import beam from '@src/utils/tracking';
+import { CurrentSessionType } from '@src/types/user';
 
 export const portalService = PortalService();
-const UpgradeBanner = props => {
+
+interface UpgradeBannerProps {
+  currentSession: CurrentSessionType;
+  upgradedLogin: Function;
+}
+
+const UpgradeBanner = (props: UpgradeBannerProps) => {
   const [showBanner, setShowBanner] = useState(false);
 
   const {

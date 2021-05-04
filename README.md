@@ -1,11 +1,12 @@
 
-# GO1 Base React App [![build status](https://code.go1.com.au/apps/go1-base-react-app/badges/master/build.svg)](https://code.go1.com.au/apps/go1-base-react-app/commits/master) [![coverage report](https://code.go1.com.au/apps/go1-base-react-app/badges/master/coverage.svg)](https://code.go1.com.au/apps/go1-base-react-app/commits/master)  
+# GO1 Portal App [![build status](https://code.go1.com.au/apps/go1-base-react-app/badges/master/build.svg)](https://code.go1.com.au/apps/go1-base-react-app/commits/master) [![coverage report](https://code.go1.com.au/apps/go1-base-react-app/badges/master/coverage.svg)](https://code.go1.com.au/apps/go1-base-react-app/commits/master)  
   
 ## Overview  
   
 This app is for GO1 admin portal settings.
 
 Visit [http://localhost:3000/r/app/portal](http://localhost:3000/r/app/portal) to see how the app works
+Alternative in case the above link does not work, visit [http://localhost:3000/r/app/portal/settings/theme](http://localhost:3000/r/app/portal/settings/theme)
   
 ## Maintainers  
 - Trung Luu (trung.luu@go1.com)

@@ -1,4 +1,4 @@
-import { ButtonFilled, Field, ImageUploadSlat, TextInput, View } from '@go1d/go1d';
+import { ButtonFilled, Field, foundations, ImageUploadSlat, Text, TextInput, View } from '@go1d/go1d';
 import { t, Trans } from '@lingui/macro';
 import { I18n } from '@lingui/react';
 import { FunctionComponent } from 'react';
@@ -16,7 +16,25 @@ const SectionCertificate: FunctionComponent<Props> = ({ isSaving }) => {
           title={<Trans>Customize completion certificate</Trans>}
           actionButton={
             <ButtonFilled>
-              <Trans>Preview certificate</Trans>
+              <Text 
+                display="none"
+                css={{
+                  [foundations.breakpoints.sm]: {
+                    display: "inline",
+                  }
+                }}
+              >
+                <Trans>Preview</Trans>
+              </Text>
+              <Text
+                css={{
+                  [foundations.breakpoints.sm]: {
+                    display: "none",
+                  }
+                }}
+              >
+                <Trans>Preview certificate</Trans>
+              </Text>
             </ButtonFilled>
           }
         >

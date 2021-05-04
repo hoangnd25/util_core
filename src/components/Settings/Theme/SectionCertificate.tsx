@@ -16,22 +16,13 @@ const SectionCertificate: FunctionComponent<Props> = ({ isSaving }) => {
           title={<Trans>Customize completion certificate</Trans>}
           actionButton={
             <ButtonFilled>
-              <Text 
-                display="none"
-                css={{
-                  [foundations.breakpoints.sm]: {
-                    display: "inline",
-                  }
-                }}
+              <Text
+                display={["flex", "flex", "none"]}
               >
                 <Trans>Preview</Trans>
               </Text>
               <Text
-                css={{
-                  [foundations.breakpoints.sm]: {
-                    display: "none",
-                  }
-                }}
+                display={["none", "none", "flex"]}
               >
                 <Trans>Preview certificate</Trans>
               </Text>

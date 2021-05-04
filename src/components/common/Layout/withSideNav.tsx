@@ -56,7 +56,7 @@ class LayoutWithSideNav extends React.PureComponent<WithSideNavProps, any> {
 
   renderDesktopMenus = () => {
     const { active, menu = [] } = this.props;
-    console.log(menu);
+    
     return menu
       .filter(item => item.isVisible)
       .map(item => {

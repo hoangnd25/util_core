@@ -1,7 +1,7 @@
 import React from 'react';
 import Router from 'next/router';
 import { Text, View, Select, foundations, Theme } from '@go1d/go1d';
-import CustomLink from '@src/components/common/Link';
+import Link from '@src/components/common/Link';
 import { getBaseUrl } from '@src/config';
 
 export interface MenuItem {
@@ -56,7 +56,7 @@ class LayoutWithSideNav extends React.PureComponent<WithSideNavProps, any> {
 
   renderDesktopMenus = () => {
     const { active, menu = [] } = this.props;
-
+    
     return menu
       .filter(item => item.isVisible)
       .map(item => {
@@ -64,34 +64,30 @@ class LayoutWithSideNav extends React.PureComponent<WithSideNavProps, any> {
         return (
           <Theme.Consumer key={`menu-${item.id}`}>
             {({ colors }) => (
-              <View
-                data-testid={item.id}
-                module={item.module}
-                href={!isActive ? item.href : null}
-                element={!isActive && item.href ? CustomLink : View}
-                width={['0', 230, 230]}
-              >
-                <View
-                  marginY={2}
-                  paddingY={3}
-                  borderColor={isActive ? 'accent' : 'transparent'}
-                  borderLeft={3}
-                  paddingLeft={4}
-                  backgroundColor="L400"
-                  css={{
-                    '&:hover': {
-                      borderLeft: '3px solid',
-                      borderColor: colors.accent,
-                    },
-                  }}
-                >
-                  <Text color={isActive ? 'accent' : foundations.colors.default} fontWeight="semibold" fontSize={2}>
-                    {item.title}
-                  </Text>
-                  <Text color={foundations.colors.subtle} fontSize={1} fontWeight="normal">
-                    {item.subtitle}
-                  </Text>
-                </View>
+              <View data-testid={item.id} width={['0', 230, 230]}>
+                <Link {...item}>
+                  <View
+                    marginY={2}
+                    paddingY={3}
+                    borderColor={isActive ? 'accent' : 'transparent'}
+                    borderLeft={3}
+                    paddingLeft={4}
+                    backgroundColor="L400"
+                    css={{
+                      '&:hover': {
+                        borderLeft: '3px solid',
+                        borderColor: colors.accent,
+                      },
+                    }}
+                  >
+                    <Text color={isActive ? 'accent' : foundations.colors.default} fontWeight="semibold" fontSize={2}>
+                      {item.title}
+                    </Text>
+                    <Text color={foundations.colors.subtle} fontSize={1} fontWeight="normal">
+                      {item.subtitle}
+                    </Text>
+                  </View>
+                </Link>
               </View>
             )}
           </Theme.Consumer>
@@ -102,7 +98,6 @@ class LayoutWithSideNav extends React.PureComponent<WithSideNavProps, any> {
   render() {
     return (
       <View marginBottom={5} marginRight={[0, 6, 6]}>
-
         <View display={['flex', 'none', 'none']}>{this.renderMobileMenus()}</View>
 
         <View display={['none', 'flex', 'block']}>{this.renderDesktopMenus()}</View>

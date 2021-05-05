@@ -78,6 +78,8 @@ const setup = (App, props, initialState = {}) => {
 
 beforeEach(() => {
   jest.spyOn(scormService, 'getApplicationId').mockResolvedValue('Existing Application ID');
+  // stub getSelection for RichTextInput in theme settings page
+  window.getSelection = jest.fn();
 })
 
 /** TEST SETUP END * */

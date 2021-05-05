@@ -16,7 +16,7 @@ const SectionCertificate: FunctionComponent<Props> = ({ isSaving }) => {
           title={
             <Text 
               fontSize={[3]} 
-              display={['flex','flex','flex']} 
+              display='flex'
               paddingRight={[3]}
             >
               <Trans>Customize completion certificate</Trans>

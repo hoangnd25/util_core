@@ -12,7 +12,7 @@ const SectionLogin: FunctionComponent = () => {
           title={
             <Text 
               fontSize={[3]}
-              display={['flex','flex','flex']} 
+              display='flex'
               paddingRight={[3]}
               >
               <Trans>Customize login</Trans>

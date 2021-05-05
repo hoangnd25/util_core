@@ -2,12 +2,15 @@ import { Form, Spinner, SubmitButton, Theme, View } from '@go1d/go1d';
 import { FunctionComponent, ReactNode, useContext, useState } from 'react';
 import { Trans } from '@lingui/macro';
 import { FormikConfig } from 'formik';
+import { Value as SlateValue } from 'slate';
 import { GO1Portal } from '@src/types/user';
 import SectionBrand from './SectionBrand';
 import SectionLogin from './SectionLogin';
 import SectionSignup from './SectionSignup';
 import { getFieldsValues, getInitialValues } from './formHelper';
 import SectionCertificate from './SectionCertificate';
+import SectionDashboard from './SectionDashboard';
+import { deserializeHtml, serializeHtml } from './htmlSerializer';
 
 export interface FormValues {
   logo?: File | null;
@@ -20,6 +23,10 @@ export interface FormValues {
   signatureImage?: File | null;
   signatureName?: string;
   signatureTitle?: string;
+  dashboardWelcomeMessage?: SlateValue;
+  dashboardImageScale?: string;
+  dashboardImage?: File | null;
+  dashboardIcon?: File | null;
 }
 
 export interface ThemeSettingsFormProps {
@@ -38,12 +45,16 @@ const BRANDS_FIELDS_MAPPING = {
   portalColor: { readPath: 'data.theme.primary', savePath: 'theme.primary' },
   signatureTitle: 'configuration.signature_title',
   signatureName: 'configuration.signature_name',
+  dashboardWelcomeMessage: 'configuration.welcome',
+  dashboardImageScale: 'files.feature_image_sizing_type',
 };
 
 const UPLOAD_FIELDS_MAPPING = {
   logo: 'files.logo',
   featuredImage: 'files.login_background',
-  signatureImage: 'configuration.signature_image'
+  signatureImage: 'configuration.signature_image',
+  dashboardImage: 'files.feature_image',
+  dashboardIcon: 'files.dashboard_icon',
 };
 
 export const useThemeSettingsFormHandler = (props: ThemeSettingsFormProps) => {
@@ -71,17 +82,27 @@ export const useThemeSettingsFormHandler = (props: ThemeSettingsFormProps) => {
 
   const handleSubmit: FormikConfig<FormValues>['onSubmit'] = async (values, actions) => {
     try {
-      const [logo, signatureImage, featuredImage] = await Promise.all([
+      const [
+        logo,
+        signatureImage,
+        featuredImage,
+        dashboardImage,
+        dashboardIcon
+      ] = await Promise.all([
         uploadOrDeleteImage(values.logo),
         uploadOrDeleteImage(values.signatureImage),
         uploadOrDeleteImage(values.featuredImage, featuredImageCropped),
+        uploadOrDeleteImage(values.dashboardImage),
+        uploadOrDeleteImage(values.dashboardIcon),
       ]);
 
       const toSaveObject = {
         ...(logo !== undefined && { [UPLOAD_FIELDS_MAPPING.logo]: logo }),
         ...(signatureImage !== undefined && { [UPLOAD_FIELDS_MAPPING.signatureImage]: signatureImage }),
         ...(featuredImage !== undefined && { [UPLOAD_FIELDS_MAPPING.featuredImage]: featuredImage }),
-        ...getFieldsValues({ ...BRANDS_FIELDS_MAPPING }, values, portal),
+        ...(dashboardImage !== undefined && { [UPLOAD_FIELDS_MAPPING.dashboardImage]: dashboardImage }),
+        ...(dashboardIcon !== undefined && { [UPLOAD_FIELDS_MAPPING.dashboardIcon]: dashboardIcon }),
+        ...getFieldsValues({ ...BRANDS_FIELDS_MAPPING }, {...values, dashboardWelcomeMessage: serializeHtml(values.dashboardWelcomeMessage)}, portal),
       };
 
       if (featuredImage) {
@@ -123,13 +144,16 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
     <Form
       initialValues={{
         ...initialValues,
-        portalColor: initialValues.portalColor || theme.colors.accent
+        portalColor: initialValues.portalColor || theme.colors.accent,
+        dashboardImageScale: initialValues.dashboardImageScale || 'fixed-width',
+        dashboardWelcomeMessage: deserializeHtml(initialValues.dashboardWelcomeMessage || ''),
       }}
       onSubmit={handleSubmit}
     >
       <SectionBrand isSaving={isSaving} onFeaturedImageCropped={setFeaturedImageCropped} />
       <SectionLogin />
       <SectionSignup />
+      <SectionDashboard />
       <SectionCertificate />
 
       <View flexDirection="row">

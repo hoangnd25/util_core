@@ -12,6 +12,7 @@ export interface GO1Portal {
     login_background?: string;
     logo?: string;
     feature_image?: string;
+    feature_image_sizing_type?: string;
   };
 }
 

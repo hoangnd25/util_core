@@ -54,3 +54,9 @@ export const getInitialValues = <T>(
     };
   }, {} as T);
 };
+
+export const stripTabsAndNewLines = (input: string) =>
+  input
+    .trim()
+    .replace(/\n/g, '')
+    .replace(/\t/g, '');

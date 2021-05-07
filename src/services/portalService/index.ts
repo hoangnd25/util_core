@@ -9,24 +9,6 @@ class PortalService extends BaseService {
     super(http, go1CookieValue);
   }
 
-  async fetchPortalConfig(portalName: string): Promise<any> {
-    try {
-      const { data } = await this.http.get(`/portal/${portalName}`);
-      return data;
-    } catch (err) {
-      console.error(err.message)
-    }
-  }
-  
-  async savePortalConfig(portalName: string, data: any){
-    try {
-      return await this.http.post(`/portal/${portalName}`, data);
-    } catch (err) {
-      console.error(err.message)
-    }
-  }
-
-
   async fetchIntegrationConfiguration(portalName: string, integrationName: string): Promise<any> {
     const url = `portal/conf/${portalName}/integrations/${integrationName}`;
     try {

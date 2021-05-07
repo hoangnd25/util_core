@@ -1,21 +1,29 @@
 import { Banner, View, Text, ButtonMinimal, foundations } from '@go1d/go1d';
 import { Trans } from '@lingui/macro';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import PortalService from '@src/services/portalService';
+// import PortalService from '@src/services/portalService';
 import { connect } from 'react-redux';
 import { mapCurrentSessionToProps } from '@src/components/common/WithAuth';
 import beam from '@src/utils/tracking';
 import { CurrentSessionType } from '@src/types/user';
+// import { PortalService } from '@go1d/go1d-exchange';
+import createHttp from '@src/utils/http';
+import { PortalData, PortalService } from '@go1d/go1d-exchange/build/services/PortalService';
 
-export const portalService = PortalService();
+const http = createHttp();
+
+interface newConfig extends PortalData {
+  login_version?: string
+}
+export const portalService = new PortalService(http);
 
 interface UpgradeBannerProps {
   currentSession: CurrentSessionType;
   upgradedLogin: Function;
 }
 
-const UpgradeBanner = (props: UpgradeBannerProps) => {
+const UpgradeBanner: React.FC<UpgradeBannerProps> = (props) => {
   const [showBanner, setShowBanner] = useState(false);
 
   const {
@@ -23,7 +31,7 @@ const UpgradeBanner = (props: UpgradeBannerProps) => {
   } = props;
 
   useEffect(() => {
-    portalService.fetchPortalConfig(portal.title).then(resp => {
+    portalService.getPortal(portal.title).then(resp => {
       beam.setContext({
         application: {
           repo: 'apps/go1-portal',
@@ -49,12 +57,12 @@ const UpgradeBanner = (props: UpgradeBannerProps) => {
     beam.track({
       type: 'go1-portal.loginVersion.submitPortalUpgrade',
     });
-    portalService.savePortalConfig(portal.title, { 'configuration.login_version': 'peach' }).then(() => {
+    portalService.updatePortal(portal.title, { 'login_version': 'peach' } as newConfig).then(() => {
       setShowBanner(false), passUpgradedLoginStatus();
       beam.endSession();
     });
   };
-
+console.log(portal)
   return (
     <View>
       {showBanner && (

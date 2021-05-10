@@ -2,15 +2,13 @@ import { Banner, View, Text, ButtonMinimal, foundations } from '@go1d/go1d';
 import { Trans } from '@lingui/macro';
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-// import PortalService from '@src/services/portalService';
 import { connect } from 'react-redux';
 import { mapCurrentSessionToProps } from '@src/components/common/WithAuth';
 import beam from '@src/utils/tracking';
 import { CurrentSessionType } from '@src/types/user';
-// import { PortalService } from '@go1d/go1d-exchange';
 import createHttp from '@src/utils/http';
 import { PortalData, PortalService } from '@go1d/go1d-exchange/build/services/PortalService';
-import { FeatureToggleModel, FeatureToggleService, } from "@go1d/go1d-exchange";
+
 const http = createHttp();
 
 interface newConfig extends PortalData {
@@ -30,22 +28,21 @@ const UpgradeBanner: React.FC<UpgradeBannerProps> = (props) => {
     currentSession: { portal, user },
   } = props;
 
-  useEffect(() => {
-    portalService.getPortal(portal.title).then(resp => {
+  useEffect(() => {      
       beam.setContext({
         application: {
           repo: 'apps/go1-portal',
           page: 'settings/theme',
         },
       });
-      
       beam.identify(user, portal);
-      if (resp.configuration && resp.configuration.login_version !== 'peach') {
+
+      if (portal.configuration && portal.configuration.login_version !== 'peach') {
         setShowBanner(true);
         beam.startSession('go1-portal.loginVersion.portalNeedsToUpgrade', {});
         passUpgradedLoginStatus();
       }
-    });
+
     return beam.endSession();
   }, []);
 
@@ -76,8 +73,8 @@ const UpgradeBanner: React.FC<UpgradeBannerProps> = (props) => {
                 </Trans>
               </Text>
               <ButtonMinimal
+                width='fit-content'
                 marginTop={4}
-                width="fit-content"
                 border={1}
                 onClick={submitUpgradedStatus}
                 css={{ borderColor: foundations.colors.faded, color: foundations.colors.default }}
@@ -85,7 +82,6 @@ const UpgradeBanner: React.FC<UpgradeBannerProps> = (props) => {
                 <Trans>Upgrade now</Trans>
               </ButtonMinimal>
             </View>
-
             <View flexGrow={1}>
               <Image src="/Login_banner.png" alt="Go1_login" width="224" height="164"></Image>
             </View>

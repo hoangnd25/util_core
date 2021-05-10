@@ -10,7 +10,7 @@ import { CurrentSessionType } from '@src/types/user';
 // import { PortalService } from '@go1d/go1d-exchange';
 import createHttp from '@src/utils/http';
 import { PortalData, PortalService } from '@go1d/go1d-exchange/build/services/PortalService';
-
+import { FeatureToggleModel, FeatureToggleService, } from "@go1d/go1d-exchange";
 const http = createHttp();
 
 interface newConfig extends PortalData {
@@ -38,8 +38,8 @@ const UpgradeBanner: React.FC<UpgradeBannerProps> = (props) => {
           page: 'settings/theme',
         },
       });
+      
       beam.identify(user, portal);
-
       if (resp.configuration && resp.configuration.login_version !== 'peach') {
         setShowBanner(true);
         beam.startSession('go1-portal.loginVersion.portalNeedsToUpgrade', {});
@@ -62,10 +62,10 @@ const UpgradeBanner: React.FC<UpgradeBannerProps> = (props) => {
       beam.endSession();
     });
   };
-console.log(portal)
+
   return (
     <View>
-      {showBanner && (
+      {!showBanner && (
         <Banner marginY={6} type="note" flexDirection="row" close={() => setShowBanner(false)}>
           <View flexDirection="row" width="100%">
             <View flexDirection="column" flexShrink={1}>

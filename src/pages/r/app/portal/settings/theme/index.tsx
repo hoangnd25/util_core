@@ -23,6 +23,7 @@ export interface ThemeSettingsPageProps extends WithRouterProps, DispatchProp {
 interface State {
   isSaving: boolean;
   upgradedLogin: boolean;
+  showBanner: boolean;
 }
 
 const ToastOptions = {
@@ -38,7 +39,14 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
     this.state = {
       isSaving: false,
       upgradedLogin: false,
+      showBanner: false
     };
+  }
+
+  componentDidMount() {
+    const { currentSession: { portal } } = this.props;
+    portal.featureToggles?.some((featureToggle) => featureToggle.raw?.name === 'login.version.upgrade.banner' && featureToggle.raw?.enabled);
+    this.setState({ showBanner: true })
   }
 
   handleImageUpload = (image: File | Blob, cancelTokenSource?: CancelToken) => {
@@ -121,6 +129,7 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
     this.setState({ isSaving: false });
   };
 
+  
   isPortalLoginUpgraded = (val) => {
     this.setState({ upgradedLogin: val})
   }
@@ -133,14 +142,14 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
   }
 
   public render() {
-    const { isSaving, upgradedLogin } = this.state;
+    const { isSaving, upgradedLogin, showBanner } = this.state;
     const {
       currentSession: { portal },
     } = this.props;
 
     return (
       <View data-testid="theme_settings_page">
-        <UpgradeBanner upgradedLogin={this.isPortalLoginUpgraded}/>
+        {showBanner && <UpgradeBanner upgradedLogin={this.isPortalLoginUpgraded}/> }
           <ThemeSettingsForm
             portal={portal}
             isSaving={isSaving}

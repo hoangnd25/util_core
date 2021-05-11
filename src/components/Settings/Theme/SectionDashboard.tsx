@@ -1,21 +1,18 @@
-import { ButtonFilled, Field, RichTextInput, View, Text, RadioGroup, ImageUploader, ImageUploadSlat } from '@go1d/go1d';
+import { Field, RichTextInput, View, Text, RadioGroup, ImageUploader, ImageUploadSlat } from '@go1d/go1d';
 import { t, Trans } from '@lingui/macro';
 import { I18n } from '@lingui/react';
 import SettingsFormSection from '@src/components/Settings/SettingsFormSection';
 import { FunctionComponent } from 'react';
 import SettingsBlockMaker from '../SettingsBlockMaker';
+import PreviewButton from './PreviewButton';
 
 const SectionDashboard: FunctionComponent = () => {
   return (
     <I18n>
       {({ i18n }) => (
         <SettingsFormSection
-          title={<Trans>Customize dashboard</Trans>}
-          actionButton={
-            <ButtonFilled>
-              <Trans>Preview dashboard</Trans>
-            </ButtonFilled>
-          }
+          title="Customize dashboard"
+          actionButton={<PreviewButton>Preview dashboard</PreviewButton>}
         >
           <View marginBottom={5}>
             <Field name="dashboardWelcomeMessage" label={i18n._(t`Welcome message`)} component={RichTextInput} />
@@ -25,10 +22,7 @@ const SectionDashboard: FunctionComponent = () => {
             marginBottom={5}
             title={<Trans>Dashboard image</Trans>}
             description={
-              <Trans>
-                To make your dashboard look the best you should upload a panoramic image. The following file types are
-                supported PNG, JPG, GIF and max file size is 5MB.
-              </Trans>
+              <Trans>To ensure you get the best result, we suggest using a panoramic image.</Trans>
             }
           >
             <Field
@@ -36,18 +30,13 @@ const SectionDashboard: FunctionComponent = () => {
               name="dashboardImage"
               hideLabel
               supportedFormatText={
-                <View alignItems="center">
-                  <Text marginBottom={3} paddingX={4}>
-                    <Trans>jpg, png and gif are supported</Trans>
+                <View alignItems="center" textAlign="center">
+                  <Text marginTop={4} marginBottom={2} paddingX={4} fontSize={[1, 2]} text>
+                    <Trans>Minimum dimensions of 1920px (W) and 300px (H)</Trans>
                   </Text>
-                  <View alignItems="flex-start" paddingX={4}>
-                    <Text fontSize={1} marginBottom={1}>
-                      <Trans>・Scale to fit width (Ideally a landscape image at least 1920px in width)</Trans>
-                    </Text>
-                    <Text fontSize={1}>
-                      <Trans>・Scale to fit height (Ideally a landscape image at least 300px in height)</Trans>
-                    </Text>
-                  </View>
+                  <Text paddingX={4} fontSize={[1, 2]}>
+                    <Trans>Max file size is 5MB</Trans>
+                  </Text>
                 </View>
               }
             />

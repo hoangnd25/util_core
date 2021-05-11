@@ -1,4 +1,4 @@
-import { ButtonFilled, ColorPicker as BaseColorPicker, Field, ImageUploader, ImageUploadSlat, Text, View } from '@go1d/go1d';
+import { ColorPicker as BaseColorPicker, Field, ImageUploader, ImageUploadSlat, View } from '@go1d/go1d';
 import { t, Trans } from '@lingui/macro';
 import { I18n } from '@lingui/react';
 import SettingsBlockMaker from '@src/components/Settings/SettingsBlockMaker';
@@ -6,6 +6,7 @@ import { usePrevious } from '@src/hooks/usePrevious';
 import { FormikHandlers } from 'formik';
 import React, { FunctionComponent } from 'react';
 import SettingsFormSection from '../SettingsFormSection';
+import PreviewButton from './PreviewButton';
 
 const FEATURED_IMAGE_RATIO = 1;
 
@@ -72,21 +73,8 @@ const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropp
     <I18n>
       {({ i18n }) => (
         <SettingsFormSection
-          title={
-          <Text fontSize={[3]}>
-            <Trans>Brand</Trans>
-          </Text>
-          }
-          actionButton={
-            <ButtonFilled>
-              <Text display={['flex','none','none']}>
-                <Trans>Preview</Trans>
-              </Text>
-              <Text display={['none','flex','flex']}>
-                <Trans>Preview brand</Trans>
-              </Text>
-            </ButtonFilled>
-          }
+          title="Brand"
+          actionButton={<PreviewButton>Preview brand</PreviewButton>}
         >
           <SettingsBlockMaker
             marginBottom={5}

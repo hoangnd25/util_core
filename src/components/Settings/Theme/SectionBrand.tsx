@@ -73,8 +73,8 @@ const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropp
     <I18n>
       {({ i18n }) => (
         <SettingsFormSection
-          title="Brand"
-          actionButton={<PreviewButton>Preview brand</PreviewButton>}
+          title={<Trans>Brand</Trans>}
+          actionButton={<PreviewButton><Trans>Preview brand</Trans></PreviewButton>}
         >
           <SettingsBlockMaker
             marginBottom={5}

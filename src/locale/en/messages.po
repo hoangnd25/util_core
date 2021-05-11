@@ -13,6 +13,10 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/pages/_error.tsx:26
+msgid ", or"
+msgstr ", or"
+
 #: src/components/AwsConnectionDetail/index.tsx:69
 msgid "AWS Connection Details"
 msgstr ""
@@ -29,13 +33,13 @@ msgstr "Add more content to selection."
 msgid "Add more resources to your library."
 msgstr "Add more resources to your library."
 
-#: src/components/ContentDistributorExport/index.tsx:114
-#~ msgid "Add them in the custom selection."
-#~ msgstr "Add them in the custom selection."
-
 #: src/components/common/WithApiom/menus.ts:90
 msgid "Addons"
 msgstr ""
+
+#: src/pages/r/app/portal/settings/theme/index.tsx:67
+msgid "An unexpected error has occurred, please try again."
+msgstr "An unexpected error has occurred, please try again."
 
 #: src/pages/r/app/portal/integrations/scorm-and-xapi/index.tsx:39
 #: src/pages/r/app/portal/integrations/scorm-and-xapi/index.tsx:52
@@ -50,21 +54,13 @@ msgstr ""
 msgid "Azure B2C"
 msgstr ""
 
-#: src/pages/r/app/base-app-demo/examples/linkComponent/index.tsx:10
-#~ msgid "Back to Overview"
-#~ msgstr ""
-
-#: src/pages/r/app/portal/settings/theme/index.tsx:90
+#: src/components/Settings/Theme/SectionBrand.tsx:54
 msgid "Brand"
 msgstr "Brand"
 
 #: src/components/common/WithApiom/menus.ts:19
 msgid "Brand, message customisation and certificates"
 msgstr "Brand, message customisation and certificates"
-
-#: src/components/DataFeed/uploadState.tsx:410
-#~ msgid "Browse for a CSV file to upload for setting up fields mapping rules."
-#~ msgstr ""
 
 #: src/components/DataFeed/uploadState.tsx:415
 msgid "Browse for a CSV file to upload for setting up fields mapping rules. For reference, please download <0><1>sample CSV file</1></0> to check the column format"
@@ -127,9 +123,29 @@ msgstr ""
 msgid "Customise available portal content"
 msgstr "Customise available portal content"
 
-#: src/components/common/WithSettings/index.tsx:39
-#~ msgid "Dashboard, menu & other options"
-#~ msgstr "Dashboard, menu & other options"
+#: src/components/Settings/Theme/SectionCertificate.tsx:8
+msgid "Customize completion certificate"
+msgstr "Customize completion certificate"
+
+#: src/components/Settings/Theme/SectionDashboard.tsx:9
+msgid "Customize dashboard"
+msgstr "Customize dashboard"
+
+#: src/components/Settings/Theme/SectionLogin.tsx:8
+msgid "Customize login"
+msgstr "Customize login"
+
+#: src/components/Settings/Theme/SectionSignup.tsx:8
+msgid "Customize sign up"
+msgstr "Customize sign up"
+
+#: src/components/Settings/Theme/SectionDashboard.tsx:39
+msgid "Dashboard icon"
+msgstr "Dashboard icon"
+
+#: src/components/Settings/Theme/SectionDashboard.tsx:14
+msgid "Dashboard image"
+msgstr "Dashboard image"
 
 #: src/components/common/WithApiom/menus.ts:28
 msgid "Dashboard, menu and other options"
@@ -176,9 +192,13 @@ msgstr ""
 msgid "Failed to save your mapping, please try again or contact us for assistance"
 msgstr ""
 
-#: src/pages/r/app/portal/settings/theme/index.tsx:96
+#: src/components/Settings/Theme/SectionBrand.tsx:65
 msgid "Featured image"
 msgstr "Featured image"
+
+#: src/components/Settings/Theme/SectionBrand.tsx:55
+msgid "For best results, upload your logo in a 1:1 ratio with a transparent background."
+msgstr "For best results, upload your logo in a 1:1 ratio with a transparent background."
 
 #: src/components/AwsConnectionDetail/index.tsx:116
 msgid "For security reason, you only see this key once and cannot be recovered it. Please copy and keep it somewhere safe but accessible."
@@ -233,9 +253,17 @@ msgstr "Last Export"
 msgid "Litmos"
 msgstr "Litmos"
 
-#: src/components/common/WithSettings/index.tsx:30
-#~ msgid "Logo, images, colours..."
-#~ msgstr "Logo, images, colours..."
+#: src/components/Settings/Theme/SectionLogin.tsx:13
+msgid "Login description"
+msgstr "Login description"
+
+#: src/components/Settings/Theme/SectionLogin.tsx:10
+msgid "Login title"
+msgstr "Login title"
+
+#: src/components/Settings/Theme/SectionBrand.tsx:55
+msgid "Logo"
+msgstr "Logo"
 
 #: src/components/DataFeed/uploadState.tsx:326
 msgid "Map the fields in your CSV file to the portal fields"
@@ -250,13 +278,17 @@ msgstr ""
 msgid "Mas"
 msgstr "Mas"
 
+#: src/components/Settings/Theme/SectionDashboard.tsx:20
+msgid "Max file size is 5MB"
+msgstr "Max file size is 5MB"
+
 #: src/components/common/WithApiom/menus.ts:207
 msgid "Microsoft 365"
 msgstr "Microsoft 365"
 
-#: src/components/common/WithIntegrations/index.tsx:117
-#~ msgid "Microsoft Azure"
-#~ msgstr ""
+#: src/components/Settings/Theme/SectionDashboard.tsx:17
+msgid "Minimum dimensions of 1920px (W) and 300px (H)"
+msgstr "Minimum dimensions of 1920px (W) and 300px (H)"
 
 #: src/components/common/WithApiom/menus.ts:190
 msgid "Nas"
@@ -298,6 +330,10 @@ msgstr "Portal Content Selection"
 msgid "Portal Information"
 msgstr "Portal Information"
 
+#: src/components/Settings/Theme/SectionBrand.tsx:62
+msgid "Portal color"
+msgstr "Portal color"
+
 #: src/components/DataFeed/uploadState.tsx:343
 msgid "Portal fields"
 msgstr ""
@@ -306,13 +342,29 @@ msgstr ""
 msgid "Portal info, legal and login config"
 msgstr "Portal info, legal and login config"
 
-#: src/components/common/WithSettings/index.tsx:71
-#~ msgid "Portal subscription plan and payment details"
-#~ msgstr "Portal subscription plan and payment details"
+#: src/components/Settings/Theme/PreviewButton.tsx:16
+msgid "Preview"
+msgstr "Preview"
 
-#: src/pages/r/app/portal/settings/theme/index.tsx:92
+#: src/components/Settings/Theme/SectionBrand.tsx:54
 msgid "Preview brand"
 msgstr "Preview brand"
+
+#: src/components/Settings/Theme/SectionCertificate.tsx:8
+msgid "Preview certificate"
+msgstr "Preview certificate"
+
+#: src/components/Settings/Theme/SectionDashboard.tsx:9
+msgid "Preview dashboard"
+msgstr "Preview dashboard"
+
+#: src/components/Settings/Theme/SectionLogin.tsx:8
+msgid "Preview login"
+msgstr "Preview login"
+
+#: src/components/Settings/Theme/SectionSignup.tsx:8
+msgid "Preview sign up"
+msgstr "Preview sign up"
 
 #: src/components/common/WithApiom/menus.ts:35
 msgid "Recommendations"
@@ -350,9 +402,17 @@ msgstr ""
 msgid "SCORM and xAPI"
 msgstr ""
 
-#: src/pages/r/app/portal/settings/theme/index.tsx:111
-msgid "Save"
-msgstr "Save"
+#: src/components/Settings/Theme/Form.tsx:100
+msgid "Save changes"
+msgstr "Save changes"
+
+#: src/components/Settings/Theme/SectionDashboard.tsx:32
+msgid "Scale to fit height"
+msgstr "Scale to fit height"
+
+#: src/components/Settings/Theme/SectionDashboard.tsx:28
+msgid "Scale to fit width"
+msgstr "Scale to fit width"
 
 #: src/components/common/WithApiom/menus.ts:97
 msgid "Scorm"
@@ -384,10 +444,6 @@ msgstr ""
 msgid "Settings saved."
 msgstr ""
 
-#: src/components/common/WithSettings/index.tsx:78
-#~ msgid "Setup Account"
-#~ msgstr "Setup Account"
-
 #: src/components/common/WithApiom/menus.ts:67
 msgid "Setup Portal"
 msgstr "Setup Portal"
@@ -400,13 +456,29 @@ msgstr ""
 msgid "Show all optional fields"
 msgstr ""
 
+#: src/components/Settings/Theme/SectionSignup.tsx:13
+msgid "Sign up description"
+msgstr "Sign up description"
+
+#: src/components/Settings/Theme/SectionSignup.tsx:10
+msgid "Sign up title"
+msgstr "Sign up title"
+
+#: src/components/Settings/Theme/SectionCertificate.tsx:10
+msgid "Signature"
+msgstr "Signature"
+
+#: src/components/Settings/Theme/SectionCertificate.tsx:14
+msgid "Signature full name"
+msgstr "Signature full name"
+
+#: src/components/Settings/Theme/SectionCertificate.tsx:18
+msgid "Signature title"
+msgstr "Signature title"
+
 #: src/components/common/WithApiom/menus.ts:231
 msgid "Single Sign On"
 msgstr ""
-
-#: src/components/common/WithSettings/index.tsx:22
-#~ msgid "Site name, welcome message..."
-#~ msgstr "Site name, welcome message..."
 
 #: src/components/DataFeed/uploadState.tsx:172
 msgid "Skip this field"
@@ -432,15 +504,15 @@ msgstr "Subscription plan and payment details"
 msgid "Success Factors"
 msgstr ""
 
-#: src/components/common/WithSettings/index.tsx:29
-#~ msgid "Theme"
-#~ msgstr "Theme"
+#: src/pages/r/app/portal/settings/theme/index.tsx:64
+msgid "The settings have been saved."
+msgstr "The settings have been saved."
 
 #: src/components/common/WithApiom/menus.ts:18
 msgid "Theme and Customisation"
 msgstr "Theme and Customisation"
 
-#: src/pages/r/app/portal/settings/theme/index.tsx:120
+#: src/pages/r/app/portal/settings/theme/index.tsx:93
 msgid "Theme and customization"
 msgstr "Theme and customization"
 
@@ -453,9 +525,17 @@ msgstr ""
 msgid "This field is required"
 msgstr ""
 
-#: src/pages/_error.tsx:13
-msgid "Uh oh, that's a no"
-msgstr ""
+#: src/components/Settings/Theme/SectionDashboard.tsx:14
+msgid "To ensure you get the best result, we suggest using a panoramic image."
+msgstr "To ensure you get the best result, we suggest using a panoramic image."
+
+#: src/pages/_error.tsx:20
+msgid "Try going"
+msgstr "Try going"
+
+#: src/pages/_error.tsx:11
+msgid "Uh oh"
+msgstr "Uh oh"
 
 #: src/components/ContentDistributorExport/index.tsx:37
 msgid "Unable to request export."
@@ -477,13 +557,17 @@ msgstr ""
 msgid "Upload failed"
 msgstr ""
 
+#: src/components/Settings/Theme/Form.tsx:72
+msgid "Upload image failed"
+msgstr "Upload image failed"
+
 #: src/components/DataFeed/uploadState.tsx:452
 msgid "Uploading"
 msgstr ""
 
-#: src/pages/r/app/portal/settings/theme/index.tsx:96
-msgid "Used in sign up and login pages. For best results, upload an image in X:Y ratio. The image can also be repositioned."
-msgstr "Used in sign up and login pages. For best results, upload an image in X:Y ratio. The image can also be repositioned."
+#: src/components/Settings/Theme/SectionBrand.tsx:65
+msgid "Used in sign up and login pages. For best results, upload an image in 1:1 ratio. The image can also be repositioned."
+msgstr "Used in sign up and login pages. For best results, upload an image in 1:1 ratio. The image can also be repositioned."
 
 #: src/components/common/WithApiom/menus.ts:245
 msgid "User Data Feed"
@@ -496,6 +580,14 @@ msgstr ""
 #: src/components/ContentDistributorExport/index.tsx:111
 msgid "Want more content?"
 msgstr "Want more content?"
+
+#: src/pages/_error.tsx:18
+msgid "We can’t seem to find the page you’re looking for."
+msgstr "We can’t seem to find the page you’re looking for."
+
+#: src/components/Settings/Theme/SectionDashboard.tsx:11
+msgid "Welcome message"
+msgstr "Welcome message"
 
 #: src/components/common/WithApiom/menus.ts:142
 msgid "Wisenet"
@@ -537,6 +629,22 @@ msgstr ""
 #: src/components/common/WithApiom/menus.ts:119
 msgid "Zapier"
 msgstr ""
+
+#: src/pages/_error.tsx:29
+msgid "contact us"
+msgstr "contact us"
+
+#: src/pages/_error.tsx:32
+msgid "for help."
+msgstr "for help."
+
+#: src/pages/_error.tsx:23
+msgid "home"
+msgstr "home"
+
+#: src/pages/_error.tsx:13
+msgid "that's a no-go zone"
+msgstr "that's a no-go zone"
 
 #: src/components/DataFeed/uploadState.tsx:84
 msgid "{0} is not a supported file type"

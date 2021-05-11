@@ -1,33 +1,17 @@
-import { ButtonFilled, Field, Text, TextInput, View } from '@go1d/go1d';
-import { t, Trans } from '@lingui/macro';
+import { Field, TextInput, View } from '@go1d/go1d';
+import { t } from '@lingui/macro';
 import { I18n } from '@lingui/react';
 import SettingsFormSection from '@src/components/Settings/SettingsFormSection';
 import { FunctionComponent } from 'react';
+import PreviewButton from './PreviewButton'
 
 const SectionSignup: FunctionComponent = () => {
   return (
     <I18n>
       {({ i18n }) => (
         <SettingsFormSection
-          title={
-            <Text 
-              fontSize={[3]}
-              display='flex'
-              paddingRight={[3]}
-            >
-              <Trans>Customize sign up</Trans>
-            </Text>
-          }
-          actionButton={
-            <ButtonFilled>
-              <Text display={['flex','none','none']}>
-                <Trans>Preview</Trans>
-              </Text>
-              <Text display={['none','flex','flex']}>
-                <Trans>Preview sign up</Trans>
-              </Text>
-            </ButtonFilled>
-          }
+          title="Customize sign up"
+          actionButton={<PreviewButton>Preview sign up</PreviewButton>}
         >
           <View marginBottom={5}>
             <Field name="signupTitle" label={i18n._(t`Sign up title`)} component={TextInput} />

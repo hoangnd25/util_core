@@ -6,14 +6,10 @@ interface PreviewButtonProps extends ButtonFilledProps {
   mobileChildren?: ReactNode;
 }
 
-const PreviewButton = ({ children, mobileChildren = 'Preview', ...buttonProps }: PreviewButtonProps) => (
+const PreviewButton = ({ children, mobileChildren = <Trans>Preview</Trans>, ...buttonProps }: PreviewButtonProps) => (
   <ButtonFilled {...buttonProps}>
-    <Text display={['flex', 'none', 'none']}>
-      <Trans>{mobileChildren}</Trans>
-    </Text>
-    <Text display={['none', 'flex', 'flex']}>
-      <Trans>{children}</Trans>
-    </Text>
+    <Text display={['flex', 'none', 'none']}>{mobileChildren}</Text>
+    <Text display={['none', 'flex', 'flex']}>{children}</Text>
   </ButtonFilled>
 );
 

@@ -1,5 +1,5 @@
 import { Field, TextInput, View } from '@go1d/go1d';
-import { t } from '@lingui/macro';
+import { t, Trans } from '@lingui/macro';
 import { I18n } from '@lingui/react';
 import SettingsFormSection from '@src/components/Settings/SettingsFormSection';
 import { FunctionComponent } from 'react';
@@ -10,8 +10,8 @@ const SectionSignup: FunctionComponent = () => {
     <I18n>
       {({ i18n }) => (
         <SettingsFormSection
-          title="Customize sign up"
-          actionButton={<PreviewButton>Preview sign up</PreviewButton>}
+          title={<Trans>Customize sign up</Trans>}
+          actionButton={<PreviewButton><Trans>Preview sign up</Trans></PreviewButton>}
         >
           <View marginBottom={5}>
             <Field name="signupTitle" label={i18n._(t`Sign up title`)} component={TextInput} />

@@ -11,8 +11,8 @@ const SectionDashboard: FunctionComponent = () => {
     <I18n>
       {({ i18n }) => (
         <SettingsFormSection
-          title="Customize dashboard"
-          actionButton={<PreviewButton>Preview dashboard</PreviewButton>}
+          title={<Trans>Customize dashboard</Trans>}
+          actionButton={<PreviewButton><Trans>Preview dashboard</Trans></PreviewButton>}
         >
           <View marginBottom={5}>
             <Field name="dashboardWelcomeMessage" label={i18n._(t`Welcome message`)} component={RichTextInput} />

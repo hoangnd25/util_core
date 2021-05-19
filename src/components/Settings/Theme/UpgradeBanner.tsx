@@ -18,11 +18,11 @@ export const portalService = new PortalService(http);
 
 interface UpgradeBannerProps {
   currentSession: CurrentSessionType;
-  upgradedLogin: Function;
-}
+  showBanner: boolean;
+};
 
 const UpgradeBanner: React.FC<UpgradeBannerProps> = (props) => {
-  const [showBanner, setShowBanner] = useState(false);
+  const [closeBanner, setCloseBanner] = useState(props.showBanner)
 
   const {
     currentSession: { portal, user },
@@ -36,34 +36,24 @@ const UpgradeBanner: React.FC<UpgradeBannerProps> = (props) => {
         },
       });
       beam.identify(user, portal);
-
-      if (portal.configuration && portal.configuration.login_version !== 'peach') {
-        setShowBanner(true);
-        beam.startSession('go1-portal.loginVersion.portalNeedsToUpgrade', {});
-        passUpgradedLoginStatus();
-      }
-
+      beam.startSession('go1-portal.loginVersion.portalNeedsToUpgrade', {});
+  
     return beam.endSession();
   }, []);
-
-  const passUpgradedLoginStatus = () => {
-    props.upgradedLogin(showBanner);
-  };
 
   const submitUpgradedStatus = () => {
     beam.track({
       type: 'go1-portal.loginVersion.submitPortalUpgrade',
     });
     portalService.updatePortal(portal.title, { 'login_version': 'peach' } as newConfig).then(() => {
-      setShowBanner(false), passUpgradedLoginStatus();
       beam.endSession();
     });
   };
 
   return (
     <View>
-      {!showBanner && (
-        <Banner marginY={6} type="note" flexDirection="row" close={() => setShowBanner(false)}>
+      {!closeBanner && (
+        <Banner marginY={6} type="note" flexDirection="row" close={() => setCloseBanner(true)}>
           <View flexDirection="row" width="100%">
             <View flexDirection="column" flexShrink={1}>
               <Text>

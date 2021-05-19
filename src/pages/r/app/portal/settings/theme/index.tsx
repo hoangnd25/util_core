@@ -11,7 +11,6 @@ import axios, { CancelToken } from 'axios';
 import ThemeSettingsForm from '@src/components/Settings/Theme/Form';
 import { Trans } from '@lingui/macro';
 import UpgradeBanner from '@src/components/Settings/Theme/UpgradeBanner';
-import beam from '@src/utils/tracking';
 import { WithRouterProps } from 'next/dist/client/with-router';
 import { DispatchProp } from 'react-redux';
 import { USER_UPDATE } from '@src/reducers/session';
@@ -45,8 +44,12 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
 
   componentDidMount() {
     const { currentSession: { portal } } = this.props;
-    portal.featureToggles?.some((featureToggle) => featureToggle.raw?.name === 'login.version.upgrade.banner' && featureToggle.raw?.enabled);
-    this.setState({ showBanner: true })
+    // If FT toggle for portal is enabled and they have not upgraded show banner
+    if (portal.featureToggles?.some((featureToggle) => featureToggle.raw?.name === 'login.version.upgrade.banner' && featureToggle.raw?.enabled)) {
+      if (portal.configuration?.login_version !== 'peach') {
+        this.setState({ showBanner: true })
+      }
+    };
   }
 
   handleImageUpload = (image: File | Blob, cancelTokenSource?: CancelToken) => {
@@ -129,11 +132,6 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
     this.setState({ isSaving: false });
   };
 
-  
-  isPortalLoginUpgraded = (val) => {
-    this.setState({ upgradedLogin: val})
-  }
-  
   toastSuccess(message: ReactNode) {
     NotificationManager.success({
       message,
@@ -149,7 +147,7 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
 
     return (
       <View data-testid="theme_settings_page">
-        {showBanner && <UpgradeBanner upgradedLogin={this.isPortalLoginUpgraded}/> }
+        {showBanner && <UpgradeBanner showBanner={showBanner}/> }
           <ThemeSettingsForm
             portal={portal}
             isSaving={isSaving}

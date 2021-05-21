@@ -1,15 +1,11 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { ButtonFilled, ButtonFilledProps, Text } from '@go1d/go1d';
-import { Trans } from '@lingui/macro';
 
-interface PreviewButtonProps extends ButtonFilledProps {
-  mobileChildren?: ReactNode;
-}
+interface PreviewButtonProps extends ButtonFilledProps {}
 
-const PreviewButton = ({ children, mobileChildren = <Trans>Preview</Trans>, ...buttonProps }: PreviewButtonProps) => (
-  <ButtonFilled {...buttonProps}>
-    <Text display={['flex', 'none', 'none']}>{mobileChildren}</Text>
-    <Text display={['none', 'flex', 'flex']}>{children}</Text>
+const PreviewButton = ({ children, ...buttonProps }: PreviewButtonProps) => (
+  <ButtonFilled display={['none', 'flex', 'flex']} {...buttonProps}>
+    <Text>{children}</Text>
   </ButtonFilled>
 );
 

@@ -69,7 +69,7 @@ class MenuOptions {
         id: SIDEBAR_MENUS_SETTINGS.SETUP_ACCOUNT,
         title: i18n._(t`Setup Portal`),
         subtitle: i18n._(t`Steps to configure your portal`),
-        href: 'app/settings/setup-portal',
+        href: 'app/setup-portal',
         isApiomLink: true,
         isVisible: true,
       },

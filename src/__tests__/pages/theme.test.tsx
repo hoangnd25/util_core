@@ -5,57 +5,73 @@ import configureMockStore from 'redux-mock-store';
 import { ThemeSettingsPage } from '@src/pages/r/app/portal/settings/theme';
 import { CurrentSessionType } from '@src/types/user';
 import { WithRouterProps } from 'next/dist/client/with-router';
+import router from 'next/router';
+  
+jest.mock('next/router', ()=> ({push: jest.fn()}))
 
-const setup = (props = {}) => {
-  const componentProps = {
-    ...props,
-    router: {
-      pathname: '/',
-    } as WithRouterProps['router'],
-    
-    dispatch: jest.fn(),
-    scrollToTop: jest.fn(),
-  };
+const setup = (props = {}, session = {}) => {
 
-  const currentSession = {
-    authenticated: true,
-    portal: {
-      id: '123',
-      title: 'test.mygo1.com',
-      data: {},
-      featureToggles: [],
-      files: {
-        logo: 'https://logo.jpg',
-        feature_image: 'https://featured-image.jpg',
-      },
-      configuration: {},
+const componentProps = {
+  ...props,
+  router: {
+    pathname: '/',
+  } as WithRouterProps['router'],
+  dispatch: jest.fn(),
+  scrollToTop: jest.fn(),
+};
+
+const currentSession = {
+  authenticated: true,
+  portal: {
+    id: '123',
+    title: 'test.mygo1.com',
+    data: {},
+    featureToggles: [],
+    files: {
+      logo: 'https://logo.jpg',
+      feature_image: 'https://featured-image.jpg',
     },
+    configuration: {},
+  },
+  account: {
+    id: 1,
+    mail: 'test@go1.com',
+    isAdministrator: true,
+    uuid: 'uuid',
+    roles: ['administrator'],
+  },    
+  ...session,
+} as CurrentSessionType;
+
+const mockStore = configureMockStore();
+
+const wrapper = shallow(
+  <ReduxProvider store={mockStore({ currentSession })}>
+    <ThemeSettingsPage currentSession={currentSession} {...componentProps} />
+  </ReduxProvider>
+)
+  .shallow()
+  .shallow();
+return {
+  wrapper,
+  props,
+};
+};
+
+it('Should render without crashing', () => {
+  const { wrapper } = setup();
+  expect(wrapper.find('View[data-testid="theme_settings_page"]').length).toBe(1);
+});
+
+it('should redirect to error page', () => {
+  setup({}, {
     account: {
       id: 1,
       mail: 'test@go1.com',
       isAdministrator: true,
       uuid: 'uuid',
+      roles: ['student'],
     },
-  } as CurrentSessionType;
-
-  const mockStore = configureMockStore();
-
-  const wrapper = shallow(
-    <ReduxProvider store={mockStore({ currentSession })}>
-      <ThemeSettingsPage currentSession={currentSession} {...componentProps} />
-    </ReduxProvider>
-  )
-    .shallow()
-    .shallow();
-
-  return {
-    wrapper,
-    props,
-  };
-};
-
-it('Should render without crashing', () => {
-  const { wrapper } = setup();
-
-  expect(wrapper.find('View[data-testid="theme_settings_page"]').length).toBe(1);
+  });
+  expect(router.push).toHaveBeenCalledWith("/errorpage");
 });

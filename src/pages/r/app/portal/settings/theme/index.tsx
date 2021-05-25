@@ -14,7 +14,6 @@ import UpgradeBanner from '@src/components/Settings/Theme/UpgradeBanner';
 import { WithRouterProps } from 'next/dist/client/with-router';
 import { DispatchProp } from 'react-redux';
 import { USER_UPDATE } from '@src/reducers/session';
-import Router from 'next/router';
 
 export interface ThemeSettingsPageProps extends WithRouterProps, DispatchProp {
   currentSession: CurrentSessionType;
@@ -52,18 +51,6 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
       }
     };
   }
-
-  componentDidMount() {
-    const {
-      currentSession: { account },
-    } = this.props;
-
-    const isAdmin = Boolean(account?.roles?.filter(role => ["administrator"].includes(role.toLowerCase())).length)
-
-    if (!isAdmin) {
-      Router.push("/errorpage")
-    }
-  }  
 
   handleImageUpload = (image: File | Blob, cancelTokenSource?: CancelToken) => {
     const {
@@ -176,11 +163,4 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
 
 ThemeSettingsPage.contextType = AppContext;
 
-export default withAuth(
-  withApiom(
-    ThemeSettingsPage, 
-    { pageTitle: <Trans>Theme and customization</Trans>, 
-      active: SIDEBAR_MENUS_SETTINGS.THEME, 
-      menuType: "Settings" 
-    }
-    ));
+export default withAuth(withApiom(ThemeSettingsPage, { pageTitle: <Trans>Theme and customization</Trans>, active: SIDEBAR_MENUS_SETTINGS.THEME, menuType: "Settings" },  ));

@@ -4,7 +4,6 @@ import { IntlProvider } from 'react-intl';
 import { Provider as ReduxProvider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import CommonProvider from '@go1d/mine/common/Provider';
-import { act } from 'react-dom/test-utils'
 
 import { CanvasLMSPage } from '@src/pages/r/app/portal/integrations/canvas'
 import { canvasService } from '@src/services/canvasService/useCanvasService'

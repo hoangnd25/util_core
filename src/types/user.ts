@@ -22,6 +22,8 @@ export interface GO1Account {
   uuid: string;
   roles?: string[];
   instance?: GO1Portal;
+  isAdministrator?: boolean;
+  isContentAdministrator?: boolean;
 }
 
 export interface GO1User {

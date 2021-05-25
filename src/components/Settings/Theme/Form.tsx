@@ -35,6 +35,7 @@ export interface ThemeSettingsFormProps {
   onSave: (values: object) => Promise<void>;
   onUpload: (image?: File | Blob | null) => Promise<string | undefined>;
   onError?: (message: ReactNode) => void;
+  upgradedLogin?: boolean;
 }
 
 const BRANDS_FIELDS_MAPPING = {
@@ -128,7 +129,7 @@ export const useThemeSettingsFormHandler = (props: ThemeSettingsFormProps) => {
 };
 
 const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
-  const { portal, isSaving } = props;
+  const { portal, isSaving, upgradedLogin } = props;
   const { handleSubmit, setFeaturedImageCropped } = useThemeSettingsFormHandler(props);
 
   const theme = useContext(Theme);
@@ -138,7 +139,7 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
       ...BRANDS_FIELDS_MAPPING,
     },
     portal
-  )
+  );
 
   return (
     <Form
@@ -151,11 +152,14 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
       onSubmit={handleSubmit}
     >
       <SectionBrand isSaving={isSaving} onFeaturedImageCropped={setFeaturedImageCropped} />
-      <SectionLogin />
-      <SectionSignup />
+      {upgradedLogin && (
+        <View>
+          <SectionLogin />
+          <SectionSignup />
+        </View>
+      )}
       <SectionDashboard />
       <SectionCertificate />
-
       <View flexDirection="row">
         <SubmitButton color="accent" flexDirection="row" alignItems="center">
           <View flexDirection="row" alignItems="center">

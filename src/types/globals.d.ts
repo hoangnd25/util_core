@@ -1,6 +1,8 @@
+import { ReduxState } from '@src/types/reducers';
 //
 // enviroment variables or custom keys in Native objects
 //
+
 declare const __DEV__: boolean;
 
 declare interface Window {
@@ -21,4 +23,20 @@ declare namespace NodeJS {
             userAgent: string;
         };
     }
+}
+
+declare global {
+  interface Window {
+    APP_STATE: ReduxState;
+    APP_CONFIG: { [key: string]: string };
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: () => any;
+    beam: {
+      identify: Function;
+    };
+    location: {
+      assign: Function;
+    };
+  }
+  // eslint-disable-next-line
+  const __DEV__: boolean;
 }

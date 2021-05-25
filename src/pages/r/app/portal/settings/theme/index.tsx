@@ -10,6 +10,7 @@ import AppContext from '@src/utils/appContext';
 import axios, { CancelToken } from 'axios';
 import ThemeSettingsForm from '@src/components/Settings/Theme/Form';
 import { Trans } from '@lingui/macro';
+import UpgradeBanner from '@src/components/Settings/Theme/UpgradeBanner';
 import { WithRouterProps } from 'next/dist/client/with-router';
 import { DispatchProp } from 'react-redux';
 import { USER_UPDATE } from '@src/reducers/session';
@@ -20,6 +21,8 @@ export interface ThemeSettingsPageProps extends WithRouterProps, DispatchProp {
 
 interface State {
   isSaving: boolean;
+  upgradedLogin: boolean;
+  showBanner: boolean;
 }
 
 const ToastOptions = {
@@ -34,6 +37,18 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
 
     this.state = {
       isSaving: false,
+      upgradedLogin: false,
+      showBanner: false
+    };
+  }
+
+  componentDidMount() {
+    const { currentSession: { portal } } = this.props;
+    // If FT toggle for portal is enabled and they have not upgraded show banner
+    if (portal.featureToggles?.some((featureToggle) => featureToggle.raw?.name === 'login.version.upgrade.banner' && featureToggle.raw?.enabled)) {
+      if (portal.configuration?.login_version !== 'peach') {
+        this.setState({ showBanner: true })
+      }
     };
   }
 
@@ -107,7 +122,7 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
       );
 
     } catch (error) {
-      this.handleError(<Trans>An unexpected error has occurred, please try again.</Trans>);
+      this.handleError(<Trans>An unexpected error has occurred. Please try again.</Trans>);
 
       if (__DEV__) {
         console.error(error);
@@ -125,20 +140,22 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
   }
 
   public render() {
-    const { isSaving } = this.state;
+    const { isSaving, upgradedLogin, showBanner } = this.state;
     const {
       currentSession: { portal },
     } = this.props;
 
     return (
       <View data-testid="theme_settings_page">
-        <ThemeSettingsForm
-          portal={portal}
-          isSaving={isSaving}
-          onSave={this.handleSave}
-          onUpload={this.handleImageUpload}
-          onError={this.handleError}
-        />
+        {showBanner && <UpgradeBanner showBanner={showBanner}/> }
+          <ThemeSettingsForm
+            portal={portal}
+            isSaving={isSaving}
+            onSave={this.handleSave}
+            onUpload={this.handleImageUpload}
+            onError={this.handleError}
+            upgradedLogin={upgradedLogin}
+          />
       </View>
     );
   }

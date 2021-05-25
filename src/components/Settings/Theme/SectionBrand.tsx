@@ -27,6 +27,7 @@ const DashedBorder: FunctionComponent = ({ children }) => (
 interface Props {
   isSaving?: boolean;
   onFeaturedImageCropped?: (image: Blob | undefined) => void;
+  upgradedLogin?: boolean;
 }
 
 const ColorPicker: FunctionComponent<{
@@ -38,16 +39,18 @@ const ColorPicker: FunctionComponent<{
   <BaseColorPicker
     {...props}
     color={value}
-    onChange={newColor => onChange?.({
-      target: {
-        name,
-        value: newColor,
-      },
-    })}
+    onChange={newColor =>
+      onChange?.({
+        target: {
+          name,
+          value: newColor,
+        },
+      })
+    }
   />
 );
 
-const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropped }) => {
+const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropped, upgradedLogin }) => {
   const [hasInteracted, setHasInteracted] = React.useState<boolean>(false);
   const prevIsSaving = usePrevious(isSaving);
 

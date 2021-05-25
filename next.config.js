@@ -18,6 +18,7 @@ module.exports = {
     LOGIN_REDIRECT_URL: process.env.ENV === 'local' ? '/r/app/portal' : '/user/login',
     AUTH_URL: process.env.AUTH_URL,
     AUTH_CLIENT_ID: process.env.AUTH_CLIENT_ID,
+    BEAM_URL: process.env.BEAM_URL,
   },
 
   webpack: (config, options) => {

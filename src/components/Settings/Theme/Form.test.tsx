@@ -47,7 +47,7 @@ const INPUT = {
 const setup = (props?: ThemeSettingsFormProps) => {
   return mount(
     <I18nProvider language="en" catalogs={{ en: { messages: {} } }}>
-      <ThemeSettingsForm {...props} upgradedLogin={true} />
+      <ThemeSettingsForm {...props} />
     </I18nProvider>
   );
 };

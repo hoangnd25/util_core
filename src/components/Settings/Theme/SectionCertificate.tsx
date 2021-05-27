@@ -29,15 +29,12 @@ const SectionCertificate: FunctionComponent<Props> = ({ isSaving }) => {
 
           <View paddingBottom={5}>
             <Field
-              name="signatureName"
-              label={i18n._(t`Signature full name`)}
-              component={TextInput}
-              disabled={isSaving}
+              name="signatureName" label={i18n._(t`Signature full name`)} component={TextInput} disabled={isSaving} hideStatus
             />
           </View>
 
           <View paddingBottom={5}>
-            <Field name="signatureTitle" label={i18n._(t`Signature title`)} component={TextInput} disabled={isSaving} />
+            <Field name="signatureTitle" label={i18n._(t`Signature title`)} component={TextInput} disabled={isSaving} hideStatus />
           </View>
         </SettingsFormSection>
       )}

@@ -15,7 +15,7 @@ const SectionDashboard: FunctionComponent = () => {
           actionButton={<PreviewButton><Trans>Preview dashboard</Trans></PreviewButton>}
         >
           <View marginBottom={5}>
-            <Field name="dashboardWelcomeMessage" label={i18n._(t`Welcome message`)} component={RichTextInput} />
+            <Field name="dashboardWelcomeMessage" label={i18n._(t`Welcome message`)} component={RichTextInput} hideStatus />
           </View>
 
           <SettingsBlockMaker
@@ -65,7 +65,7 @@ const SectionDashboard: FunctionComponent = () => {
           </View>
 
           <View marginBottom={0}>
-            <Field component={ImageUploadSlat} name="dashboardIcon" label={i18n._(t`Dashboard icon`)} />
+            <Field component={ImageUploadSlat} name="dashboardIcon" label={i18n._(t`Dashboard icon`)} hideStatus />
           </View>
         </SettingsFormSection>
       )}

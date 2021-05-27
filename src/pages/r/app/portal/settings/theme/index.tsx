@@ -10,10 +10,10 @@ import AppContext from '@src/utils/appContext';
 import axios, { CancelToken } from 'axios';
 import ThemeSettingsForm from '@src/components/Settings/Theme/Form';
 import { Trans } from '@lingui/macro';
-import UpgradeBanner from '@src/components/Settings/Theme/UpgradeBanner';
 import { WithRouterProps } from 'next/dist/client/with-router';
 import { DispatchProp } from 'react-redux';
 import { USER_UPDATE } from '@src/reducers/session';
+import { Router } from 'next/router';
 
 export interface ThemeSettingsPageProps extends WithRouterProps, DispatchProp {
   currentSession: CurrentSessionType;
@@ -44,10 +44,10 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
 
   componentDidMount() {
     const { currentSession: { portal } } = this.props;
-    // If FT toggle for portal is enabled and they have not upgraded show banner
+    // If FT toggle for portal is enabled and they have not upgraded kick them back to apiom.
     if (portal.featureToggles?.some((featureToggle) => featureToggle.raw?.name === 'login.version.upgrade.banner' && featureToggle.raw?.enabled)) {
       if (portal.configuration?.login_version !== 'peach') {
-        this.setState({ showBanner: true })
+        window.location.assign(`https://${portal.title}/p/#/app/settings/theme`)
       }
     };
   }
@@ -140,22 +140,20 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
   }
 
   public render() {
-    const { isSaving, upgradedLogin, showBanner } = this.state;
+    const { isSaving } = this.state;
     const {
       currentSession: { portal },
     } = this.props;
 
     return (
       <View data-testid="theme_settings_page">
-        {showBanner && <UpgradeBanner showBanner={showBanner}/> }
-          <ThemeSettingsForm
-            portal={portal}
-            isSaving={isSaving}
-            onSave={this.handleSave}
-            onUpload={this.handleImageUpload}
-            onError={this.handleError}
-            upgradedLogin={upgradedLogin}
-          />
+        <ThemeSettingsForm
+          portal={portal}
+          isSaving={isSaving}
+          onSave={this.handleSave}
+          onUpload={this.handleImageUpload}
+          onError={this.handleError}
+        />
       </View>
     );
   }

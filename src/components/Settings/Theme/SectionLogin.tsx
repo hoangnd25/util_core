@@ -14,10 +14,10 @@ const SectionLogin: FunctionComponent = () => {
           actionButton={<PreviewButton><Trans>Preview login</Trans></PreviewButton>}
         >
           <View marginBottom={5}>
-            <Field name="loginTitle" label={i18n._(t`Login title`)} component={TextInput} />
+            <Field name="loginTitle" label={i18n._(t`Login title`)} component={TextInput} hideStatus />
           </View>
           <View marginBottom={0}>
-            <Field name="loginDescription" label={i18n._(t`Login description`)} component={TextInput} />
+            <Field name="loginDescription" label={i18n._(t`Login description`)} component={TextInput} hideStatus />
           </View>
         </SettingsFormSection>
       )}

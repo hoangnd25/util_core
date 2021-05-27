@@ -10,20 +10,6 @@ import PreviewButton from './PreviewButton';
 
 const FEATURED_IMAGE_RATIO = 1;
 
-const DashedBorder: FunctionComponent = ({ children }) => (
-  <View
-    padding={4}
-    borderRadius={2}
-    border={1}
-    borderColor="delicate"
-    css={{
-      borderStyle: 'dashed',
-    }}
-  >
-    {children}
-  </View>
-);
-
 interface Props {
   isSaving?: boolean;
   onFeaturedImageCropped?: (image: Blob | undefined) => void;
@@ -86,13 +72,13 @@ const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropp
               <Trans>For best results, upload your logo in a 1:1 ratio with a transparent background.</Trans>
             }
           >
-            <DashedBorder>
-              <Field component={ImageUploadSlat} name="logo" hideLabel required disabled={isSaving} />
-            </DashedBorder>
+            
+            <Field component={ImageUploadSlat} name="logo" hideLabel required disabled={isSaving} />
+            
           </SettingsBlockMaker>
 
           <View paddingBottom={5}>
-            <Field name="portalColor" label={i18n._(t`Portal color`)} component={ColorPicker} />
+            <Field name="portalColor" label={i18n._(t`Portal color`)} component={ColorPicker} hideStatus />
           </View>
 
           <SettingsBlockMaker
@@ -104,21 +90,21 @@ const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropp
               </Trans>
             }
           >
-            <DashedBorder>
-              <Field
-                id="featuredImage"
-                name="featuredImage"
-                allowCrop
-                hideLabel
-                component={ImageUploader}
-                height={400}
-                cropConfig={{
-                  aspect: FEATURED_IMAGE_RATIO,
-                  onCrop: handleCrop,
-                  onInteractionStart: handleInteractionStart,
-                }}
-              />
-            </DashedBorder>
+            
+            <Field
+              id="featuredImage"
+              name="featuredImage"
+              allowCrop
+              hideLabel
+              component={ImageUploader}
+              height={400}
+              cropConfig={{
+                aspect: FEATURED_IMAGE_RATIO,
+                onCrop: handleCrop,
+                onInteractionStart: handleInteractionStart,
+              }}
+            />
+            
           </SettingsBlockMaker>
         </SettingsFormSection>
       )}

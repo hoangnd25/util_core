@@ -13,7 +13,6 @@ import { Trans } from '@lingui/macro';
 import { WithRouterProps } from 'next/dist/client/with-router';
 import { DispatchProp } from 'react-redux';
 import { USER_UPDATE } from '@src/reducers/session';
-import { Router } from 'next/router';
 
 export interface ThemeSettingsPageProps extends WithRouterProps, DispatchProp {
   currentSession: CurrentSessionType;

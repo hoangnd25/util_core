@@ -4,21 +4,24 @@ const webpack = require("webpack");
 var LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const StatsPlugin = require("stats-webpack-plugin");
 
-module.exports = {
+const assetPrefix = useCDN ? `${process.env.CDN_PATH}/${process.env.DOCKER_TAG}` : '';
 
+
+module.exports = {
   poweredByHeader: false,
   // CDN stuff https://www.npmjs.com/package/next#cdn-support-with-asset-prefix
-  assetPrefix: useCDN ? `${process.env.CDN_PATH}/${process.env.DOCKER_TAG}` : '',
+  assetPrefix,
   crossOrigin: 'anonymous',
   // Sent env variables to frontend in page-builder
   publicRuntimeConfig: {
+    CDN_PATH: assetPrefix,
     DOCKER_TAG: process.env.DOCKER_TAG,
     API_URL: process.env.API_URL,
     ENV: process.env.ENV,
-    LOGIN_REDIRECT_URL: process.env.ENV === 'local' ? '/r/app/portal' : '/user/login',
+    LOGIN_REDIRECT_URL: process.env.ENV === 'local' ? '/r/app/portal' : '/login',
     AUTH_URL: process.env.AUTH_URL,
     AUTH_CLIENT_ID: process.env.AUTH_CLIENT_ID,
-    BEAM_URL: process.env.BEAM_URL,
+    WEBSITE_URL: process.env.WEBSITE_URL || 'www.go1.com',
   },
 
   webpack: (config, options) => {

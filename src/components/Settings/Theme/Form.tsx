@@ -1,5 +1,5 @@
-import { Form, Spinner, SubmitButton, Theme, View } from '@go1d/go1d';
-import { FunctionComponent, ReactNode, useContext, useState } from 'react';
+import { Form, Spinner, SubmitButton, Theme, View, Modal } from '@go1d/go1d';
+import { FunctionComponent, ReactNode, useContext, useState, useEffect } from 'react';
 import { Trans } from '@lingui/macro';
 import { FormikConfig } from 'formik';
 import { Value as SlateValue } from 'slate';
@@ -11,6 +11,7 @@ import { getFieldsValues, getInitialValues } from './formHelper';
 import SectionCertificate from './SectionCertificate';
 import SectionDashboard from './SectionDashboard';
 import { deserializeHtml, serializeHtml } from './htmlSerializer';
+import Preview from './Preview';
 
 export interface FormValues {
   logo?: File | null;
@@ -35,6 +36,7 @@ export interface ThemeSettingsFormProps {
   onSave: (values: object) => Promise<void>;
   onUpload: (image?: File | Blob | null) => Promise<string | undefined>;
   onError?: (message: ReactNode) => void;
+  onPreview? : any;
 }
 
 const BRANDS_FIELDS_MAPPING = {
@@ -117,7 +119,7 @@ export const useThemeSettingsFormHandler = (props: ThemeSettingsFormProps) => {
       onError?.(<Trans>Upload image failed</Trans>);
     } finally {
       actions.setSubmitting(false);
-    }
+    } 
   };
 
   return {
@@ -127,10 +129,13 @@ export const useThemeSettingsFormHandler = (props: ThemeSettingsFormProps) => {
   };
 };
 
-const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
+const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = ( props ) => {
   const { portal, isSaving } = props;
   const { handleSubmit, setFeaturedImageCropped } = useThemeSettingsFormHandler(props);
 
+  const [openPreview, setOpenPreview] = useState(false);
+  const [previewType, setPreviewType ] = useState('')
+  
   const theme = useContext(Theme);
   const initialValues = getInitialValues<FormValues>(
     {
@@ -139,6 +144,17 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
     },
     portal
   );
+
+  const [themeSettings, setThemeSettings ] = useState(initialValues)
+  
+  const getPreviewTypeFromSection = (previewTypeFromSection) => {  
+    setPreviewType(previewTypeFromSection)
+    setOpenPreview(true)
+  };
+
+  const handleOnChange = async (values) => {
+    setThemeSettings(values.values)
+  };
 
   return (
     <Form
@@ -149,10 +165,14 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
         dashboardWelcomeMessage: deserializeHtml(initialValues.dashboardWelcomeMessage || ''),
       }}
       onSubmit={handleSubmit}
+      onChange={handleOnChange as any} //Fix typing here
     >
+       
+      <Preview isOpen={openPreview} onRequestClose={() => setOpenPreview(false)} themeSettings={themeSettings} previewType={previewType}></Preview>
+
       <SectionBrand isSaving={isSaving} onFeaturedImageCropped={setFeaturedImageCropped} />
-      <SectionLogin />
-      <SectionSignup />
+      <SectionLogin/>
+      <SectionSignup sendPreviewType={getPreviewTypeFromSection}/>
       <SectionDashboard />
       <SectionCertificate />
       <View flexDirection="row">

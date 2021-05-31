@@ -20,8 +20,6 @@ export interface ThemeSettingsPageProps extends WithRouterProps, DispatchProp {
 
 interface State {
   isSaving: boolean;
-  upgradedLogin: boolean;
-  showBanner: boolean;
 }
 
 const ToastOptions = {
@@ -36,8 +34,6 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
 
     this.state = {
       isSaving: false,
-      upgradedLogin: false,
-      showBanner: false
     };
   }
 
@@ -127,8 +123,6 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
         console.error(error);
       }
     }
-
-    this.setState({ isSaving: false });
   };
 
   toastSuccess(message: ReactNode) {

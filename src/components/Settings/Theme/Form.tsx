@@ -36,7 +36,6 @@ export interface ThemeSettingsFormProps {
   onSave: (values: object) => Promise<void>;
   onUpload: (image?: File | Blob | null) => Promise<string | undefined>;
   onError?: (message: ReactNode) => void;
-  onPreview? : any;
 }
 
 const BRANDS_FIELDS_MAPPING = {
@@ -151,7 +150,7 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = ( props ) =
     setPreviewType(previewTypeFromSection)
     setOpenPreview(true)
   };
-console.log(initialValues)
+
   const handleOnChange = async (values) => {
     setThemeSettings(values.values)
   };

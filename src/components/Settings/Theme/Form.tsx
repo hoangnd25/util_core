@@ -135,7 +135,7 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = ( props ) =
 
   const [openPreview, setOpenPreview] = useState(false);
   const [previewType, setPreviewType ] = useState('')
-  
+
   const theme = useContext(Theme);
   const initialValues = getInitialValues<FormValues>(
     {
@@ -151,7 +151,7 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = ( props ) =
     setPreviewType(previewTypeFromSection)
     setOpenPreview(true)
   };
-
+console.log(initialValues)
   const handleOnChange = async (values) => {
     setThemeSettings(values.values)
   };

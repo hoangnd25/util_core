@@ -1,11 +1,15 @@
-import { Field, TextInput, View } from '@go1d/go1d';
+import { Checkbox, Field, TextInput, View } from '@go1d/go1d';
 import { t, Trans } from '@lingui/macro';
 import SettingsFormSection from '@src/components/Settings/SettingsFormSection';
 import { FunctionComponent } from 'react';
 import { I18n } from '@lingui/react';
 import PreviewButton from './PreviewButton';
 
-const SectionLogin: FunctionComponent = () => {
+interface Props {
+  isPartnerPortal?: boolean;
+}
+
+const SectionLogin: FunctionComponent<Props> = ({ isPartnerPortal }) => {
   return (
     <I18n>
       {({ i18n }) => (
@@ -16,9 +20,21 @@ const SectionLogin: FunctionComponent = () => {
           <View marginBottom={5}>
             <Field name="loginTitle" label={i18n._(t`Login title`)} component={TextInput} hideStatus />
           </View>
-          <View marginBottom={0}>
+          <View marginBottom={5}>
             <Field name="loginDescription" label={i18n._(t`Login description`)} component={TextInput} hideStatus />
           </View>
+          {isPartnerPortal && (
+            <View>
+              <Field 
+                name="applyCustomizationLogin" 
+                label={i18n._(t`Apply login customization to customer portals`)} 
+                description={i18n._(t`This can be changed from the individual portal’s settings page`)}
+                hideStatus
+                component={Checkbox}
+                hideLabel={true}
+              />
+            </View>
+          )}
         </SettingsFormSection>
       )}
     </I18n>

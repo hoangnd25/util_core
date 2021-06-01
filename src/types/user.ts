@@ -7,6 +7,7 @@ export interface GO1Portal {
   configuration: any;
   data: any;
   featureToggles: FeatureToggleModel[];
+  portalData?: GO1PortalData;
   files?: {
     dashboard_icon?: string;
     login_background?: string;
@@ -14,6 +15,10 @@ export interface GO1Portal {
     feature_image?: string;
     feature_image_sizing_type?: string;
   };
+}
+
+export interface GO1PortalData {
+  type: string;
 }
 
 export interface GO1Account {

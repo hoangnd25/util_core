@@ -8,6 +8,7 @@ const portalMock = {
   data: {},
   featureToggles: [],
   files: {},
+  type: 'customer',
   configuration: {
     integrations: {
       oracle: {

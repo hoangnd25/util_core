@@ -37,6 +37,7 @@ const setup = (props = {}, isLoading = false) => {
       data: {},
       featureToggles: [],
       files: {},
+      type: 'customer',
       configuration: {
         integrations: {
           oracle: {

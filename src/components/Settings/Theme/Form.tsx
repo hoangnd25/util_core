@@ -50,7 +50,7 @@ export interface ThemeSettingsFormProps {
 
 const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
   const { portal, isSaving } = props;
-  const isPartnerPortal = ['content_partner', 'distribution_partner'].includes(portal.portalData?.type || null);
+  const isPartnerPortal = ['content_partner', 'distribution_partner'].includes(portal.type || null);
   const { handleSubmit, setFeaturedImageCropped } = useThemeSettingsFormHandler(props);
 
   const theme = useContext(Theme);

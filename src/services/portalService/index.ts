@@ -31,6 +31,11 @@ class PortalService extends BaseService {
     const { data } = await this.http.post<{status: 'OK'}>(`/portal/${portal}`, payload);
     return data;
   }
+
+  async applyChildPortalCustomization(portal: string, groups: string[]) {
+    const { data } = await this.http.post<{status: 'OK'}>(`/portal/${portal}/inheritance`, { groups });
+    return data;
+  }
 }
 
 export default function createPortalService (http?: HttpInstance) {

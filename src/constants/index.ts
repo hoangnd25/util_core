@@ -33,3 +33,36 @@ export const SIDEBAR_MENUS_SETTINGS = {
   PLAN_AND_BILLING: 'sidebar.settings-plan-and-billing',
   SETUP_ACCOUNT: 'sidebar.settings-setup-account',
 };
+
+export const SETTINGS_THEME_FIELDS_MAPPING = {
+  loginTitle: 'configuration.login_tagline',
+  loginDescription: 'configuration.login_secondary_tagline',
+  signupTitle: 'configuration.signup_tagline',
+  signupDescription: 'configuration.signup_secondary_tagline',
+  portalColor: { readPath: 'data.theme.primary', savePath: 'theme.primary' },
+  signatureTitle: 'configuration.signature_title',
+  signatureName: 'configuration.signature_name',
+  dashboardWelcomeMessage: 'configuration.welcome',
+  dashboardImageScale: 'files.feature_image_sizing_type',
+};
+
+export const SETTINGS_THEME_UPLOAD_FIELDS_MAPPING = {
+  logo: 'files.logo',
+  featuredImage: 'files.login_background',
+  signatureImage: 'configuration.signature_image',
+  dashboardImage: 'files.feature_image',
+  dashboardIcon: 'files.dashboard_icon',
+};
+
+/**
+ * @see https://github.com/go1com/util_core/blob/master/portal/PartnerConfigurationsInheritance.php
+ */
+ export const SETTINGS_THEME_CUSTOMIZATION_GROUPS_MAPPING: Record<string, string> = {
+  applyCustomizationLogo: 'logo',
+  applyCustomizationPortalColor: 'portal_color',
+  applyCustomizationFeaturedImage: 'featured_image',
+  applyCustomizationCertificate: 'certificate',
+  applyCustomizationDashboard: 'dashboard',
+  applyCustomizationLogin: 'login',
+  applyCustomizationSignup: 'signup',
+}

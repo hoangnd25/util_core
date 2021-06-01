@@ -9,6 +9,7 @@ import CloudinaryService from '@go1d/mine/services/cloudinary';
 import AppContext from '@src/utils/appContext';
 import axios, { CancelToken } from 'axios';
 import ThemeSettingsForm from '@src/components/Settings/Theme/Form';
+import { FormSaveError, ApplyCustomizationdError, ImageUploadError } from '@src/components/Settings/Theme/errors';
 import { Trans } from '@lingui/macro';
 import { WithRouterProps } from 'next/dist/client/with-router';
 import { DispatchProp } from 'react-redux';
@@ -20,7 +21,6 @@ export interface ThemeSettingsPageProps extends WithRouterProps, DispatchProp {
 
 interface State {
   isSaving: boolean;
-  upgradedLogin: boolean;
   showBanner: boolean;
 }
 
@@ -28,6 +28,7 @@ const ToastOptions = {
   lifetime: 3000,
   isOpen: true,
 };
+
 export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, State> {
   context: React.ContextType<typeof AppContext>;
 
@@ -36,7 +37,6 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
 
     this.state = {
       isSaving: false,
-      upgradedLogin: false,
       showBanner: false
     };
   }
@@ -51,7 +51,7 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
     };
   }
 
-  handleImageUpload = (image: File | Blob, cancelTokenSource?: CancelToken) => {
+  handleImageUpload = async (image: File | Blob, cancelTokenSource?: CancelToken) => {
     const {
       currentSession: { account },
     } = this.props;
@@ -62,16 +62,21 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
 
     this.setState({ isSaving: true });
     
-    return cloudinaryService.uploadImage(
-      {
-        file: image as File,
-        mail: account.mail,
-      },
-      cancelToken
-    );
+    try {
+      return await cloudinaryService.uploadImage(
+        {
+          file: image as File,
+          mail: account.mail,
+        },
+        cancelToken
+      );
+    } catch (error) {
+      throw new ImageUploadError(error.message);
+    }
   };
 
   handleError = (message: ReactNode) => {
+    this.setState({ isSaving: false });
     NotificationManager.warning({
       message,
       options: ToastOptions,
@@ -103,7 +108,7 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
     }
   }
 
-  handleSave = async (fields: object) => {
+  handleSave = async (fields: object, childCustomizationGroups: string[] = []) => {
     const {
       currentSession: { portal },
     } = this.props;
@@ -114,21 +119,22 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
 
     try {
       await portalService.save(portal.title, fields);
-      this.refreshSession(fields);
+    } catch (saveError) {
+      throw new FormSaveError(saveError.message);
+    }
 
-      this.toastSuccess(
-        <Trans>The settings have been saved.</Trans>
-      );
-
-    } catch (error) {
-      this.handleError(<Trans>An unexpected error has occurred. Please try again.</Trans>);
-
-      if (__DEV__) {
-        console.error(error);
+    if (childCustomizationGroups.length > 0) {
+      try {
+        await portalService.applyChildPortalCustomization(portal.title, childCustomizationGroups);
+      } catch (applyCustomizationdError) {
+        throw new ApplyCustomizationdError(applyCustomizationdError.message);
       }
     }
 
-    this.setState({ isSaving: false });
+    this.refreshSession(fields);
+    this.toastSuccess(
+      <Trans>The settings have been saved.</Trans>
+    );
   };
 
   toastSuccess(message: ReactNode) {

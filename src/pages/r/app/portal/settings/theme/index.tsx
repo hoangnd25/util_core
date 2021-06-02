@@ -122,6 +122,8 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
       if (__DEV__) {
         console.error(error);
       }
+      
+      this.setState({ isSaving: false });
     }
   };
 

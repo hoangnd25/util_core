@@ -11,7 +11,6 @@ import { getFieldsValues, getInitialValues } from './formHelper';
 import SectionCertificate from './SectionCertificate';
 import SectionDashboard from './SectionDashboard';
 import { deserializeHtml, serializeHtml } from './htmlSerializer';
-import Preview from './Preview';
 
 export interface FormValues {
   logo?: File | null;
@@ -132,9 +131,6 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = ( props ) =
   const { portal, isSaving } = props;
   const { handleSubmit, setFeaturedImageCropped } = useThemeSettingsFormHandler(props);
 
-  const [openPreview, setOpenPreview] = useState(false);
-  const [previewType, setPreviewType ] = useState('')
-
   const theme = useContext(Theme);
   const initialValues = getInitialValues<FormValues>(
     {
@@ -146,11 +142,6 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = ( props ) =
 
   const [themeSettings, setThemeSettings ] = useState(initialValues)
   
-  const getPreviewTypeFromSection = (previewTypeFromSection) => {  
-    setPreviewType(previewTypeFromSection)
-    setOpenPreview(true)
-  };
-
   const handleOnChange = async (values) => {
     setThemeSettings(values.values)
   };
@@ -166,12 +157,10 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = ( props ) =
       onSubmit={handleSubmit}
       onChange={handleOnChange as any} //Fix typing here
     >
-       
-      <Preview isOpen={openPreview} onRequestClose={() => setOpenPreview(false)} themeSettings={themeSettings} previewType={previewType}></Preview>
 
       <SectionBrand isSaving={isSaving} onFeaturedImageCropped={setFeaturedImageCropped} />
       <SectionLogin/>
-      <SectionSignup sendPreviewType={getPreviewTypeFromSection}/>
+      <SectionSignup themeSettings={themeSettings}/>
       <SectionDashboard />
       <SectionCertificate />
       <View flexDirection="row">

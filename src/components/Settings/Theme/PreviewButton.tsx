@@ -3,10 +3,10 @@ import { ButtonFilled, ButtonFilledProps, Text } from '@go1d/go1d';
 
 interface PreviewButtonProps extends ButtonFilledProps {}
 
-const PreviewButton = ({ children, onClick, props, ...buttonProps }: PreviewButtonProps) => {
+const PreviewButton = ({ children, props, ...buttonProps }: PreviewButtonProps) => {
   
   return (
-    <ButtonFilled display={['none', 'flex', 'flex']} onClick={onClick} {...buttonProps}>
+    <ButtonFilled display={['none', 'flex', 'flex']} {...buttonProps}>
       <Text>{children}</Text>
     </ButtonFilled>
   );

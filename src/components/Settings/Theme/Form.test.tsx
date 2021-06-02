@@ -76,9 +76,7 @@ it('Should render all fields correctly', () => {
     onUpload: jest.fn(),
     portal: {
       ...defaultPortal,
-      portalData: {
-        type: 'distribution_partner',
-      },
+      type: 'distribution_partner',
     } as GO1Portal,
   });
   Object.entries({ ...INPUTS, ...APPLY_CHILD_PORTAL_INPUTS }).forEach(([_, selector]) => {
@@ -235,7 +233,9 @@ it('Should be able to handle image upload error', async done => {
   });
 
   waitFor(() => {
-    expect(errorFn).toHaveBeenCalledWith(<Trans>An unexpected error has occurred while uploading image. Please try again.</Trans>);
+    expect(errorFn).toHaveBeenCalledWith(
+      <Trans>An unexpected error has occurred while uploading image. Please try again.</Trans>
+    );
     done();
   });
 });
@@ -266,7 +266,9 @@ it('Should be able to handle form saving error', async done => {
   });
 
   waitFor(() => {
-    expect(errorFn).toHaveBeenCalledWith(<Trans>An unexpected error has occurred while saving form. Please try again.</Trans>);
+    expect(errorFn).toHaveBeenCalledWith(
+      <Trans>An unexpected error has occurred while saving form. Please try again.</Trans>
+    );
     done();
   });
 });
@@ -297,7 +299,11 @@ it('Should be able to handle apply customization to child portals error', async 
   });
 
   waitFor(() => {
-    expect(errorFn).toHaveBeenCalledWith(<Trans>An unexpected error has occurred while applying customization to customer portals. Please try again.</Trans>);
+    expect(errorFn).toHaveBeenCalledWith(
+      <Trans>
+        An unexpected error has occurred while applying customization to customer portals. Please try again.
+      </Trans>
+    );
     done();
   });
 });

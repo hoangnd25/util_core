@@ -31,6 +31,7 @@ const setup = (query = {}) => {
       id: '123',
       title: 'test.mygo1.com',
       mail: 'test@go1.com',
+      type: 'customer',
       data: {},
       featureToggles: [],
       files: {},

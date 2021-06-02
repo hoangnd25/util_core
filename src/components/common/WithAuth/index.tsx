@@ -8,6 +8,7 @@ import Cookies from 'universal-cookie';
 import { AppContext } from 'next/app';
 import { LoadingSpinner } from '../Suspense';
 import UserService, { removeSession, saveSession } from './services/userService';
+import isAdminRole from '../../../utils/isAdminRole';
 
 /**
  * The following HOC is used to enable protected routes and inject the "currentSession" object in to the page
@@ -87,6 +88,15 @@ export const withCurrentSession = (App, helpers) =>
       if (App.getInitialProps) {
         appProps = await App.getInitialProps(ctx);
       }
+
+      if (ctx.ctx.isServer && !ctx.ctx.pathname.includes('access-denied')) {
+        if (!isAdminRole) {
+          ctx.ctx.res.writeHead(302, {
+            Location: 'r/app/portal/access-denied'
+          });
+          return ctx.ctx.res.end();
+        }
+      };
 
       return {
         ...appProps,

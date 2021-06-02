@@ -31,6 +31,5 @@ deploy:qa:k8s:
 deploy:production:
   variables:
     ENV: "production"
-    MEM_MIN: 64Mi
-    MEM_MAX: 128Mi
+    MEM_MIN: 256Mi
     ORG_ID: A6GD9

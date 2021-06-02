@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Field, TextInput, View, PasswordInput } from '@go1d/go1d';
+import { Checkbox, Field, TextInput, View, PasswordInput  } from '@go1d/go1d';
 import { t, Trans } from '@lingui/macro';
 import { I18n } from '@lingui/react';
 import SettingsFormSection from '@src/components/Settings/SettingsFormSection';
@@ -13,12 +13,12 @@ const {
   publicRuntimeConfig: { CDN_PATH },
 } = getConfig();
 
-interface SectionSignupProps {
+interface Props {
+  isPartnerPortal?: boolean;
   themeSettings?: any;
 }
 
-const SectionSignup: FunctionComponent<SectionSignupProps> = (props: any) => {
-  const { themeSettings } = props;
+const SectionSignup: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings }) => {
   const { logo, featuredImage, signupTitle, signupDescription } = themeSettings;
   const [openPreview, setOpenPreview] = useState(false);
 
@@ -68,9 +68,22 @@ const SectionSignup: FunctionComponent<SectionSignupProps> = (props: any) => {
           <View marginBottom={5}>
             <Field name="signupTitle" label={i18n._(t`Sign up title`)} component={TextInput} hideStatus />
           </View>
-          <View marginBottom={0}>
+          <View marginBottom={5}>
             <Field name="signupDescription" label={i18n._(t`Sign up description`)} component={TextInput} hideStatus />
           </View>
+          
+          {isPartnerPortal && (
+            <View>
+              <Field 
+                name="applyCustomizationSignup" 
+                label={i18n._(t`Apply sign up customization to customer portals`)} 
+                description={i18n._(t`This can be changed from the individual portal’s settings page`)}
+                hideStatus
+                component={Checkbox}
+                hideLabel={true}
+              />
+            </View>
+          )}
         </SettingsFormSection>
       )}
     </I18n>

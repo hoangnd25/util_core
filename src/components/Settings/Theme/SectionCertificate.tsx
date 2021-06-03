@@ -1,4 +1,4 @@
-import { Field, ImageUploadSlat, TextInput, View } from '@go1d/go1d';
+import { Checkbox, Field, ImageUploadSlat, TextInput, View } from '@go1d/go1d';
 import { t, Trans } from '@lingui/macro';
 import { I18n } from '@lingui/react';
 import { FunctionComponent } from 'react';
@@ -7,9 +7,10 @@ import PreviewButton from './PreviewButton';
 
 interface Props {
   isSaving?: boolean;
+  isPartnerPortal?: boolean;
 }
 
-const SectionCertificate: FunctionComponent<Props> = ({ isSaving }) => {
+const SectionCertificate: FunctionComponent<Props> = ({ isSaving, isPartnerPortal }) => {
   return (
     <I18n>
       {({ i18n }) => (
@@ -36,6 +37,19 @@ const SectionCertificate: FunctionComponent<Props> = ({ isSaving }) => {
           <View paddingBottom={5}>
             <Field name="signatureTitle" label={i18n._(t`Signature title`)} component={TextInput} disabled={isSaving} hideStatus />
           </View>
+
+          {isPartnerPortal && (
+            <View>
+              <Field 
+                name="applyCustomizationCertificate" 
+                label={i18n._(t`Apply completion certificate customization to customer portals`)} 
+                description={i18n._(t`This can be changed from the individual portal’s settings page`)}
+                hideStatus
+                component={Checkbox}
+                hideLabel={true}
+              />
+            </View>
+          )}
         </SettingsFormSection>
       )}
     </I18n>

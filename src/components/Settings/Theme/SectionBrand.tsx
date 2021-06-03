@@ -1,4 +1,4 @@
-import { ColorPicker as BaseColorPicker, Field, ImageUploader, ImageUploadSlat, View } from '@go1d/go1d';
+import { Checkbox, ColorPicker as BaseColorPicker, Field, ImageUploader, ImageUploadSlat, View } from '@go1d/go1d';
 import { t, Trans } from '@lingui/macro';
 import { I18n } from '@lingui/react';
 import SettingsBlockMaker from '@src/components/Settings/SettingsBlockMaker';
@@ -13,7 +13,7 @@ const FEATURED_IMAGE_RATIO = 1;
 interface Props {
   isSaving?: boolean;
   onFeaturedImageCropped?: (image: Blob | undefined) => void;
-  upgradedLogin?: boolean;
+  isPartnerPortal?: boolean;
 }
 
 const ColorPicker: FunctionComponent<{
@@ -36,7 +36,7 @@ const ColorPicker: FunctionComponent<{
   />
 );
 
-const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropped, upgradedLogin }) => {
+const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropped, isPartnerPortal }) => {
   const [hasInteracted, setHasInteracted] = React.useState<boolean>(false);
   const prevIsSaving = usePrevious(isSaving);
 
@@ -72,14 +72,38 @@ const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropp
               <Trans>For best results, upload your logo in a 1:1 ratio with a transparent background.</Trans>
             }
           >
-            
-            <Field component={ImageUploadSlat} name="logo" hideLabel required disabled={isSaving} />
-            
+            <Field component={ImageUploadSlat} name="logo" hideLabel required disabled={isSaving} hideStatus />
           </SettingsBlockMaker>
+
+          {isPartnerPortal && (
+            <View marginBottom={6}>
+              <Field 
+                name="applyCustomizationLogo" 
+                label={i18n._(t`Apply logo to customer portals`)} 
+                description={i18n._(t`This can be changed from the individual portal’s settings page`)}
+                hideStatus
+                component={Checkbox}
+                hideLabel={true}
+              />
+            </View>
+          )}
 
           <View paddingBottom={5}>
             <Field name="portalColor" label={i18n._(t`Portal color`)} component={ColorPicker} hideStatus />
           </View>
+
+          {isPartnerPortal && (
+            <View marginBottom={6}>
+              <Field 
+                name="applyCustomizationPortalColor" 
+                label={i18n._(t`Apply portal color to customer portals`)} 
+                description={i18n._(t`This can be changed from the individual portal’s settings page`)}
+                hideStatus
+                component={Checkbox}
+                hideLabel={true}
+              />
+            </View>
+          )}
 
           <SettingsBlockMaker
             title={<Trans>Featured image</Trans>}
@@ -89,8 +113,8 @@ const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropp
                 repositioned.
               </Trans>
             }
+            marginBottom={5}
           >
-            
             <Field
               id="featuredImage"
               name="featuredImage"
@@ -104,8 +128,20 @@ const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropp
                 onInteractionStart: handleInteractionStart,
               }}
             />
-            
           </SettingsBlockMaker>
+
+          {isPartnerPortal && (
+            <View>
+              <Field 
+                name="applyCustomizationFeaturedImage" 
+                label={i18n._(t`Apply featured image to customer portals`)} 
+                description={i18n._(t`This can be changed from the individual portal’s settings page`)}
+                hideStatus
+                component={Checkbox}
+                hideLabel={true}
+              />
+            </View>
+          )}
         </SettingsFormSection>
       )}
     </I18n>

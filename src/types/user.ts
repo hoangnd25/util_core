@@ -7,6 +7,7 @@ export interface GO1Portal {
   configuration: any;
   data: any;
   featureToggles: FeatureToggleModel[];
+  type: string;
   files?: {
     dashboard_icon?: string;
     login_background?: string;

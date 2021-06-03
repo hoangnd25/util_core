@@ -1,4 +1,4 @@
-import { Field, RichTextInput, View, Text, RadioGroup, ImageUploader, ImageUploadSlat } from '@go1d/go1d';
+import { Field, RichTextInput, View, Text, RadioGroup, ImageUploader, ImageUploadSlat, Checkbox } from '@go1d/go1d';
 import { t, Trans } from '@lingui/macro';
 import { I18n } from '@lingui/react';
 import SettingsFormSection from '@src/components/Settings/SettingsFormSection';
@@ -6,7 +6,11 @@ import { FunctionComponent } from 'react';
 import SettingsBlockMaker from '../SettingsBlockMaker';
 import PreviewButton from './PreviewButton';
 
-const SectionDashboard: FunctionComponent = () => {
+interface Props {
+  isPartnerPortal?: boolean;
+}
+
+const SectionDashboard: FunctionComponent<Props> = ({ isPartnerPortal }) => {
   return (
     <I18n>
       {({ i18n }) => (
@@ -31,7 +35,7 @@ const SectionDashboard: FunctionComponent = () => {
               hideLabel
               supportedFormatText={
                 <View alignItems="center" textAlign="center">
-                  <Text marginTop={4} marginBottom={2} paddingX={4} fontSize={[1, 2]} text>
+                  <Text marginTop={4} marginBottom={2} paddingX={4} fontSize={[1, 2]}>
                     <Trans>Minimum dimensions of 1920px (W) and 300px (H)</Trans>
                   </Text>
                   <Text paddingX={4} fontSize={[1, 2]}>
@@ -64,9 +68,22 @@ const SectionDashboard: FunctionComponent = () => {
             />
           </View>
 
-          <View marginBottom={0}>
+          <View marginBottom={5}>
             <Field component={ImageUploadSlat} name="dashboardIcon" label={i18n._(t`Dashboard icon`)} hideStatus />
           </View>
+
+          {isPartnerPortal && (
+            <View>
+              <Field 
+                name="applyCustomizationDashboard" 
+                label={i18n._(t`Apply dashboard customization to customer portals`)} 
+                description={i18n._(t`This can be changed from the individual portal’s settings page`)}
+                hideStatus
+                component={Checkbox}
+                hideLabel={true}
+              />
+            </View>
+          )}
         </SettingsFormSection>
       )}
     </I18n>

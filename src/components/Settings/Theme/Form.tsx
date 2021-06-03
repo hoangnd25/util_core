@@ -14,20 +14,20 @@ import { useThemeSettingsFormHandler } from './Form.hooks';
 import { SETTINGS_THEME_FIELDS_MAPPING, SETTINGS_THEME_UPLOAD_FIELDS_MAPPING } from '@src/constants';
 
 export interface FormValues {
-  logo?: File | null;
-  featuredImage?: File | null;
+  logo?: File | string | null;
+  featuredImage?: File | string | null;
   loginTitle?: string;
   loginDescription?: string;
   signupTitle?: string;
   signupDescription?: string;
   portalColor?: string;
-  signatureImage?: File | null;
+  signatureImage?: File | string | null;
   signatureName?: string;
   signatureTitle?: string;
-  dashboardWelcomeMessage?: SlateValue;
+  dashboardWelcomeMessage?: SlateValue | string;
   dashboardImageScale?: string;
-  dashboardImage?: File | null;
-  dashboardIcon?: File | null;
+  dashboardImage?: File | string | null;
+  dashboardIcon?: File | string | null;
 }
 
 export interface FormApplyCustomizationValues {

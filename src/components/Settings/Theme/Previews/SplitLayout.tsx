@@ -1,14 +1,20 @@
 import React from 'react';
-import { View, ButtonFilled, Text, foundations, Provider } from '@go1d/go1d';
+import { View, ButtonFilled, Text } from '@go1d/go1d';
 import IconGo1Logo from '@go1d/go1d/build/components/Icons/Go1Logo';
+import { Trans } from '@lingui/macro';
 
-const SplitLayout = props => {
+interface Props {
+  primaryTagline, description, logo, buttonText, featuredImage, terms: string;
+  secondaryTagline: string[];
+  children: React.ReactNode, 
+}
+
+const SplitLayout: React.FC<Props> = (props) => {
   const { primaryTagline, secondaryTagline, description, logo, buttonText, featuredImage, children, terms } = props;
 
   const DEFAULT_APIOM_LOGO = 'images/logo-white.png';
   
   return (
-    <Provider accent={foundations.colors.accent}>
       <View width="100%" height="580px" flexDirection="row" border={1} borderColor="soft">
         <View
           width="400px"
@@ -78,18 +84,20 @@ const SplitLayout = props => {
             <Text textAlign="center">
               {terms} 
               <Text color="successLowest" fontWeight="bold" textDecoration="underline">
-              {' '}Go1 terms of use
-              </Text>{' '}
-                and{' '}
+              {' '}
+                <Trans>Go1 terms of use</Trans>
+              </Text>
+              {' '}
+                <Trans>and</Trans>
+              {' '}
               <Text color="successLowest" fontWeight="bold" textDecoration="underline">
-                privacy policy.
+                <Trans>privacy policy.</Trans>
               </Text>
             </Text>
 
           </View> 
         </View>
       </View>
-    </Provider>
   );
 };
 

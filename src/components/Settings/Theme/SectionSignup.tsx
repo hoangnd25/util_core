@@ -6,6 +6,7 @@ import SettingsFormSection from '@src/components/Settings/SettingsFormSection';
 import { FunctionComponent } from 'react';
 import PreviewButton from '@src/components/Settings/Theme/PreviewButton';
 import Preview from '@src/components/Settings/Theme/Preview';
+import { FormValues } from '@src/components/Settings/Theme/Form';
 
 import getConfig from 'next/config';
 
@@ -15,14 +16,15 @@ const {
 
 interface Props {
   isPartnerPortal?: boolean;
-  themeSettings?: any;
+  themeSettings?: FormValues;
 }
 
 const SectionSignup: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings }) => {
   const { logo, featuredImage, signupTitle, signupDescription } = themeSettings;
   const [openPreview, setOpenPreview] = useState(false);
 
-  const landingPage = featuredImage?.includes('cloudinary') ? `url("${featuredImage}")` :  `url("${CDN_PATH}/signup_default_landing_page.jpg")`;
+
+  const landingPage = typeof featuredImage === 'string' && featuredImage?.includes('cloudinary') ? `url("${featuredImage}")` : `url("${CDN_PATH}/signup_default_landing_page.jpg")`;
   
   return (
     <I18n>
@@ -38,29 +40,29 @@ const SectionSignup: FunctionComponent<Props> = ({ isPartnerPortal, themeSetting
           <Preview 
             isOpen={openPreview} 
             onRequestClose={() => setOpenPreview(false)} 
-            title="sign up"
-            buttonText="Create new account"
+            title={i18n._(t`sign up`)}
+            buttonText={i18n._(t`Create new account`)}
             primaryTagline={signupTitle}
-            terms="By signing up, you agree"
-            secondaryTagline={["Already have an account?", "Log in"]}
+            terms={i18n._(t`By signing up, you agree`)}
+            secondaryTagline={[i18n._(`"Already have an account?`), i18n._(t`Log in`)]}
             description={signupDescription}
             featuredImage={landingPage}
             logo={logo}>       
             <View>
               <View flexDirection="row" display="flex" marginY={3} justifyContent="space-between" width="100%">
                 <View paddingRight={1} flexShrink={1} flexGrow={1}>
-                  <TextInput id="firstName" label="First name" floating></TextInput>
+                  <TextInput id="firstName" label={i18n._(t`First Name`)} floating></TextInput>
                 </View>
                 <View paddingLeft={1} flexShrink={1} flexGrow={1}>
-                  <TextInput id="lastName" label="Last name" floating></TextInput>
+                  <TextInput id="lastName" label={i18n._(t`Last Name`)} floating></TextInput>
                 </View>
               </View>
 
               <View width="100%">
-                <TextInput id="email" label="Email" floating></TextInput>
+                <TextInput id="email" label={i18n._(t`Email`)} floating></TextInput>
               </View>
               <View marginY={3} width="100%">
-                <PasswordInput id="password" label="Password" floating></PasswordInput>
+                <PasswordInput id="password" label={i18n._(t`Password`)} floating></PasswordInput>
               </View>
           </View>
           </Preview>

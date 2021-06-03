@@ -3,7 +3,7 @@ import { View, ButtonFilled, Text, foundations, Provider } from '@go1d/go1d';
 import IconGo1Logo from '@go1d/go1d/build/components/Icons/Go1Logo';
 
 const SplitLayout = props => {
-  const { title, secondaryTagline, description, logo, buttonText, featuredImage, children, terms } = props;
+  const { primaryTagline, secondaryTagline, description, logo, buttonText, featuredImage, children, terms } = props;
 
   const DEFAULT_APIOM_LOGO = 'images/logo-white.png';
   
@@ -50,7 +50,7 @@ const SplitLayout = props => {
               textAlign="center"
               color="successLowest"
             >
-              {title}
+              {primaryTagline}
             </Text>
   
             <Text marginBottom={5} color="default" textAlign="center">

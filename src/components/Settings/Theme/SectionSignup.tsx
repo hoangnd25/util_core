@@ -6,7 +6,7 @@ import SettingsFormSection from '@src/components/Settings/SettingsFormSection';
 import { FunctionComponent } from 'react';
 import PreviewButton from '@src/components/Settings/Theme/PreviewButton';
 import Preview from '@src/components/Settings/Theme/Preview';
-import SplitLayout from './Previews/SplitLayout';
+
 import getConfig from 'next/config';
 
 const {
@@ -35,34 +35,34 @@ const SectionSignup: FunctionComponent<Props> = ({ isPartnerPortal, themeSetting
             </PreviewButton>
           }
         >
-          <Preview isOpen={openPreview} onRequestClose={() => setOpenPreview(false)} title="sign up">       
-            <SplitLayout
+          <Preview 
+            isOpen={openPreview} 
+            onRequestClose={() => setOpenPreview(false)} 
+            title="sign up"
             buttonText="Create new account"
-            title={signupTitle}
+            primaryTagline={signupTitle}
             terms="By signing up, you agree"
             secondaryTagline={["Already have an account?", "Log in"]}
             description={signupDescription}
             featuredImage={landingPage}
-            logo={logo}
-            >
-              <View>
-                <View flexDirection="row" display="flex" marginY={3} justifyContent="space-between" width="100%">
-                  <View paddingRight={1} flexShrink={1} flexGrow={1}>
-                    <TextInput id="firstName" label="First name" floating></TextInput>
-                  </View>
-                  <View paddingLeft={1} flexShrink={1} flexGrow={1}>
-                    <TextInput id="lastName" label="Last name" floating></TextInput>
-                  </View>
+            logo={logo}>       
+            <View>
+              <View flexDirection="row" display="flex" marginY={3} justifyContent="space-between" width="100%">
+                <View paddingRight={1} flexShrink={1} flexGrow={1}>
+                  <TextInput id="firstName" label="First name" floating></TextInput>
                 </View>
-
-                <View width="100%">
-                  <TextInput id="email" label="Email" floating></TextInput>
-                </View>
-                <View marginY={3} width="100%">
-                  <PasswordInput id="password" label="Password" floating></PasswordInput>
+                <View paddingLeft={1} flexShrink={1} flexGrow={1}>
+                  <TextInput id="lastName" label="Last name" floating></TextInput>
                 </View>
               </View>
-            </SplitLayout>
+
+              <View width="100%">
+                <TextInput id="email" label="Email" floating></TextInput>
+              </View>
+              <View marginY={3} width="100%">
+                <PasswordInput id="password" label="Password" floating></PasswordInput>
+              </View>
+          </View>
           </Preview>
 
           <View marginBottom={5}>

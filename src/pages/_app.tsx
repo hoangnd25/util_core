@@ -65,7 +65,7 @@ export class GO1App extends App<AppProps, any> {
   public render() {
     const { Component, pageProps, store, currentSession } = this.props;
     // Show loading if current Session has not been loaded
-    if (currentSession === null) {
+    if (!currentSession) {
       // can be replaced with a skeleton
       return <LoadingSpinner />;
     }

@@ -44,7 +44,7 @@ class UserService {
     return this;
   }
 
-  public async performAuth(go1CookieValue: string, oneTimeLoginToken: string) {
+  public async performAuth(go1CookieValue: string, oneTimeLoginToken: string): Promise<CurrentSessionType | null> {
     let user: GO1User = null;
     // try one time login tokens
     if (oneTimeLoginToken) {
@@ -79,7 +79,7 @@ class UserService {
     }
     // No login information found
     if (!jwt || !uuid) {
-      return new Promise((resolve, reject) => reject(null));
+      return Promise.reject(null)
     }
 
     this.http.setJWT(jwt);
@@ -120,7 +120,7 @@ class UserService {
       };
   }
 
-  public async makeSession(rawUser: GO1User, instanceName: string) {
+  public async makeSession(rawUser: GO1User, instanceName: string): Promise<CurrentSessionType> {
     const { accounts = [] as GO1Account[], jwt = '' as string, ...restUser } = rawUser;
     const currentAccount = Array.isArray(accounts)
       ? accounts.find(account => String(account.instance.title) === instanceName) || accounts[0]

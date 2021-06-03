@@ -8,6 +8,7 @@ import Cookies from 'universal-cookie';
 import { AppContext } from 'next/app';
 import { LoadingSpinner } from '../Suspense';
 import UserService, { removeSession, saveSession } from './services/userService';
+import isAdminRole from '@src/utils/isAdminRole';
 
 /**
  * The following HOC is used to enable protected routes and inject the "currentSession" object in to the page
@@ -56,14 +57,14 @@ export const withCurrentSession = (App, helpers) =>
   class Auth extends React.Component<any, any> {
     public static displayName = 'Authentication';
 
-    public static async getInitialProps(ctx: AppContext) {
+    public static async getInitialProps(appCtx: AppContext) {
       const { http } = helpers;
       const {
         router: { query },
-        ctx: { req, store },
-      } = ctx;
+        ctx: { req, store, res, isServer, pathname },
+      } = appCtx;
       let appProps = {};
-      let currentSession = null;
+      let currentSession: CurrentSessionType | null | undefined;
 
       // Only perform on server
       if (typeof window === 'undefined') {
@@ -85,8 +86,17 @@ export const withCurrentSession = (App, helpers) =>
       }
 
       if (App.getInitialProps) {
-        appProps = await App.getInitialProps(ctx);
+        appProps = await App.getInitialProps(appCtx);
       }
+      
+      if (isServer && currentSession && !pathname.includes('access-denied')) {
+        if (!isAdminRole(currentSession)) {
+          res.writeHead(302, {
+            Location: '/r/app/portal/access-denied'
+          });
+          return res.end();
+        }
+      };
 
       return {
         ...appProps,

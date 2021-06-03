@@ -61,7 +61,7 @@ export const withCurrentSession = (App, helpers) =>
       const { http } = helpers;
       const {
         router: { query },
-        ctx: { req, store },
+        ctx: { req, store, res, isServer, pathname },
       } = appCtx;
       let appProps = {};
       let currentSession = null;
@@ -88,13 +88,13 @@ export const withCurrentSession = (App, helpers) =>
       if (App.getInitialProps) {
         appProps = await App.getInitialProps(appCtx);
       }
-
-      if (appCtx.ctx.isServer && !appCtx.ctx.pathname.includes('access-denied')) {
+      
+      if (isServer && !pathname.includes('access-denied')) {
         if (!isAdminRole(currentSession)) {
-          appCtx.ctx.res.writeHead(302, {
+          res.writeHead(302, {
             Location: '/r/app/portal/access-denied'
           });
-          return appCtx.ctx.res.end();
+          return res.end();
         }
       };
 

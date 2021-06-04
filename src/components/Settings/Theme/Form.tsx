@@ -64,7 +64,7 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
 
   const [themeSettings, setThemeSettings ] = useState(initialValues)
   
-  const handleOnChange = async (values) => {
+  const handleChange = async (values) => {
     setThemeSettings(values.values)
   };
 
@@ -77,7 +77,7 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
         dashboardWelcomeMessage: deserializeHtml(initialValues.dashboardWelcomeMessage || ''),
       }}
       onSubmit={handleSubmit}
-      onChange={handleOnChange as any} //Fix typing here
+      onChange={handleChange}
     >
       <SectionBrand isSaving={isSaving} onFeaturedImageCropped={setFeaturedImageCropped} isPartnerPortal={isPartnerPortal} />
       <SectionLogin isPartnerPortal={isPartnerPortal} />

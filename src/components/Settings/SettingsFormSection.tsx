@@ -1,7 +1,7 @@
 import { Text, View } from '@go1d/go1d';
-import { FunctionComponent } from 'react';
+import React, { FunctionComponent } from 'react';
 
-interface Props {
+export interface Props {
   title: React.ReactNode;
   actionButton?: React.ReactNode;
 }

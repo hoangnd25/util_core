@@ -66,7 +66,7 @@ export const useThemeSettingsFormHandler = (props: ThemeSettingsFormProps) => {
         ...(featuredImage !== undefined && { [SETTINGS_THEME_UPLOAD_FIELDS_MAPPING.featuredImage]: featuredImage }),
         ...(dashboardImage !== undefined && { [SETTINGS_THEME_UPLOAD_FIELDS_MAPPING.dashboardImage]: dashboardImage }),
         ...(dashboardIcon !== undefined && { [SETTINGS_THEME_UPLOAD_FIELDS_MAPPING.dashboardIcon]: dashboardIcon }),
-        ...getFieldsValues({ ...SETTINGS_THEME_FIELDS_MAPPING }, { ...values, dashboardWelcomeMessage: serializeHtml(values.dashboardWelcomeMessage) }, portal),
+        ...getFieldsValues({ ...SETTINGS_THEME_FIELDS_MAPPING }, { ...values, dashboardWelcomeMessage: serializeHtml(typeof values.dashboardWelcomeMessage !== 'string'  && values.dashboardWelcomeMessage) }, portal),
       };
 
       if (featuredImage) {

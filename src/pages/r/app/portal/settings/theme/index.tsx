@@ -21,7 +21,6 @@ export interface ThemeSettingsPageProps extends WithRouterProps, DispatchProp {
 
 interface State {
   isSaving: boolean;
-  showBanner: boolean;
 }
 
 const ToastOptions = {
@@ -37,14 +36,13 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
 
     this.state = {
       isSaving: false,
-      showBanner: false
     };
   }
 
   componentDidMount() {
     const { currentSession: { portal } } = this.props;
     // If FT toggle for portal is enabled and they have not upgraded kick them back to apiom.
-    if (portal.featureToggles?.some((featureToggle) => featureToggle.raw?.name === 'login.version.upgrade.banner' && featureToggle.raw?.enabled)) {
+    if (portal.featureToggles?.some((featureToggle) => featureToggle.raw?.name === 'portal.settings.uplift' && featureToggle.raw?.enabled)) {
       if (portal.configuration?.login_version !== 'peach') {
         window.location.assign(`https://${portal.title}/p/#/app/settings/theme`)
       }
@@ -128,6 +126,8 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
         await portalService.applyChildPortalCustomization(portal.title, childCustomizationGroups);
       } catch (applyCustomizationdError) {
         throw new ApplyCustomizationdError(applyCustomizationdError.message);
+      } finally {
+        this.setState({ isSaving: false });
       }
     }
 

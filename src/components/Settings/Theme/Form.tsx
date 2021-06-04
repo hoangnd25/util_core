@@ -1,5 +1,5 @@
 import { Form, Spinner, SubmitButton, Theme, View } from '@go1d/go1d';
-import { FunctionComponent, ReactNode, useContext } from 'react';
+import { FunctionComponent, ReactNode, useContext, useState } from 'react';
 import { Trans } from '@lingui/macro';
 import { Value as SlateValue } from 'slate';
 import { GO1Portal } from '@src/types/user';
@@ -14,20 +14,20 @@ import { useThemeSettingsFormHandler } from './Form.hooks';
 import { SETTINGS_THEME_FIELDS_MAPPING, SETTINGS_THEME_UPLOAD_FIELDS_MAPPING } from '@src/constants';
 
 export interface FormValues {
-  logo?: File | null;
-  featuredImage?: File | null;
+  logo?: File | string | null;
+  featuredImage?: File | string | null;
   loginTitle?: string;
   loginDescription?: string;
   signupTitle?: string;
   signupDescription?: string;
   portalColor?: string;
-  signatureImage?: File | null;
+  signatureImage?: File | string | null;
   signatureName?: string;
   signatureTitle?: string;
-  dashboardWelcomeMessage?: SlateValue;
+  dashboardWelcomeMessage?: SlateValue | string;
   dashboardImageScale?: string;
-  dashboardImage?: File | null;
-  dashboardIcon?: File | null;
+  dashboardImage?: File | string | null;
+  dashboardIcon?: File | string | null;
 }
 
 export interface FormApplyCustomizationValues {
@@ -62,6 +62,12 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
     portal
   );
 
+  const [themeSettings, setThemeSettings ] = useState(initialValues)
+  
+  const handleChange = async (values) => {
+    setThemeSettings(values.values)
+  };
+
   return (
     <Form
       initialValues={{
@@ -71,10 +77,11 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
         dashboardWelcomeMessage: deserializeHtml(initialValues.dashboardWelcomeMessage || ''),
       }}
       onSubmit={handleSubmit}
+      onChange={handleChange}
     >
       <SectionBrand isSaving={isSaving} onFeaturedImageCropped={setFeaturedImageCropped} isPartnerPortal={isPartnerPortal} />
       <SectionLogin isPartnerPortal={isPartnerPortal} />
-      <SectionSignup isPartnerPortal={isPartnerPortal} />
+      <SectionSignup isPartnerPortal={isPartnerPortal} themeSettings={themeSettings}/>
       <SectionDashboard isPartnerPortal={isPartnerPortal} />
       <SectionCertificate isPartnerPortal={isPartnerPortal} />
       <View flexDirection="row">

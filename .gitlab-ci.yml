@@ -11,12 +11,14 @@ build:
     paths:
     - node_modules
     - .next
+    - public
 
 package:cdn:
   stage: package
   script:
   - export DOCKER_TAG=${CI_PIPELINE_ID}
   - npx s3-cli sync .next/ s3://apiomui-assets/assets/$DOCKER_TAG/_next/ --acl-public --add-header="Cache-Control:public, max-age=31536000, immutable"
+  - npx s3-cli sync public/ s3://apiomui-assets/assets/$DOCKER_TAG/ --acl-public --add-header="Cache-Control:public, max-age=31536000, immutable"
 
 deploy:master:k8s:
   variables:

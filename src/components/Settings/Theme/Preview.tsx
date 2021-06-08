@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Modal, ButtonFilled } from '@go1d/go1d';
+import { View, Modal, ButtonFilled, foundations } from '@go1d/go1d';
 import SplitLayout from './Previews/SplitLayout';
 import { Trans } from '@lingui/macro';
 
@@ -17,6 +17,7 @@ const Preview: React.FC<Props> = (props) => {
 
   return (
     <Modal isOpen={isOpen} maxWidth={850} title={`Preview ${title}`} onRequestClose={onRequestClose}>
+     
       <SplitLayout
         buttonText={buttonText}
         primaryTagline={primaryTagline}
@@ -27,7 +28,8 @@ const Preview: React.FC<Props> = (props) => {
         logo={logo}
         >
         {children}
-      </SplitLayout>
+      </SplitLayout>   
+
       <View marginTop={5} display="flex" flexDirection="row" justifyContent="center">
         <ButtonFilled color="accent" onClick={onRequestClose}><Trans>Close preview</Trans></ButtonFilled>
       </View>

@@ -1,0 +1,756 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2021-06-08 09:55+0700\n"
+"Mime-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en-US\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+#: src/components/Settings/Theme/SectionSignup.tsx:18
+msgid "\"Already have an account?"
+msgstr "\"Already have an account?"
+
+#: src/pages/_error.tsx:26
+msgid ", or"
+msgstr ", or"
+
+#: src/components/AwsConnectionDetail/index.tsx:69
+msgid "AWS Connection Details"
+msgstr "AWS Connection Details"
+
+#: src/components/AwsConnectionDetail/index.tsx:92
+msgid "Access key"
+msgstr "Access key"
+
+#: src/components/ContentDistributorExport/index.tsx:99
+msgid "Add more content to selection."
+msgstr "Add more content to selection."
+
+#: src/components/ContentDistributorExport/index.tsx:114
+msgid "Add more resources to your library."
+msgstr "Add more resources to your library."
+
+#: src/components/common/WithApiom/menus.ts:90
+msgid "Addons"
+msgstr "Addons"
+
+#: src/pages/r/app/portal/access-denied.tsx:12
+msgid "Admin permissions required"
+msgstr "Admin permissions required"
+
+#: src/components/Settings/Theme/Form.hooks.tsx:62
+#: src/components/Settings/Theme/Form.test.tsx:255
+msgid "An unexpected error has occurred while applying customization to customer portals. Please try again."
+msgstr "An unexpected error has occurred while applying customization to customer portals. Please try again."
+
+#: src/components/Settings/Theme/Form.hooks.tsx:65
+#: src/components/Settings/Theme/Form.test.tsx:232
+msgid "An unexpected error has occurred while saving form. Please try again."
+msgstr "An unexpected error has occurred while saving form. Please try again."
+
+#: src/components/Settings/Theme/Form.hooks.tsx:59
+#: src/components/Settings/Theme/Form.test.tsx:209
+msgid "An unexpected error has occurred while uploading image. Please try again."
+msgstr "An unexpected error has occurred while uploading image. Please try again."
+
+#: src/pages/r/app/portal/integrations/scorm-and-xapi/index.tsx:39
+#: src/pages/r/app/portal/integrations/scorm-and-xapi/index.tsx:52
+msgid "Application ID"
+msgstr "Application ID"
+
+#: src/components/Settings/Theme/SectionCertificate.tsx:22
+msgid "Apply completion certificate customization to customer portals"
+msgstr "Apply completion certificate customization to customer portals"
+
+#: src/components/Settings/Theme/SectionDashboard.tsx:43
+msgid "Apply dashboard customization to customer portals"
+msgstr "Apply dashboard customization to customer portals"
+
+#: src/components/Settings/Theme/SectionBrand.tsx:78
+msgid "Apply featured image to customer portals"
+msgstr "Apply featured image to customer portals"
+
+#: src/components/Settings/Theme/SectionLogin.tsx:16
+msgid "Apply login customization to customer portals"
+msgstr "Apply login customization to customer portals"
+
+#: src/components/Settings/Theme/SectionBrand.tsx:55
+msgid "Apply logo to customer portals"
+msgstr "Apply logo to customer portals"
+
+#: src/components/Settings/Theme/SectionBrand.tsx:63
+msgid "Apply portal color to customer portals"
+msgstr "Apply portal color to customer portals"
+
+#: src/components/Settings/Theme/SectionSignup.tsx:46
+msgid "Apply sign up customization to customer portals"
+msgstr "Apply sign up customization to customer portals"
+
+#: src/components/common/WithApiom/menus.ts:105
+msgid "Autopilot"
+msgstr "Autopilot"
+
+#: src/components/common/WithApiom/menus.ts:216
+msgid "Azure B2C"
+msgstr "Azure B2C"
+
+#: src/components/Settings/Theme/SectionBrand.tsx:49
+msgid "Brand"
+msgstr "Brand"
+
+#: src/components/common/WithApiom/menus.ts:19
+msgid "Brand, message customisation and certificates"
+msgstr "Brand, message customisation and certificates"
+
+#: src/components/DataFeed/uploadState.tsx:415
+msgid "Browse for a CSV file to upload for setting up fields mapping rules. For reference, please download <0><1>sample CSV file</1></0> to check the column format"
+msgstr "Browse for a CSV file to upload for setting up fields mapping rules. For reference, please download <0><1>sample CSV file</1></0> to check the column format"
+
+#: src/components/AwsConnectionDetail/index.tsx:84
+msgid "Bucket URL"
+msgstr "Bucket URL"
+
+#: src/components/ContentDistributorExport/index.tsx:76
+msgid "By pushing your Go1 content to the Microsoft Graph, members of your organization will be able to find your Go1 content from Microsoft Search, in Microsoft products like Sharepoint, office.com, and Bing."
+msgstr "By pushing your Go1 content to the Microsoft Graph, members of your organization will be able to find your Go1 content from Microsoft Search, in Microsoft products like Sharepoint, office.com, and Bing."
+
+#: src/components/Settings/Theme/SectionSignup.tsx:18
+msgid "By signing up, you agree"
+msgstr "By signing up, you agree"
+
+#: src/components/DataFeed/uploadState.tsx:353
+msgid "CSV fields"
+msgstr "CSV fields"
+
+#: src/components/DataFeed/uploadState.tsx:388
+#: src/components/DataFeed/uploadState.tsx:473
+msgid "Cancel"
+msgstr "Cancel"
+
+#: src/components/common/WithApiom/menus.ts:198
+msgid "Canvas"
+msgstr "Canvas"
+
+#: src/components/DataFeed/uploadState.tsx:441
+msgid "Choose a file"
+msgstr "Choose a file"
+
+#: src/pages/r/app/portal/integrations/scorm-and-xapi/index.tsx:85
+msgid "Click Generate Application ID button below to create an application ID."
+msgstr "Click Generate Application ID button below to create an application ID."
+
+#: src/components/Settings/Theme/Preview.tsx:12
+msgid "Close preview"
+msgstr "Close preview"
+
+#: src/components/common/WithApiom/menus.ts:27
+msgid "Configuration"
+msgstr "Configuration"
+
+#: src/pages/r/app/portal/integrations/azure/index.tsx:69
+msgid "Connect with Microsoft"
+msgstr "Connect with Microsoft"
+
+#: src/components/AwsConnectionDetail/index.tsx:33
+msgid "Copied!"
+msgstr "Copied!"
+
+#: src/components/AwsConnectionDetail/index.tsx:30
+msgid "Copy"
+msgstr "Copy"
+
+#: src/components/common/WithApiom/menus.ts:224
+msgid "Course Catalog"
+msgstr "Course Catalog"
+
+#: src/components/DataFeed/uploadState.tsx:322
+msgid "Create mapping rules"
+msgstr "Create mapping rules"
+
+#: src/components/Settings/Theme/SectionSignup.tsx:18
+msgid "Create new account"
+msgstr "Create new account"
+
+#: src/components/common/WithApiom/menus.ts:44
+msgid "Customise available portal content"
+msgstr "Customise available portal content"
+
+#: src/components/Settings/Theme/SectionCertificate.tsx:8
+msgid "Customize completion certificate"
+msgstr "Customize completion certificate"
+
+#: src/components/Settings/Theme/SectionDashboard.tsx:9
+msgid "Customize dashboard"
+msgstr "Customize dashboard"
+
+#: src/components/Settings/Theme/SectionLogin.tsx:8
+msgid "Customize login"
+msgstr "Customize login"
+
+#: src/components/Settings/Theme/SectionSignup.tsx:15
+msgid "Customize sign up"
+msgstr "Customize sign up"
+
+#: src/components/Settings/Theme/SectionDashboard.tsx:39
+msgid "Dashboard icon"
+msgstr "Dashboard icon"
+
+#: src/components/Settings/Theme/SectionDashboard.tsx:14
+msgid "Dashboard image"
+msgstr "Dashboard image"
+
+#: src/components/common/WithApiom/menus.ts:28
+msgid "Dashboard, menu and other options"
+msgstr "Dashboard, menu and other options"
+
+#: src/pages/r/app/portal/integrations/user-data-feed/index.tsx:65
+msgid "Data Mapping"
+msgstr "Data Mapping"
+
+#: src/components/DataFeed/uploadState.tsx:323
+msgid "Data mapping details"
+msgstr "Data mapping details"
+
+#: src/components/common/WithApiom/menus.ts:238
+msgid "Developer"
+msgstr "Developer"
+
+#: src/components/DataFeed/uploadState.tsx:301
+#: src/components/DataFeed/uploadState.tsx:396
+msgid "Done"
+msgstr "Done"
+
+#: src/components/DataFeed/uploadState.tsx:436
+msgid "Drag and drop to upload"
+msgstr "Drag and drop to upload"
+
+#: src/components/DataFeed/uploadState.tsx:435
+msgid "Drop it here"
+msgstr "Drop it here"
+
+#: src/components/Settings/Theme/SectionSignup.tsx:30
+msgid "Email"
+msgstr "Email"
+
+#: src/components/ContentDistributorExport/index.tsx:150
+msgid "Errors within export"
+msgstr "Errors within export"
+
+#: src/components/ContentDistributorExport/index.tsx:107
+msgid "Export"
+msgstr "Export"
+
+#: src/components/ContentDistributorExport/index.tsx:30
+msgid "Export requested."
+msgstr "Export requested."
+
+#: src/components/DataFeed/uploadState.tsx:144
+msgid "Failed to save your mapping, please try again or contact us for assistance"
+msgstr "Failed to save your mapping, please try again or contact us for assistance"
+
+#: src/components/Settings/Theme/SectionBrand.tsx:66
+msgid "Featured image"
+msgstr "Featured image"
+
+#: src/components/Settings/Theme/SectionSignup.tsx:22
+msgid "First Name"
+msgstr "First Name"
+
+#: src/components/Settings/Theme/SectionBrand.tsx:50
+msgid "For best results, upload your logo in a 1:1 ratio with a transparent background."
+msgstr "For best results, upload your logo in a 1:1 ratio with a transparent background."
+
+#: src/components/AwsConnectionDetail/index.tsx:116
+msgid "For security reason, you only see this key once and cannot be recovered it. Please copy and keep it somewhere safe but accessible."
+msgstr "For security reason, you only see this key once and cannot be recovered it. Please copy and keep it somewhere safe but accessible."
+
+#: src/pages/r/app/portal/integrations/scorm-and-xapi/index.tsx:91
+msgid "Generate Application ID"
+msgstr "Generate Application ID"
+
+#: src/components/DataFeed/emptyState.tsx:7
+#: src/components/DataFeed/emptyState.tsx:7
+msgid "Get started"
+msgstr "Get started"
+
+#: src/pages/r/app/portal/access-denied.tsx:18
+msgid "Go to Dashboard"
+msgstr "Go to Dashboard"
+
+#: src/components/Settings/Theme/Previews/SplitLayout.tsx:57
+msgid "Go1 terms of use"
+msgstr "Go1 terms of use"
+
+#: src/components/AwsConnectionDetail/index.tsx:77
+msgid "Hide"
+msgstr "Hide"
+
+#: src/components/DataFeed/uploadState.tsx:380
+msgid "Hide all optional fields"
+msgstr "Hide all optional fields"
+
+#: src/components/common/WithApiom/menus.ts:36
+msgid "Improve portal recommendations"
+msgstr "Improve portal recommendations"
+
+#: src/components/common/WithApiom/menus.ts:52
+msgid "In-app messaging and emails"
+msgstr "In-app messaging and emails"
+
+#: src/components/AwsConnectionDetail/index.tsx:72
+msgid "Integrate using the following details to keep your user records up to date"
+msgstr "Integrate using the following details to keep your user records up to date"
+
+#: src/components/ContentDistributorExport/index.tsx:84
+msgid "Integration not connected. Check your account settings."
+msgstr "Integration not connected. Check your account settings."
+
+#: src/components/DataFeed/uploadState.tsx:146
+msgid "Invalid date format. Please edit your file follow this format: YYYY-MM-DD"
+msgstr "Invalid date format. Please edit your file follow this format: YYYY-MM-DD"
+
+#: src/components/common/WithApiom/menus.ts:126
+msgid "LTI Provider"
+msgstr "LTI Provider"
+
+#: src/components/ContentDistributorExport/index.tsx:121
+msgid "Last Export"
+msgstr "Last Export"
+
+#: src/components/Settings/Theme/SectionSignup.tsx:25
+msgid "Last Name"
+msgstr "Last Name"
+
+#: src/components/common/WithApiom/menus.ts:174
+msgid "Litmos"
+msgstr "Litmos"
+
+#: src/components/Settings/Theme/SectionSignup.tsx:18
+msgid "Log in"
+msgstr "Log in"
+
+#: src/components/Settings/Theme/SectionLogin.tsx:13
+msgid "Login description"
+msgstr "Login description"
+
+#: src/components/Settings/Theme/SectionLogin.tsx:10
+msgid "Login title"
+msgstr "Login title"
+
+#: src/components/Settings/Theme/SectionBrand.tsx:50
+msgid "Logo"
+msgstr "Logo"
+
+#: src/components/DataFeed/uploadState.tsx:326
+msgid "Map the fields in your CSV file to the portal fields"
+msgstr "Map the fields in your CSV file to the portal fields"
+
+#: src/components/DataFeed/uploadState.tsx:232
+#: src/components/DataFeed/uploadState.tsx:280
+msgid "Map with"
+msgstr "Map with"
+
+#: src/components/common/WithApiom/menus.ts:182
+msgid "Mas"
+msgstr "Mas"
+
+#: src/components/Settings/Theme/SectionDashboard.tsx:20
+msgid "Max file size is 5MB"
+msgstr "Max file size is 5MB"
+
+#: src/components/common/WithApiom/menus.ts:207
+msgid "Microsoft 365"
+msgstr "Microsoft 365"
+
+#: src/components/Settings/Theme/SectionDashboard.tsx:17
+msgid "Minimum dimensions of 1920px (W) and 300px (H)"
+msgstr "Minimum dimensions of 1920px (W) and 300px (H)"
+
+#: src/components/common/WithApiom/menus.ts:190
+msgid "Nas"
+msgstr "Nas"
+
+#: src/components/ContentDistributorExport/index.tsx:80
+msgid "New Export"
+msgstr "New Export"
+
+#: src/components/DataFeed/uploadState.tsx:392
+msgid "Next"
+msgstr "Next"
+
+#: src/components/ContentDistributorExport/index.tsx:96
+msgid "No content added to custom selection for export."
+msgstr "No content added to custom selection for export."
+
+#: src/components/common/WithApiom/menus.ts:51
+msgid "Notifications"
+msgstr "Notifications"
+
+#: src/components/DataFeed/uploadState.tsx:200
+msgid "Optional"
+msgstr "Optional"
+
+#: src/components/common/WithApiom/menus.ts:166
+msgid "Oracle"
+msgstr "Oracle"
+
+#: src/components/Settings/Theme/SectionSignup.tsx:33
+msgid "Password"
+msgstr "Password"
+
+#: src/components/common/WithApiom/menus.ts:59
+msgid "Plan and Billing"
+msgstr "Plan and Billing"
+
+#: src/pages/r/app/portal/access-denied.tsx:15
+msgid "Please contact your Go1 administrator to get access to this page or to make changes to your portal settings."
+msgstr "Please contact your Go1 administrator to get access to this page or to make changes to your portal settings."
+
+#: src/components/common/WithApiom/menus.ts:43
+msgid "Portal Content Selection"
+msgstr "Portal Content Selection"
+
+#: src/components/common/WithApiom/menus.ts:10
+msgid "Portal Information"
+msgstr "Portal Information"
+
+#: src/components/Settings/Theme/SectionBrand.tsx:59
+msgid "Portal color"
+msgstr "Portal color"
+
+#: src/components/DataFeed/uploadState.tsx:343
+msgid "Portal fields"
+msgstr "Portal fields"
+
+#: src/components/common/WithApiom/menus.ts:11
+msgid "Portal info, legal and login config"
+msgstr "Portal info, legal and login config"
+
+#: src/components/Settings/Theme/SectionBrand.tsx:49
+msgid "Preview brand"
+msgstr "Preview brand"
+
+#: src/components/Settings/Theme/SectionCertificate.tsx:8
+msgid "Preview certificate"
+msgstr "Preview certificate"
+
+#: src/components/Settings/Theme/SectionDashboard.tsx:9
+msgid "Preview dashboard"
+msgstr "Preview dashboard"
+
+#: src/components/Settings/Theme/SectionLogin.tsx:8
+msgid "Preview login"
+msgstr "Preview login"
+
+#: src/components/Settings/Theme/SectionSignup.tsx:16
+msgid "Preview sign up"
+msgstr "Preview sign up"
+
+#: src/components/common/WithApiom/menus.ts:35
+msgid "Recommendations"
+msgstr "Recommendations"
+
+#: src/pages/r/app/portal/integrations/azure/index.tsx:68
+msgid "Reconnect with Microsoft"
+msgstr "Reconnect with Microsoft"
+
+#: src/pages/r/app/portal/integrations/scorm-and-xapi/index.tsx:74
+msgid "Remove Application ID"
+msgstr "Remove Application ID"
+
+#: src/components/ContentDistributorExport/index.tsx:126
+msgid "Requested"
+msgstr "Requested"
+
+#: src/components/DataFeed/uploadState.tsx:189
+msgid "Required"
+msgstr "Required"
+
+#: src/components/ContentDistributorExport/index.tsx:144
+msgid "Resources exported"
+msgstr "Resources exported"
+
+#: src/components/ContentDistributorExport/index.tsx:88
+msgid "Resources to be exported"
+msgstr "Resources to be exported"
+
+#: src/components/DataFeed/uploadState.tsx:463
+msgid "Retry"
+msgstr "Retry"
+
+#: src/components/common/WithApiom/menus.ts:97
+msgid "SCORM and xAPI"
+msgstr "SCORM and xAPI"
+
+#: src/components/Settings/Theme/Form.tsx:42
+msgid "Save changes"
+msgstr "Save changes"
+
+#: src/components/Settings/Theme/SectionDashboard.tsx:32
+msgid "Scale to fit height"
+msgstr "Scale to fit height"
+
+#: src/components/Settings/Theme/SectionDashboard.tsx:28
+msgid "Scale to fit width"
+msgstr "Scale to fit width"
+
+#: src/components/common/WithApiom/menus.ts:97
+msgid "Scorm"
+msgstr "Scorm"
+
+#: src/components/AwsConnectionDetail/index.tsx:101
+msgid "Secret key"
+msgstr "Secret key"
+
+#: src/components/DataFeed/uploadState.tsx:173
+msgid "Select a field"
+msgstr "Select a field"
+
+#: src/components/DataFeed/uploadState.tsx:412
+msgid "Select file"
+msgstr "Select file"
+
+#: src/components/DataFeed/uploadState.tsx:288
+msgid "Set a field with a unique value as the unique identifier"
+msgstr "Set a field with a unique value as the unique identifier"
+
+#: src/pages/r/app/portal/integrations/litmos/index.tsx:76
+#: src/pages/r/app/portal/integrations/oracle/index.tsx:86
+msgid "Settings failed to save."
+msgstr "Settings failed to save."
+
+#: src/pages/r/app/portal/integrations/litmos/index.tsx:69
+#: src/pages/r/app/portal/integrations/oracle/index.tsx:79
+msgid "Settings saved."
+msgstr "Settings saved."
+
+#: src/components/common/WithApiom/menus.ts:67
+msgid "Setup Portal"
+msgstr "Setup Portal"
+
+#: src/components/AwsConnectionDetail/index.tsx:77
+msgid "Show"
+msgstr "Show"
+
+#: src/components/DataFeed/uploadState.tsx:379
+msgid "Show all optional fields"
+msgstr "Show all optional fields"
+
+#: src/components/Settings/Theme/SectionSignup.tsx:42
+msgid "Sign up description"
+msgstr "Sign up description"
+
+#: src/components/Settings/Theme/SectionSignup.tsx:39
+msgid "Sign up title"
+msgstr "Sign up title"
+
+#: src/components/Settings/Theme/SectionCertificate.tsx:10
+msgid "Signature"
+msgstr "Signature"
+
+#: src/components/Settings/Theme/SectionCertificate.tsx:14
+msgid "Signature full name"
+msgstr "Signature full name"
+
+#: src/components/Settings/Theme/SectionCertificate.tsx:18
+msgid "Signature title"
+msgstr "Signature title"
+
+#: src/components/common/WithApiom/menus.ts:231
+msgid "Single Sign On"
+msgstr "Single Sign On"
+
+#: src/components/DataFeed/uploadState.tsx:172
+msgid "Skip this field"
+msgstr "Skip this field"
+
+#: src/components/ContentDistributorExport/index.tsx:133
+msgid "Status"
+msgstr "Status"
+
+#: src/components/common/WithApiom/menus.ts:68
+msgid "Steps to configure your portal"
+msgstr "Steps to configure your portal"
+
+#: src/components/common/WithApiom/menus.ts:112
+msgid "Stripe"
+msgstr "Stripe"
+
+#: src/components/common/WithApiom/menus.ts:60
+msgid "Subscription plan and payment details"
+msgstr "Subscription plan and payment details"
+
+#: src/components/common/WithApiom/menus.ts:158
+msgid "Success Factors"
+msgstr "Success Factors"
+
+#: src/pages/r/app/portal/settings/theme/index.tsx:86
+msgid "The settings have been saved."
+msgstr "The settings have been saved."
+
+#: src/components/common/WithApiom/menus.ts:18
+msgid "Theme and Customisation"
+msgstr "Theme and Customisation"
+
+#: src/pages/r/app/portal/settings/theme/index.tsx:118
+msgid "Theme and customization"
+msgstr "Theme and customization"
+
+#: src/pages/r/app/portal/integrations/scorm-and-xapi/index.tsx:46
+msgid "This application ID can be used as a SCORM or xAPI provider. You can now download your content in SCORM or xAPI format from the Publish / Sharing menu found in the Settings section of each piece of training."
+msgstr "This application ID can be used as a SCORM or xAPI provider. You can now download your content in SCORM or xAPI format from the Publish / Sharing menu found in the Settings section of each piece of training."
+
+#: src/components/Settings/Theme/SectionBrand.tsx:55
+#: src/components/Settings/Theme/SectionBrand.tsx:63
+#: src/components/Settings/Theme/SectionBrand.tsx:78
+#: src/components/Settings/Theme/SectionCertificate.tsx:22
+#: src/components/Settings/Theme/SectionDashboard.tsx:43
+#: src/components/Settings/Theme/SectionLogin.tsx:16
+#: src/components/Settings/Theme/SectionSignup.tsx:46
+msgid "This can be changed from the individual portal’s settings page"
+msgstr "This can be changed from the individual portal’s settings page"
+
+#: src/components/DataFeed/uploadState.tsx:215
+#: src/components/DataFeed/uploadState.tsx:243
+msgid "This field is required"
+msgstr "This field is required"
+
+#: src/components/Settings/Theme/SectionDashboard.tsx:14
+msgid "To ensure you get the best result, we suggest using a panoramic image."
+msgstr "To ensure you get the best result, we suggest using a panoramic image."
+
+#: src/pages/_error.tsx:20
+msgid "Try going"
+msgstr "Try going"
+
+#: src/pages/_error.tsx:11
+msgid "Uh oh"
+msgstr "Uh oh"
+
+#: src/components/ContentDistributorExport/index.tsx:37
+msgid "Unable to request export."
+msgstr "Unable to request export."
+
+#: src/components/DataFeed/uploadState.tsx:255
+msgid "Unique identifier"
+msgstr "Unique identifier"
+
+#: src/components/DataFeed/uploadState.tsx:400
+msgid "Update"
+msgstr "Update"
+
+#: src/components/DataFeed/uploadState.tsx:132
+msgid "Update data mapping successfully.\""
+msgstr "Update data mapping successfully.\""
+
+#: src/components/DataFeed/uploadState.tsx:459
+msgid "Upload failed"
+msgstr "Upload failed"
+
+#: src/components/DataFeed/uploadState.tsx:452
+msgid "Uploading"
+msgstr "Uploading"
+
+#: src/components/Settings/Theme/SectionBrand.tsx:66
+msgid "Used in sign up and login pages. For best results, upload an image in 1:1 ratio. The image can also be repositioned."
+msgstr "Used in sign up and login pages. For best results, upload an image in 1:1 ratio. The image can also be repositioned."
+
+#: src/components/common/WithApiom/menus.ts:245
+msgid "User Data Feed"
+msgstr "User Data Feed"
+
+#: src/components/common/WithApiom/menus.ts:134
+msgid "VETTRAK"
+msgstr "VETTRAK"
+
+#: src/components/ContentDistributorExport/index.tsx:111
+msgid "Want more content?"
+msgstr "Want more content?"
+
+#: src/pages/_error.tsx:18
+msgid "We can’t seem to find the page you’re looking for."
+msgstr "We can’t seem to find the page you’re looking for."
+
+#: src/components/Settings/Theme/SectionDashboard.tsx:11
+msgid "Welcome message"
+msgstr "Welcome message"
+
+#: src/components/common/WithApiom/menus.ts:142
+msgid "Wisenet"
+msgstr "Wisenet"
+
+#: src/components/common/WithApiom/menus.ts:150
+msgid "Xero"
+msgstr "Xero"
+
+#: src/pages/r/app/portal/integrations/scorm-and-xapi/index.tsx:82
+msgid "You are one click away from having the ability to export training as SCORM and xAPI enabled on your portal."
+msgstr "You are one click away from having the ability to export training as SCORM and xAPI enabled on your portal."
+
+#: src/components/DataFeed/uploadState.tsx:327
+msgid "You can edit your current mapping rules"
+msgstr "You can edit your current mapping rules"
+
+#: src/components/DataFeed/emptyState.tsx:8
+msgid "You don’t have a S3 folder. Start creating your folder and set up mapping rules."
+msgstr "You don’t have a S3 folder. Start creating your folder and set up mapping rules."
+
+#: src/components/DataFeed/uploadState.tsx:317
+#: src/pages/r/app/portal/integrations/user-data-feed/index.tsx:56
+msgid "Your data feed"
+msgstr "Your data feed"
+
+#: src/pages/r/app/portal/integrations/azure/index.tsx:64
+msgid "Your portal can be configured to enable login with Microsoft."
+msgstr "Your portal can be configured to enable login with Microsoft."
+
+#: src/pages/r/app/portal/integrations/azure/index.tsx:62
+msgid "Your portal is connected with Microsoft."
+msgstr "Your portal is connected with Microsoft."
+
+#: src/components/AwsConnectionDetail/index.tsx:116
+msgid "Your secret key was created on {0}. Please find where you have saved it."
+msgstr "Your secret key was created on {0}. Please find where you have saved it."
+
+#: src/components/common/WithApiom/menus.ts:119
+msgid "Zapier"
+msgstr "Zapier"
+
+#: src/components/Settings/Theme/Previews/SplitLayout.tsx:60
+msgid "and"
+msgstr "and"
+
+#: src/pages/_error.tsx:29
+msgid "contact us"
+msgstr "contact us"
+
+#: src/pages/_error.tsx:32
+msgid "for help."
+msgstr "for help."
+
+#: src/pages/_error.tsx:23
+msgid "home"
+msgstr "home"
+
+#: src/components/Settings/Theme/Previews/SplitLayout.tsx:63
+msgid "privacy policy."
+msgstr "privacy policy."
+
+#: src/components/Settings/Theme/SectionSignup.tsx:18
+msgid "sign up"
+msgstr "sign up"
+
+#: src/pages/_error.tsx:13
+msgid "that's a no-go zone"
+msgstr "that's a no-go zone"
+
+#: src/components/DataFeed/uploadState.tsx:84
+msgid "{0} is not a supported file type"
+msgstr "{0} is not a supported file type"

@@ -1,7 +1,7 @@
 import React from 'react'
 import { I18nProvider, I18n } from '@lingui/react'
 
-export const defaultLocale = 'en';
+export const defaultLocale = 'en-US';
 
 export const countryToLocale = {
   AU: defaultLocale,
@@ -23,7 +23,7 @@ export const getLocale = (currentSession) => {
   return defaultLocale;
 }
 
-export default function withI18n(App, language = 'en') {
+export default function withI18n(App, language = defaultLocale) {
   return class WithI18n extends React.Component<{
     language: string;
     catalogs: any;
@@ -54,9 +54,9 @@ export default function withI18n(App, language = 'en') {
     }
 
     render() {
-      const { language, catalogs, ...props } = this.props;
+      const { language: lang, catalogs, ...props } = this.props;
       return (
-        <I18nProvider language={language} catalogs={catalogs}>
+        <I18nProvider language={lang} catalogs={catalogs}>
           <I18n>
             {({ i18n }) => <App i18n={i18n} {...props} /> }
           </I18n>

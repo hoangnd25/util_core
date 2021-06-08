@@ -8,7 +8,7 @@
     "build": "next build",
     "compile": "lingui compile",
     "dev": "next",
-    "extract": "lingui extract",
+    "extract": "NODE_ENV=development lingui extract",
     "lint": "eslint src/**/*.{ts,tsx} --ignore-pattern src/utils/*.test.* --ignore-pattern src/**/*.test.* --ignore-pattern src/**/mocks/** -c .eslintrc.js  --fix",
     "serve": "next start -p 80",
     "start": "npm run dev",
@@ -91,7 +91,7 @@
     "jest-environment-jsdom-fourteen": "^0.1.0",
     "jest-junit": "^12.0.0",
     "jest-localstorage-mock": "^2.4.3",
-    "lint-staged": "8.1.5",
+    "lint-staged": "^10.5.4",
     "prettier": "^1.18.2",
     "prettier-package-json": "2.1.0",
     "redux-devtools-extension": "^2.13.8",
@@ -103,21 +103,12 @@
   "keywords": [],
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint && npm run type-check && lint-staged"
+      "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {
-    "[*.js,*.jsx,*.ts,*.tsx]": [
-      "prettier --write",
-      "git add"
-    ],
-    "[*.json, !package.json]": [
-      "prettier --write",
-      "git add"
-    ],
-    "package.json": [
-      "prettier-package-json --write",
-      "git add"
+    "**/*.{ts,tsx}": [
+      "eslint --fix"
     ]
   },
   "pre-push": "lint"

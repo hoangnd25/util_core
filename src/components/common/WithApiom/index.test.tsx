@@ -4,20 +4,17 @@ import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import CommonProvider from '@go1d/mine/common/Provider';
 import { I18nProvider } from '@lingui/react';
-import en from '@src/locale/en/messages';
 import LinkComponent from '@src/components/common/Link';
 import authenticatedStoreState from '@src/store/mocks/authenticatedStore';
 import { CurrentSessionType } from '@src/types/user';
 import withApiom from '@src/components/common/WithApiom';
 import ScormAndXapi, { scormService } from '@src/pages/r/app/portal/integrations/scorm-and-xapi';
 import ThemeSettingsPage from '@src/pages/r/app/portal/settings/theme';
-import MenuOptions from './menus';
 
 /** TEST SETUP * */
 let Component;
 
 const mockStore = configureStore([]);
-export const menuOptions = new MenuOptions();
 
 const currentSession = {
   portal: {
@@ -68,7 +65,7 @@ const setup = (App, props, initialState = {}) => {
   return mount(
     <CommonProvider linkComponent={LinkComponent}>
       <Provider store={store}>
-        <I18nProvider language="en" catalogs={{ en }} {...i18nProps}>
+        <I18nProvider language="en" catalogs={{ en: { messages: {} } }} {...i18nProps}>
           <Component currentSession={currentSession} {...props} />
         </I18nProvider>
       </Provider>

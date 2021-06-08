@@ -1,8 +1,8 @@
-import { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import * as React from 'react';
-import withI18n, { getLocale, defaultLocale } from '.';
 import configureStore from 'redux-mock-store';
 import authenticatedStoreState from '@src/store/mocks/authenticatedStore';
+import withI18n, { getLocale, defaultLocale } from '.';
 import { currentSessionMock } from "../WithAuth/mocks/authMocks";
 
 /** TEST SETUP * */
@@ -15,7 +15,7 @@ jest.spyOn(store, 'getState').mockReturnValue({
   currentSession: currentSessionMock
 });
 
-jest.mock('@src/locale/en/messages.po', () => ({
+jest.mock('@src/locale/en-US/messages.po', () => ({
   messages: {
     "Something!": "Something!"
   }
@@ -49,16 +49,16 @@ describe('getLocale', () => {
   });
 
   it('should return portal locale', () => {
-    const session = { ...currentSessionMock };
-    session.portal.configuration['locale'] = 'AU';
+    const session = { ...currentSessionMock } as any;
+    session.portal.configuration.locale = 'AU';
 
     const locale = getLocale(session);
     expect(locale).toBe(defaultLocale);
   });
 
   it('should return user locale', () => {
-    const session = { ...currentSessionMock };
-    session.user['locale']= ['fr'];
+    const session = { ...currentSessionMock } as any;
+    session.user.locale= ['fr'];
 
     const locale = getLocale(session);
     expect(locale).toBe('fr');

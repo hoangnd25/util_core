@@ -20,7 +20,8 @@ export interface ThemeSettingsPageProps extends WithRouterProps, DispatchProp {
 }
 
 interface State {
-  isSaving: boolean;
+  isSavingPortal: boolean;
+  isUploading: boolean;
 }
 
 const ToastOptions = {
@@ -35,7 +36,8 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
     super(props);
 
     this.state = {
-      isSaving: false,
+      isSavingPortal: false,
+      isUploading: false,
     };
   }
 
@@ -58,7 +60,7 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
     const cloudinaryService = new CloudinaryService(http);
     const cancelToken = cancelTokenSource || axios.CancelToken.source();
 
-    this.setState({ isSaving: true });
+    this.setState({ isUploading: true });
     
     try {
       return await cloudinaryService.uploadImage(
@@ -70,15 +72,21 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
       );
     } catch (error) {
       throw new ImageUploadError(error.message);
+    } finally {
+      this.setState({ isUploading: false });
     }
   };
 
   handleError = (message: ReactNode) => {
-    this.setState({ isSaving: false });
     NotificationManager.warning({
       message,
       options: ToastOptions,
     });
+
+    this.setState({
+      isSavingPortal: false,
+      isUploading: false
+    })
   };
 
   refreshSession = (fields: object) => {
@@ -113,7 +121,7 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
     const { http } = this.context;
     const portalService = createPortalService(http);
 
-    this.setState({ isSaving: true });
+    this.setState({ isSavingPortal: true });
 
     try {
       await portalService.save(portal.title, fields);
@@ -126,8 +134,6 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
         await portalService.applyChildPortalCustomization(portal.title, childCustomizationGroups);
       } catch (applyCustomizationdError) {
         throw new ApplyCustomizationdError(applyCustomizationdError.message);
-      } finally {
-        this.setState({ isSaving: false });
       }
     }
 
@@ -135,6 +141,7 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
     this.toastSuccess(
       <Trans>The settings have been saved.</Trans>
     );
+    this.setState({ isSavingPortal: false });
   };
 
   toastSuccess(message: ReactNode) {
@@ -145,7 +152,7 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
   }
 
   public render() {
-    const { isSaving } = this.state;
+    const { isSavingPortal, isUploading } = this.state;
     const {
       currentSession: { portal },
     } = this.props;
@@ -154,7 +161,7 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
       <View data-testid="theme_settings_page">
         <ThemeSettingsForm
           portal={portal}
-          isSaving={isSaving}
+          isSaving={isSavingPortal || isUploading}
           onSave={this.handleSave}
           onUpload={this.handleImageUpload}
           onError={this.handleError}

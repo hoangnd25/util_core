@@ -1,4 +1,4 @@
-import { Checkbox, ColorPicker as BaseColorPicker, Field, ImageUploader, ImageUploadSlat, View } from '@go1d/go1d';
+import { Checkbox, ColorPicker as BaseColorPicker, Field, foundations, ImageUploader, View } from '@go1d/go1d';
 import { t, Trans } from '@lingui/macro';
 import { I18n } from '@lingui/react';
 import SettingsBlockMaker from '@src/components/Settings/SettingsBlockMaker';
@@ -6,7 +6,9 @@ import { usePrevious } from '@src/hooks/usePrevious';
 import { FormikHandlers } from 'formik';
 import React, { FunctionComponent } from 'react';
 import SettingsFormSection from '../SettingsFormSection';
+import { ImageSupportText } from './ImageSupportText';
 import PreviewButton from './PreviewButton';
+import { imageValidator } from './imageValidator';
 
 const FEATURED_IMAGE_RATIO = 1;
 
@@ -57,7 +59,7 @@ const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropp
       onFeaturedImageCropped(file);
     }
   }
-
+  
   return (
     <I18n>
       {({ i18n }) => (
@@ -66,13 +68,30 @@ const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropp
           actionButton={<PreviewButton><Trans>Preview brand</Trans></PreviewButton>}
         >
           <SettingsBlockMaker
-            marginBottom={5}
+            marginBottom={isPartnerPortal ? 0: 5}
             title={<Trans>Logo</Trans>}
             description={
-              <Trans>For best results, upload your logo in a 1:1 ratio with a transparent background.</Trans>
+              <Trans>For best results, upload your logo with minimum dimensions of 200x200px over a transparent background.</Trans>
             }
           >
-            <Field component={ImageUploadSlat} name="logo" hideLabel required disabled={isSaving} hideStatus />
+            <Field
+              component={ImageUploader}
+              name="logo"
+              hideLabel
+              hideStatus
+              required
+              disabled={isSaving}
+              imageBackgroundSize="contain"
+              validate={imageValidator({
+                maxSizeInMb: 5,
+                minWidthInPixel: 200,
+                minHeightInPixel: 200,
+                minDimensionsMessage: i18n._(t`Please use an image with minimum dimensions of 200x200px`)
+              })}
+              height={200}
+              maxWidth={200}
+              supportedFormatText={<ImageSupportText />}
+            />
           </SettingsBlockMaker>
 
           {isPartnerPortal && (
@@ -109,11 +128,11 @@ const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropp
             title={<Trans>Featured image</Trans>}
             description={
               <Trans>
-                Used in sign up and login pages. For best results, upload an image in 1:1 ratio. The image can also be
-                repositioned.
+                Used in sign up and login pages. For best results, upload an image with at least 1000px in height.
+                The image can be repositioned to fit the intended 1:1 ratio.
               </Trans>
             }
-            marginBottom={5}
+            marginBottom={0}
           >
             <Field
               id="featuredImage"
@@ -121,12 +140,25 @@ const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropp
               allowCrop
               hideLabel
               component={ImageUploader}
+              validate={imageValidator({
+                maxSizeInMb: 5,
+                minHeightInPixel: 1000,
+                minHeightMessage: i18n._(t`Please use an image with at least 1000px in height`)
+              })}
               height={400}
+              maxWidth={400}
+              css={{
+                [foundations.breakpoints.sm]: {
+                  height: 200,
+                  maxWidth: 200,
+                },
+              }}
               cropConfig={{
                 aspect: FEATURED_IMAGE_RATIO,
                 onCrop: handleCrop,
                 onInteractionStart: handleInteractionStart,
               }}
+              supportedFormatText={<ImageSupportText />}
             />
           </SettingsBlockMaker>
 

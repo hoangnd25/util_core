@@ -32,10 +32,10 @@ const SplitLayout: React.FC<Props> = props => {
           backgroundPosition: 'center center',
           backgroundSize: 'cover',
         }}
-      ></View>
+       />
 
       <View width="400px" backgroundColor="faint" height="100%" overflow="auto">
-        <View alignItems="center" justifyContent="center" width={'100%'} marginTop={8} paddingBottom={4} paddingX={6}>
+        <View alignItems="center" justifyContent="center" width="100%" marginTop={8} paddingBottom={4} paddingX={6}>
           {/* LOGOs */}
           {(logo && logo !== DEFAULT_APIOM_LOGO && (
             <View
@@ -49,7 +49,7 @@ const SplitLayout: React.FC<Props> = props => {
                 backgroundSize: 'contain',
                 backgroundRepeat: 'no-repeat',
               }}
-            ></View>
+             />
           )) || <IconGo1Logo size={8} marginY={6} color="successLowest" />}
 
           <Text

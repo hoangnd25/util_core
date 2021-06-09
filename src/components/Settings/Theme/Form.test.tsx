@@ -31,7 +31,7 @@ const defaultPortal = {
 };
 
 const INPUTS = {
-  logo: 'ImageUploadSlat[name="logo"]',
+  logo: 'ImageUploader[name="logo"]',
   featuredImage: 'ImageUploader[name="featuredImage"]',
   loginTitle: 'TextInput[name="loginTitle"]',
   loginDescription: 'TextInput[name="loginDescription"]',
@@ -40,11 +40,11 @@ const INPUTS = {
   portalColor: 'ColorPicker[name="portalColor"]',
   signatureTitle: 'TextInput[name="signatureTitle"]',
   signatureName: 'TextInput[name="signatureName"]',
-  signatureImage: 'ImageUploadSlat[name="signatureImage"]',
+  signatureImage: 'ImageUploader[name="signatureImage"]',
   dashboardWelcomeMessage: 'RichTextInput[name="dashboardWelcomeMessage"]',
   dashboardImageScale: 'RadioGroup[name="dashboardImageScale"]',
   dashboardImage: 'ImageUploader[name="dashboardImage"]',
-  dashboardIcon: 'ImageUploadSlat[name="dashboardIcon"]',
+  dashboardIcon: 'ImageUploader[name="dashboardIcon"]',
 };
 
 const APPLY_CHILD_PORTAL_INPUTS = {

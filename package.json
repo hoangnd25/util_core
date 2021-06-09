@@ -17,7 +17,7 @@
     "type-check": "tsc"
   },
   "dependencies": {
-    "@go1d/go1d": "^3.4.0",
+    "@go1d/go1d": "^6.2.5",
     "@go1d/go1d-exchange": "^0.2.95",
     "@go1d/mine": "^1.0.3",
     "@lingui/react": "^2.9.1",

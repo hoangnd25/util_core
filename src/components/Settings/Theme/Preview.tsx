@@ -6,7 +6,7 @@ import SplitLayout from './Previews/SplitLayout';
 interface Props {
   primaryTagline: string;
   description: string;
-  logo: string;
+  logo: File | string | null;
   buttonText: string;
   featuredImage: string;
   terms: string;

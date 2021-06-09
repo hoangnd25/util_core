@@ -6,7 +6,7 @@ import { Trans } from '@lingui/macro';
 interface Props {
   primaryTagline;
   description;
-  logo;
+  logo: File | string | null;
   buttonText;
   featuredImage;
   terms: string;

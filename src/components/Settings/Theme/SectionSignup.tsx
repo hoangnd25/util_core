@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState , FunctionComponent } from 'react';
 import { Checkbox, Field, TextInput, View  } from '@go1d/go1d';
 import { t, Trans } from '@lingui/macro';
 import { I18n } from '@lingui/react';
 import SettingsFormSection from '@src/components/Settings/SettingsFormSection';
-import { FunctionComponent } from 'react';
+
 import PreviewButton from '@src/components/Settings/Theme/PreviewButton';
 import Preview from '@src/components/Settings/Theme/Preview';
 import IconEye from '@go1d/go1d/build/components/Icons/Eye';
@@ -52,17 +52,17 @@ const SectionSignup: FunctionComponent<Props> = ({ isPartnerPortal, themeSetting
             <View>
               <View flexDirection="row" display="flex" marginY={3} justifyContent="space-between" width="100%">
                 <View paddingRight={1} flexShrink={1} flexGrow={1}>
-                  <TextInput id="firstName" label={i18n._(t`First Name`)} placeHolder="First Name" css={{ pointerEvents: 'none' }}></TextInput>
+                  <TextInput id="firstName" label={i18n._(t`First Name`)} placeHolder="First Name" css={{ pointerEvents: 'none' }} />
                 </View>
                 <View paddingLeft={1} flexShrink={1} flexGrow={1}>
-                  <TextInput id="lastName" label={i18n._(t`Last Name`)} autoComplete="new-password" placeHolder="Last Name" css={{ pointerEvents: 'none' }}></TextInput>
+                  <TextInput id="lastName" label={i18n._(t`Last Name`)} autoComplete="new-password" placeHolder="Last Name" css={{ pointerEvents: 'none' }} />
                 </View>
               </View>
               <View width="100%">
-                <TextInput id="Email" placeHolder="Email" autoComplete="new-password" css={{ pointerEvents: 'none' }}></TextInput>
+                <TextInput id="Email" placeHolder="Email" autoComplete="new-password" css={{ pointerEvents: 'none' }} />
               </View>
               <View marginY={3} width="100%">
-                <TextInput id="Password" placeHolder="Password" autoComplete="new-password" css={{ pointerEvents: 'none' }} suffixNode={<View padding={4}><IconEye color="accent"/></View>}></TextInput>
+                <TextInput id="Password" placeHolder="Password" autoComplete="new-password" css={{ pointerEvents: 'none' }} suffixNode={<View padding={4}><IconEye color="accent"/></View>} />
               </View>
             </View>
           </Preview>
@@ -82,7 +82,7 @@ const SectionSignup: FunctionComponent<Props> = ({ isPartnerPortal, themeSetting
                 description={i18n._(t`This can be changed from the individual portal’s settings page`)}
                 hideStatus
                 component={Checkbox}
-                hideLabel={true}
+                hideLabel
               />
             </View>
           )}

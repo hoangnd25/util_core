@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Modal, ButtonFilled, foundations } from '@go1d/go1d';
-import SplitLayout from './Previews/SplitLayout';
 import { Trans } from '@lingui/macro';
+import SplitLayout from './Previews/SplitLayout';
 
 interface Props {
   primaryTagline, description, logo, buttonText, featuredImage, terms: string;
@@ -13,7 +13,7 @@ interface Props {
 }
 
 const Preview: React.FC<Props> = (props) => {
-  const {isOpen, onRequestClose, title, children, buttonText, terms, primaryTagline, secondaryTagline, description, featuredImage, logo } = props;
+  const { isOpen, onRequestClose, title, children, buttonText, terms, primaryTagline, secondaryTagline, description, featuredImage, logo } = props;
 
   return (
     <Modal isOpen={isOpen} maxWidth={850} title={`Preview ${title}`} onRequestClose={onRequestClose}>

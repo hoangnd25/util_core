@@ -14,12 +14,16 @@ msgstr ""
 "Plural-Forms: \n"
 
 #: src/components/Settings/Theme/SectionSignup.tsx:18
-msgid "\"Already have an account?"
-msgstr "\"Already have an account?"
+#~ msgid "\"Already have an account?"
+#~ msgstr "\"Already have an account?"
 
 #: src/pages/_error.tsx:26
 msgid ", or"
 msgstr ", or"
+
+#: src/components/Settings/Theme/Previews/SplitLayout.tsx:48
+msgid "<0>terms of use</0> and <1>privacy policy.</1>"
+msgstr "<0>terms of use</0> and <1>privacy policy.</1>"
 
 #: src/components/AwsConnectionDetail/index.tsx:69
 msgid "AWS Connection Details"
@@ -45,6 +49,10 @@ msgstr "Addons"
 msgid "Admin permissions required"
 msgstr "Admin permissions required"
 
+#: src/components/Settings/Theme/SectionSignup.tsx:19
+msgid "Already have an account?"
+msgstr "Already have an account?"
+
 #: src/components/Settings/Theme/Form.hooks.tsx:62
 #: src/components/Settings/Theme/Form.test.tsx:255
 msgid "An unexpected error has occurred while applying customization to customer portals. Please try again."
@@ -65,15 +73,15 @@ msgstr "An unexpected error has occurred while uploading image. Please try again
 msgid "Application ID"
 msgstr "Application ID"
 
-#: src/components/Settings/Theme/SectionCertificate.tsx:22
+#: src/components/Settings/Theme/SectionCertificate.tsx:35
 msgid "Apply completion certificate customization to customer portals"
 msgstr "Apply completion certificate customization to customer portals"
 
-#: src/components/Settings/Theme/SectionDashboard.tsx:43
+#: src/components/Settings/Theme/SectionDashboard.tsx:55
 msgid "Apply dashboard customization to customer portals"
 msgstr "Apply dashboard customization to customer portals"
 
-#: src/components/Settings/Theme/SectionBrand.tsx:78
+#: src/components/Settings/Theme/SectionBrand.tsx:94
 msgid "Apply featured image to customer portals"
 msgstr "Apply featured image to customer portals"
 
@@ -81,11 +89,11 @@ msgstr "Apply featured image to customer portals"
 msgid "Apply login customization to customer portals"
 msgstr "Apply login customization to customer portals"
 
-#: src/components/Settings/Theme/SectionBrand.tsx:55
+#: src/components/Settings/Theme/SectionBrand.tsx:62
 msgid "Apply logo to customer portals"
 msgstr "Apply logo to customer portals"
 
-#: src/components/Settings/Theme/SectionBrand.tsx:63
+#: src/components/Settings/Theme/SectionBrand.tsx:70
 msgid "Apply portal color to customer portals"
 msgstr "Apply portal color to customer portals"
 
@@ -101,7 +109,7 @@ msgstr "Autopilot"
 msgid "Azure B2C"
 msgstr "Azure B2C"
 
-#: src/components/Settings/Theme/SectionBrand.tsx:49
+#: src/components/Settings/Theme/SectionBrand.tsx:51
 msgid "Brand"
 msgstr "Brand"
 
@@ -117,13 +125,17 @@ msgstr "Browse for a CSV file to upload for setting up fields mapping rules. For
 msgid "Bucket URL"
 msgstr "Bucket URL"
 
+#: src/components/Settings/Theme/SectionSignup.tsx:19
+msgid "By creating an account you are agreeing to the Go1"
+msgstr "By creating an account you are agreeing to the Go1"
+
 #: src/components/ContentDistributorExport/index.tsx:76
 msgid "By pushing your Go1 content to the Microsoft Graph, members of your organization will be able to find your Go1 content from Microsoft Search, in Microsoft products like Sharepoint, office.com, and Bing."
 msgstr "By pushing your Go1 content to the Microsoft Graph, members of your organization will be able to find your Go1 content from Microsoft Search, in Microsoft products like Sharepoint, office.com, and Bing."
 
 #: src/components/Settings/Theme/SectionSignup.tsx:18
-msgid "By signing up, you agree"
-msgstr "By signing up, you agree"
+#~ msgid "By signing up, you agree"
+#~ msgstr "By signing up, you agree"
 
 #: src/components/DataFeed/uploadState.tsx:353
 msgid "CSV fields"
@@ -146,7 +158,7 @@ msgstr "Choose a file"
 msgid "Click Generate Application ID button below to create an application ID."
 msgstr "Click Generate Application ID button below to create an application ID."
 
-#: src/components/Settings/Theme/Preview.tsx:12
+#: src/components/Settings/Theme/Preview.tsx:14
 msgid "Close preview"
 msgstr "Close preview"
 
@@ -174,7 +186,7 @@ msgstr "Course Catalog"
 msgid "Create mapping rules"
 msgstr "Create mapping rules"
 
-#: src/components/Settings/Theme/SectionSignup.tsx:18
+#: src/components/Settings/Theme/SectionSignup.tsx:19
 msgid "Create new account"
 msgstr "Create new account"
 
@@ -182,11 +194,11 @@ msgstr "Create new account"
 msgid "Customise available portal content"
 msgstr "Customise available portal content"
 
-#: src/components/Settings/Theme/SectionCertificate.tsx:8
+#: src/components/Settings/Theme/SectionCertificate.tsx:11
 msgid "Customize completion certificate"
 msgstr "Customize completion certificate"
 
-#: src/components/Settings/Theme/SectionDashboard.tsx:9
+#: src/components/Settings/Theme/SectionDashboard.tsx:11
 msgid "Customize dashboard"
 msgstr "Customize dashboard"
 
@@ -194,15 +206,15 @@ msgstr "Customize dashboard"
 msgid "Customize login"
 msgstr "Customize login"
 
-#: src/components/Settings/Theme/SectionSignup.tsx:15
+#: src/components/Settings/Theme/SectionSignup.tsx:16
 msgid "Customize sign up"
 msgstr "Customize sign up"
 
-#: src/components/Settings/Theme/SectionDashboard.tsx:39
+#: src/components/Settings/Theme/SectionDashboard.tsx:43
 msgid "Dashboard icon"
 msgstr "Dashboard icon"
 
-#: src/components/Settings/Theme/SectionDashboard.tsx:14
+#: src/components/Settings/Theme/SectionDashboard.tsx:18
 msgid "Dashboard image"
 msgstr "Dashboard image"
 
@@ -236,8 +248,8 @@ msgid "Drop it here"
 msgstr "Drop it here"
 
 #: src/components/Settings/Theme/SectionSignup.tsx:30
-msgid "Email"
-msgstr "Email"
+#~ msgid "Email"
+#~ msgstr "Email"
 
 #: src/components/ContentDistributorExport/index.tsx:150
 msgid "Errors within export"
@@ -255,17 +267,25 @@ msgstr "Export requested."
 msgid "Failed to save your mapping, please try again or contact us for assistance"
 msgstr "Failed to save your mapping, please try again or contact us for assistance"
 
-#: src/components/Settings/Theme/SectionBrand.tsx:66
+#: src/components/Settings/Theme/SectionBrand.tsx:73
 msgid "Featured image"
 msgstr "Featured image"
 
-#: src/components/Settings/Theme/SectionSignup.tsx:22
+#: src/components/Settings/Theme/SectionSignup.tsx:23
 msgid "First Name"
 msgstr "First Name"
 
+#: src/components/Settings/Theme/SectionCertificate.tsx:14
+msgid "For best results, upload an image with minimum dimensions of 100x100px over a transparent or white background."
+msgstr "For best results, upload an image with minimum dimensions of 100x100px over a transparent or white background."
+
 #: src/components/Settings/Theme/SectionBrand.tsx:50
-msgid "For best results, upload your logo in a 1:1 ratio with a transparent background."
-msgstr "For best results, upload your logo in a 1:1 ratio with a transparent background."
+#~ msgid "For best results, upload your logo in a 1:1 ratio with a transparent background."
+#~ msgstr "For best results, upload your logo in a 1:1 ratio with a transparent background."
+
+#: src/components/Settings/Theme/SectionBrand.tsx:52
+msgid "For best results, upload your logo with minimum dimensions of 200x200px over a transparent background."
+msgstr "For best results, upload your logo with minimum dimensions of 200x200px over a transparent background."
 
 #: src/components/AwsConnectionDetail/index.tsx:116
 msgid "For security reason, you only see this key once and cannot be recovered it. Please copy and keep it somewhere safe but accessible."
@@ -285,8 +305,8 @@ msgid "Go to Dashboard"
 msgstr "Go to Dashboard"
 
 #: src/components/Settings/Theme/Previews/SplitLayout.tsx:57
-msgid "Go1 terms of use"
-msgstr "Go1 terms of use"
+#~ msgid "Go1 terms of use"
+#~ msgstr "Go1 terms of use"
 
 #: src/components/AwsConnectionDetail/index.tsx:77
 msgid "Hide"
@@ -316,6 +336,10 @@ msgstr "Integration not connected. Check your account settings."
 msgid "Invalid date format. Please edit your file follow this format: YYYY-MM-DD"
 msgstr "Invalid date format. Please edit your file follow this format: YYYY-MM-DD"
 
+#: src/components/Settings/Theme/ImageSupportText.tsx:5
+msgid "JPG, PNG, and GIF are supported"
+msgstr "JPG, PNG, and GIF are supported"
+
 #: src/components/common/WithApiom/menus.ts:126
 msgid "LTI Provider"
 msgstr "LTI Provider"
@@ -324,7 +348,7 @@ msgstr "LTI Provider"
 msgid "Last Export"
 msgstr "Last Export"
 
-#: src/components/Settings/Theme/SectionSignup.tsx:25
+#: src/components/Settings/Theme/SectionSignup.tsx:26
 msgid "Last Name"
 msgstr "Last Name"
 
@@ -332,7 +356,7 @@ msgstr "Last Name"
 msgid "Litmos"
 msgstr "Litmos"
 
-#: src/components/Settings/Theme/SectionSignup.tsx:18
+#: src/components/Settings/Theme/SectionSignup.tsx:19
 msgid "Log in"
 msgstr "Log in"
 
@@ -344,7 +368,7 @@ msgstr "Login description"
 msgid "Login title"
 msgstr "Login title"
 
-#: src/components/Settings/Theme/SectionBrand.tsx:50
+#: src/components/Settings/Theme/SectionBrand.tsx:52
 msgid "Logo"
 msgstr "Logo"
 
@@ -361,7 +385,7 @@ msgstr "Map with"
 msgid "Mas"
 msgstr "Mas"
 
-#: src/components/Settings/Theme/SectionDashboard.tsx:20
+#: src/components/Settings/Theme/ImageSupportText.tsx:8
 msgid "Max file size is 5MB"
 msgstr "Max file size is 5MB"
 
@@ -370,8 +394,8 @@ msgid "Microsoft 365"
 msgstr "Microsoft 365"
 
 #: src/components/Settings/Theme/SectionDashboard.tsx:17
-msgid "Minimum dimensions of 1920px (W) and 300px (H)"
-msgstr "Minimum dimensions of 1920px (W) and 300px (H)"
+#~ msgid "Minimum dimensions of 1920px (W) and 300px (H)"
+#~ msgstr "Minimum dimensions of 1920px (W) and 300px (H)"
 
 #: src/components/common/WithApiom/menus.ts:190
 msgid "Nas"
@@ -402,8 +426,8 @@ msgid "Oracle"
 msgstr "Oracle"
 
 #: src/components/Settings/Theme/SectionSignup.tsx:33
-msgid "Password"
-msgstr "Password"
+#~ msgid "Password"
+#~ msgstr "Password"
 
 #: src/components/common/WithApiom/menus.ts:59
 msgid "Plan and Billing"
@@ -413,6 +437,23 @@ msgstr "Plan and Billing"
 msgid "Please contact your Go1 administrator to get access to this page or to make changes to your portal settings."
 msgstr "Please contact your Go1 administrator to get access to this page or to make changes to your portal settings."
 
+#: src/components/Settings/Theme/SectionBrand.tsx:80
+msgid "Please use an image with at least 1000px in height"
+msgstr "Please use an image with at least 1000px in height"
+
+#: src/components/Settings/Theme/SectionCertificate.tsx:22
+#: src/components/Settings/Theme/SectionDashboard.tsx:51
+msgid "Please use an image with minimum dimensions of 100x100px"
+msgstr "Please use an image with minimum dimensions of 100x100px"
+
+#: src/components/Settings/Theme/SectionDashboard.tsx:26
+msgid "Please use an image with minimum dimensions of 1920x300px"
+msgstr "Please use an image with minimum dimensions of 1920x300px"
+
+#: src/components/Settings/Theme/SectionBrand.tsx:57
+msgid "Please use an image with minimum dimensions of 200x200px"
+msgstr "Please use an image with minimum dimensions of 200x200px"
+
 #: src/components/common/WithApiom/menus.ts:43
 msgid "Portal Content Selection"
 msgstr "Portal Content Selection"
@@ -421,7 +462,7 @@ msgstr "Portal Content Selection"
 msgid "Portal Information"
 msgstr "Portal Information"
 
-#: src/components/Settings/Theme/SectionBrand.tsx:59
+#: src/components/Settings/Theme/SectionBrand.tsx:66
 msgid "Portal color"
 msgstr "Portal color"
 
@@ -433,15 +474,15 @@ msgstr "Portal fields"
 msgid "Portal info, legal and login config"
 msgstr "Portal info, legal and login config"
 
-#: src/components/Settings/Theme/SectionBrand.tsx:49
+#: src/components/Settings/Theme/SectionBrand.tsx:51
 msgid "Preview brand"
 msgstr "Preview brand"
 
-#: src/components/Settings/Theme/SectionCertificate.tsx:8
+#: src/components/Settings/Theme/SectionCertificate.tsx:12
 msgid "Preview certificate"
 msgstr "Preview certificate"
 
-#: src/components/Settings/Theme/SectionDashboard.tsx:9
+#: src/components/Settings/Theme/SectionDashboard.tsx:12
 msgid "Preview dashboard"
 msgstr "Preview dashboard"
 
@@ -449,7 +490,7 @@ msgstr "Preview dashboard"
 msgid "Preview login"
 msgstr "Preview login"
 
-#: src/components/Settings/Theme/SectionSignup.tsx:16
+#: src/components/Settings/Theme/SectionSignup.tsx:17
 msgid "Preview sign up"
 msgstr "Preview sign up"
 
@@ -489,15 +530,15 @@ msgstr "Retry"
 msgid "SCORM and xAPI"
 msgstr "SCORM and xAPI"
 
-#: src/components/Settings/Theme/Form.tsx:42
+#: src/components/Settings/Theme/Form.tsx:33
 msgid "Save changes"
 msgstr "Save changes"
 
-#: src/components/Settings/Theme/SectionDashboard.tsx:32
+#: src/components/Settings/Theme/SectionDashboard.tsx:37
 msgid "Scale to fit height"
 msgstr "Scale to fit height"
 
-#: src/components/Settings/Theme/SectionDashboard.tsx:28
+#: src/components/Settings/Theme/SectionDashboard.tsx:33
 msgid "Scale to fit width"
 msgstr "Scale to fit width"
 
@@ -551,15 +592,15 @@ msgstr "Sign up description"
 msgid "Sign up title"
 msgstr "Sign up title"
 
-#: src/components/Settings/Theme/SectionCertificate.tsx:10
+#: src/components/Settings/Theme/SectionCertificate.tsx:14
 msgid "Signature"
 msgstr "Signature"
 
-#: src/components/Settings/Theme/SectionCertificate.tsx:14
+#: src/components/Settings/Theme/SectionCertificate.tsx:27
 msgid "Signature full name"
 msgstr "Signature full name"
 
-#: src/components/Settings/Theme/SectionCertificate.tsx:18
+#: src/components/Settings/Theme/SectionCertificate.tsx:31
 msgid "Signature title"
 msgstr "Signature title"
 
@@ -591,7 +632,7 @@ msgstr "Subscription plan and payment details"
 msgid "Success Factors"
 msgstr "Success Factors"
 
-#: src/pages/r/app/portal/settings/theme/index.tsx:86
+#: src/pages/r/app/portal/settings/theme/index.tsx:89
 msgid "The settings have been saved."
 msgstr "The settings have been saved."
 
@@ -599,7 +640,7 @@ msgstr "The settings have been saved."
 msgid "Theme and Customisation"
 msgstr "Theme and Customisation"
 
-#: src/pages/r/app/portal/settings/theme/index.tsx:118
+#: src/pages/r/app/portal/settings/theme/index.tsx:123
 msgid "Theme and customization"
 msgstr "Theme and customization"
 
@@ -607,11 +648,11 @@ msgstr "Theme and customization"
 msgid "This application ID can be used as a SCORM or xAPI provider. You can now download your content in SCORM or xAPI format from the Publish / Sharing menu found in the Settings section of each piece of training."
 msgstr "This application ID can be used as a SCORM or xAPI provider. You can now download your content in SCORM or xAPI format from the Publish / Sharing menu found in the Settings section of each piece of training."
 
-#: src/components/Settings/Theme/SectionBrand.tsx:55
-#: src/components/Settings/Theme/SectionBrand.tsx:63
-#: src/components/Settings/Theme/SectionBrand.tsx:78
-#: src/components/Settings/Theme/SectionCertificate.tsx:22
-#: src/components/Settings/Theme/SectionDashboard.tsx:43
+#: src/components/Settings/Theme/SectionBrand.tsx:62
+#: src/components/Settings/Theme/SectionBrand.tsx:70
+#: src/components/Settings/Theme/SectionBrand.tsx:94
+#: src/components/Settings/Theme/SectionCertificate.tsx:35
+#: src/components/Settings/Theme/SectionDashboard.tsx:55
 #: src/components/Settings/Theme/SectionLogin.tsx:16
 #: src/components/Settings/Theme/SectionSignup.tsx:46
 msgid "This can be changed from the individual portal’s settings page"
@@ -623,8 +664,8 @@ msgid "This field is required"
 msgstr "This field is required"
 
 #: src/components/Settings/Theme/SectionDashboard.tsx:14
-msgid "To ensure you get the best result, we suggest using a panoramic image."
-msgstr "To ensure you get the best result, we suggest using a panoramic image."
+#~ msgid "To ensure you get the best result, we suggest using a panoramic image."
+#~ msgstr "To ensure you get the best result, we suggest using a panoramic image."
 
 #: src/pages/_error.tsx:20
 msgid "Try going"
@@ -658,9 +699,21 @@ msgstr "Upload failed"
 msgid "Uploading"
 msgstr "Uploading"
 
+#: src/components/Settings/Theme/SectionDashboard.tsx:18
+msgid "Used as the featured image in your dashboard. For best results, upload an image with minimum dimensions of 1920x300px."
+msgstr "Used as the featured image in your dashboard. For best results, upload an image with minimum dimensions of 1920x300px."
+
+#: src/components/Settings/Theme/SectionDashboard.tsx:43
+msgid "Used as the logo in your dashboard. For best results, upload an image with minimum dimensions of 100x100px over a transparent background."
+msgstr "Used as the logo in your dashboard. For best results, upload an image with minimum dimensions of 100x100px over a transparent background."
+
 #: src/components/Settings/Theme/SectionBrand.tsx:66
-msgid "Used in sign up and login pages. For best results, upload an image in 1:1 ratio. The image can also be repositioned."
-msgstr "Used in sign up and login pages. For best results, upload an image in 1:1 ratio. The image can also be repositioned."
+#~ msgid "Used in sign up and login pages. For best results, upload an image in 1:1 ratio. The image can also be repositioned."
+#~ msgstr "Used in sign up and login pages. For best results, upload an image in 1:1 ratio. The image can also be repositioned."
+
+#: src/components/Settings/Theme/SectionBrand.tsx:73
+msgid "Used in sign up and login pages. For best results, upload an image with at least 1000px in height. The image can be repositioned to fit the intended 1:1 ratio."
+msgstr "Used in sign up and login pages. For best results, upload an image with at least 1000px in height. The image can be repositioned to fit the intended 1:1 ratio."
 
 #: src/components/common/WithApiom/menus.ts:245
 msgid "User Data Feed"
@@ -678,7 +731,7 @@ msgstr "Want more content?"
 msgid "We can’t seem to find the page you’re looking for."
 msgstr "We can’t seem to find the page you’re looking for."
 
-#: src/components/Settings/Theme/SectionDashboard.tsx:11
+#: src/components/Settings/Theme/SectionDashboard.tsx:15
 msgid "Welcome message"
 msgstr "Welcome message"
 
@@ -724,8 +777,8 @@ msgid "Zapier"
 msgstr "Zapier"
 
 #: src/components/Settings/Theme/Previews/SplitLayout.tsx:60
-msgid "and"
-msgstr "and"
+#~ msgid "and"
+#~ msgstr "and"
 
 #: src/pages/_error.tsx:29
 msgid "contact us"
@@ -740,10 +793,10 @@ msgid "home"
 msgstr "home"
 
 #: src/components/Settings/Theme/Previews/SplitLayout.tsx:63
-msgid "privacy policy."
-msgstr "privacy policy."
+#~ msgid "privacy policy."
+#~ msgstr "privacy policy."
 
-#: src/components/Settings/Theme/SectionSignup.tsx:18
+#: src/components/Settings/Theme/SectionSignup.tsx:19
 msgid "sign up"
 msgstr "sign up"
 

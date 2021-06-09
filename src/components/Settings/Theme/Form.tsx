@@ -62,10 +62,10 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
     portal
   );
 
-  const [themeSettings, setThemeSettings ] = useState(initialValues)
-  
-  const handleChange = async (values) => {
-    setThemeSettings(values.values)
+  const [themeSettings, setThemeSettings] = useState(initialValues);
+
+  const handleChange = (values: { values: any }) => {
+    setThemeSettings(values.values);
   };
 
   return (
@@ -79,13 +79,17 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
       onSubmit={handleSubmit}
       onChange={handleChange}
     >
-      <SectionBrand isSaving={isSaving} onFeaturedImageCropped={setFeaturedImageCropped} isPartnerPortal={isPartnerPortal} />
+      <SectionBrand
+        isSaving={isSaving}
+        onFeaturedImageCropped={setFeaturedImageCropped}
+        isPartnerPortal={isPartnerPortal}
+      />
       <SectionLogin isPartnerPortal={isPartnerPortal} />
-      <SectionSignup isPartnerPortal={isPartnerPortal} themeSettings={themeSettings}/>
+      <SectionSignup isPartnerPortal={isPartnerPortal} themeSettings={themeSettings} />
       <SectionDashboard isPartnerPortal={isPartnerPortal} />
       <SectionCertificate isPartnerPortal={isPartnerPortal} />
       <View flexDirection="row">
-        <SubmitButton color="accent" flexDirection="row" alignItems="center">
+        <SubmitButton disableOnFormError color="accent" flexDirection="row" alignItems="center">
           <View flexDirection="row" alignItems="center">
             {isSaving && <Spinner color="white" marginRight={2} />}
             <Trans>Save changes</Trans>

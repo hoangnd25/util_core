@@ -1,9 +1,8 @@
-import React, { useState , FunctionComponent } from 'react';
+import React, { useState, FunctionComponent } from 'react';
 import { Checkbox, Field, TextInput, View  } from '@go1d/go1d';
 import { t, Trans } from '@lingui/macro';
 import { I18n } from '@lingui/react';
 import SettingsFormSection from '@src/components/Settings/SettingsFormSection';
-
 import PreviewButton from '@src/components/Settings/Theme/PreviewButton';
 import Preview from '@src/components/Settings/Theme/Preview';
 import IconEye from '@go1d/go1d/build/components/Icons/Eye';
@@ -22,9 +21,7 @@ interface Props {
 const SectionSignup: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings }) => {
   const { logo, featuredImage, signupTitle, signupDescription } = themeSettings;
   const [openPreview, setOpenPreview] = useState(false);
-
-
-  const landingPage = typeof featuredImage === 'string' && featuredImage?.includes('cloudinary') ? `url("${featuredImage}")` : `url("${CDN_PATH}/signup_default_landing_page.jpg")`;
+  const landingPage = (typeof featuredImage === 'string' && featuredImage?.includes('cloudinary')) ? `url("${featuredImage}")` : `url("${CDN_PATH}/signup_default_landing_page.jpg")`;
   
   return (
     <I18n>
@@ -47,19 +44,25 @@ const SectionSignup: FunctionComponent<Props> = ({ isPartnerPortal, themeSetting
             secondaryTagline={[i18n._(t`Already have an account?`), i18n._(t`Log in`)]}
             description={signupDescription}
             featuredImage={landingPage}
-            logo={logo}>       
+            logo={logo}
+            isPreviewLogin={false}
+            >   
+                
             <View>
               <View flexDirection="row" display="flex" marginY={3} justifyContent="space-between" width="100%">
                 <View paddingRight={1} flexShrink={1} flexGrow={1}>
                   <TextInput id="firstName" label={i18n._(t`First Name`)} placeHolder="First Name" css={{ pointerEvents: 'none' }} />
                 </View>
+                
                 <View paddingLeft={1} flexShrink={1} flexGrow={1}>
                   <TextInput id="lastName" label={i18n._(t`Last Name`)} autoComplete="new-password" placeHolder="Last Name" css={{ pointerEvents: 'none' }} />
                 </View>
               </View>
+              
               <View width="100%">
                 <TextInput id="Email" placeHolder="Email" autoComplete="new-password" css={{ pointerEvents: 'none' }} />
               </View>
+              
               <View marginY={3} width="100%">
                 <TextInput id="Password" placeHolder="Password" autoComplete="new-password" css={{ pointerEvents: 'none' }} suffixNode={<View padding={4}><IconEye color="accent"/></View>} />
               </View>
@@ -69,6 +72,7 @@ const SectionSignup: FunctionComponent<Props> = ({ isPartnerPortal, themeSetting
           <View marginBottom={5}>
             <Field name="signupTitle" label={i18n._(t`Sign up title`)} component={TextInput} hideStatus />
           </View>
+          
           <View marginBottom={5}>
             <Field name="signupDescription" label={i18n._(t`Sign up description`)} component={TextInput} hideStatus />
           </View>

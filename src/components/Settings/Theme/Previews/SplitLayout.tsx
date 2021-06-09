@@ -12,10 +12,11 @@ interface Props {
   terms: string;
   secondaryTagline: string[];
   children: React.ReactNode;
+  isPreviewLogin: boolean;
 }
 
 const SplitLayout: React.FC<Props> = props => {
-  const { primaryTagline, secondaryTagline, description, logo, buttonText, featuredImage, children, terms } = props;
+  const { primaryTagline, secondaryTagline, description, logo, buttonText, featuredImage, children, terms, isPreviewLogin } = props;
 
   const DEFAULT_APIOM_LOGO = 'images/logo-white.png';
 
@@ -81,6 +82,7 @@ const SplitLayout: React.FC<Props> = props => {
             {buttonText}
           </ButtonFilled>
 
+          { !isPreviewLogin ? (
           <Text textAlign="center">
             {terms}{' '}
             <Trans>
@@ -92,7 +94,8 @@ const SplitLayout: React.FC<Props> = props => {
                 privacy policy.
               </Text>
             </Trans>
-          </Text>
+          </Text>) : null
+          }
         </View>
       </View>
     </View>

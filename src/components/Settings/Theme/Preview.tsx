@@ -1,19 +1,25 @@
 import React from 'react';
-import { View, Modal, ButtonFilled, foundations } from '@go1d/go1d';
+import { View, Modal, ButtonFilled } from '@go1d/go1d';
 import { Trans } from '@lingui/macro';
 import SplitLayout from './Previews/SplitLayout';
 
 interface Props {
-  primaryTagline, description, logo, buttonText, featuredImage, terms: string;
+  primaryTagline: string;
+  description: string;
+  logo: string;
+  buttonText: string;
+  featuredImage: string;
+  terms: string;
   secondaryTagline: string[];
   children: React.ReactNode,
   title: string; 
   isOpen: boolean;
   onRequestClose: () => void;  
+  isPreviewLogin: boolean;
 }
 
 const Preview: React.FC<Props> = (props) => {
-  const { isOpen, onRequestClose, title, children, buttonText, terms, primaryTagline, secondaryTagline, description, featuredImage, logo } = props;
+  const {isOpen, onRequestClose, title, children, buttonText, terms, primaryTagline, secondaryTagline, description, featuredImage, logo, isPreviewLogin } = props;
 
   return (
     <Modal isOpen={isOpen} maxWidth={850} title={`Preview ${title}`} onRequestClose={onRequestClose}>
@@ -26,6 +32,7 @@ const Preview: React.FC<Props> = (props) => {
         description={description}
         featuredImage={featuredImage}
         logo={logo}
+        isPreviewLogin={isPreviewLogin}
         >
         {children}
       </SplitLayout>   

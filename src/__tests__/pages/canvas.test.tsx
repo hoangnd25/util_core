@@ -1,13 +1,12 @@
 import { mount } from 'enzyme';
 import * as React from 'react';
-import { IntlProvider } from 'react-intl';
 import { Provider as ReduxProvider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import CommonProvider from '@go1d/mine/common/Provider';
-import { act } from 'react-dom/test-utils'
 
-import { CanvasLMSPage } from '@src/pages/r/app/portal/integrations/canvas'
-import { canvasService } from '@src/services/canvasService/useCanvasService'
+import { CanvasLMSPage } from '@src/pages/r/app/portal/integrations/canvas';
+import { canvasService } from '@src/services/canvasService/useCanvasService';
+import { CurrentSessionType } from '@src/types/user';
 
 const mockStore = configureMockStore();
 
@@ -30,9 +29,9 @@ jest.spyOn(canvasService, 'getConfig').mockResolvedValue([
       domain: 'domain',
       client_id: 'client_id',
       client_secret: 'client_secret',
-    }
-  }
-])
+    },
+  },
+]);
 
 const setup = (query = {}) => {
   const currentSession = {
@@ -42,7 +41,9 @@ const setup = (query = {}) => {
       title: 'test.mygo1.com',
       mail: 'test@go1.com',
       type: 'customer',
-      data: {},
+      data: {
+        theme: {},
+      },
       featureToggles: [],
       files: {},
       configuration: {},
@@ -53,15 +54,13 @@ const setup = (query = {}) => {
       isAdministrator: true,
       uuid: '00000000-0000-0000-00000000',
     },
-  };
+  } as CurrentSessionType;
 
   return mount(
     <ReduxProvider store={mockStore({ currentSession })}>
-      <IntlProvider locale="en">
-        <CommonProvider pushNavigationState={jest.fn()} apiUrl="api.go1.co" jwt="jwt" accountId={123} portalId={456}>
-          <CanvasLMSPage router={{ query }} currentSession={currentSession} />
-        </CommonProvider>
-      </IntlProvider>
+      <CommonProvider pushNavigationState={jest.fn()} apiUrl="api.go1.co" jwt="jwt" accountId={123} portalId={456}>
+        <CanvasLMSPage router={{ query }} currentSession={currentSession} />
+      </CommonProvider>
     </ReduxProvider>
   );
 };

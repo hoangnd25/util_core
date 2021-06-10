@@ -1,6 +1,5 @@
 import { mount } from 'enzyme';
 import * as React from 'react';
-import { IntlProvider } from 'react-intl';
 import { Provider as ReduxProvider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import CommonProvider from '@go1d/mine/common/Provider';
@@ -28,11 +27,9 @@ const setup = (props = {}) => {
 
   return mount(
     <ReduxProvider store={mockStore({ currentSession })}>
-      <IntlProvider locale="en">
-        <CommonProvider pushNavigationState={jest.fn()} apiUrl="api.go1.co" jwt="jwt" accountId={123} portalId={456}>
-          <ScormAndXapiPage currentSession={currentSession} {...componentProps} />
-        </CommonProvider>
-      </IntlProvider>
+      <CommonProvider pushNavigationState={jest.fn()} apiUrl="api.go1.co" jwt="jwt" accountId={123} portalId={456}>
+        <ScormAndXapiPage currentSession={currentSession} {...componentProps} />
+      </CommonProvider>
     </ReduxProvider>
   );
 };

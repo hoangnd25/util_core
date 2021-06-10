@@ -9,7 +9,7 @@ import CloudinaryService from '@go1d/mine/services/cloudinary';
 import AppContext from '@src/utils/appContext';
 import axios, { CancelToken } from 'axios';
 import ThemeSettingsForm from '@src/components/Settings/Theme/Form';
-import { FormSaveError, ApplyCustomizationdError, ImageUploadError } from '@src/components/Settings/Theme/errors';
+import { ImageUploadError } from '@src/components/Settings/Theme/errors';
 import { Trans } from '@lingui/macro';
 import { WithRouterProps } from 'next/dist/client/with-router';
 import { DispatchProp } from 'react-redux';
@@ -42,13 +42,19 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
   }
 
   componentDidMount() {
-    const { currentSession: { portal } } = this.props;
+    const {
+      currentSession: { portal },
+    } = this.props;
     // If FT toggle for portal is enabled and they have not upgraded kick them back to apiom.
-    if (portal.featureToggles?.some((featureToggle) => featureToggle.raw?.name === 'portal.settings.uplift' && featureToggle.raw?.enabled)) {
+    if (
+      portal.featureToggles?.some(
+        (featureToggle) => featureToggle.raw?.name === 'portal.settings.uplift' && featureToggle.raw?.enabled
+      )
+    ) {
       if (portal.configuration?.login_version !== 'peach') {
-        window.location.assign(`https://${portal.title}/p/#/app/settings/theme`)
+        window.location.assign(`https://${portal.title}/p/#/app/settings/theme`);
       }
-    };
+    }
   }
 
   handleImageUpload = async (image: File | Blob, cancelTokenSource?: CancelToken) => {
@@ -61,7 +67,7 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
     const cancelToken = cancelTokenSource || axios.CancelToken.source();
 
     this.setState({ isUploading: true });
-    
+
     try {
       return await cloudinaryService.uploadImage(
         {
@@ -85,8 +91,8 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
 
     this.setState({
       isSavingPortal: false,
-      isUploading: false
-    })
+      isUploading: false,
+    });
   };
 
   refreshSession = (fields: object) => {
@@ -94,7 +100,8 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
 
     if (currentSession) {
       const { portal } = currentSession;
-      
+      const { theme } = portal.data;
+
       dispatch({
         type: USER_UPDATE,
         payload: {
@@ -104,15 +111,15 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
             data: {
               ...portal.data,
               theme: {
-                ...portal.data.theme,
-                primary: fields['theme.primary'],
-              }
-            }
-          }
+                ...theme,
+                primary: typeof fields['theme.primary'] !== 'undefined' ? fields['theme.primary'] : theme.primary,
+              },
+            },
+          },
         },
-      }) 
+      });
     }
-  }
+  };
 
   handleSave = async (fields: object, childCustomizationGroups: string[] = []) => {
     const {
@@ -126,21 +133,23 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
     try {
       await portalService.save(portal.title, fields);
     } catch (saveError) {
-      throw new FormSaveError(saveError.message);
+      // we should allow user retry instead and stop then
+      // throw new FormSaveError(saveError.message);
+      this.handleError(saveError.message);
+      return;
     }
 
     if (childCustomizationGroups.length > 0) {
       try {
         await portalService.applyChildPortalCustomization(portal.title, childCustomizationGroups);
       } catch (applyCustomizationdError) {
-        throw new ApplyCustomizationdError(applyCustomizationdError.message);
+        // throw new ApplyCustomizationdError(applyCustomizationdError.message);
+        this.handleError(applyCustomizationdError.message);
       }
     }
 
     this.refreshSession(fields);
-    this.toastSuccess(
-      <Trans>The settings have been saved.</Trans>
-    );
+    this.toastSuccess(<Trans>The settings have been saved.</Trans>);
     this.setState({ isSavingPortal: false });
   };
 
@@ -173,4 +182,10 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
 
 ThemeSettingsPage.contextType = AppContext;
 
-export default withAuth(withApiom(ThemeSettingsPage, { pageTitle: <Trans>Theme and customization</Trans>, active: SIDEBAR_MENUS_SETTINGS.THEME, menuType: "Settings" },  ));
+export default withAuth(
+  withApiom(ThemeSettingsPage, {
+    pageTitle: <Trans>Theme and customization</Trans>,
+    active: SIDEBAR_MENUS_SETTINGS.THEME,
+    menuType: 'Settings',
+  })
+);

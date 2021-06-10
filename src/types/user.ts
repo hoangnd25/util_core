@@ -5,7 +5,11 @@ export interface GO1Portal {
   id: string;
   title: string;
   configuration: any;
-  data: any;
+  data: {
+    theme: {
+      primary?: string;
+    };
+  };
   featureToggles: FeatureToggleModel[];
   type: string;
   files?: {

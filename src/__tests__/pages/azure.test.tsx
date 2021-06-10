@@ -1,28 +1,18 @@
 import { mount } from 'enzyme';
 import * as React from 'react';
-import { IntlProvider } from 'react-intl';
 import { Banner } from '@go1d/go1d';
 import { Provider as ReduxProvider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import CommonProvider from '@go1d/mine/common/Provider';
 import { MicrosoftAzurePage, microsoftAzureService } from '@src/pages/r/app/portal/integrations/azure';
-import {contentDistributorService} from "@src/components/ContentDistributorExport";
-import {exportStatusMock,mockCustomCollectionResponse} from "@src/components/ContentDistributorExport/index.test";
+import { contentDistributorService } from '@src/components/ContentDistributorExport';
+import { exportStatusMock, mockCustomCollectionResponse } from '@src/components/ContentDistributorExport/index.test';
+import { CurrentSessionType } from '@src/types/user';
+
 const mockStore = configureMockStore();
 
 jest.spyOn(contentDistributorService, 'getExportStatus').mockResolvedValue(exportStatusMock);
 jest.spyOn(contentDistributorService, 'getCustomContent').mockResolvedValue(mockCustomCollectionResponse);
-
-jest.spyOn(microsoftAzureService, 'getConnection').mockResolvedValue({
-  id: '123',
-  name: 'test',
-  identifier: '123',
-  strategy: '',
-  provider: 'azure',
-  links: {
-    authorize: 'http://test.com'
-  }
-});
 
 const setup = (query = {}) => {
   const currentSession = {
@@ -32,7 +22,9 @@ const setup = (query = {}) => {
       title: 'test.mygo1.com',
       mail: 'test@go1.com',
       type: 'customer',
-      data: {},
+      data: {
+        theme: {},
+      },
       featureToggles: [],
       files: {},
       configuration: {},
@@ -43,30 +35,40 @@ const setup = (query = {}) => {
       mail: 'test@go1.com',
       uuid: '00000000-0000-0000-00000000',
     },
-  };
+  } as CurrentSessionType;
 
   return mount(
     <ReduxProvider store={mockStore({ currentSession })}>
-      <IntlProvider locale="en">
-        <CommonProvider pushNavigationState={jest.fn()} apiUrl="api.go1.co" jwt="jwt" accountId={123} portalId={456}>
-          <MicrosoftAzurePage router={{ query }} currentSession={currentSession} />
-        </CommonProvider>
-      </IntlProvider>
+      <CommonProvider pushNavigationState={jest.fn()} apiUrl="api.go1.co" jwt="jwt" accountId={123} portalId={456}>
+        <MicrosoftAzurePage router={{ query }} currentSession={currentSession} />
+      </CommonProvider>
     </ReduxProvider>
   );
 };
 
-it('Should render without crashing', (done) => {
-  setup();
-  done();
+beforeEach(() => {
+  jest.spyOn(microsoftAzureService, 'getConnection').mockResolvedValue({
+    id: '123',
+    name: 'test',
+    identifier: '123',
+    strategy: '',
+    provider: 'azure',
+    links: {
+      authorize: 'http://test.com',
+    },
+  });
 });
 
-it('Should render with no connection', async () => {
+it('Should render without crashing', () => {
+  setup();
+});
+
+it('Should render with no connection', async (done) => {
   delete window.location;
   window.location = { ...window.location, assign: jest.fn() };
 
-  spyOn(microsoftAzureService, 'getConnection').and.callFake(() => Promise.resolve(null));
-  spyOn(microsoftAzureService, 'getRedirectLink').and.callFake(() => Promise.resolve('https://test.com'));
+  jest.spyOn(microsoftAzureService, 'getConnection').mockImplementation(() => Promise.resolve(null));
+  jest.spyOn(microsoftAzureService, 'getRedirectLink').mockImplementation(() => Promise.resolve('https://test.com'));
 
   const wrapper = setup();
   setImmediate(async () => {
@@ -76,6 +78,8 @@ it('Should render with no connection', async () => {
     const Page = wrapper.find(MicrosoftAzurePage);
     await (Page.instance() as any).handleConnect();
     expect(window.location.assign).toHaveBeenCalled();
+
+    done();
   });
 });
 

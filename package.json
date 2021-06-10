@@ -1,7 +1,7 @@
 {
   "name": "portal",
-  "author": "",
   "version": "2.0.0",
+  "author": "",
   "scripts": {
     "add-locale": "lingui add-locale",
     "analyze": "webpack-bundle-analyzer ./.next/stats.json",
@@ -14,7 +14,7 @@
     "start": "npm run dev",
     "test": "jest --config=jest-config.js --collectCoverage --detectOpenHandles --forceExit",
     "test:watch": "jest --config=jest-config.js --watch",
-    "type-check": "tsc"
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@go1d/go1d": "^6.3.0",
@@ -36,7 +36,6 @@
     "papaparse": "^5.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-intl": "^2.9.0",
     "react-redux": "^7.1.1",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
@@ -53,9 +52,11 @@
     "@lingui/cli": "^2.9.1",
     "@lingui/loader": "^2.9.1",
     "@lingui/macro": "^2.9.1",
+    "@testing-library/jest-dom": "^5.13.0",
+    "@testing-library/react": "^11.2.7",
     "@testing-library/react-hooks": "^5.1.1",
     "@types/enzyme": "^3.10.3",
-    "@types/jest": "^24.0.18",
+    "@types/jest": "^26.0.23",
     "@types/lingui__macro": "^2.7.4",
     "@types/lingui__react": "^2.8.2",
     "@types/lodash": "^4.14.146",
@@ -87,13 +88,13 @@
     "eslint-plugin-react": "^7.15.0",
     "eslint-plugin-react-hooks": "^1.7.0",
     "husky": "1.3.1",
-    "jest": "^25.5.4",
+    "jest": "^26.6.3",
     "jest-environment-jsdom-fourteen": "^0.1.0",
     "jest-junit": "^12.0.0",
     "jest-localstorage-mock": "^2.4.3",
     "lint-staged": "^10.5.4",
-    "prettier": "^1.18.2",
-    "prettier-package-json": "2.1.0",
+    "prettier": "^2.3.1",
+    "prettier-package-json": "^2.6.0",
     "redux-devtools-extension": "^2.13.8",
     "redux-mock-store": "^1.5.3",
     "ts-jest": "^25.5.1",
@@ -108,7 +109,11 @@
   },
   "lint-staged": {
     "**/*.{ts,tsx}": [
+      "prettier --write",
       "eslint --fix"
+    ],
+    "package.json": [
+      "prettier-package-json --write"
     ]
   },
   "pre-push": "lint"

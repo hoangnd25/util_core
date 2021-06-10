@@ -5,7 +5,9 @@ import ContentDistributorExport, { contentDistributorService } from '.';
 const portalMock = {
   id: '123',
   title: 'test.mygo1.com',
-  data: {},
+  data: {
+    theme: {},
+  },
   featureToggles: [],
   files: {},
   type: 'customer',
@@ -15,7 +17,7 @@ const portalMock = {
         domain: 'test domain',
         username: 'testusername',
         password: 'testpassword',
-      }
+      },
     },
   },
 };
@@ -53,9 +55,7 @@ jest.spyOn(contentDistributorService, 'exportContent').mockResolvedValue(mockExp
 jest.spyOn(contentDistributorService, 'getExportStatus').mockResolvedValue(exportStatusMock);
 
 const setup = (isConnected, targetName) => {
-  return mount(
-    <ContentDistributorExport isConnected={isConnected} exportType={targetName} portal={portalMock} />
-  );
+  return mount(<ContentDistributorExport isConnected={isConnected} exportType={targetName} portal={portalMock} />);
 };
 
 it('Should render export for oracle', () => {

@@ -1,8 +1,7 @@
 import { mount } from 'enzyme';
 import * as React from 'react';
-import { IntlProvider } from 'react-intl';
-import { AWSConnectionDetail } from '.';
 import { I18nProvider } from '@lingui/react';
+import { AWSConnectionDetail } from '.';
 
 const fakeCredentials = {
   awsBucketUrl: 's3://cd22d769e7d5.credential.name',
@@ -12,11 +11,9 @@ const fakeCredentials = {
 
 const setup = (props?: any) => {
   return mount(
-    <IntlProvider locale="en">
-      <I18nProvider language="en" catalogs={{en: {messages:{}}}}>
-        <AWSConnectionDetail {...props} awsCredential={fakeCredentials} />
-      </I18nProvider>
-    </IntlProvider>
+    <I18nProvider language="en" catalogs={{ en: { messages: {} } }}>
+      <AWSConnectionDetail {...props} awsCredential={fakeCredentials} />
+    </I18nProvider>
   );
 };
 
@@ -52,16 +49,24 @@ it('Should able to show/hide all fields', () => {
 
   // All connection fields are invisible by default
   expect(fieldBucketUrl).toHaveLength(0);
-  expect(ComponentWrapper.find('View[data-testid="awsConnectionDetail.fieldBucketUrl"]').find('CopyToClipboard')).toHaveLength(0);
-  expect(ComponentWrapper.find('View[data-testid="awsConnectionDetail.fieldBucketUrl"]').find('Tooltip')).toHaveLength(0);
+  expect(
+    ComponentWrapper.find('View[data-testid="awsConnectionDetail.fieldBucketUrl"]').find('CopyToClipboard')
+  ).toHaveLength(0);
+  expect(ComponentWrapper.find('View[data-testid="awsConnectionDetail.fieldBucketUrl"]').find('Tooltip')).toHaveLength(
+    0
+  );
   expect(ComponentWrapper.find('View[data-testid="awsConnectionDetail.fieldAccessKeyId"]')).toHaveLength(0);
   expect(ComponentWrapper.find('View[data-testid="awsConnectionDetail.fieldSecretKey"]')).toHaveLength(0);
 
   // Should able to expand connection detail
   toggleButton.simulate('click');
   expect(ComponentWrapper.find('View[data-testid="awsConnectionDetail.fieldBucketUrl"]')).toHaveLength(1);
-  expect(ComponentWrapper.find('View[data-testid="awsConnectionDetail.fieldBucketUrl"]').find('CopyToClipboard')).toHaveLength(1);
-  expect(ComponentWrapper.find('View[data-testid="awsConnectionDetail.fieldBucketUrl"]').find('Tooltip')).toHaveLength(0);
+  expect(
+    ComponentWrapper.find('View[data-testid="awsConnectionDetail.fieldBucketUrl"]').find('CopyToClipboard')
+  ).toHaveLength(1);
+  expect(ComponentWrapper.find('View[data-testid="awsConnectionDetail.fieldBucketUrl"]').find('Tooltip')).toHaveLength(
+    0
+  );
   expect(ComponentWrapper.find('View[data-testid="awsConnectionDetail.fieldAccessKeyId"]')).toHaveLength(1);
   expect(ComponentWrapper.find('View[data-testid="awsConnectionDetail.fieldSecretKey"]')).toHaveLength(1);
 });

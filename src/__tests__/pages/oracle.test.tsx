@@ -1,16 +1,13 @@
-import Enzyme, { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import * as React from 'react';
-import { IntlProvider } from 'react-intl';
 import { Provider as ReduxProvider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import CommonProvider from '@go1d/mine/common/Provider';
 import { Oracle, portalService } from '@src/pages/r/app/portal/integrations/oracle';
 
-import Adapter from 'enzyme-adapter-react-16';
-import {contentDistributorService} from "@src/components/ContentDistributorExport";
-import {exportStatusMock,mockCustomCollectionResponse} from "@src/components/ContentDistributorExport/index.test";
-
-Enzyme.configure({ adapter: new Adapter() });
+import { contentDistributorService } from '@src/components/ContentDistributorExport';
+import { exportStatusMock, mockCustomCollectionResponse } from '@src/components/ContentDistributorExport/index.test';
+import { CurrentSessionType } from '@src/types/user';
 
 const mockIntegrationDataResponse = {
   domain: 'test domain',
@@ -34,7 +31,9 @@ const setup = (props = {}, isLoading = false) => {
       id: '123',
       title: 'test.mygo1.com',
       mail: 'test@go1.com',
-      data: {},
+      data: {
+        theme: {},
+      },
       featureToggles: [],
       files: {},
       type: 'customer',
@@ -54,30 +53,22 @@ const setup = (props = {}, isLoading = false) => {
       isAdministrator: true,
       uuid: '00000000-0000-0000-00000000',
     },
-  };
+  } as CurrentSessionType;
 
   const mockStore = configureMockStore();
 
-    return mount(
-      <ReduxProvider store={mockStore({ currentSession })}>
-        <IntlProvider locale="en">
-          <CommonProvider
-            pushNavigationState={jest.fn()}
-            apiUrl="api.go1.co"
-            jwt="jwt"
-            accountId={123}
-            portalId={456}
-          >
-            <Oracle currentSession={currentSession} {...componentProps} />
-          </CommonProvider>
-        </IntlProvider>
-      </ReduxProvider>
-    );
+  return mount(
+    <ReduxProvider store={mockStore({ currentSession })}>
+      <CommonProvider pushNavigationState={jest.fn()} apiUrl="api.go1.co" jwt="jwt" accountId={123} portalId={456}>
+        <Oracle currentSession={currentSession} {...componentProps} />
+      </CommonProvider>
+    </ReduxProvider>
+  );
 };
 
 it('Should render without crashing', (done) => {
-    setup();
-    done();
+  setup();
+  done();
 });
 
 it('Should get account data to portal config', async () => {

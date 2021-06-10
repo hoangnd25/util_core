@@ -139,14 +139,14 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
       return;
     }
 
-    if (childCustomizationGroups.length > 0) {
-      try {
-        await portalService.applyChildPortalCustomization(portal.title, childCustomizationGroups);
-      } catch (applyCustomizationdError) {
-        // throw new ApplyCustomizationdError(applyCustomizationdError.message);
-        this.handleError(applyCustomizationdError.message);
-      }
-    }
+    // if (childCustomizationGroups.length > 0) {
+    //   try {
+    //     await portalService.applyChildPortalCustomization(portal.title, childCustomizationGroups);
+    //   } catch (applyCustomizationdError) {
+    //     // throw new ApplyCustomizationdError(applyCustomizationdError.message);
+    //     this.handleError(applyCustomizationdError.message);
+    //   }
+    // }
 
     this.refreshSession(fields);
     this.toastSuccess(<Trans>The settings have been saved.</Trans>);

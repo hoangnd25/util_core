@@ -8,8 +8,9 @@ import { WithRouterProps } from 'next/dist/client/with-router';
 import { NotificationContainer } from '@go1d/go1d';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import AppContext from '@src/utils/appContext';
-import createHttp from '@src/utils/http';
+import { HttpInstance } from '@src/utils/http';
 import MockAdapter from 'axios-mock-adapter';
+import axios from 'axios';
 
 const setup = (props = {}) => {
   const componentProps = {
@@ -48,7 +49,11 @@ const setup = (props = {}) => {
     embeddedMode: true,
   };
   const mockStore = configureMockStore();
-  const http = createHttp();
+  const http = axios.create() as HttpInstance;
+  // Try not to set the header to keep it clean
+  // somehow it fails when use the `create` function exported from http above
+  http.setJWT = () => {};
+
   const adapter = new MockAdapter(http);
 
   const wrapper = render(

@@ -86,7 +86,8 @@ const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropp
                 maxSizeInMb: 5,
                 minWidthInPixel: 200,
                 minHeightInPixel: 200,
-                minDimensionsMessage: i18n._(t`Please use an image with minimum dimensions of 200x200px`)
+                minDimensionsMessage: i18n._(t`Please upload an image with minimum dimensions of 200x200px`),
+                maxSizeMessage: i18n._(t`Please upload an image less than 5MB`),
               })}
               height={200}
               maxWidth={200}
@@ -102,7 +103,7 @@ const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropp
                 description={i18n._(t`This can be changed from the individual portal’s settings page`)}
                 hideStatus
                 component={Checkbox}
-                hideLabel={true}
+                hideLabel
               />
             </View>
           )}
@@ -119,7 +120,7 @@ const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropp
                 description={i18n._(t`This can be changed from the individual portal’s settings page`)}
                 hideStatus
                 component={Checkbox}
-                hideLabel={true}
+                hideLabel
               />
             </View>
           )}
@@ -143,7 +144,8 @@ const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropp
               validate={imageValidator({
                 maxSizeInMb: 5,
                 minHeightInPixel: 1000,
-                minHeightMessage: i18n._(t`Please use an image with at least 1000px in height`)
+                minHeightMessage: i18n._(t`Please upload an image with at least 1000px in height`),
+                maxSizeMessage: i18n._(t`Please upload an image less than 5MB`),
               })}
               height={400}
               maxWidth={400}
@@ -170,7 +172,7 @@ const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropp
                 description={i18n._(t`This can be changed from the individual portal’s settings page`)}
                 hideStatus
                 component={Checkbox}
-                hideLabel={true}
+                hideLabel
               />
             </View>
           )}

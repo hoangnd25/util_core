@@ -1,8 +1,8 @@
-import { Form, Spinner, SubmitButton, Theme, View } from '@go1d/go1d';
-import { FunctionComponent, ReactNode, useContext, useState } from 'react';
+import { Form, NotificationManager, Spinner, SubmitButton, Theme, View } from '@go1d/go1d';
+import { FunctionComponent, useContext, useRef, useState } from 'react';
 import { Trans } from '@lingui/macro';
-import { Value as SlateValue } from 'slate';
-import { GO1Portal } from '@src/types/user';
+import { Formik } from 'formik';
+import { SETTINGS_THEME_FIELDS_MAPPING, SETTINGS_THEME_UPLOAD_FIELDS_MAPPING } from '@src/constants';
 import SectionBrand from './SectionBrand';
 import SectionLogin from './SectionLogin';
 import SectionSignup from './SectionSignup';
@@ -11,47 +11,20 @@ import SectionCertificate from './SectionCertificate';
 import SectionDashboard from './SectionDashboard';
 import { deserializeHtml } from './htmlSerializer';
 import { useThemeSettingsFormHandler } from './Form.hooks';
-import { SETTINGS_THEME_FIELDS_MAPPING, SETTINGS_THEME_UPLOAD_FIELDS_MAPPING } from '@src/constants';
-
-export interface FormValues {
-  logo?: File | string | null;
-  featuredImage?: File | string | null;
-  loginTitle?: string;
-  loginDescription?: string;
-  signupTitle?: string;
-  signupDescription?: string;
-  portalColor?: string;
-  signatureImage?: File | string | null;
-  signatureName?: string;
-  signatureTitle?: string;
-  dashboardWelcomeMessage?: SlateValue | string;
-  dashboardImageScale?: string;
-  dashboardImage?: File | string | null;
-  dashboardIcon?: File | string | null;
-}
-
-export interface FormApplyCustomizationValues {
-  applyCustomizationLogo?: boolean;
-  applyCustomizationPortalColor?: boolean;
-  applyCustomizationFeaturedImage?: boolean;
-  applyCustomizationCertificate?: boolean;
-  applyCustomizationDashboard?: boolean;
-  applyCustomizationLogin?: boolean;
-  applyCustomizationSignup?: boolean;
-}
-
-export interface ThemeSettingsFormProps {
-  portal: GO1Portal;
-  isSaving?: boolean;
-  onSave: (values: object, childCustomizationGroups?: string[]) => Promise<void>;
-  onUpload: (image?: File | Blob | null) => Promise<string | undefined>;
-  onError?: (message: ReactNode) => void;
-}
+import { FormValues, ThemeSettingsFormProps } from './types';
+import ConfirmModal from './ConfirmModal';
 
 const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
   const { portal, isSaving } = props;
   const isPartnerPortal = ['content_partner', 'distribution_partner'].includes(portal.type || null);
-  const { handleSubmit, setFeaturedImageCropped } = useThemeSettingsFormHandler(props);
+  const {
+    handleSubmit,
+    setFeaturedImageCropped,
+    showConfirmModal,
+    setShowConfirmModal,
+    applyCustomizationGroups,
+    setChangesConfirmed,
+  } = useThemeSettingsFormHandler(props);
 
   const theme = useContext(Theme);
   const initialValues = getInitialValues<FormValues>(
@@ -64,12 +37,32 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
 
   const [themeSettings, setThemeSettings] = useState(initialValues);
 
+  const formikRef = useRef<Formik>(null);
+
   const handleChange = (values: { values: any }) => {
     setThemeSettings(values.values);
   };
 
+  const handleConfirmModalClose = () => {
+    setChangesConfirmed(false);
+    setShowConfirmModal(false);
+    NotificationManager.warning({
+      message: <Trans>Changes have not been saved.</Trans>,
+      options: {
+        lifetime: 3000,
+        isOpen: true, },
+    });
+  };
+
+  const handleConfirmChanges = () => {
+    setChangesConfirmed(true);
+    setShowConfirmModal(false);
+    formikRef.current?.submitForm();
+  }
+
   return (
     <Form
+      formikRef={formikRef}
       initialValues={{
         ...initialValues,
         portalColor: initialValues.portalColor || theme.colors.accent,
@@ -96,6 +89,12 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
           </View>
         </SubmitButton>
       </View>
+      <ConfirmModal
+        isOpen={showConfirmModal}
+        onRequestClose={handleConfirmModalClose}
+        onConfirm={handleConfirmChanges}
+        applyCustomizationGroups={applyCustomizationGroups}
+      />
     </Form>
   );
 };

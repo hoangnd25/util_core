@@ -48,7 +48,8 @@ const SectionCertificate: FunctionComponent<Props> = ({ isSaving, isPartnerPorta
                 maxSizeInMb: 5,
                 minWidthInPixel: 100,
                 minHeightInPixel: 100,
-                minDimensionsMessage: i18n._(t`Please use an image with minimum dimensions of 100x100px`)
+                minDimensionsMessage: i18n._(t`Please upload an image with minimum dimensions of 100x100px`),
+                maxSizeMessage: i18n._(t`Please upload an image less than 5MB`),
               })}
               supportedFormatText={<ImageSupportText />}
             />
@@ -82,7 +83,7 @@ const SectionCertificate: FunctionComponent<Props> = ({ isSaving, isPartnerPorta
                 description={i18n._(t`This can be changed from the individual portal’s settings page`)}
                 hideStatus
                 component={Checkbox}
-                hideLabel={true}
+                hideLabel
               />
             </View>
           )}

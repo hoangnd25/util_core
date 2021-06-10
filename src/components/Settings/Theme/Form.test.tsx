@@ -4,10 +4,11 @@ import { I18nProvider } from '@lingui/react';
 import { GO1Portal } from '@src/types/user';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { Value } from 'slate';
-import ThemeSettingsForm, { ThemeSettingsFormProps } from './Form';
+import { Trans } from '@lingui/macro';
+import ThemeSettingsForm from './Form';
+import { ThemeSettingsFormProps } from './types';
 import { useThemeSettingsFormHandler } from './Form.hooks';
 import { ApplyCustomizationdError, FormSaveError, ImageUploadError } from './errors';
-import { Trans } from '@lingui/macro';
 
 const defaultPortal = {
   files: {
@@ -155,8 +156,9 @@ it('Should be able to handle submit', async done => {
   });
   const testFile = new File([new ArrayBuffer(1)], 'file.jpg');
 
-  act(() => {
-    result.current.handleSubmit(
+  await act(async () => {
+    result.current.setChangesConfirmed(true);
+    await result.current.handleSubmit(
       {
         loginTitle: newLoginTitle,
         loginDescription: newLoginDescription,
@@ -202,8 +204,8 @@ it('Should be able to handle submit', async done => {
       },
       ['certificate', 'login']
     );
-    done();
   });
+  done();
 });
 
 it('Should be able to handle image upload error', async done => {

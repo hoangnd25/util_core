@@ -7,9 +7,8 @@ import SettingsFormSection from '@src/components/Settings/SettingsFormSection';
 import PreviewButton from '@src/components/Settings/Theme/PreviewButton';
 import Preview from '@src/components/Settings/Theme/Preview';
 import IconEye from '@go1d/go1d/build/components/Icons/Eye';
-import { FormValues } from '@src/components/Settings/Theme/Form';
-
 import getConfig from 'next/config';
+import { FormValues } from './types';
 
 const {
   publicRuntimeConfig: { CDN_PATH },

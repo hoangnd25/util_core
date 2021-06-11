@@ -9,7 +9,7 @@ import CloudinaryService from '@go1d/mine/services/cloudinary';
 import AppContext from '@src/utils/appContext';
 import axios, { CancelToken } from 'axios';
 import ThemeSettingsForm from '@src/components/Settings/Theme/Form';
-import { ImageUploadError } from '@src/components/Settings/Theme/errors';
+import { ApplyCustomizationdError, FormSaveError, ImageUploadError } from '@src/components/Settings/Theme/errors';
 import { Trans } from '@lingui/macro';
 import { WithRouterProps } from 'next/dist/client/with-router';
 import { DispatchProp } from 'react-redux';
@@ -133,20 +133,16 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
     try {
       await portalService.save(portal.title, fields);
     } catch (saveError) {
-      // we should allow user retry instead and stop then
-      // throw new FormSaveError(saveError.message);
-      this.handleError(saveError.message);
-      return;
+      throw new FormSaveError(saveError.message);
     }
 
-    // if (childCustomizationGroups.length > 0) {
-    //   try {
-    //     await portalService.applyChildPortalCustomization(portal.title, childCustomizationGroups);
-    //   } catch (applyCustomizationdError) {
-    //     // throw new ApplyCustomizationdError(applyCustomizationdError.message);
-    //     this.handleError(applyCustomizationdError.message);
-    //   }
-    // }
+    if (childCustomizationGroups.length > 0) {
+      try {
+        await portalService.applyChildPortalCustomization(portal.title, childCustomizationGroups);
+      } catch (applyCustomizationdError) {
+        throw new ApplyCustomizationdError(applyCustomizationdError.message);
+      }
+    }
 
     this.refreshSession(fields);
     this.toastSuccess(<Trans>The settings have been saved.</Trans>);

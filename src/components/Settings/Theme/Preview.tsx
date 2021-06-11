@@ -11,19 +11,31 @@ interface Props {
   featuredImage: string;
   terms: string;
   secondaryTagline: string[];
-  children: React.ReactNode,
-  title: string; 
+  children: React.ReactNode;
+  title: string;
   isOpen: boolean;
-  onRequestClose: () => void;  
-  isPreviewLogin: boolean;
+  onRequestClose: () => void;
+  isShown: boolean;
 }
 
 const Preview: React.FC<Props> = (props) => {
-  const {isOpen, onRequestClose, title, children, buttonText, terms, primaryTagline, secondaryTagline, description, featuredImage, logo, isPreviewLogin } = props;
+  const {
+    isOpen,
+    onRequestClose,
+    title,
+    children,
+    buttonText,
+    terms,
+    primaryTagline,
+    secondaryTagline,
+    description,
+    featuredImage,
+    logo,
+    isShown,
+  } = props;
 
   return (
     <Modal isOpen={isOpen} maxWidth={850} title={`Preview ${title}`} onRequestClose={onRequestClose}>
-     
       <SplitLayout
         buttonText={buttonText}
         primaryTagline={primaryTagline}
@@ -32,16 +44,18 @@ const Preview: React.FC<Props> = (props) => {
         description={description}
         featuredImage={featuredImage}
         logo={logo}
-        isPreviewLogin={isPreviewLogin}
-        >
+        isShown={isShown}
+      >
         {children}
-      </SplitLayout>   
+      </SplitLayout>
 
       <View marginTop={5} display="flex" flexDirection="row" justifyContent="center">
-        <ButtonFilled color="accent" onClick={onRequestClose}><Trans>Close preview</Trans></ButtonFilled>
+        <ButtonFilled color="accent" onClick={onRequestClose}>
+          <Trans>Close preview</Trans>
+        </ButtonFilled>
       </View>
     </Modal>
-  )
+  );
 };
 
 export default Preview;

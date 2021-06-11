@@ -12,11 +12,12 @@ interface Props {
   terms: string;
   secondaryTagline: string[];
   children: React.ReactNode;
-  isPreviewLogin: boolean;
+  isShown: boolean;
 }
 
-const SplitLayout: React.FC<Props> = props => {
-  const { primaryTagline, secondaryTagline, description, logo, buttonText, featuredImage, children, terms, isPreviewLogin } = props;
+const SplitLayout: React.FC<Props> = (props) => {
+  const { primaryTagline, secondaryTagline, description, logo, buttonText, featuredImage, children, terms, isShown } =
+    props;
 
   const DEFAULT_APIOM_LOGO = 'images/logo-white.png';
 
@@ -33,7 +34,7 @@ const SplitLayout: React.FC<Props> = props => {
           backgroundPosition: 'center center',
           backgroundSize: 'cover',
         }}
-       />
+      />
 
       <View width="400px" backgroundColor="faint" height="100%" overflow="auto">
         <View alignItems="center" justifyContent="center" width="100%" marginTop={8} paddingBottom={4} paddingX={6}>
@@ -50,7 +51,7 @@ const SplitLayout: React.FC<Props> = props => {
                 backgroundSize: 'contain',
                 backgroundRepeat: 'no-repeat',
               }}
-             />
+            />
           )) || <IconGo1Logo size={8} marginY={6} color="successLowest" />}
 
           <Text
@@ -82,20 +83,20 @@ const SplitLayout: React.FC<Props> = props => {
             {buttonText}
           </ButtonFilled>
 
-          { !isPreviewLogin ? (
-          <Text textAlign="center">
-            {terms}{' '}
-            <Trans>
-              <Text color="successLowest" fontWeight="bold" textDecoration="underline">
-                terms of use
-              </Text>{' '}
-              and{' '}
-              <Text color="successLowest" fontWeight="bold" textDecoration="underline">
-                privacy policy.
-              </Text>
-            </Trans>
-          </Text>) : null
-          }
+          {!isShown ? (
+            <Text textAlign="center">
+              {terms}{' '}
+              <Trans>
+                <Text color="successLowest" fontWeight="bold" textDecoration="underline">
+                  terms of use
+                </Text>{' '}
+                and{' '}
+                <Text color="successLowest" fontWeight="bold" textDecoration="underline">
+                  privacy policy.
+                </Text>
+              </Trans>
+            </Text>
+          ) : null}
         </View>
       </View>
     </View>

@@ -1,6 +1,5 @@
 import { mount } from 'enzyme';
 import * as React from 'react';
-import { IntlProvider } from 'react-intl';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import { View } from '@go1d/go1d';
@@ -12,7 +11,6 @@ import unauthenticatedStoreState from '@src/store/mocks/unauthenticatedStore';
 import withAuth, { withCurrentSession } from './index';
 import LinkComponent from '../Link/index';
 import { loginResponseMock, currentSessionMock } from './mocks/authMocks';
-import Router from 'next/router';
 
 /** TEST SETUP * */
 let Component;
@@ -53,11 +51,11 @@ const setup = (props: any = {}) => {
   );
 };
 
-const checkAuthStatus = currentSession => {
+const checkAuthStatus = (currentSession) => {
   expect(currentSession).toMatchObject(currentSessionMock);
   expect(localStorage.getItem('jwt')).toBe(currentSessionMock.jwt);
   expect(localStorage.getItem('uuid')).toBe(currentSessionMock.user.uuid);
-  expect(parseInt(localStorage.getItem('active-instance'))).toBe(parseInt(currentSessionMock.portal.id, 10));
+  expect(parseInt(localStorage.getItem('active-instance'), 10)).toBe(parseInt(currentSessionMock.portal.id, 10));
   expect(localStorage.getItem('active-instance-domain')).toBe(currentSessionMock.portal.title);
 };
 /** TEST SETUP END * */
@@ -68,7 +66,7 @@ beforeEach(() => {
   sessionStorage.clear();
 });
 
-it('does client side one time login token login', done => {
+it('does client side one time login token login', (done) => {
   const Mock = new MockAdapter(http);
   Mock.onGet().reply(200, loginResponseMock);
   const wrapper = setup() as any;
@@ -82,7 +80,7 @@ it('does client side one time login token login', done => {
   });
 });
 
-it('handles login error correctly', done => {
+it('handles login error correctly', (done) => {
   const Mock = new MockAdapter(http);
   Mock.onGet().reply(403, {});
   const wrapper = setup() as any;
@@ -95,7 +93,7 @@ it('handles login error correctly', done => {
   });
 });
 
-it('processes ssr information correctly', done => {
+it('processes ssr information correctly', (done) => {
   const wrapper = setup({ currentSession: currentSessionMock }) as any;
   setImmediate(() => {
     wrapper.update();
@@ -106,7 +104,7 @@ it('processes ssr information correctly', done => {
   });
 });
 
-it('processes localStorage login correctly', done => {
+it('processes localStorage login correctly', (done) => {
   localStorage.setItem('jwt', currentSessionMock.jwt);
   localStorage.setItem('uuid', currentSessionMock.user.uuid);
   localStorage.setItem('active-instance', currentSessionMock.portal.id);
@@ -127,15 +125,13 @@ it('Test withAuth redirects if no login state', () => {
   delete window.location;
   window.location = { assign: jest.fn() } as any;
   const store = mockStore(unauthenticatedStoreState);
-  const Component = withAuth(App);
+  const Test = withAuth(App);
   const wrapper = mount(
-    <IntlProvider locale="en" defaultLocale="en" onError={() => {}}>
-      <CommonProvider linkComponent={LinkComponent}>
-        <Provider store={store}>
-          <Component />
-        </Provider>
-      </CommonProvider>
-    </IntlProvider>
+    <CommonProvider linkComponent={LinkComponent}>
+      <Provider store={store}>
+        <Test />
+      </Provider>
+    </CommonProvider>
   );
   expect((window.location.assign as any).mock.calls.length).toBe(1);
 });
@@ -144,16 +140,14 @@ it('Test withAuth no redirects if login state', () => {
   delete window.location;
   window.location = { assign: jest.fn() } as any;
   const store = mockStore(authenticatedStoreState);
-  const Component = withAuth(App);
-  Component.getInitialProps({ router: { query: {} }, ctx: { req: {} } });
+  const Test = withAuth(App);
+  Test.getInitialProps({ router: { query: {} }, ctx: { req: {} } });
   const wrapper = mount(
-    <IntlProvider locale="en" defaultLocale="en" onError={() => {}}>
-      <CommonProvider linkComponent={LinkComponent}>
-        <Provider store={store}>
-          <Component />
-        </Provider>
-      </CommonProvider>
-    </IntlProvider>
+    <CommonProvider linkComponent={LinkComponent}>
+      <Provider store={store}>
+        <Test />
+      </Provider>
+    </CommonProvider>
   );
   expect((window.location.assign as any).mock.calls.length).toBe(0);
   expect(wrapper.find('App').length).toBe(1);

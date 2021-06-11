@@ -1,27 +1,31 @@
 import { mount } from 'enzyme';
 import * as React from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
-import configureMockStore from "redux-mock-store";
+import configureMockStore from 'redux-mock-store';
 import CommonProvider from '@go1d/mine/common/Provider';
 import { UserDataFeed, dataFeedService } from '@src/pages/r/app/portal/integrations/user-data-feed';
 import { setupI18n } from '@lingui/core';
 
-const i18n = setupI18n({ language: 'en', catalogs: {
-  en: {
-    messages: {}
-  }
-} });
+const i18n = setupI18n({
+  language: 'en',
+  catalogs: {
+    en: {
+      messages: {},
+    },
+  },
+});
+
 const mockComponent = () => <div />;
 
 beforeEach(() => {
-  jest.mock("@go1d/go1d/build/components/BaseUploader", () => ({
+  jest.mock('@go1d/go1d/build/components/BaseUploader', () => ({
     default: (props: any) =>
       props.children
         ? props.children({
-          getRootProps: () => ({}),
-          isDragActive: false,
-          open: false,
-        })
+            getRootProps: () => ({}),
+            isDragActive: false,
+            open: false,
+          })
         : mockComponent,
   }));
 });
@@ -46,15 +50,9 @@ const setup = (props = {}) => {
   const mockStore = configureMockStore();
   return mount(
     <ReduxProvider store={mockStore({ currentSession })}>
-      <CommonProvider
-          pushNavigationState={jest.fn}
-          apiUrl="go1.api.com"
-          jwt="123"
-          accountId={123}
-          portalId={123}
-        >
-          <UserDataFeed i18n={i18n} {...componentProps} currentSession={currentSession} />
-        </CommonProvider>
+      <CommonProvider pushNavigationState={jest.fn} apiUrl="go1.api.com" jwt="123" accountId={123} portalId={123}>
+        <UserDataFeed i18n={i18n} {...componentProps} currentSession={currentSession} />
+      </CommonProvider>
     </ReduxProvider>
   );
 };
@@ -82,7 +80,9 @@ it('renders with mapping data', async () => {
     },
   };
 
-  jest.spyOn(dataFeedService, 'fetchAWSCredentials').mockImplementation(() => Promise.resolve(fakeAWSCredentials as any));
+  jest
+    .spyOn(dataFeedService, 'fetchAWSCredentials')
+    .mockImplementation(() => Promise.resolve(fakeAWSCredentials as any));
   jest.spyOn(dataFeedService, 'fetchMappingData').mockImplementation(() => Promise.resolve(fakeMapping));
 
   const Element = setup({

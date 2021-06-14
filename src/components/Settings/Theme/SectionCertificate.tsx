@@ -19,11 +19,12 @@ const SectionCertificate: FunctionComponent<Props> = ({ isSaving, isPartnerPorta
       {({ i18n }) => (
         <SettingsFormSection
           title={<Trans>Customize completion certificate</Trans>}
-          actionButton={
-            <PreviewButton>
-              <Trans>Preview certificate</Trans>
-            </PreviewButton>
-          }
+          // Will allow actionButton once the Preview Certificate is developed
+          // actionButton={
+          //   <PreviewButton>
+          //     <Trans>Preview certificate</Trans>
+          //   </PreviewButton>
+          // }
         >
           <SettingsBlockMaker
             paddingBottom={5}
@@ -38,7 +39,7 @@ const SectionCertificate: FunctionComponent<Props> = ({ isSaving, isPartnerPorta
             <Field
               component={ImageUploader}
               name="signatureImage"
-              hideLabel 
+              hideLabel
               required
               disabled={isSaving}
               height={200}

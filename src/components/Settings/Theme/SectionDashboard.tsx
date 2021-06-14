@@ -18,11 +18,12 @@ const SectionDashboard: FunctionComponent<Props> = ({ isPartnerPortal }) => {
       {({ i18n }) => (
         <SettingsFormSection
           title={<Trans>Customize dashboard</Trans>}
-          actionButton={
-            <PreviewButton>
-              <Trans>Preview dashboard</Trans>
-            </PreviewButton>
-          }
+          // Will allow actionButton once the Preview Dashboard is developed
+          // actionButton={
+          //   <PreviewButton>
+          //     <Trans>Preview dashboard</Trans>
+          //   </PreviewButton>
+          // }
         >
           <View marginBottom={5}>
             <Field

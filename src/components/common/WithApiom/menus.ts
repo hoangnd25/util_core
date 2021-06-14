@@ -6,8 +6,8 @@ import { getNested } from '@go1d/mine/utils';
 import { FeatureToggleModel } from '@go1d/go1d-exchange';
 
 class MenuOptions {
-  public getSettingsMenu = i18n => {
-    let menu = [
+  public getSettingsMenu = (i18n) => {
+    const menu = [
       {
         id: SIDEBAR_MENUS_SETTINGS.PORTAL_INFORMATION,
         title: i18n._(t`Portal Information`),
@@ -18,8 +18,8 @@ class MenuOptions {
       },
       {
         id: SIDEBAR_MENUS_SETTINGS.THEME,
-        title: i18n._(t`Theme and Customisation`),
-        subtitle: i18n._(t`Brand, message customisation and certificates`),
+        title: i18n._(t`Theme and Customization`),
+        subtitle: i18n._(t`Brand, message customization and certificates`),
         href: '/settings/theme',
         isApiomLink: false,
         isVisible: true,
@@ -83,7 +83,7 @@ class MenuOptions {
     const allIntegrations = (portal && portal.configuration && portal.configuration.integrations) || {};
 
     const enabledIntegrations = {} as any;
-    Object.keys(allIntegrations).forEach(name => {
+    Object.keys(allIntegrations).forEach((name) => {
       enabledIntegrations[name] = !!allIntegrations[name].status;
     });
 

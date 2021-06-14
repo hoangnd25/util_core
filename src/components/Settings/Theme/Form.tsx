@@ -39,6 +39,16 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
 
   const formikRef = useRef<Formik>(null);
 
+  const debounce = (func, timeout = 300) => {
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        func.apply(this, args);
+      }, timeout);
+    };
+  };
+
   const handleChange = async (values: { values: FormValues; errors: FormValues }) => {
     const newValues = values.values as any;
     const errors = values.errors as any;
@@ -95,7 +105,7 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
         dashboardWelcomeMessage: deserializeHtml(initialValues.dashboardWelcomeMessage || ''),
       }}
       onSubmit={handleSubmit}
-      onChange={handleChange}
+      onChange={debounce((actions) => handleChange(actions))}
     >
       <SectionBrand
         isSaving={isSaving}

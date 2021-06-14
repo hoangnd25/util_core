@@ -12,12 +12,21 @@ interface Props {
   terms: string;
   secondaryTagline: string[];
   children: React.ReactNode;
-  isShown: boolean;
+  showPolicyLinks: boolean;
 }
 
 const SplitLayout: React.FC<Props> = (props) => {
-  const { primaryTagline, secondaryTagline, description, logo, buttonText, featuredImage, children, terms, isShown } =
-    props;
+  const {
+    primaryTagline,
+    secondaryTagline,
+    description,
+    logo,
+    buttonText,
+    featuredImage,
+    children,
+    terms,
+    showPolicyLinks,
+  } = props;
 
   const DEFAULT_APIOM_LOGO = 'images/logo-white.png';
 
@@ -83,7 +92,7 @@ const SplitLayout: React.FC<Props> = (props) => {
             {buttonText}
           </ButtonFilled>
 
-          {!isShown ? (
+          {!showPolicyLinks ? (
             <Text textAlign="center">
               {terms}{' '}
               <Trans>

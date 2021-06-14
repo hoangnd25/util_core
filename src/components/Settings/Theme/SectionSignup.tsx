@@ -48,7 +48,7 @@ const SectionSignup: FunctionComponent<Props> = ({ isPartnerPortal, themeSetting
             description={signupDescription}
             featuredImage={landingPage}
             logo={logo}
-            isShown={false}
+            showPolicyLinks={false}
           >
             <View>
               <View flexDirection="row" display="flex" marginY={3} justifyContent="space-between" width="100%">

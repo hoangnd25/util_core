@@ -15,7 +15,7 @@ interface Props {
   title: string;
   isOpen: boolean;
   onRequestClose: () => void;
-  isShown: boolean;
+  showPolicyLinks: boolean;
 }
 
 const Preview: React.FC<Props> = (props) => {
@@ -31,7 +31,7 @@ const Preview: React.FC<Props> = (props) => {
     description,
     featuredImage,
     logo,
-    isShown,
+    showPolicyLinks,
   } = props;
 
   return (
@@ -44,7 +44,7 @@ const Preview: React.FC<Props> = (props) => {
         description={description}
         featuredImage={featuredImage}
         logo={logo}
-        isShown={isShown}
+        showPolicyLinks={showPolicyLinks}
       >
         {children}
       </SplitLayout>

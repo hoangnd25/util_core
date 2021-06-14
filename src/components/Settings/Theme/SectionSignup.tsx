@@ -8,6 +8,7 @@ import Preview from '@src/components/Settings/Theme/Preview';
 import IconEye from '@go1d/go1d/build/components/Icons/Eye';
 import getConfig from 'next/config';
 import { FormValues } from './types';
+import SignupForm from './Previews/SignupForm';
 
 const {
   publicRuntimeConfig: { CDN_PATH },
@@ -19,7 +20,7 @@ interface Props {
 }
 
 const SectionSignup: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings }) => {
-  const { logo, featuredImage, signupTitle, signupDescription } = themeSettings;
+  const { logo, featuredImage, signupTitle, signupDescription, portalColor } = themeSettings;
   const [openPreview, setOpenPreview] = useState(false);
   const landingPage =
     typeof featuredImage === 'string' && featuredImage?.includes('cloudinary')
@@ -49,47 +50,9 @@ const SectionSignup: FunctionComponent<Props> = ({ isPartnerPortal, themeSetting
             featuredImage={landingPage}
             logo={logo}
             showPolicyLinks={false}
+            portalColor={portalColor}
           >
-            <View>
-              <View flexDirection="row" display="flex" marginY={3} justifyContent="space-between" width="100%">
-                <View paddingRight={1} flexShrink={1} flexGrow={1}>
-                  <TextInput
-                    id="firstName"
-                    label={i18n._(t`First Name`)}
-                    placeHolder="First Name"
-                    css={{ pointerEvents: 'none' }}
-                  />
-                </View>
-
-                <View paddingLeft={1} flexShrink={1} flexGrow={1}>
-                  <TextInput
-                    id="lastName"
-                    label={i18n._(t`Last Name`)}
-                    autoComplete="new-password"
-                    placeHolder="Last Name"
-                    css={{ pointerEvents: 'none' }}
-                  />
-                </View>
-              </View>
-
-              <View width="100%">
-                <TextInput id="Email" placeHolder="Email" autoComplete="new-password" css={{ pointerEvents: 'none' }} />
-              </View>
-
-              <View marginY={3} width="100%">
-                <TextInput
-                  id="Password"
-                  placeHolder="Password"
-                  autoComplete="new-password"
-                  css={{ pointerEvents: 'none' }}
-                  suffixNode={
-                    <View padding={4}>
-                      <IconEye color="accent" />
-                    </View>
-                  }
-                />
-              </View>
-            </View>
+            <SignupForm />
           </Preview>
 
           <View marginBottom={5}>

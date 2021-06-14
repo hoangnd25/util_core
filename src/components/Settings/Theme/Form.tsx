@@ -14,7 +14,7 @@ import { useThemeSettingsFormHandler } from './Form.hooks';
 import { FormValues, ThemeSettingsFormProps } from './types';
 import ConfirmModal from './ConfirmModal';
 
-const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
+const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => {
   const { portal, isSaving } = props;
   const isPartnerPortal = ['content_partner', 'distribution_partner'].includes(portal.type || null);
   const {
@@ -39,10 +39,34 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
 
   const formikRef = useRef<Formik>(null);
 
-  const handleChange = (values: { values: any }) => {
-    setThemeSettings(values.values);
-  };
+  const handleChange = async (values: { values: FormValues; errors: FormValues }) => {
+    const newValues = values.values as any;
+    const errors = values.errors as any;
 
+    // check the image is set in the values -> if haven't been set before will not be in default values object
+    // Check that the featured image is not an already saved cloudinary image file
+    // Check that the iamge has not bee removed which defaults to empty string
+    // Check if errors is present by the returned error message -> then create blob image object
+    const previewImages = [
+      {
+        featuredImage:
+          'featuredImage' in newValues &&
+          (newValues.featuredImage !== 'string' || newValues.featuredImage.length > 0) &&
+          typeof errors.featuredImage !== 'string'
+            ? `${URL.createObjectURL(newValues.featuredImage)}`
+            : undefined,
+        logo:
+          'logo' in newValues &&
+          (newValues.logo !== 'string' || newValues.logo.length > 1) &&
+          typeof errors.logo !== 'string'
+            ? `${URL.createObjectURL(newValues.logo)}`
+            : undefined,
+      },
+    ];
+
+    const previewValues = [newValues].map((item, i) => ({ ...item, ...previewImages[i] }));
+    setThemeSettings(previewValues[0] as any);
+  };
   const handleConfirmModalClose = () => {
     setChangesConfirmed(false);
     setShowConfirmModal(false);
@@ -50,7 +74,8 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
       message: <Trans>Changes have not been saved.</Trans>,
       options: {
         lifetime: 3000,
-        isOpen: true, },
+        isOpen: true,
+      },
     });
   };
 
@@ -58,7 +83,7 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
     setChangesConfirmed(true);
     setShowConfirmModal(false);
     formikRef.current?.submitForm();
-  }
+  };
 
   return (
     <Form
@@ -76,8 +101,9 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
         isSaving={isSaving}
         onFeaturedImageCropped={setFeaturedImageCropped}
         isPartnerPortal={isPartnerPortal}
+        themeSettings={themeSettings}
       />
-      <SectionLogin isPartnerPortal={isPartnerPortal} themeSettings={themeSettings}/>
+      <SectionLogin isPartnerPortal={isPartnerPortal} themeSettings={themeSettings} />
       <SectionSignup isPartnerPortal={isPartnerPortal} themeSettings={themeSettings} />
       <SectionDashboard isPartnerPortal={isPartnerPortal} />
       <SectionCertificate isPartnerPortal={isPartnerPortal} />

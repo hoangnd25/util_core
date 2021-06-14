@@ -19,7 +19,7 @@ interface Props {
 }
 
 const SectionLogin: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings }) => {
-  const { logo, featuredImage, loginTitle, loginDescription } = themeSettings;
+  const { logo, featuredImage, loginTitle, loginDescription, portalColor } = themeSettings;
   const [openPreview, setOpenPreview] = useState(false);
   const landingPage =
     typeof featuredImage === 'string' && featuredImage?.includes('cloudinary')
@@ -48,6 +48,7 @@ const SectionLogin: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings
             description={loginDescription}
             featuredImage={landingPage}
             logo={logo}
+            portalColor={portalColor}
             showPolicyLinks
           >
             <View width="100%">

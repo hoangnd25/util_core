@@ -77,7 +77,7 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
         onFeaturedImageCropped={setFeaturedImageCropped}
         isPartnerPortal={isPartnerPortal}
       />
-      <SectionLogin isPartnerPortal={isPartnerPortal} />
+      <SectionLogin isPartnerPortal={isPartnerPortal} themeSettings={themeSettings}/>
       <SectionSignup isPartnerPortal={isPartnerPortal} themeSettings={themeSettings} />
       <SectionDashboard isPartnerPortal={isPartnerPortal} />
       <SectionCertificate isPartnerPortal={isPartnerPortal} />

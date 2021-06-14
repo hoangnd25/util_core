@@ -46,7 +46,6 @@ const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropp
   React.useEffect(() => {
     // reset after having saved which means switch from `true` => `false`
     if (typeof prevIsSaving !== 'undefined' && isSaving !== prevIsSaving && !isSaving) {
-      console.log('here')
       setHasInteracted(false);
       onFeaturedImageCropped(undefined);
       setFeaturedImageZoomValue(1);

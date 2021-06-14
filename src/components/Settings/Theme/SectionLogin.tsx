@@ -22,10 +22,7 @@ const SectionLogin: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings
   const { logo, featuredImage, loginTitle, loginDescription, portalColor } = themeSettings;
   const [openPreview, setOpenPreview] = useState(false);
   const landingPage =
-    typeof featuredImage === 'string' && featuredImage?.includes('cloudinary')
-      ? `url("${featuredImage}")`
-      : `url("${CDN_PATH}/login_default_landing_page.jpg")`;
-
+    typeof featuredImage === 'string' ? `url("${featuredImage}")` : `url("${CDN_PATH}/login_default_landing_page.jpg")`;
   return (
     <I18n>
       {({ i18n }) => (

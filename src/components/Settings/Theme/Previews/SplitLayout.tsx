@@ -81,7 +81,7 @@ const SplitLayout: React.FC<Props> = (props) => {
                   fontSize={3}
                   fontWeight="medium"
                   textAlign="center"
-                  color="successLowest"
+                  color="accent"
                 >
                   {primaryTagline}
                 </Text>

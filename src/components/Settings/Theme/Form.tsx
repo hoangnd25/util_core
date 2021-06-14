@@ -49,34 +49,35 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
     };
   };
 
+  const setPreviewImage = (imageType, values, errors) => {
+    // if image is  not an empty string after being deleted and it is
+    // check the image is set in the values -> if haven't been set before will not be in default values object
+    // Check that the featured image is not an already saved cloudinary image file
+    // Check that the image has not bee removed which defaults to empty string
+    // Check if errors is present by the returned error message -> then create blob image object
+
+    if (values[imageType].length > 0 && values[imageType].includes('cloudinary')) {
+      return values[imageType];
+    } if (errors && errors.length > 0) {
+      return undefined;
+    } 
+      return `${URL.createObjectURL(values[imageType])}`;
+    
+  };
+
   const handleChange = async (values: { values: FormValues; errors: FormValues }) => {
     const newValues = values.values as any;
     const errors = values.errors as any;
+    const images = ['featuredImage', 'logo'];
+    const previewImages = {};
+    images.forEach((key) => {
+      previewImages[key] = setPreviewImage(key, newValues, errors);
+    });
 
-    // check the image is set in the values -> if haven't been set before will not be in default values object
-    // Check that the featured image is not an already saved cloudinary image file
-    // Check that the iamge has not bee removed which defaults to empty string
-    // Check if errors is present by the returned error message -> then create blob image object
-    const previewImages = [
-      {
-        featuredImage:
-          'featuredImage' in newValues &&
-          (newValues.featuredImage !== 'string' || newValues.featuredImage.length > 0) &&
-          typeof errors.featuredImage !== 'string'
-            ? `${URL.createObjectURL(newValues.featuredImage)}`
-            : undefined,
-        logo:
-          'logo' in newValues &&
-          (newValues.logo !== 'string' || newValues.logo.length > 1) &&
-          typeof errors.logo !== 'string'
-            ? `${URL.createObjectURL(newValues.logo)}`
-            : undefined,
-      },
-    ];
-
-    const previewValues = [newValues].map((item, i) => ({ ...item, ...previewImages[i] }));
+    const previewValues = [newValues].map((item, i) => ({ ...item, ...previewImages }));
     setThemeSettings(previewValues[0] as any);
   };
+
   const handleConfirmModalClose = () => {
     setChangesConfirmed(false);
     setShowConfirmModal(false);

@@ -1,4 +1,12 @@
-import { Checkbox, ColorPicker as BaseColorPicker, Field, foundations, ImageUploader, View } from '@go1d/go1d';
+import {
+  Checkbox,
+  ColorPicker as BaseColorPicker,
+  CourseModule,
+  Field,
+  foundations,
+  ImageUploader,
+  View,
+} from '@go1d/go1d';
 import { t, Trans } from '@lingui/macro';
 import { I18n } from '@lingui/react';
 import SettingsBlockMaker from '@src/components/Settings/SettingsBlockMaker';
@@ -61,9 +69,7 @@ const SectionBrand: FunctionComponent<Props> = ({
   const { logo, featuredImage, signupTitle, signupDescription, portalColor } = themeSettings;
 
   const landingPage =
-    typeof featuredImage === 'string' && featuredImage?.includes('cloudinary')
-      ? `url("${featuredImage}")`
-      : `url("${CDN_PATH}/login_default_landing_page.jpg")`;
+    typeof featuredImage === 'string' ? `url("${featuredImage}")` : `url("${CDN_PATH}/login_default_landing_page.jpg")`;
 
   React.useEffect(() => {
     // reset after having saved which means switch from `true` => `false`
@@ -90,7 +96,7 @@ const SectionBrand: FunctionComponent<Props> = ({
         <SettingsFormSection
           title={<Trans>Brand</Trans>}
           actionButton={
-            <PreviewButton>
+            <PreviewButton onClick={() => setOpenPreview(true)}>
               <Trans>Preview brand</Trans>
             </PreviewButton>
           }

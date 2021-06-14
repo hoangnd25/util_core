@@ -40,13 +40,16 @@ const ColorPicker: FunctionComponent<{
 
 const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropped, isPartnerPortal }) => {
   const [hasInteracted, setHasInteracted] = React.useState<boolean>(false);
+  const [featuredImageZoomValue, setFeaturedImageZoomValue] = React.useState(1);
   const prevIsSaving = usePrevious(isSaving);
 
   React.useEffect(() => {
     // reset after having saved which means switch from `true` => `false`
     if (typeof prevIsSaving !== 'undefined' && isSaving !== prevIsSaving && !isSaving) {
+      console.log('here')
       setHasInteracted(false);
       onFeaturedImageCropped(undefined);
+      setFeaturedImageZoomValue(1);
     }
   }, [isSaving]);
 
@@ -161,6 +164,8 @@ const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropp
                 onInteractionStart: handleInteractionStart,
               }}
               supportedFormatText={<ImageSupportText />}
+              zoomValue={featuredImageZoomValue}
+              onZoomChange={value => setFeaturedImageZoomValue(value)}
             />
           </SettingsBlockMaker>
 

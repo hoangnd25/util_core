@@ -55,6 +55,7 @@ const SectionBrand: FunctionComponent<Props> = ({
 }) => {
   const [hasInteracted, setHasInteracted] = React.useState<boolean>(false);
   const [openPreview, setOpenPreview] = React.useState(false);
+  const [featuredImageZoomValue, setFeaturedImageZoomValue] = React.useState(1);
   const prevIsSaving = usePrevious(isSaving);
 
   const { logo, featuredImage, signupTitle, signupDescription, portalColor } = themeSettings;
@@ -69,6 +70,7 @@ const SectionBrand: FunctionComponent<Props> = ({
     if (typeof prevIsSaving !== 'undefined' && isSaving !== prevIsSaving && !isSaving) {
       setHasInteracted(false);
       onFeaturedImageCropped(undefined);
+      setFeaturedImageZoomValue(1);
     }
   }, [isSaving]);
 
@@ -206,6 +208,8 @@ const SectionBrand: FunctionComponent<Props> = ({
                 onInteractionStart: handleInteractionStart,
               }}
               supportedFormatText={<ImageSupportText />}
+              zoomValue={featuredImageZoomValue}
+              onZoomChange={(value) => setFeaturedImageZoomValue(value)}
             />
           </SettingsBlockMaker>
 

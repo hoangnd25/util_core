@@ -1,11 +1,9 @@
-const path = require('path');
 const useCDN = process.env.ENV !== 'local' && process.env.ENV !== 'test';
-const webpack = require("webpack");
 var LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const webpack = require("webpack");
 const StatsPlugin = require("stats-webpack-plugin");
 
 const assetPrefix = useCDN ? `${process.env.CDN_PATH}/${process.env.DOCKER_TAG}` : '';
-
 
 module.exports = {
   poweredByHeader: false,

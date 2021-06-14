@@ -1,14 +1,26 @@
-import { Checkbox, ColorPicker as BaseColorPicker, Field, foundations, ImageUploader, View } from '@go1d/go1d';
+import {
+  Checkbox,
+  ColorPicker as BaseColorPicker,
+  CourseModule,
+  Field,
+  foundations,
+  ImageUploader,
+  View,
+} from '@go1d/go1d';
 import { t, Trans } from '@lingui/macro';
 import { I18n } from '@lingui/react';
 import SettingsBlockMaker from '@src/components/Settings/SettingsBlockMaker';
 import { usePrevious } from '@src/hooks/usePrevious';
 import { FormikHandlers } from 'formik';
 import React, { FunctionComponent } from 'react';
+import getConfig from 'next/config';
 import SettingsFormSection from '../SettingsFormSection';
 import { ImageSupportText } from './ImageSupportText';
 import PreviewButton from './PreviewButton';
 import { imageValidator } from './imageValidator';
+import { FormValues } from './types';
+import Preview from './Preview';
+import SignupForm from './Previews/SignupForm';
 
 const FEATURED_IMAGE_RATIO = 1;
 
@@ -16,7 +28,12 @@ interface Props {
   isSaving?: boolean;
   onFeaturedImageCropped?: (image: Blob | undefined) => void;
   isPartnerPortal?: boolean;
+  themeSettings: FormValues;
 }
+
+const {
+  publicRuntimeConfig: { CDN_PATH },
+} = getConfig();
 
 const ColorPicker: FunctionComponent<{
   name?: string;
@@ -27,7 +44,7 @@ const ColorPicker: FunctionComponent<{
   <BaseColorPicker
     {...props}
     color={value}
-    onChange={newColor =>
+    onChange={(newColor) =>
       onChange?.({
         target: {
           name,
@@ -38,10 +55,21 @@ const ColorPicker: FunctionComponent<{
   />
 );
 
-const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropped, isPartnerPortal }) => {
+const SectionBrand: FunctionComponent<Props> = ({
+  isSaving,
+  onFeaturedImageCropped,
+  isPartnerPortal,
+  themeSettings,
+}) => {
   const [hasInteracted, setHasInteracted] = React.useState<boolean>(false);
+  const [openPreview, setOpenPreview] = React.useState(false);
   const [featuredImageZoomValue, setFeaturedImageZoomValue] = React.useState(1);
   const prevIsSaving = usePrevious(isSaving);
+
+  const { logo, featuredImage, signupTitle, signupDescription, portalColor } = themeSettings;
+
+  const landingPage =
+    typeof featuredImage === 'string' ? `url("${featuredImage}")` : `url("${CDN_PATH}/login_default_landing_page.jpg")`;
 
   React.useEffect(() => {
     // reset after having saved which means switch from `true` => `false`
@@ -61,19 +89,42 @@ const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropp
       onFeaturedImageCropped(file);
     }
   }
-  
+
   return (
     <I18n>
       {({ i18n }) => (
         <SettingsFormSection
           title={<Trans>Brand</Trans>}
-          actionButton={<PreviewButton><Trans>Preview brand</Trans></PreviewButton>}
+          actionButton={
+            <PreviewButton onClick={() => setOpenPreview(true)}>
+              <Trans>Preview brand</Trans>
+            </PreviewButton>
+          }
         >
+          <Preview
+            isOpen={openPreview}
+            onRequestClose={() => setOpenPreview(false)}
+            title={i18n._(t`sign up`)}
+            buttonText={i18n._(t`Create new account`)}
+            primaryTagline={signupTitle || 'Sign up with your work email '}
+            terms={i18n._(t`By creating an account you are agreeing to the Go1`)}
+            secondaryTagline={[i18n._(t`Already have an account?`), i18n._(t`Log in`)]}
+            description={signupDescription}
+            featuredImage={landingPage}
+            logo={logo}
+            showPolicyLinks={false}
+            portalColor={portalColor}
+          >
+            <SignupForm />
+          </Preview>
+
           <SettingsBlockMaker
-            marginBottom={isPartnerPortal ? 0: 5}
+            marginBottom={isPartnerPortal ? 0 : 5}
             title={<Trans>Logo</Trans>}
             description={
-              <Trans>For best results, upload your logo with minimum dimensions of 200x200px over a transparent background.</Trans>
+              <Trans>
+                For best results, upload your logo with minimum dimensions of 200x200px over a transparent background.
+              </Trans>
             }
           >
             <Field
@@ -99,9 +150,9 @@ const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropp
 
           {isPartnerPortal && (
             <View marginBottom={6}>
-              <Field 
-                name="applyCustomizationLogo" 
-                label={i18n._(t`Apply logo to customer portals`)} 
+              <Field
+                name="applyCustomizationLogo"
+                label={i18n._(t`Apply logo to customer portals`)}
                 description={i18n._(t`This can be changed from the individual portal’s settings page`)}
                 hideStatus
                 component={Checkbox}
@@ -116,9 +167,9 @@ const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropp
 
           {isPartnerPortal && (
             <View marginBottom={6}>
-              <Field 
-                name="applyCustomizationPortalColor" 
-                label={i18n._(t`Apply portal color to customer portals`)} 
+              <Field
+                name="applyCustomizationPortalColor"
+                label={i18n._(t`Apply portal color to customer portals`)}
                 description={i18n._(t`This can be changed from the individual portal’s settings page`)}
                 hideStatus
                 component={Checkbox}
@@ -131,8 +182,8 @@ const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropp
             title={<Trans>Featured image</Trans>}
             description={
               <Trans>
-                Used in sign up and login pages. For best results, upload an image with at least 1000px in height.
-                The image can be repositioned to fit the intended 1:1 ratio.
+                Used in sign up and login pages. For best results, upload an image with at least 1000px in height. The
+                image can be repositioned to fit the intended 1:1 ratio.
               </Trans>
             }
             marginBottom={0}
@@ -164,15 +215,15 @@ const SectionBrand: FunctionComponent<Props> = ({ isSaving, onFeaturedImageCropp
               }}
               supportedFormatText={<ImageSupportText />}
               zoomValue={featuredImageZoomValue}
-              onZoomChange={value => setFeaturedImageZoomValue(value)}
+              onZoomChange={(value) => setFeaturedImageZoomValue(value)}
             />
           </SettingsBlockMaker>
 
           {isPartnerPortal && (
             <View>
-              <Field 
-                name="applyCustomizationFeaturedImage" 
-                label={i18n._(t`Apply featured image to customer portals`)} 
+              <Field
+                name="applyCustomizationFeaturedImage"
+                label={i18n._(t`Apply featured image to customer portals`)}
                 description={i18n._(t`This can be changed from the individual portal’s settings page`)}
                 hideStatus
                 component={Checkbox}

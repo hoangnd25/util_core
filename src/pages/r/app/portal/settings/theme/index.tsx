@@ -41,22 +41,6 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
     };
   }
 
-  componentDidMount() {
-    const {
-      currentSession: { portal },
-    } = this.props;
-
-    // If FT toggle for portal is enabled and they have not upgraded kick them back to apiom.
-    if (
-      !portal.featureToggles?.some(
-        (featureToggle) => featureToggle.raw?.name === 'portal.settings.uplift' && featureToggle.raw?.enabled
-      ) &&
-      portal.configuration?.login_version !== 'peach'
-    ) {
-      window.location.assign(`https://${portal.title}/p/#/app/settings/theme`);
-    }
-  }
-
   handleImageUpload = async (image: File | Blob, cancelTokenSource?: CancelToken) => {
     const {
       currentSession: { account },

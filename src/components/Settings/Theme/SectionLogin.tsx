@@ -65,7 +65,7 @@ const SectionLogin: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings
                   }
                 />
               </View>
-              <Text color="accent" textDecoration="underline" fontWeight="bold">
+              <Text color="successLowest" textDecoration="underline" fontWeight="medium">
                 Forgot your password?
               </Text>
             </View>

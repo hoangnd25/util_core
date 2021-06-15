@@ -1,20 +1,19 @@
 import { getNested } from '@go1d/mine/utils';
-import { getBaseUrl, getConfigValue } from '@src/config';
+import { getConfigValue } from '@src/config';
 import { USER_UPDATE } from '@src/reducers/session';
 import { CurrentSessionType } from '@src/types/user';
 import React from 'react';
 import { connect } from 'react-redux';
 import Cookies from 'universal-cookie';
 import { AppContext } from 'next/app';
+import isAdminRole from '@src/utils/isAdminRole';
 import { LoadingSpinner } from '../Suspense';
 import UserService, { removeSession, saveSession } from './services/userService';
-import isAdminRole from '@src/utils/isAdminRole';
 
 /**
  * The following HOC is used to enable protected routes and inject the "currentSession" object in to the page
  */
-
-const WithAuthComponent = AppPage =>
+const WithAuthComponent = (AppPage) =>
   class extends React.Component<any, any> {
     // proxy getInitialProps through
     public static async getInitialProps(ctx) {
@@ -29,6 +28,12 @@ const WithAuthComponent = AppPage =>
       if (currentSession && currentSession.authenticated === true) {
         return <AppPage {...this.props} />;
       }
+
+      if (__DEV__) {
+        return <div>Your session is expired. You have to authenticate again :(</div>;
+      }
+
+      // Head to login page
       if (typeof window !== 'undefined') {
         window.location.assign(
           `${getConfigValue('LOGIN_REDIRECT_URL', '/login')}?redirect_url=${encodeURIComponent(
@@ -40,13 +45,9 @@ const WithAuthComponent = AppPage =>
     }
   };
 
-export const mapCurrentSessionToProps = state => ({ currentSession: state.currentSession });
+export const mapCurrentSessionToProps = (state) => ({ currentSession: state.currentSession });
 
-const withAuth = AppPage =>
-  connect(
-    mapCurrentSessionToProps,
-    null
-  )(WithAuthComponent(AppPage));
+const withAuth = (AppPage) => connect(mapCurrentSessionToProps, null)(WithAuthComponent(AppPage));
 
 export default withAuth;
 
@@ -88,15 +89,15 @@ export const withCurrentSession = (App, helpers) =>
       if (App.getInitialProps) {
         appProps = await App.getInitialProps(appCtx);
       }
-      
+
       if (isServer && currentSession && !pathname.includes('access-denied')) {
         if (!isAdminRole(currentSession)) {
           res.writeHead(302, {
-            Location: '/r/app/portal/access-denied'
+            Location: '/r/app/portal/access-denied',
           });
           return res.end();
         }
-      };
+      }
 
       return {
         ...appProps,
@@ -118,6 +119,7 @@ export const withCurrentSession = (App, helpers) =>
         router: { query, asPath, pathname },
         store,
       } = this.props;
+
       const { http } = helpers;
       const oneTimeToken = query.oneTimeToken || null;
       // Server side did not result in a login
@@ -137,10 +139,9 @@ export const withCurrentSession = (App, helpers) =>
                 },
               });
             },
-            err => {
+            (err) => {
               removeSession();
               this.setState({ currentSession: { authenticated: false } });
-              router.push(`${getBaseUrl()}/access-denied`);
             }
           );
       } else if (
@@ -149,8 +150,6 @@ export const withCurrentSession = (App, helpers) =>
         !currentSession.account.isContentAdministrator
       ) {
         saveSession(currentSession);
-      } else {
-        router.push(`${getBaseUrl()}/access-denied`)
       }
 
       if (oneTimeToken) {

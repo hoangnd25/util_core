@@ -3,28 +3,18 @@ import { FormikConfig } from "formik";
 import React, { useState }  from 'react';
 import {
   SETTINGS_THEME_FIELDS_MAPPING,
-  SETTINGS_THEME_UPLOAD_FIELDS_MAPPING,
-  SETTINGS_THEME_CUSTOMIZATION_GROUPS_MAPPING
+  SETTINGS_THEME_UPLOAD_FIELDS_MAPPING
 } from "@src/constants";
 import { FormValues, FormApplyCustomizationValues, ThemeSettingsFormProps } from "./types";
-import { getFieldsValues } from "./formHelper";
+import { getCustomizationGroupsFromValues, getFieldsValues } from "./formHelper";
 import { serializeHtml } from "./htmlSerializer";
 import { ApplyCustomizationdError, FormSaveError, ImageUploadError } from "./errors";
-
-const getCustomizationGroupsFromValues = (values: FormApplyCustomizationValues) =>
-  Object.entries(values).reduce<string[]>((carry, [key, value]) => {
-    if (Object.keys(SETTINGS_THEME_CUSTOMIZATION_GROUPS_MAPPING).includes(key) && value === true) {
-      return [...carry, SETTINGS_THEME_CUSTOMIZATION_GROUPS_MAPPING[key]]
-    }
-    return carry;
-  }, []);
 
 export const useThemeSettingsFormHandler = (props: ThemeSettingsFormProps) => {
   const { portal, onSave, onUpload, onError } = props;
   const [featuredImageCropped, setFeaturedImageCropped] = useState<Blob | undefined>();
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [changesConfirmed, setChangesConfirmed] = useState(false);
-  const [applyCustomizationGroups, setApplyCustomizationGroups] = useState<string[]>([]);
 
   const uploadOrDeleteImage = async (
     image?: string | File | null,
@@ -47,9 +37,8 @@ export const useThemeSettingsFormHandler = (props: ThemeSettingsFormProps) => {
   };
 
   const handleSubmit: FormikConfig<FormValues & FormApplyCustomizationValues>['onSubmit'] = async (values, actions) => {
-    const selectedCustomizationGroups = getCustomizationGroupsFromValues(values);
-    setApplyCustomizationGroups(selectedCustomizationGroups)
-    if (selectedCustomizationGroups.length > 0 && !changesConfirmed) {
+    const applyCustomizationGroups = getCustomizationGroupsFromValues(values);
+    if (applyCustomizationGroups.length > 0 && !changesConfirmed) {
       setShowConfirmModal(true);
       actions.setSubmitting(false);
       return;
@@ -83,7 +72,7 @@ export const useThemeSettingsFormHandler = (props: ThemeSettingsFormProps) => {
         actions.setFieldValue('featuredImage', featuredImage);
       }
 
-      await onSave(toSaveObject, selectedCustomizationGroups);
+      await onSave(toSaveObject, applyCustomizationGroups);
       setChangesConfirmed(false);
     } catch (error) {
       if (__DEV__) {
@@ -110,7 +99,6 @@ export const useThemeSettingsFormHandler = (props: ThemeSettingsFormProps) => {
     handleSubmit,
     featuredImageCropped,
     setFeaturedImageCropped,
-    applyCustomizationGroups,
     showConfirmModal,
     setShowConfirmModal,
     changesConfirmed,

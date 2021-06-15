@@ -55,14 +55,13 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
     // Check that the featured image is not an already saved cloudinary image file
     // Check that the image has not bee removed which defaults to empty string
     // Check if errors is present by the returned error message -> then create blob image object
-
-    if (values[imageType].length > 0 && values[imageType].includes('cloudinary')) {
+    if (!values[imageType]) {
+      return '';
+    } if (values[imageType]?.length > 0 && values[imageType]?.includes('cloudinary')) {
       return values[imageType];
-    } if (errors && errors.length > 0) {
+    } if (errors?.length > 0) {
       return undefined;
-    } 
-      return `${URL.createObjectURL(values[imageType])}`;
-    
+    } return `${URL.createObjectURL(values[imageType])}`;
   };
 
   const handleChange = async (values: { values: FormValues; errors: FormValues }) => {

@@ -45,15 +45,15 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
     const {
       currentSession: { portal },
     } = this.props;
+
     // If FT toggle for portal is enabled and they have not upgraded kick them back to apiom.
     if (
-      portal.featureToggles?.some(
+      !portal.featureToggles?.some(
         (featureToggle) => featureToggle.raw?.name === 'portal.settings.uplift' && featureToggle.raw?.enabled
-      )
+      ) &&
+      portal.configuration?.login_version !== 'peach'
     ) {
-      if (portal.configuration?.login_version !== 'peach') {
-        window.location.assign(`https://${portal.title}/p/#/app/settings/theme`);
-      }
+      window.location.assign(`https://${portal.title}/p/#/app/settings/theme`);
     }
   }
 

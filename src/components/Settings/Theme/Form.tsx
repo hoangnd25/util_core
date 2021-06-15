@@ -17,14 +17,8 @@ import ConfirmModal from './ConfirmModal';
 const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => {
   const { portal, isSaving } = props;
   const isPartnerPortal = ['content_partner', 'distribution_partner'].includes(portal.type || null);
-  const {
-    handleSubmit,
-    setFeaturedImageCropped,
-    showConfirmModal,
-    setShowConfirmModal,
-    applyCustomizationGroups,
-    setChangesConfirmed,
-  } = useThemeSettingsFormHandler(props);
+  const { handleSubmit, setFeaturedImageCropped, showConfirmModal, setShowConfirmModal, setChangesConfirmed } =
+    useThemeSettingsFormHandler(props);
 
   const theme = useContext(Theme);
   const initialValues = getInitialValues<FormValues>(
@@ -95,7 +89,7 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
   const handleConfirmChanges = () => {
     setChangesConfirmed(true);
     setShowConfirmModal(false);
-    formikRef.current?.submitForm();
+    formikRef.current?.submitForm(); // eslint-disable-line no-unused-expressions
   };
 
   return (
@@ -132,7 +126,7 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
         isOpen={showConfirmModal}
         onRequestClose={handleConfirmModalClose}
         onConfirm={handleConfirmChanges}
-        applyCustomizationGroups={applyCustomizationGroups}
+        portalInstance={portal.title}
       />
     </Form>
   );

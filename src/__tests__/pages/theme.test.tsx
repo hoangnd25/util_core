@@ -89,6 +89,10 @@ it('should be able to submit form successfully', async () => {
     status: 'ok',
   });
 
+  adapter.onGet('/portal/test.mygo1.com?includeChildPortalsCount=1').reply(200, {
+    partner_child_portals_number: 10,
+  });
+
   expect(screen.queryByTestId('theme_settings_page')).toBeInTheDocument();
   expect(screen.queryByText('Save changes')).toBeInTheDocument();
 

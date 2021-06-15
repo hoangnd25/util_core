@@ -69,7 +69,9 @@ const SectionBrand: FunctionComponent<Props> = ({
   const { logo, featuredImage, signupTitle, signupDescription, portalColor } = themeSettings;
 
   const landingPage =
-    typeof featuredImage === 'string' ? `url("${featuredImage}")` : `url("${CDN_PATH}/login_default_landing_page.jpg")`;
+    typeof featuredImage === 'string'
+      ? `url("${featuredImage}")`
+      : `url("${CDN_PATH}/signup_default_landing_page.jpg")`;
 
   React.useEffect(() => {
     // reset after having saved which means switch from `true` => `false`

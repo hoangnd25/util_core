@@ -23,7 +23,9 @@ const SectionSignup: FunctionComponent<Props> = ({ isPartnerPortal, themeSetting
   const { logo, featuredImage, signupTitle, signupDescription, portalColor } = themeSettings;
   const [openPreview, setOpenPreview] = useState(false);
   const landingPage =
-    typeof featuredImage === 'string' ? `url("${featuredImage}")` : `url("${CDN_PATH}/login_default_landing_page.jpg")`;
+    typeof featuredImage === 'string'
+      ? `url("${featuredImage}")`
+      : `url("${CDN_PATH}/signup_default_landing_page.jpg")`;
   return (
     <I18n>
       {({ i18n }) => (

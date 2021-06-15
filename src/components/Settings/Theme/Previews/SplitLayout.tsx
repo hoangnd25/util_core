@@ -4,13 +4,13 @@ import IconGo1Logo from '@go1d/go1d/build/components/Icons/Go1Logo';
 import { Trans } from '@lingui/macro';
 
 interface Props {
-  primaryTagline;
+  primaryTagline: React.ReactNode;
   description;
   logo: File | string | null;
   buttonText;
   featuredImage;
   terms: string;
-  secondaryTagline: string[];
+  secondaryTagline: React.ReactNode;
   children: React.ReactNode;
   showPolicyLinks: boolean;
   portalColor: string;
@@ -88,7 +88,7 @@ const SplitLayout: React.FC<Props> = (props) => {
 
                 <Text marginBottom={5} color="default" textAlign="center">
                   {secondaryTagline[0]}{' '}
-                  <Text color="successLowest" fontWeight="medium" textAlign="center">
+                  <Text color="successLowest" fontWeight="medium" textAlign="center" textDecoration="underline">
                     {secondaryTagline[1]}
                   </Text>
                 </Text>

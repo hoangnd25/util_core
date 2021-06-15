@@ -4,13 +4,13 @@ import { Trans } from '@lingui/macro';
 import SplitLayout from './Previews/SplitLayout';
 
 interface Props {
-  primaryTagline: string;
+  primaryTagline: React.ReactNode;
   description: string;
   logo: File | string | null;
   buttonText: string;
   featuredImage: string;
   terms: string;
-  secondaryTagline: string[];
+  secondaryTagline: React.ReactNode;
   children: React.ReactNode;
   title: string;
   isOpen: boolean;

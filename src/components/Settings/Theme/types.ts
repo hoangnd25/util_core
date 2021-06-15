@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { Value as SlateValue } from 'slate';
 import { GO1Portal } from '@src/types/user';
 

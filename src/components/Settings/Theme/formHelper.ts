@@ -1,4 +1,6 @@
+import { SETTINGS_THEME_CUSTOMIZATION_GROUPS_MAPPING } from '@src/constants';
 import _get from 'lodash/get';
+import { FormApplyCustomizationValues } from './types';
 
 type ValueMap =
   | string
@@ -60,3 +62,11 @@ export const stripTabsAndNewLines = (input: string) =>
     .trim()
     .replace(/\n/g, '')
     .replace(/\t/g, '');
+
+export const getCustomizationGroupsFromValues = (values: FormApplyCustomizationValues) =>
+  Object.entries(values).reduce<string[]>((carry, [key, value]) => {
+    if (Object.keys(SETTINGS_THEME_CUSTOMIZATION_GROUPS_MAPPING).includes(key) && value === true) {
+      return [...carry, SETTINGS_THEME_CUSTOMIZATION_GROUPS_MAPPING[key]]
+    }
+    return carry;
+  }, []);

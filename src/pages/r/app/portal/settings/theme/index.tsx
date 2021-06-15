@@ -51,6 +51,7 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
         (featureToggle) => featureToggle.raw?.name === 'portal.settings.uplift' && featureToggle.raw?.enabled
       )
     ) {
+      // eslint-disable-next-line camelcase
       if (portal.configuration?.login_version !== 'peach') {
         window.location.assign(`https://${portal.title}/p/#/app/settings/theme`);
       }

@@ -77,12 +77,16 @@ beforeEach(() => {
   jest.spyOn(scormService, 'getApplicationId').mockResolvedValue('Existing Application ID');
   // stub getSelection for RichTextInput in theme settings page
   window.getSelection = jest.fn();
-})
+});
 
 /** TEST SETUP END * */
 
 it('withApiom: Integrations menu renders correctly', async () => {
-  const wrapper = setup(ScormAndXapi, { pageTitle: 'Example', active: 'sidebar.integrations-scorm_and_api', menuType: 'Integrations' });
+  const wrapper = setup(ScormAndXapi, {
+    pageTitle: 'Example',
+    active: 'sidebar.integrations-scorm_and_api',
+    menuType: 'Integrations',
+  });
   await Promise.resolve();
   const PageInstance = wrapper.find(ScormAndXapi) as any;
   const sideMenuInstance = PageInstance.find('LayoutWithSideNav');
@@ -127,6 +131,6 @@ it('withApiom: Settings menu renders correctly', async () => {
   const PageInstance = wrapper.find(ThemeSettingsPage) as any;
   const sideMenuInstance = PageInstance.find('LayoutWithSideNav');
   const sideMenu = PageInstance.props().menu[0];
-  expect(sideMenu).toEqual(settingsMenuMock);  
+  expect(sideMenu).toEqual(settingsMenuMock);
   expect(sideMenuInstance.length).toBe(1);
 });

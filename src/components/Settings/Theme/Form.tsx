@@ -26,7 +26,7 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
     useThemeSettingsFormHandler(props);
 
   const theme = useContext(Theme);
-  let initialValues = getInitialValues<any>(
+  let initialValues = getInitialValues<FormValues>(
     {
       ...SETTINGS_THEME_UPLOAD_FIELDS_MAPPING,
       ...SETTINGS_THEME_FIELDS_MAPPING,

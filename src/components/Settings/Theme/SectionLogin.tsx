@@ -19,13 +19,10 @@ interface Props {
 }
 
 const SectionLogin: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings }) => {
-  const { logo, featuredImage, loginTitle, loginDescription } = themeSettings;
+  const { logo, featuredImage, loginTitle, loginDescription, portalColor } = themeSettings;
   const [openPreview, setOpenPreview] = useState(false);
   const landingPage =
-    typeof featuredImage === 'string' && featuredImage?.includes('cloudinary')
-      ? `url("${featuredImage}")`
-      : `url("${CDN_PATH}/login_default_landing_page.jpg")`;
-
+    typeof featuredImage === 'string' ? `url("${featuredImage}")` : `url("${CDN_PATH}/login_default_landing_page.jpg")`;
   return (
     <I18n>
       {({ i18n }) => (
@@ -48,6 +45,7 @@ const SectionLogin: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings
             description={loginDescription}
             featuredImage={landingPage}
             logo={logo}
+            portalColor={portalColor}
             showPolicyLinks
           >
             <View width="100%">
@@ -67,7 +65,7 @@ const SectionLogin: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings
                   }
                 />
               </View>
-              <Text color="accent" textDecoration="underline" fontWeight="bold">
+              <Text color="successLowest" textDecoration="underline" fontWeight="medium">
                 Forgot your password?
               </Text>
             </View>

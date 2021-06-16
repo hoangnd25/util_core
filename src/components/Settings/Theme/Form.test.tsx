@@ -5,12 +5,16 @@ import { GO1Portal } from '@src/types/user';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { Value } from 'slate';
 import { Trans } from '@lingui/macro';
+import AppContext from '@src/utils/appContext';
+import create from '@src/utils/http';
+import MockAdapter from 'axios-mock-adapter';
 import ThemeSettingsForm from './Form';
 import { ThemeSettingsFormProps } from './types';
 import { useThemeSettingsFormHandler } from './Form.hooks';
 import { ApplyCustomizationdError, FormSaveError, ImageUploadError } from './errors';
 
 const defaultPortal = {
+  title: 'test.mygo1.com',
   files: {
     logo: 'https://logo.jpg',
     login_background: 'https://featured-image.jpg',
@@ -58,11 +62,21 @@ const APPLY_CHILD_PORTAL_INPUTS = {
   applyCustomizationSignup: 'Checkbox[name="applyCustomizationSignup"]',
 };
 
+let mock: MockAdapter;
+const http = create();
+
+beforeEach(() => {
+  mock = new MockAdapter(http);
+  global.URL.createObjectURL = jest.fn();
+});
+
 const setup = (props?: ThemeSettingsFormProps) => {
   return mount(
-    <I18nProvider language="en" catalogs={{ en: { messages: {} } }}>
-      <ThemeSettingsForm {...props} />
-    </I18nProvider>
+    <AppContext.Provider value={{ http, cookies: {} }}>
+      <I18nProvider language="en" catalogs={{ en: { messages: {} } }}>
+        <ThemeSettingsForm {...props} />
+      </I18nProvider>
+    </AppContext.Provider>
   );
 };
 
@@ -96,7 +110,7 @@ it('Should not render apply customization checkboxes for non partner portal', ()
   });
 });
 
-it('Should ignore unchanged fields for submit', async done => {
+it('Should ignore unchanged fields for submit', async (done) => {
   const saveFn = jest.fn().mockResolvedValue(undefined);
   const uploadFn = jest.fn().mockResolvedValue('https://uploaded-image.jpg');
   const wrapper = setup({
@@ -113,7 +127,39 @@ it('Should ignore unchanged fields for submit', async done => {
   });
 });
 
-it('Should be able to handle submit', async done => {
+it('Should show confirm modal for apply child portal customization', async (done) => {
+  mock.onGet('/portal/test.mygo1.com?includeChildPortalsCount=1').reply(200, {
+    partner_child_portals_number: 10,
+  });
+  const saveFn = jest.fn().mockResolvedValue(undefined);
+  const wrapper = setup({
+    onSave: saveFn,
+    onUpload: jest.fn(),
+    portal: {
+      ...defaultPortal,
+      type: 'distribution_partner',
+    } as any,
+  });
+
+  act(() => {
+    // check apply logo checkbox
+    wrapper.find(`${APPLY_CHILD_PORTAL_INPUTS.applyCustomizationLogo} input`).simulate('change');
+    wrapper.find('Form').simulate('submit');
+
+    setImmediate(() => {
+      wrapper.update();
+      // confirm modal should be visible
+      expect(wrapper.find('ConfirmModal').prop('isOpen')).toBeTruthy();
+      expect(wrapper.find('p[data-testid="confirm-message"]').getDOMNode().textContent).toEqual(
+        'The following options will be applied to all 10 customer portals. Do you want to continue?'
+      );
+      expect(saveFn).not.toHaveBeenCalled();
+      done();
+    });
+  });
+});
+
+it('Should be able to handle submit', async (done) => {
   const UPLOADED_URL = 'https://uploaded-image.jpg';
   const saveFn = jest.fn().mockResolvedValue(undefined);
   const uploadFn = jest.fn().mockResolvedValue(UPLOADED_URL);
@@ -148,7 +194,7 @@ it('Should be able to handle submit', async done => {
                   object: 'leaf',
                 },
               ],
-            },
+            } as any,
           ],
         },
       ],
@@ -208,7 +254,7 @@ it('Should be able to handle submit', async done => {
   done();
 });
 
-it('Should be able to handle image upload error', async done => {
+it('Should be able to handle image upload error', async (done) => {
   const saveFn = jest.fn().mockResolvedValue(undefined);
   const uploadFn = jest.fn().mockRejectedValueOnce(new ImageUploadError());
   const errorFn = jest.fn();
@@ -242,7 +288,7 @@ it('Should be able to handle image upload error', async done => {
   });
 });
 
-it('Should be able to handle form saving error', async done => {
+it('Should be able to handle form saving error', async (done) => {
   const saveFn = jest.fn().mockRejectedValue(new FormSaveError());
   const uploadFn = jest.fn().mockResolvedValue('image.jpg');
   const errorFn = jest.fn();
@@ -275,7 +321,7 @@ it('Should be able to handle form saving error', async done => {
   });
 });
 
-it('Should be able to handle apply customization to child portals error', async done => {
+it('Should be able to handle apply customization to child portals error', async (done) => {
   const saveFn = jest.fn().mockRejectedValue(new ApplyCustomizationdError());
   const uploadFn = jest.fn().mockResolvedValue('image.jpg');
   const errorFn = jest.fn();

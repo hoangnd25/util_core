@@ -1,11 +1,15 @@
 import { ButtonFilled, Modal, Text, View } from '@go1d/go1d';
 import { t, Trans } from '@lingui/macro';
 import { I18n } from '@lingui/react';
+import createPortalService from '@src/services/portalService';
+import AppContext from '@src/utils/appContext';
+import { connect, FormikContext } from 'formik';
+import { useContext, useEffect, useState } from 'react';
+import { getCustomizationGroupsFromValues } from './formHelper';
 
-interface Props {
+export interface ConfirmModalProps {
+  portalInstance: string;
   isOpen?: boolean;
-  customerPortalsCount?: number;
-  applyCustomizationGroups?: string[];
   onRequestClose?: () => void;
   onConfirm?: () => void;
 }
@@ -26,29 +30,41 @@ const ConfirmModal = ({
   isOpen,
   onRequestClose,
   onConfirm,
-  customerPortalsCount,
-  applyCustomizationGroups = [],
-}: Props) => {
+  formik,
+  portalInstance,
+}: ConfirmModalProps & { formik: FormikContext<any> }) => {
+  const [childPortalsCount, setChildPortalsCount] = useState<number | undefined>();
+  const { http } = useContext(AppContext);
+
+  useEffect(() => {
+    if (isOpen) {
+      const portalService = createPortalService(http);
+      portalService.getChildPortalsCount(portalInstance).then(setChildPortalsCount);
+    }
+  }, [isOpen]);
+
+  const selectedGroups = getCustomizationGroupsFromValues(formik.values);
   return (
     <I18n>
       {({ i18n }) => (
         <Modal isOpen={isOpen} title={i18n._(t`Confirm changes`)} onRequestClose={onRequestClose}>
           <View flexGrow={1} justifyContent="space-between">
-            <View data-testid="confirm-modal-message" element="p" display="inline">
+            <View data-testid="confirm-message" element="p" display="inline">
               <Text display="inline">
                 <Trans>The following options will be applied to all</Trans>{' '}
               </Text>
               <Text display="inline" fontWeight="semibold">
-                {customerPortalsCount ? `${customerPortalsCount} ` : ''}
+                {childPortalsCount ? `${childPortalsCount} ` : ''}
                 <Trans>customer portals</Trans>
               </Text>
               <Text display="inline">
-                . <Trans>Do you want to continue?</Trans>
+                {'. '}
+                <Trans>Do you want to continue?</Trans>
               </Text>
             </View>
             <View element="ul" marginTop={4}>
-              {applyCustomizationGroups.map((group) => (
-                <Text key={group} element="li" marginLeft={2} marginBottom={4}>
+              {selectedGroups.map((group) => (
+                <Text key={group} element="li" marginLeft={2} marginBottom={4} data-testid="customization-group">
                   • <TranslatedGroup>{group}</TranslatedGroup>
                 </Text>
               ))}
@@ -66,4 +82,4 @@ const ConfirmModal = ({
   );
 };
 
-export default ConfirmModal;
+export default connect<ConfirmModalProps>(ConfirmModal);

@@ -4,18 +4,19 @@ import { Trans } from '@lingui/macro';
 import SplitLayout from './Previews/SplitLayout';
 
 interface Props {
-  primaryTagline: string;
+  primaryTagline: React.ReactNode;
   description: string;
   logo: File | string | null;
   buttonText: string;
   featuredImage: string;
   terms: string;
-  secondaryTagline: string[];
+  secondaryTagline: React.ReactNode;
   children: React.ReactNode;
   title: string;
   isOpen: boolean;
   onRequestClose: () => void;
   showPolicyLinks: boolean;
+  portalColor: string;
 }
 
 const Preview: React.FC<Props> = (props) => {
@@ -32,6 +33,7 @@ const Preview: React.FC<Props> = (props) => {
     featuredImage,
     logo,
     showPolicyLinks,
+    portalColor,
   } = props;
 
   return (
@@ -45,6 +47,7 @@ const Preview: React.FC<Props> = (props) => {
         featuredImage={featuredImage}
         logo={logo}
         showPolicyLinks={showPolicyLinks}
+        portalColor={portalColor}
       >
         {children}
       </SplitLayout>

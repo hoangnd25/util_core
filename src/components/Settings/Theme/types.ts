@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { Value as SlateValue } from 'slate';
-import { GO1Portal } from '@src/types/user';
+import { GO1Portal, GO1User } from '@src/types/user';
 
 export interface FormValues {
   logo?: File | string | null;
@@ -31,6 +31,7 @@ export interface FormApplyCustomizationValues {
 
 export interface ThemeSettingsFormProps {
   portal: GO1Portal;
+  user: GO1User;
   isSaving?: boolean;
   onSave: (values: object, childCustomizationGroups?: string[]) => Promise<void>;
   onUpload: (image?: File | Blob | null) => Promise<string | undefined>;

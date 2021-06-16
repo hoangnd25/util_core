@@ -1,5 +1,5 @@
 import { ButtonFilled, Modal, Text, View } from '@go1d/go1d';
-import { t, Trans } from '@lingui/macro';
+import { t, Trans, Plural } from '@lingui/macro';
 import { I18n } from '@lingui/react';
 import createPortalService from '@src/services/portalService';
 import AppContext from '@src/utils/appContext';
@@ -51,11 +51,14 @@ const ConfirmModal = ({
           <View flexGrow={1} justifyContent="space-between">
             <View data-testid="confirm-message" element="p" display="inline">
               <Text display="inline">
-                <Trans>The following options will be applied to all</Trans>{' '}
+                <Trans>The following options will be applied to </Trans>{' '}
               </Text>
               <Text display="inline" fontWeight="semibold">
-                {childPortalsCount ? `${childPortalsCount} ` : ''}
-                <Trans>customer portals</Trans>
+                {childPortalsCount ? (
+                  <Plural value={childPortalsCount} one="# customer portal" other="all # customer portals" />
+                ) : (
+                  <Trans>all customer portals</Trans>
+                )}
               </Text>
               <Text display="inline">
                 . 

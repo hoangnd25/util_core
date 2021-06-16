@@ -22,8 +22,9 @@ interface Props {
 const SectionSignup: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings }) => {
   const { logo, featuredImage, signupTitle, signupDescription, portalColor } = themeSettings;
   const [openPreview, setOpenPreview] = useState(false);
+
   const landingPage =
-    typeof featuredImage === 'string'
+    typeof featuredImage === 'string' && featuredImage.length > 0
       ? `url("${featuredImage}")`
       : `url("${CDN_PATH}/signup_default_landing_page.jpg")`;
   return (

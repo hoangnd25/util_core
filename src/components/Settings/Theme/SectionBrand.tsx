@@ -69,7 +69,7 @@ const SectionBrand: FunctionComponent<Props> = ({
   const { logo, featuredImage, signupTitle, signupDescription, portalColor } = themeSettings;
 
   const landingPage =
-    typeof featuredImage === 'string'
+    typeof featuredImage === 'string' && featuredImage.length > 0
       ? `url("${featuredImage}")`
       : `url("${CDN_PATH}/signup_default_landing_page.jpg")`;
 
@@ -106,7 +106,7 @@ const SectionBrand: FunctionComponent<Props> = ({
           <Preview
             isOpen={openPreview}
             onRequestClose={() => setOpenPreview(false)}
-            title={i18n._(t`sign up`)}
+            title={i18n._(t`brand`)}
             buttonText={i18n._(t`Create new account`)}
             primaryTagline={signupTitle || 'Sign up with your work email '}
             terms={i18n._(t`By creating an account you are agreeing to the Go1`)}

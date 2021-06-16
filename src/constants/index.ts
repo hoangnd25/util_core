@@ -57,7 +57,7 @@ export const SETTINGS_THEME_UPLOAD_FIELDS_MAPPING = {
 /**
  * @see https://github.com/go1com/util_core/blob/master/portal/PartnerConfigurationsInheritance.php
  */
- export const SETTINGS_THEME_CUSTOMIZATION_GROUPS_MAPPING: Record<string, string> = {
+export const SETTINGS_THEME_CUSTOMIZATION_GROUPS_MAPPING: Record<string, string> = {
   applyCustomizationLogo: 'logo',
   applyCustomizationPortalColor: 'portal_color',
   applyCustomizationFeaturedImage: 'featured_image',
@@ -65,4 +65,6 @@ export const SETTINGS_THEME_UPLOAD_FIELDS_MAPPING = {
   applyCustomizationDashboard: 'dashboard',
   applyCustomizationLogin: 'login',
   applyCustomizationSignup: 'signup',
-}
+};
+
+export const PREVIEW_IMAGE_TYPE = ['logo', 'featuredImage'];

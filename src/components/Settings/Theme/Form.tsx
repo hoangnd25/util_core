@@ -2,7 +2,11 @@ import { Form, NotificationManager, Spinner, SubmitButton, Theme, View } from '@
 import { FunctionComponent, useContext, useRef, useState } from 'react';
 import { Trans } from '@lingui/macro';
 import { Formik } from 'formik';
-import { SETTINGS_THEME_FIELDS_MAPPING, SETTINGS_THEME_UPLOAD_FIELDS_MAPPING } from '@src/constants';
+import {
+  SETTINGS_THEME_FIELDS_MAPPING,
+  SETTINGS_THEME_UPLOAD_FIELDS_MAPPING,
+  PREVIEW_IMAGE_TYPE,
+} from '@src/constants';
 import SectionBrand from './SectionBrand';
 import SectionLogin from './SectionLogin';
 import SectionSignup from './SectionSignup';
@@ -21,7 +25,7 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
     useThemeSettingsFormHandler(props);
 
   const theme = useContext(Theme);
-  const initialValues = getInitialValues<FormValues>(
+  let initialValues = getInitialValues<any>(
     {
       ...SETTINGS_THEME_UPLOAD_FIELDS_MAPPING,
       ...SETTINGS_THEME_FIELDS_MAPPING,
@@ -29,6 +33,14 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
     portal
   );
 
+  // If user has old apiom theme settings for images-> reset to default
+  const apiomImages = {};
+  PREVIEW_IMAGE_TYPE.forEach((key) => {
+    apiomImages[key] =
+      initialValues[key].includes('get-started') || initialValues[key].includes('logo-white') ? '' : initialValues[key];
+  });
+  const updatedInitialValues = [initialValues].map((item, i) => ({ ...item, ...apiomImages }));
+  [initialValues] = updatedInitialValues;
   const [themeSettings, setThemeSettings] = useState(initialValues);
 
   const formikRef = useRef<Formik>(null);
@@ -49,7 +61,8 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
     // Check that the featured image is not an already saved cloudinary image file
     // Check that the image has not bee removed which defaults to empty string
     // Check if errors is present by the returned error message -> then create blob image object
-    if (!values[imageType]) {
+
+    if (!values[imageType] || values[imageType].length < 0) {
       return '';
     }
     if (values[imageType]?.length > 0 && values[imageType]?.includes('cloudinary')) {
@@ -64,9 +77,9 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
   const handleChange = async (values: { values: FormValues; errors: FormValues }) => {
     const newValues = values.values as any;
     const errors = values.errors as any;
-    const images = ['featuredImage', 'logo'];
+
     const previewImages = {};
-    images.forEach((key) => {
+    PREVIEW_IMAGE_TYPE.forEach((key) => {
       previewImages[key] = setPreviewImage(key, newValues, errors);
     });
 

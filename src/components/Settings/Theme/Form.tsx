@@ -2,7 +2,11 @@ import { Form, NotificationManager, Spinner, SubmitButton, Theme, View } from '@
 import { FunctionComponent, useContext, useRef, useState } from 'react';
 import { Trans } from '@lingui/macro';
 import { Formik } from 'formik';
-import { SETTINGS_THEME_FIELDS_MAPPING, SETTINGS_THEME_UPLOAD_FIELDS_MAPPING } from '@src/constants';
+import {
+  SETTINGS_THEME_FIELDS_MAPPING,
+  SETTINGS_THEME_UPLOAD_FIELDS_MAPPING,
+  PREVIEW_IMAGE_TYPE,
+} from '@src/constants';
 import Track from '@src/utils/tracking';
 import SectionBrand from './SectionBrand';
 import SectionLogin from './SectionLogin';
@@ -15,19 +19,31 @@ import { useThemeSettingsFormHandler } from './Form.hooks';
 import { FormValues, ThemeSettingsFormProps } from './types';
 import ConfirmModal from './ConfirmModal';
 
-const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
-  const { portal, user, isSaving } = props;  const isPartnerPortal = ['content_partner', 'distribution_partner'].includes(portal.type || null);
+const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => {
+  const { portal, user, isSaving } = props;
+  const isPartnerPortal = ['content_partner', 'distribution_partner'].includes(portal.type || null);
   const { handleSubmit, setFeaturedImageCropped, showConfirmModal, setShowConfirmModal, setChangesConfirmed } =
     useThemeSettingsFormHandler(props);
 
   const theme = useContext(Theme);
-  const initialValues = getInitialValues<FormValues>(
+  let initialValues = getInitialValues<FormValues>(
     {
       ...SETTINGS_THEME_UPLOAD_FIELDS_MAPPING,
       ...SETTINGS_THEME_FIELDS_MAPPING,
     },
     portal
   );
+
+  // If user has old apiom theme settings for images-> reset to default
+  const apiomImages = {};
+  PREVIEW_IMAGE_TYPE.forEach((key) => {
+    apiomImages[key] =
+      initialValues[key]?.includes('get-started') || initialValues[key]?.includes('logo-white')
+        ? ''
+        : initialValues[key];
+  });
+
+  initialValues = { ...initialValues, ...apiomImages };
 
   const [themeSettings, setThemeSettings] = useState(initialValues);
 
@@ -49,7 +65,8 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
     // Check that the featured image is not an already saved cloudinary image file
     // Check that the image has not bee removed which defaults to empty string
     // Check if errors is present by the returned error message -> then create blob image object
-    if (!values[imageType]) {
+
+    if (!values[imageType] || values[imageType].length < 0) {
       return '';
     }
     if (values[imageType]?.length > 0 && values[imageType]?.includes('cloudinary')) {
@@ -64,14 +81,13 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
   const handleChange = async (values: { values: FormValues; errors: FormValues }) => {
     const newValues = values.values as any;
     const errors = values.errors as any;
-    const images = ['featuredImage', 'logo'];
+
     const previewImages = {};
-    images.forEach((key) => {
+    PREVIEW_IMAGE_TYPE.forEach((key) => {
       previewImages[key] = setPreviewImage(key, newValues, errors);
     });
-
-    const previewValues = [newValues].map((item, i) => ({ ...item, ...previewImages }));
-    setThemeSettings(previewValues[0] as any);
+    const previewValues = { ...newValues, ...previewImages };
+    setThemeSettings(previewValues);
   };
 
   const handleConfirmModalClose = () => {
@@ -91,7 +107,7 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
     setChangesConfirmed(true);
     setShowConfirmModal(false);
     formikRef.current?.submitForm();
-  }
+  };
   return (
     <Form
       formikRef={formikRef}

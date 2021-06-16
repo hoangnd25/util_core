@@ -38,7 +38,7 @@ const SplitLayout: React.FC<Props> = (props) => {
         {({ colors }) => (
           <View width="100%" height="580px" flexDirection="row" border={1} borderColor="soft">
             <View
-              width="400px"
+              width="50%"
               height="100%"
               borderColor="successLowest"
               backgroundColor="successLowest"
@@ -50,7 +50,7 @@ const SplitLayout: React.FC<Props> = (props) => {
               }}
             />
 
-            <View width="400px" backgroundColor="faint" height="100%" overflow="auto">
+            <View width="50%" backgroundColor="faint" height="100%" overflow="auto">
               <View
                 alignItems="center"
                 justifyContent="center"

@@ -37,7 +37,7 @@ const Preview: React.FC<Props> = (props) => {
   } = props;
 
   return (
-    <Modal isOpen={isOpen} maxWidth={850} title={`Preview ${title}`} onRequestClose={onRequestClose}>
+    <Modal isOpen={isOpen} maxWidth={[0, 800, 850]} title={`Preview ${title}`} onRequestClose={onRequestClose}>
       <SplitLayout
         buttonText={buttonText}
         primaryTagline={primaryTagline}

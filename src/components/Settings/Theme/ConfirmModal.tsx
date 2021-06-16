@@ -1,5 +1,5 @@
 import { ButtonFilled, Modal, Text, View } from '@go1d/go1d';
-import { t, Trans, Plural } from '@lingui/macro';
+import { t, Trans } from '@lingui/macro';
 import { I18n } from '@lingui/react';
 import createPortalService from '@src/services/portalService';
 import AppContext from '@src/utils/appContext';
@@ -44,6 +44,8 @@ const ConfirmModal = ({
   }, [isOpen]);
 
   const selectedGroups = getCustomizationGroupsFromValues(formik.values);
+  const countString =
+    childPortalsCount > 1 ? `all ${childPortalsCount} customer portals` : `${childPortalsCount} customer portal`;
   return (
     <I18n>
       {({ i18n }) => (
@@ -54,11 +56,7 @@ const ConfirmModal = ({
                 <Trans>The following options will be applied to </Trans>{' '}
               </Text>
               <Text display="inline" fontWeight="semibold">
-                {childPortalsCount ? (
-                  <Plural value={childPortalsCount} one="# customer portal" other="all # customer portals" />
-                ) : (
-                  <Trans>all customer portals</Trans>
-                )}
+                {childPortalsCount ? countString : <Trans>all customer portals</Trans>}
               </Text>
               <Text display="inline">
                 {'. '}

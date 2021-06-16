@@ -51,11 +51,16 @@ const ConfirmModal = ({
           <View flexGrow={1} justifyContent="space-between">
             <View data-testid="confirm-message" element="p" display="inline">
               <Text display="inline">
-                <Trans>The following options will be applied to all</Trans>{' '}
+                <Trans>The following options will be applied to </Trans>{' '}
               </Text>
               <Text display="inline" fontWeight="semibold">
-                {childPortalsCount ? `${childPortalsCount} ` : ''}
-                <Trans>customer portals</Trans>
+                {childPortalsCount
+                  ? `${i18n.plural({
+                      value: childPortalsCount,
+                      one: '# customer portal',
+                      other: 'all # customer portals',
+                    })}`
+                  : 'all customer portals'}
               </Text>
               <Text display="inline">
                 {'. '}

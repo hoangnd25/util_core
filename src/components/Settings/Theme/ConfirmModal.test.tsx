@@ -63,6 +63,27 @@ it('Should render without portals count', async (done) => {
   });
 });
 
+it('Should render with 1 portal', async (done) => {
+  mock.onGet('/portal/test.mygo1.com?includeChildPortalsCount=1').reply(200, {
+    partner_child_portals_number: 1,
+  });
+  const { getByText, findAllByTestId } = setup({
+    isOpen: true,
+    portalInstance: 'test.mygo1.com',
+  });
+
+  await waitFor(async () => {
+    expect(
+      getByText((_, node) => {
+        return (
+          node.textContent === 'The following options will be applied to 1 customer portal. Do you want to continue?'
+        );
+      })
+    ).toBeInTheDocument();
+    done();
+  });
+});
+
 it('Should render with portals count', async (done) => {
   mock.onGet('/portal/test.mygo1.com?includeChildPortalsCount=1').reply(200, {
     partner_child_portals_number: 10,
@@ -75,7 +96,8 @@ it('Should render with portals count', async (done) => {
   await waitFor(() => {
     getByText((_, node) => {
       return (
-        node.textContent === 'The following options will be applied to all customer portals. Do you want to continue?'
+        node.textContent ===
+        'The following options will be applied to all 10 customer portals. Do you want to continue?'
       );
     });
     done();

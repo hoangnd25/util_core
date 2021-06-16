@@ -61,7 +61,7 @@ const ConfirmModal = ({
                 )}
               </Text>
               <Text display="inline">
-                . 
+                {'. '}
                 <Trans>Do you want to continue?</Trans>
               </Text>
             </View>

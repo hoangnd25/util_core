@@ -16,7 +16,7 @@ import { FormValues, ThemeSettingsFormProps } from './types';
 import ConfirmModal from './ConfirmModal';
 
 const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = props => {
-  const { portal, isSaving } = props;  const isPartnerPortal = ['content_partner', 'distribution_partner'].includes(portal.type || null);
+  const { portal, user, isSaving } = props;  const isPartnerPortal = ['content_partner', 'distribution_partner'].includes(portal.type || null);
   const { handleSubmit, setFeaturedImageCropped, showConfirmModal, setShowConfirmModal, setChangesConfirmed } =
     useThemeSettingsFormHandler(props);
 

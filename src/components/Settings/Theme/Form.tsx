@@ -38,10 +38,13 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
   const apiomImages = {};
   PREVIEW_IMAGE_TYPE.forEach((key) => {
     apiomImages[key] =
-      initialValues[key].includes('get-started') || initialValues[key].includes('logo-white') ? '' : initialValues[key];
+      initialValues[key]?.includes('get-started') || initialValues[key]?.includes('logo-white')
+        ? ''
+        : initialValues[key];
   });
-  const updatedInitialValues = [initialValues].map((item, i) => ({ ...item, ...apiomImages }));
-  [initialValues] = updatedInitialValues;
+
+  initialValues = { ...initialValues, ...apiomImages };
+
   const [themeSettings, setThemeSettings] = useState(initialValues);
 
   const formikRef = useRef<Formik>(null);
@@ -83,9 +86,8 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
     PREVIEW_IMAGE_TYPE.forEach((key) => {
       previewImages[key] = setPreviewImage(key, newValues, errors);
     });
-
-    const previewValues = [newValues].map((item, i) => ({ ...item, ...previewImages }));
-    setThemeSettings(previewValues[0] as any);
+    const previewValues = { ...newValues, ...previewImages };
+    setThemeSettings(previewValues);
   };
 
   const handleConfirmModalClose = () => {

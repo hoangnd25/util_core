@@ -159,13 +159,14 @@ export class ThemeSettingsPage extends React.Component<ThemeSettingsPageProps, S
   public render() {
     const { isSavingPortal, isUploading } = this.state;
     const {
-      currentSession: { portal },
+      currentSession: { portal, user },
     } = this.props;
 
     return (
       <View data-testid="theme_settings_page">
         <ThemeSettingsForm
           portal={portal}
+          user={user}
           isSaving={isSavingPortal || isUploading}
           onSave={this.handleSave}
           onUpload={this.handleImageUpload}

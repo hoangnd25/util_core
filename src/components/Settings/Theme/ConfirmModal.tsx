@@ -47,14 +47,14 @@ const ConfirmModal = ({
               </Text>
             </View>
             <View element="ul" marginTop={4}>
-              {applyCustomizationGroups.map(group => (
+              {applyCustomizationGroups.map((group) => (
                 <Text key={group} element="li" marginLeft={2} marginBottom={4}>
                   • <TranslatedGroup>{group}</TranslatedGroup>
                 </Text>
               ))}
             </View>
             <View marginTop={3} flexDirection="row" justifyContent="center">
-              <ButtonFilled color="accent" marginRight={5} onClick={onConfirm}>
+              <ButtonFilled color="accent" marginRight={5} onClick={onConfirm} data-tid="Portal.Settings.Confirm">
                 <Trans>Apply to all portals</Trans>
               </ButtonFilled>
               <ButtonFilled onClick={onRequestClose}>Cancel</ButtonFilled>

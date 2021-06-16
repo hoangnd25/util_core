@@ -7,6 +7,7 @@ import {
   SETTINGS_THEME_UPLOAD_FIELDS_MAPPING,
   PREVIEW_IMAGE_TYPE,
 } from '@src/constants';
+import Track from '@src/utils/tracking';
 import SectionBrand from './SectionBrand';
 import SectionLogin from './SectionLogin';
 import SectionSignup from './SectionSignup';
@@ -19,7 +20,7 @@ import { FormValues, ThemeSettingsFormProps } from './types';
 import ConfirmModal from './ConfirmModal';
 
 const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => {
-  const { portal, isSaving } = props;
+  const { portal, user, isSaving } = props;
   const isPartnerPortal = ['content_partner', 'distribution_partner'].includes(portal.type || null);
   const { handleSubmit, setFeaturedImageCropped, showConfirmModal, setShowConfirmModal, setChangesConfirmed } =
     useThemeSettingsFormHandler(props);
@@ -100,11 +101,11 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
   };
 
   const handleConfirmChanges = () => {
+    Track.trackFS('Button.Portal.Settings.Confirm.Click', { portalId: portal.id, userId: user.id, email: user.mail });
     setChangesConfirmed(true);
     setShowConfirmModal(false);
-    formikRef.current?.submitForm(); // eslint-disable-line no-unused-expressions
+    formikRef.current?.submitForm();
   };
-
   return (
     <Form
       formikRef={formikRef}
@@ -128,7 +129,20 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
       <SectionDashboard isPartnerPortal={isPartnerPortal} />
       <SectionCertificate isPartnerPortal={isPartnerPortal} />
       <View flexDirection="row">
-        <SubmitButton disableOnFormError color="accent" flexDirection="row" alignItems="center">
+        <SubmitButton
+          disableOnFormError
+          color="accent"
+          flexDirection="row"
+          alignItems="center"
+          data-tid="Portal.Settings.Save"
+          onClick={() =>
+            Track.trackFS('Button.Portal.Settings.Save.Click', {
+              portalId: portal.id,
+              userId: user.id,
+              email: user.mail,
+            })
+          }
+        >
           <View flexDirection="row" alignItems="center">
             {isSaving && <Spinner color="white" marginRight={2} />}
             <Trans>Save changes</Trans>

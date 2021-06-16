@@ -20,6 +20,7 @@ module.exports = {
     AUTH_URL: process.env.AUTH_URL,
     AUTH_CLIENT_ID: process.env.AUTH_CLIENT_ID,
     WEBSITE_URL: process.env.WEBSITE_URL || 'www.go1.com',
+    BEAM_URL: process.env.BEAM_URL,
   },
 
   webpack: (config, options) => {

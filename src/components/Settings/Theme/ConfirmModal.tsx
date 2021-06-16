@@ -58,7 +58,7 @@ const ConfirmModal = ({
                 <Trans>customer portals</Trans>
               </Text>
               <Text display="inline">
-                {'. '}
+                . 
                 <Trans>Do you want to continue?</Trans>
               </Text>
             </View>
@@ -70,7 +70,7 @@ const ConfirmModal = ({
               ))}
             </View>
             <View marginTop={3} flexDirection="row" justifyContent="center">
-              <ButtonFilled color="accent" marginRight={5} onClick={onConfirm}>
+              <ButtonFilled color="accent" marginRight={5} onClick={onConfirm} data-tid="Portal.Settings.Confirm">
                 <Trans>Apply to all portals</Trans>
               </ButtonFilled>
               <ButtonFilled onClick={onRequestClose}>Cancel</ButtonFilled>

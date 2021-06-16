@@ -17,7 +17,7 @@ msgstr ""
 msgid ", or"
 msgstr ""
 
-#: src/components/Settings/Theme/Previews/SplitLayout.tsx:48
+#: src/components/Settings/Theme/Previews/SplitLayout.tsx:50
 msgid "<0>terms of use</0> and <1>privacy policy.</1>"
 msgstr ""
 
@@ -45,22 +45,23 @@ msgstr ""
 msgid "Admin permissions required"
 msgstr ""
 
+#: src/components/Settings/Theme/SectionBrand.tsx:65
 #: src/components/Settings/Theme/SectionSignup.tsx:21
 msgid "Already have an account?"
 msgstr ""
 
-#: src/components/Settings/Theme/Form.hooks.tsx:71
-#: src/components/Settings/Theme/Form.test.tsx:256
+#: src/components/Settings/Theme/Form.hooks.tsx:63
+#: src/components/Settings/Theme/Form.test.tsx:292
 msgid "An unexpected error has occurred while applying customization to customer portals. Please try again."
 msgstr ""
 
-#: src/components/Settings/Theme/Form.hooks.tsx:74
-#: src/components/Settings/Theme/Form.test.tsx:233
+#: src/components/Settings/Theme/Form.hooks.tsx:66
+#: src/components/Settings/Theme/Form.test.tsx:269
 msgid "An unexpected error has occurred while saving form. Please try again."
 msgstr ""
 
-#: src/components/Settings/Theme/Form.hooks.tsx:68
-#: src/components/Settings/Theme/Form.test.tsx:210
+#: src/components/Settings/Theme/Form.hooks.tsx:60
+#: src/components/Settings/Theme/Form.test.tsx:246
 msgid "An unexpected error has occurred while uploading image. Please try again."
 msgstr ""
 
@@ -77,27 +78,27 @@ msgstr ""
 msgid "Apply dashboard customization to customer portals"
 msgstr ""
 
-#: src/components/Settings/Theme/SectionBrand.tsx:96
+#: src/components/Settings/Theme/SectionBrand.tsx:115
 msgid "Apply featured image to customer portals"
 msgstr ""
 
-#: src/components/Settings/Theme/SectionLogin.tsx:44
+#: src/components/Settings/Theme/SectionLogin.tsx:42
 msgid "Apply login customization to customer portals"
 msgstr ""
 
-#: src/components/Settings/Theme/SectionBrand.tsx:63
+#: src/components/Settings/Theme/SectionBrand.tsx:82
 msgid "Apply logo to customer portals"
 msgstr ""
 
-#: src/components/Settings/Theme/SectionBrand.tsx:71
+#: src/components/Settings/Theme/SectionBrand.tsx:90
 msgid "Apply portal color to customer portals"
 msgstr ""
 
-#: src/components/Settings/Theme/SectionSignup.tsx:54
+#: src/components/Settings/Theme/SectionSignup.tsx:34
 msgid "Apply sign up customization to customer portals"
 msgstr ""
 
-#: src/components/Settings/Theme/ConfirmModal.tsx:36
+#: src/components/Settings/Theme/ConfirmModal.tsx:50
 msgid "Apply to all portals"
 msgstr ""
 
@@ -109,7 +110,7 @@ msgstr ""
 msgid "Azure B2C"
 msgstr ""
 
-#: src/components/Settings/Theme/SectionBrand.tsx:51
+#: src/components/Settings/Theme/SectionBrand.tsx:62
 msgid "Brand"
 msgstr ""
 
@@ -125,6 +126,7 @@ msgstr ""
 msgid "Bucket URL"
 msgstr ""
 
+#: src/components/Settings/Theme/SectionBrand.tsx:65
 #: src/components/Settings/Theme/SectionSignup.tsx:21
 msgid "By creating an account you are agreeing to the Go1"
 msgstr ""
@@ -146,11 +148,11 @@ msgstr ""
 msgid "Canvas"
 msgstr ""
 
-#: src/components/Settings/Theme/ConfirmModal.tsx:8
+#: src/components/Settings/Theme/ConfirmModal.tsx:13
 msgid "Certificate customization"
 msgstr ""
 
-#: src/components/Settings/Theme/Form.tsx:29
+#: src/components/Settings/Theme/Form.tsx:74
 msgid "Changes have not been saved."
 msgstr ""
 
@@ -170,7 +172,7 @@ msgstr ""
 msgid "Configuration"
 msgstr ""
 
-#: src/components/Settings/Theme/ConfirmModal.tsx:15
+#: src/components/Settings/Theme/ConfirmModal.tsx:29
 msgid "Confirm changes"
 msgstr ""
 
@@ -194,6 +196,7 @@ msgstr ""
 msgid "Create mapping rules"
 msgstr ""
 
+#: src/components/Settings/Theme/SectionBrand.tsx:65
 #: src/components/Settings/Theme/SectionSignup.tsx:21
 msgid "Create new account"
 msgstr ""
@@ -210,7 +213,7 @@ msgstr ""
 msgid "Customize dashboard"
 msgstr ""
 
-#: src/components/Settings/Theme/SectionLogin.tsx:18
+#: src/components/Settings/Theme/SectionLogin.tsx:16
 msgid "Customize login"
 msgstr ""
 
@@ -218,7 +221,7 @@ msgstr ""
 msgid "Customize sign up"
 msgstr ""
 
-#: src/components/Settings/Theme/ConfirmModal.tsx:9
+#: src/components/Settings/Theme/ConfirmModal.tsx:14
 msgid "Dashboard customization"
 msgstr ""
 
@@ -246,11 +249,11 @@ msgstr ""
 msgid "Developer"
 msgstr ""
 
-#: src/components/Settings/Theme/ConfirmModal.tsx:26
+#: src/components/Settings/Theme/ConfirmModal.tsx:40
 msgid "Do you want to continue?"
 msgstr ""
 
-#: src/components/Settings/Theme/SectionLogin.tsx:21
+#: src/components/Settings/Theme/SectionLogin.tsx:19
 msgid "Don't have an account?"
 msgstr ""
 
@@ -283,12 +286,12 @@ msgstr ""
 msgid "Failed to save your mapping, please try again or contact us for assistance"
 msgstr ""
 
-#: src/components/Settings/Theme/ConfirmModal.tsx:7
-#: src/components/Settings/Theme/SectionBrand.tsx:74
+#: src/components/Settings/Theme/ConfirmModal.tsx:12
+#: src/components/Settings/Theme/SectionBrand.tsx:93
 msgid "Featured image"
 msgstr ""
 
-#: src/components/Settings/Theme/SectionSignup.tsx:25
+#: src/components/Settings/Theme/Previews/SignupForm.tsx:9
 msgid "First Name"
 msgstr ""
 
@@ -296,7 +299,7 @@ msgstr ""
 msgid "For best results, upload an image with minimum dimensions of 100x100px over a transparent or white background."
 msgstr ""
 
-#: src/components/Settings/Theme/SectionBrand.tsx:52
+#: src/components/Settings/Theme/SectionBrand.tsx:69
 msgid "For best results, upload your logo with minimum dimensions of 200x200px over a transparent background."
 msgstr ""
 
@@ -357,7 +360,7 @@ msgstr ""
 msgid "Last Export"
 msgstr ""
 
-#: src/components/Settings/Theme/SectionSignup.tsx:29
+#: src/components/Settings/Theme/Previews/SignupForm.tsx:12
 msgid "Last Name"
 msgstr ""
 
@@ -365,25 +368,26 @@ msgstr ""
 msgid "Litmos"
 msgstr ""
 
-#: src/components/Settings/Theme/SectionLogin.tsx:21
+#: src/components/Settings/Theme/SectionBrand.tsx:65
+#: src/components/Settings/Theme/SectionLogin.tsx:19
 #: src/components/Settings/Theme/SectionSignup.tsx:21
 msgid "Log in"
 msgstr ""
 
-#: src/components/Settings/Theme/ConfirmModal.tsx:11
+#: src/components/Settings/Theme/ConfirmModal.tsx:16
 msgid "Login customization"
 msgstr ""
 
-#: src/components/Settings/Theme/SectionLogin.tsx:41
+#: src/components/Settings/Theme/SectionLogin.tsx:39
 msgid "Login description"
 msgstr ""
 
-#: src/components/Settings/Theme/SectionLogin.tsx:38
+#: src/components/Settings/Theme/SectionLogin.tsx:36
 msgid "Login title"
 msgstr ""
 
-#: src/components/Settings/Theme/ConfirmModal.tsx:5
-#: src/components/Settings/Theme/SectionBrand.tsx:52
+#: src/components/Settings/Theme/ConfirmModal.tsx:10
+#: src/components/Settings/Theme/SectionBrand.tsx:69
 msgid "Logo"
 msgstr ""
 
@@ -444,15 +448,15 @@ msgstr ""
 msgid "Please contact your Go1 administrator to get access to this page or to make changes to your portal settings."
 msgstr ""
 
-#: src/components/Settings/Theme/SectionBrand.tsx:58
-#: src/components/Settings/Theme/SectionBrand.tsx:82
+#: src/components/Settings/Theme/SectionBrand.tsx:77
+#: src/components/Settings/Theme/SectionBrand.tsx:101
 #: src/components/Settings/Theme/SectionCertificate.tsx:20
 #: src/components/Settings/Theme/SectionDashboard.tsx:24
 #: src/components/Settings/Theme/SectionDashboard.tsx:50
 msgid "Please upload an image less than 5MB"
 msgstr ""
 
-#: src/components/Settings/Theme/SectionBrand.tsx:81
+#: src/components/Settings/Theme/SectionBrand.tsx:100
 msgid "Please upload an image with at least 1000px in height"
 msgstr ""
 
@@ -465,7 +469,7 @@ msgstr ""
 msgid "Please upload an image with minimum dimensions of 1920x300px"
 msgstr ""
 
-#: src/components/Settings/Theme/SectionBrand.tsx:57
+#: src/components/Settings/Theme/SectionBrand.tsx:76
 msgid "Please upload an image with minimum dimensions of 200x200px"
 msgstr ""
 
@@ -477,8 +481,8 @@ msgstr ""
 msgid "Portal Information"
 msgstr ""
 
-#: src/components/Settings/Theme/ConfirmModal.tsx:6
-#: src/components/Settings/Theme/SectionBrand.tsx:67
+#: src/components/Settings/Theme/ConfirmModal.tsx:11
+#: src/components/Settings/Theme/SectionBrand.tsx:86
 msgid "Portal color"
 msgstr ""
 
@@ -490,11 +494,11 @@ msgstr ""
 msgid "Portal info, legal and login config"
 msgstr ""
 
-#: src/components/Settings/Theme/SectionBrand.tsx:51
+#: src/components/Settings/Theme/SectionBrand.tsx:63
 msgid "Preview brand"
 msgstr ""
 
-#: src/components/Settings/Theme/SectionLogin.tsx:19
+#: src/components/Settings/Theme/SectionLogin.tsx:17
 msgid "Preview login"
 msgstr ""
 
@@ -538,7 +542,7 @@ msgstr ""
 msgid "SCORM and xAPI"
 msgstr ""
 
-#: src/components/Settings/Theme/Form.tsx:52
+#: src/components/Settings/Theme/Form.tsx:102
 msgid "Save changes"
 msgstr ""
 
@@ -592,15 +596,15 @@ msgstr ""
 msgid "Show all optional fields"
 msgstr ""
 
-#: src/components/Settings/Theme/SectionLogin.tsx:21
+#: src/components/Settings/Theme/SectionLogin.tsx:19
 msgid "Sign up"
 msgstr ""
 
-#: src/components/Settings/Theme/SectionSignup.tsx:50
+#: src/components/Settings/Theme/SectionSignup.tsx:30
 msgid "Sign up description"
 msgstr ""
 
-#: src/components/Settings/Theme/SectionSignup.tsx:46
+#: src/components/Settings/Theme/SectionSignup.tsx:26
 msgid "Sign up title"
 msgstr ""
 
@@ -616,7 +620,7 @@ msgstr ""
 msgid "Signature title"
 msgstr ""
 
-#: src/components/Settings/Theme/ConfirmModal.tsx:10
+#: src/components/Settings/Theme/ConfirmModal.tsx:15
 msgid "Signup customization"
 msgstr ""
 
@@ -648,8 +652,8 @@ msgstr ""
 msgid "Success Factors"
 msgstr ""
 
-#: src/components/Settings/Theme/ConfirmModal.tsx:19
-msgid "The following options will be applied to all"
+#: src/components/Settings/Theme/ConfirmModal.tsx:33
+msgid "The following options will be applied to"
 msgstr ""
 
 #: src/pages/r/app/portal/settings/theme/index.tsx:90
@@ -660,7 +664,7 @@ msgstr ""
 msgid "Theme and Customization"
 msgstr "Giao diện và tinh chỉnh"
 
-#: src/pages/r/app/portal/settings/theme/index.tsx:124
+#: src/pages/r/app/portal/settings/theme/index.tsx:114
 msgid "Theme and customization"
 msgstr "Giao diện và tinh chỉnh"
 
@@ -668,13 +672,13 @@ msgstr "Giao diện và tinh chỉnh"
 msgid "This application ID can be used as a SCORM or xAPI provider. You can now download your content in SCORM or xAPI format from the Publish / Sharing menu found in the Settings section of each piece of training."
 msgstr ""
 
-#: src/components/Settings/Theme/SectionBrand.tsx:63
-#: src/components/Settings/Theme/SectionBrand.tsx:71
-#: src/components/Settings/Theme/SectionBrand.tsx:96
+#: src/components/Settings/Theme/SectionBrand.tsx:82
+#: src/components/Settings/Theme/SectionBrand.tsx:90
+#: src/components/Settings/Theme/SectionBrand.tsx:115
 #: src/components/Settings/Theme/SectionCertificate.tsx:33
 #: src/components/Settings/Theme/SectionDashboard.tsx:54
-#: src/components/Settings/Theme/SectionLogin.tsx:44
-#: src/components/Settings/Theme/SectionSignup.tsx:54
+#: src/components/Settings/Theme/SectionLogin.tsx:42
+#: src/components/Settings/Theme/SectionSignup.tsx:34
 msgid "This can be changed from the individual portal’s settings page"
 msgstr ""
 
@@ -723,7 +727,7 @@ msgstr ""
 msgid "Used as the logo in your dashboard. For best results, upload an image with minimum dimensions of 100x100px over a transparent background."
 msgstr ""
 
-#: src/components/Settings/Theme/SectionBrand.tsx:74
+#: src/components/Settings/Theme/SectionBrand.tsx:93
 msgid "Used in sign up and login pages. For best results, upload an image with at least 1000px in height. The image can be repositioned to fit the intended 1:1 ratio."
 msgstr ""
 
@@ -788,12 +792,12 @@ msgstr ""
 msgid "Zapier"
 msgstr ""
 
-#: src/pages/_error.tsx:29
-msgid "contact us"
+#: src/components/Settings/Theme/ConfirmModal.tsx:36
+msgid "all customer portals"
 msgstr ""
 
-#: src/components/Settings/Theme/ConfirmModal.tsx:23
-msgid "customer portals"
+#: src/pages/_error.tsx:29
+msgid "contact us"
 msgstr ""
 
 #: src/pages/_error.tsx:32
@@ -804,10 +808,11 @@ msgstr ""
 msgid "home"
 msgstr ""
 
-#: src/components/Settings/Theme/SectionLogin.tsx:21
+#: src/components/Settings/Theme/SectionLogin.tsx:19
 msgid "login"
 msgstr ""
 
+#: src/components/Settings/Theme/SectionBrand.tsx:65
 #: src/components/Settings/Theme/SectionSignup.tsx:21
 msgid "sign up"
 msgstr ""
@@ -818,4 +823,8 @@ msgstr ""
 
 #: src/components/DataFeed/uploadState.tsx:84
 msgid "{0} is not a supported file type"
+msgstr ""
+
+#: src/components/Settings/Theme/ConfirmModal.tsx:36
+msgid "{childPortalsCount, plural, one {# customer portal} other {all # customer portals}}"
 msgstr ""

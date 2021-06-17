@@ -87,9 +87,10 @@ const SectionBrand: FunctionComponent<Props> = ({
   }
 
   function handleCrop(file: Blob) {
-    if (hasInteracted) {
-      onFeaturedImageCropped(file);
-    }
+    onFeaturedImageCropped(file);
+    // if (hasInteracted) {
+    //   onFeaturedImageCropped(file);
+    // }
   }
 
   return (

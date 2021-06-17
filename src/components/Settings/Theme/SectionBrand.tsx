@@ -1,12 +1,4 @@
-import {
-  Checkbox,
-  ColorPicker as BaseColorPicker,
-  CourseModule,
-  Field,
-  foundations,
-  ImageUploader,
-  View,
-} from '@go1d/go1d';
+import { Checkbox, ColorPicker as BaseColorPicker, Field, foundations, ImageUploader, View } from '@go1d/go1d';
 import { t, Trans } from '@lingui/macro';
 import { I18n } from '@lingui/react';
 import SettingsBlockMaker from '@src/components/Settings/SettingsBlockMaker';
@@ -109,7 +101,9 @@ const SectionBrand: FunctionComponent<Props> = ({
             title={i18n._(t`brand`)}
             buttonText={i18n._(t`Create new account`)}
             primaryTagline={signupTitle || 'Sign up with your work email '}
-            terms={i18n._(t`By creating an account you are agreeing to the Go1`)}
+            terms={
+              <Trans>By creating an account you are agreeing to {signupTitle || 'the Go1'}&rsquo;s</Trans>
+            }
             secondaryTagline={[i18n._(t`Already have an account?`), i18n._(t`Log in`)]}
             description={signupDescription}
             featuredImage={landingPage}

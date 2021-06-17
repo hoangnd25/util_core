@@ -5,7 +5,6 @@ import { I18n } from '@lingui/react';
 import SettingsFormSection from '@src/components/Settings/SettingsFormSection';
 import PreviewButton from '@src/components/Settings/Theme/PreviewButton';
 import Preview from '@src/components/Settings/Theme/Preview';
-import IconEye from '@go1d/go1d/build/components/Icons/Eye';
 import getConfig from 'next/config';
 import { FormValues } from './types';
 import SignupForm from './Previews/SignupForm';
@@ -44,7 +43,9 @@ const SectionSignup: FunctionComponent<Props> = ({ isPartnerPortal, themeSetting
             title={i18n._(t`sign up`)}
             buttonText={i18n._(t`Create new account`)}
             primaryTagline={signupTitle || 'Sign up with your work email '}
-            terms={i18n._(t`By creating an account you are agreeing to the Go1`)}
+            terms={
+              <Trans>By creating an account you are agreeing to {signupTitle || 'the Go1'}&rsquo;s</Trans>
+            }
             secondaryTagline={[i18n._(t`Already have an account?`), i18n._(t`Log in`)]}
             description={signupDescription}
             featuredImage={landingPage}

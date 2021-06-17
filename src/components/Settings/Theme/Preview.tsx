@@ -9,7 +9,7 @@ interface Props {
   logo: File | string | null;
   buttonText: string;
   featuredImage: string;
-  terms: string;
+  terms: React.ReactNode;
   secondaryTagline: React.ReactNode;
   children: React.ReactNode;
   title: string;

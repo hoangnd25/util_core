@@ -9,7 +9,7 @@ interface Props {
   logo: File | string | null;
   buttonText;
   featuredImage;
-  terms: string;
+  terms: React.ReactNode;
   secondaryTagline: React.ReactNode;
   children: React.ReactNode;
   showPolicyLinks: boolean;
@@ -109,11 +109,11 @@ const SplitLayout: React.FC<Props> = (props) => {
                     {terms}{' '}
                     <Trans>
                       <Text color="successLowest" fontWeight="bold" textDecoration="underline">
-                        terms of use
+                        Terms of Use
                       </Text>{' '}
                       and{' '}
                       <Text color="successLowest" fontWeight="bold" textDecoration="underline">
-                        privacy policy.
+                        Privacy Policy.
                       </Text>
                     </Trans>
                   </Text>

@@ -3,7 +3,7 @@ import * as React from 'react';
 import configureStore from 'redux-mock-store';
 import authenticatedStoreState from '@src/store/mocks/authenticatedStore';
 import withI18n, { getLocale, defaultLocale } from '.';
-import { currentSessionMock } from "../WithAuth/mocks/authMocks";
+import { currentSessionMock } from '../WithAuth/mocks/authMocks';
 
 /** TEST SETUP * */
 let Component;
@@ -12,18 +12,18 @@ const mockStore = configureStore([]);
 const store = mockStore(authenticatedStoreState);
 
 jest.spyOn(store, 'getState').mockReturnValue({
-  currentSession: currentSessionMock
+  currentSession: currentSessionMock,
 });
 
 jest.mock('@src/locale/en-US/messages.po', () => ({
   messages: {
-    "Something!": "Something!"
-  }
+    'Something!': 'Something!',
+  },
 }));
 
 const TestComp = () => {
-  return <div>Something!</div>
-}
+  return <div>Something!</div>;
+};
 
 const setup = (props: any = {}) => {
   Component = withI18n(TestComp);
@@ -32,11 +32,11 @@ const setup = (props: any = {}) => {
 
 describe('With18n', () => {
   it('should render with translation', (done) => {
-    const wrapper = setup() as any;
+    const wrapper = setup();
     Component.getInitialProps({ router: { query: {} }, ctx: { store } });
     setImmediate(() => {
       wrapper.update();
-      expect(wrapper.find("div").text()).toBe("Something!");
+      expect(wrapper.find('div').text()).toBe('Something!');
       done();
     });
   });
@@ -58,7 +58,7 @@ describe('getLocale', () => {
 
   it('should return user locale', () => {
     const session = { ...currentSessionMock } as any;
-    session.user.locale= ['fr'];
+    session.user.locale = ['fr'];
 
     const locale = getLocale(session);
     expect(locale).toBe('fr');

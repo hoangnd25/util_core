@@ -1,7 +1,7 @@
 import { mount } from 'enzyme';
 import * as React from 'react';
 import { I18nProvider } from '@lingui/react';
-import { GO1Portal } from '@src/types/user';
+import { GO1Portal, GO1User } from '@src/types/user';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { Value } from 'slate';
 import { Trans } from '@lingui/macro';
@@ -67,7 +67,7 @@ const http = create();
 
 beforeEach(() => {
   mock = new MockAdapter(http);
-  global.URL.createObjectURL = jest.fn();
+  window.URL.createObjectURL = jest.fn();
 });
 
 const setup = (props?: ThemeSettingsFormProps) => {
@@ -89,6 +89,7 @@ it('Should render all fields correctly', () => {
   const wrapper = setup({
     onSave: jest.fn(),
     onUpload: jest.fn(),
+    user: {} as GO1User,
     portal: {
       ...defaultPortal,
       type: 'distribution_partner',
@@ -104,6 +105,7 @@ it('Should not render apply customization checkboxes for non partner portal', ()
     onSave: jest.fn(),
     onUpload: jest.fn(),
     portal: defaultPortal as GO1Portal,
+    user: {} as GO1User,
   });
   Object.entries(APPLY_CHILD_PORTAL_INPUTS).forEach(([_, selector]) => {
     expect(wrapper.find(selector)).toHaveLength(0);
@@ -117,6 +119,7 @@ it('Should ignore unchanged fields for submit', async (done) => {
     onSave: saveFn,
     onUpload: uploadFn,
     portal: defaultPortal as GO1Portal,
+    user: {} as GO1User,
   });
 
   wrapper.find('Form').simulate('submit');
@@ -139,6 +142,7 @@ it('Should show confirm modal for apply child portal customization', async (done
       ...defaultPortal,
       type: 'distribution_partner',
     } as any,
+    user: {} as GO1User,
   });
 
   act(() => {
@@ -168,6 +172,7 @@ it('Should be able to handle submit', async (done) => {
       onSave: saveFn,
       onUpload: uploadFn,
       portal: defaultPortal as GO1Portal,
+      user: {} as GO1User,
     })
   );
 
@@ -264,6 +269,7 @@ it('Should be able to handle image upload error', async (done) => {
       onUpload: uploadFn,
       onError: errorFn,
       portal: defaultPortal as GO1Portal,
+      user: {} as GO1User,
     })
   );
 
@@ -298,6 +304,7 @@ it('Should be able to handle form saving error', async (done) => {
       onUpload: uploadFn,
       onError: errorFn,
       portal: defaultPortal as GO1Portal,
+      user: {} as GO1User,
     })
   );
 
@@ -331,6 +338,7 @@ it('Should be able to handle apply customization to child portals error', async 
       onUpload: uploadFn,
       onError: errorFn,
       portal: defaultPortal as GO1Portal,
+      user: {} as GO1User,
     })
   );
 

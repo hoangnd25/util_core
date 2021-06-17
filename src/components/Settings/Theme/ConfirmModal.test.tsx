@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { I18nProvider } from '@lingui/react';
 import { FormikProvider } from 'formik';
-import { render, waitFor } from '@testing-library/react';
+import { render, waitFor, screen } from '@testing-library/react';
 import AppContext from '@src/utils/appContext';
 import create from '@src/utils/http';
 import MockAdapter from 'axios-mock-adapter';
@@ -22,7 +22,7 @@ const http = create();
 
 beforeEach(() => {
   mock = new MockAdapter(http);
-  global.URL.createObjectURL = jest.fn();
+  window.URL.createObjectURL = jest.fn();
 });
 
 const setup = (props?: ConfirmModalProps) => {
@@ -43,63 +43,49 @@ const setup = (props?: ConfirmModalProps) => {
   );
 };
 
-it('Should render without portals count', async (done) => {
+it('Should render without portals count', async () => {
   mock.onGet('/portal/test.mygo1.com?includeChildPortalsCount=1').reply(200, {});
-  const { getByText, findAllByTestId } = setup({
+  const { findAllByTestId } = setup({
     isOpen: true,
     portalInstance: 'test.mygo1.com',
   });
 
   await waitFor(async () => {
-    expect(
-      getByText((_, node) => {
-        return (
-          node.textContent === 'The following options will be applied to all customer portals. Do you want to continue?'
-        );
-      })
-    ).toBeInTheDocument();
     expect(await findAllByTestId('customization-group')).toHaveLength(Object.keys(formValues).length);
-    done();
+    expect(screen.queryByTestId('confirm-message').textContent).toBe(
+      'The following options will be applied to all customer portals. Do you want to continue?'
+    );
   });
 });
 
-it('Should render with 1 portal', async (done) => {
+it('Should render with 1 portal', async () => {
   mock.onGet('/portal/test.mygo1.com?includeChildPortalsCount=1').reply(200, {
     partner_child_portals_number: 1,
   });
-  const { getByText, findAllByTestId } = setup({
-    isOpen: true,
-    portalInstance: 'test.mygo1.com',
-  });
-
-  await waitFor(async () => {
-    expect(
-      getByText((_, node) => {
-        return (
-          node.textContent === 'The following options will be applied to 1 customer portal. Do you want to continue?'
-        );
-      })
-    ).toBeInTheDocument();
-    done();
-  });
-});
-
-it('Should render with portals count', async (done) => {
-  mock.onGet('/portal/test.mygo1.com?includeChildPortalsCount=1').reply(200, {
-    partner_child_portals_number: 10,
-  });
-  const { getByText } = setup({
+  setup({
     isOpen: true,
     portalInstance: 'test.mygo1.com',
   });
 
   await waitFor(() => {
-    getByText((_, node) => {
-      return (
-        node.textContent ===
-        'The following options will be applied to all 10 customer portals. Do you want to continue?'
-      );
-    });
-    done();
+    expect(screen.queryByTestId('confirm-message').textContent).toBe(
+      'The following options will be applied to 1 customer portal. Do you want to continue?'
+    );
+  });
+});
+
+it('Should render with portals count', async () => {
+  mock.onGet('/portal/test.mygo1.com?includeChildPortalsCount=1').reply(200, {
+    partner_child_portals_number: 10,
+  });
+  setup({
+    isOpen: true,
+    portalInstance: 'test.mygo1.com',
+  });
+
+  await waitFor(() => {
+    expect(screen.queryByTestId('confirm-message').textContent).toBe(
+      'The following options will be applied to all 10 customer portals. Do you want to continue?'
+    );
   });
 });

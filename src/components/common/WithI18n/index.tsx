@@ -59,8 +59,18 @@ export default function withI18n(App, language = defaultLocale) {
 
     render() {
       const { language: lang, catalogs, ...props } = this.props;
+      let internalCatalogs = catalogs;
+
+      if (typeof window !== 'undefined' && lang) {
+        /* eslint-disable */
+        const messages = require(`@src/locale/${lang}/messages.po`);
+        internalCatalogs = {
+          [lang]: messages,
+        };
+      }
+
       return (
-        <I18nProvider language={lang} catalogs={catalogs}>
+        <I18nProvider language={lang} catalogs={internalCatalogs}>
           <I18n>{({ i18n }) => <App i18n={i18n} {...props} />}</I18n>
         </I18nProvider>
       );

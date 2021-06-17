@@ -51,17 +51,17 @@ msgid "Already have an account?"
 msgstr ""
 
 #: src/components/Settings/Theme/Form.hooks.tsx:63
-#: src/components/Settings/Theme/Form.test.tsx:292
+#: src/components/Settings/Theme/Form.test.tsx:300
 msgid "An unexpected error has occurred while applying customization to customer portals. Please try again."
-msgstr ""
+msgstr "An unexpected error has occurred while applying customisation to customer portals. Please try again."
 
 #: src/components/Settings/Theme/Form.hooks.tsx:66
-#: src/components/Settings/Theme/Form.test.tsx:269
+#: src/components/Settings/Theme/Form.test.tsx:276
 msgid "An unexpected error has occurred while saving form. Please try again."
 msgstr ""
 
 #: src/components/Settings/Theme/Form.hooks.tsx:60
-#: src/components/Settings/Theme/Form.test.tsx:246
+#: src/components/Settings/Theme/Form.test.tsx:252
 msgid "An unexpected error has occurred while uploading image. Please try again."
 msgstr ""
 
@@ -72,19 +72,19 @@ msgstr ""
 
 #: src/components/Settings/Theme/SectionCertificate.tsx:33
 msgid "Apply completion certificate customization to customer portals"
-msgstr ""
+msgstr "Apply completion certificate customisation to customer portals"
 
 #: src/components/Settings/Theme/SectionDashboard.tsx:54
 msgid "Apply dashboard customization to customer portals"
-msgstr ""
+msgstr "Apply dashboard customisation to customer portals"
 
 #: src/components/Settings/Theme/SectionBrand.tsx:115
 msgid "Apply featured image to customer portals"
 msgstr ""
 
-#: src/components/Settings/Theme/SectionLogin.tsx:42
+#: src/components/Settings/Theme/SectionLogin.tsx:44
 msgid "Apply login customization to customer portals"
-msgstr ""
+msgstr "Apply login customisation to customer portals"
 
 #: src/components/Settings/Theme/SectionBrand.tsx:82
 msgid "Apply logo to customer portals"
@@ -96,9 +96,9 @@ msgstr ""
 
 #: src/components/Settings/Theme/SectionSignup.tsx:34
 msgid "Apply sign up customization to customer portals"
-msgstr ""
+msgstr "Apply sign up customisation to customer portals"
 
-#: src/components/Settings/Theme/ConfirmModal.tsx:50
+#: src/components/Settings/Theme/ConfirmModal.tsx:64
 msgid "Apply to all portals"
 msgstr ""
 
@@ -116,7 +116,7 @@ msgstr ""
 
 #: src/components/common/WithApiom/menus.ts:19
 msgid "Brand, message customization and certificates"
-msgstr ""
+msgstr "Brand, message customisation and certificates"
 
 #: src/components/DataFeed/uploadState.tsx:415
 msgid "Browse for a CSV file to upload for setting up fields mapping rules. For reference, please download <0><1>sample CSV file</1></0> to check the column format"
@@ -150,9 +150,9 @@ msgstr ""
 
 #: src/components/Settings/Theme/ConfirmModal.tsx:13
 msgid "Certificate customization"
-msgstr ""
+msgstr "Certificate customisation"
 
-#: src/components/Settings/Theme/Form.tsx:74
+#: src/components/Settings/Theme/Form.tsx:83
 msgid "Changes have not been saved."
 msgstr ""
 
@@ -172,7 +172,7 @@ msgstr ""
 msgid "Configuration"
 msgstr ""
 
-#: src/components/Settings/Theme/ConfirmModal.tsx:29
+#: src/components/Settings/Theme/ConfirmModal.tsx:51
 msgid "Confirm changes"
 msgstr ""
 
@@ -213,7 +213,7 @@ msgstr ""
 msgid "Customize dashboard"
 msgstr ""
 
-#: src/components/Settings/Theme/SectionLogin.tsx:16
+#: src/components/Settings/Theme/SectionLogin.tsx:18
 msgid "Customize login"
 msgstr "Customise login"
 
@@ -249,11 +249,7 @@ msgstr ""
 msgid "Developer"
 msgstr ""
 
-#: src/components/Settings/Theme/ConfirmModal.tsx:40
-msgid "Do you want to continue?"
-msgstr ""
-
-#: src/components/Settings/Theme/SectionLogin.tsx:19
+#: src/components/Settings/Theme/SectionLogin.tsx:21
 msgid "Don't have an account?"
 msgstr ""
 
@@ -369,20 +365,20 @@ msgid "Litmos"
 msgstr ""
 
 #: src/components/Settings/Theme/SectionBrand.tsx:65
-#: src/components/Settings/Theme/SectionLogin.tsx:19
+#: src/components/Settings/Theme/SectionLogin.tsx:21
 #: src/components/Settings/Theme/SectionSignup.tsx:21
 msgid "Log in"
 msgstr ""
 
 #: src/components/Settings/Theme/ConfirmModal.tsx:16
 msgid "Login customization"
-msgstr ""
+msgstr "Login customisation"
 
-#: src/components/Settings/Theme/SectionLogin.tsx:39
+#: src/components/Settings/Theme/SectionLogin.tsx:41
 msgid "Login description"
 msgstr ""
 
-#: src/components/Settings/Theme/SectionLogin.tsx:36
+#: src/components/Settings/Theme/SectionLogin.tsx:38
 msgid "Login title"
 msgstr ""
 
@@ -498,7 +494,7 @@ msgstr ""
 msgid "Preview brand"
 msgstr ""
 
-#: src/components/Settings/Theme/SectionLogin.tsx:17
+#: src/components/Settings/Theme/SectionLogin.tsx:19
 msgid "Preview login"
 msgstr ""
 
@@ -542,7 +538,7 @@ msgstr ""
 msgid "SCORM and xAPI"
 msgstr ""
 
-#: src/components/Settings/Theme/Form.tsx:102
+#: src/components/Settings/Theme/Form.tsx:111
 msgid "Save changes"
 msgstr ""
 
@@ -596,7 +592,7 @@ msgstr ""
 msgid "Show all optional fields"
 msgstr ""
 
-#: src/components/Settings/Theme/SectionLogin.tsx:19
+#: src/components/Settings/Theme/SectionLogin.tsx:21
 msgid "Sign up"
 msgstr ""
 
@@ -622,7 +618,7 @@ msgstr ""
 
 #: src/components/Settings/Theme/ConfirmModal.tsx:15
 msgid "Signup customization"
-msgstr ""
+msgstr "Signup customisation"
 
 #: src/components/common/WithApiom/menus.ts:231
 msgid "Single Sign On"
@@ -652,8 +648,16 @@ msgstr ""
 msgid "Success Factors"
 msgstr ""
 
-#: src/components/Settings/Theme/ConfirmModal.tsx:33
-msgid "The following options will be applied to"
+#: src/components/Settings/Theme/ConfirmModal.tsx:43
+msgid "The following options will be applied to <0>all customer portals.</0> Do you want to continue?"
+msgstr ""
+
+#: src/components/Settings/Theme/ConfirmModal.tsx:29
+msgid "The following options will be applied to <0>all {childPortalsCount} customer portals.</0> Do you want to continue?"
+msgstr ""
+
+#: src/components/Settings/Theme/ConfirmModal.tsx:35
+msgid "The following options will be applied to <0>{childPortalsCount} customer portal.</0> Do you want to continue?"
 msgstr ""
 
 #: src/pages/r/app/portal/settings/theme/index.tsx:90
@@ -677,7 +681,7 @@ msgstr ""
 #: src/components/Settings/Theme/SectionBrand.tsx:115
 #: src/components/Settings/Theme/SectionCertificate.tsx:33
 #: src/components/Settings/Theme/SectionDashboard.tsx:54
-#: src/components/Settings/Theme/SectionLogin.tsx:42
+#: src/components/Settings/Theme/SectionLogin.tsx:44
 #: src/components/Settings/Theme/SectionSignup.tsx:34
 msgid "This can be changed from the individual portal’s settings page"
 msgstr ""
@@ -792,8 +796,8 @@ msgstr ""
 msgid "Zapier"
 msgstr ""
 
-#: src/components/Settings/Theme/ConfirmModal.tsx:36
-msgid "all customer portals"
+#: src/components/Settings/Theme/SectionBrand.tsx:65
+msgid "brand"
 msgstr ""
 
 #: src/pages/_error.tsx:29
@@ -808,11 +812,10 @@ msgstr ""
 msgid "home"
 msgstr ""
 
-#: src/components/Settings/Theme/SectionLogin.tsx:19
+#: src/components/Settings/Theme/SectionLogin.tsx:21
 msgid "login"
 msgstr ""
 
-#: src/components/Settings/Theme/SectionBrand.tsx:65
 #: src/components/Settings/Theme/SectionSignup.tsx:21
 msgid "sign up"
 msgstr ""
@@ -823,8 +826,4 @@ msgstr ""
 
 #: src/components/DataFeed/uploadState.tsx:84
 msgid "{0} is not a supported file type"
-msgstr ""
-
-#: src/components/Settings/Theme/ConfirmModal.tsx:36
-msgid "{childPortalsCount, plural, one {# customer portal} other {all # customer portals}}"
 msgstr ""

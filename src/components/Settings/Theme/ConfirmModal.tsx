@@ -44,25 +44,48 @@ const ConfirmModal = ({
   }, [isOpen]);
 
   const selectedGroups = getCustomizationGroupsFromValues(formik.values);
-  const countString =
-    childPortalsCount > 1 ? `all ${childPortalsCount} customer portals` : `${childPortalsCount} customer portal`;
+
+  function messageMaker(count: number) {
+    return count > 1 ? (
+      <Trans>
+        The following options will be applied to{' '}
+        <Text display="inline" fontWeight="semibold">
+          all {childPortalsCount} customer portals.
+        </Text>{' '}
+        Do you want to continue?
+      </Trans>
+    ) : (
+      <Trans>
+        The following options will be applied to{' '}
+        <Text display="inline" fontWeight="semibold">
+          {childPortalsCount} customer portal.
+        </Text>{' '}
+        Do you want to continue?
+      </Trans>
+    );
+  }
+
+  const message = childPortalsCount ? (
+    messageMaker(childPortalsCount)
+  ) : (
+    <Trans>
+      The following options will be applied to{' '}
+      <Text display="inline" fontWeight="semibold">
+        all customer portals.
+      </Text>{' '}
+      Do you want to continue?
+    </Trans>
+  );
+
   return (
     <I18n>
       {({ i18n }) => (
         <Modal isOpen={isOpen} title={i18n._(t`Confirm changes`)} onRequestClose={onRequestClose}>
           <View flexGrow={1} justifyContent="space-between">
             <View data-testid="confirm-message" element="p" display="inline">
-              <Text display="inline">
-                <Trans>The following options will be applied to </Trans>{' '}
-              </Text>
-              <Text display="inline" fontWeight="semibold">
-                {childPortalsCount ? countString : <Trans>all customer portals</Trans>}
-              </Text>
-              <Text display="inline">
-                {'. '}
-                <Trans>Do you want to continue?</Trans>
-              </Text>
+              {message}
             </View>
+
             <View element="ul" marginTop={4}>
               {selectedGroups.map((group) => (
                 <Text key={group} element="li" marginLeft={2} marginBottom={4} data-testid="customization-group">

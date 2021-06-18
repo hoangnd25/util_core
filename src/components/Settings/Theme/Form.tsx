@@ -1,5 +1,5 @@
 import { Form, NotificationManager, Spinner, SubmitButton, Theme, View } from '@go1d/go1d';
-import { FunctionComponent, useContext, useRef, useState } from 'react';
+import { FunctionComponent, useContext, useRef, useState, useEffect } from 'react';
 import { Trans } from '@lingui/macro';
 import { Formik } from 'formik';
 import {
@@ -22,8 +22,14 @@ import ConfirmModal from './ConfirmModal';
 const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => {
   const { portal, user, isSaving } = props;
   const isPartnerPortal = ['content_partner', 'distribution_partner'].includes(portal.type || null);
-  const { handleSubmit, setFeaturedImageCropped, showConfirmModal, setShowConfirmModal, setChangesConfirmed } =
-    useThemeSettingsFormHandler(props);
+  const {
+    handleSubmit,
+    setFeaturedImageCropped,
+    featuredImageCropped,
+    showConfirmModal,
+    setShowConfirmModal,
+    setChangesConfirmed,
+  } = useThemeSettingsFormHandler(props);
 
   const theme = useContext(Theme);
   let initialValues = getInitialValues<FormValues>(
@@ -42,10 +48,16 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
         ? ''
         : initialValues[key];
   });
-
   initialValues = { ...initialValues, ...apiomImages };
 
   const [themeSettings, setThemeSettings] = useState(initialValues);
+
+  useEffect(() => {
+    // Interaction of featuredImage upload i.e crop  and move does not trigger form change event.
+    if (featuredImageCropped !== undefined) {
+      themeSettings.featuredImage = `${URL.createObjectURL(featuredImageCropped)}`;
+    }
+  }, [featuredImageCropped]);
 
   const formikRef = useRef<Formik>(null);
 
@@ -75,6 +87,7 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
     if (errors?.length > 0) {
       return undefined;
     }
+
     return `${URL.createObjectURL(values[imageType])}`;
   };
 

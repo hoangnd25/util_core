@@ -4,7 +4,7 @@ import { I18n } from '@lingui/react';
 import SettingsBlockMaker from '@src/components/Settings/SettingsBlockMaker';
 import { usePrevious } from '@src/hooks/usePrevious';
 import { FormikHandlers } from 'formik';
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react';
 import getConfig from 'next/config';
 import SettingsFormSection from '../SettingsFormSection';
 import { ImageSupportText } from './ImageSupportText';
@@ -47,16 +47,28 @@ const ColorPicker: FunctionComponent<{
   />
 );
 
+let id: number;
+
 const SectionBrand: FunctionComponent<Props> = ({
   isSaving,
   onFeaturedImageCropped,
   isPartnerPortal,
   themeSettings,
 }) => {
-  const [hasInteracted, setHasInteracted] = React.useState<boolean>(false);
-  const [openPreview, setOpenPreview] = React.useState(false);
-  const [featuredImageZoomValue, setFeaturedImageZoomValue] = React.useState(1);
+  const [allowCrop, setAllowCrop] = useState<boolean>(false);
+  const [openPreview, setOpenPreview] = useState(false);
+  const [featuredImageZoomValue, setFeaturedImageZoomValue] = useState(1);
   const prevIsSaving = usePrevious(isSaving);
+
+  // A hack way to not call the callback when component mounted
+  // and right after having saved
+  function setAllow2CropAfterMoment() {
+    if (typeof id !== 'undefined') {
+      clearTimeout(id);
+      id = undefined;
+    }
+    id = window.setTimeout(() => setAllowCrop(true), 500);
+  }
 
   const { logo, featuredImage, signupTitle, signupDescription, portalColor } = themeSettings;
 
@@ -65,24 +77,24 @@ const SectionBrand: FunctionComponent<Props> = ({
       ? `url("${featuredImage}")`
       : `url("${CDN_PATH}/signup_default_landing_page.jpg")`;
 
-  React.useEffect(() => {
-    // reset after having saved which means switch from `true` => `false`
+  useEffect(setAllow2CropAfterMoment, []);
+
+  useEffect(() => {
+    // Reset after having saved which means switch from `true` => `false`
     if (typeof prevIsSaving !== 'undefined' && isSaving !== prevIsSaving && !isSaving) {
-      setHasInteracted(false);
+      setAllowCrop(false);
+      setAllow2CropAfterMoment();
       onFeaturedImageCropped(undefined);
-      setFeaturedImageZoomValue(1);
+      if (featuredImageZoomValue !== 1) {
+        setFeaturedImageZoomValue(1);
+      }
     }
   }, [isSaving]);
 
-  function handleInteractionStart() {
-    setHasInteracted(true);
-  }
-
   function handleCrop(file: Blob) {
-    onFeaturedImageCropped(file);
-    // if (hasInteracted) {
-    //   onFeaturedImageCropped(file);
-    // }
+    if (allowCrop) {
+      onFeaturedImageCropped(file);
+    }
   }
 
   return (
@@ -102,9 +114,7 @@ const SectionBrand: FunctionComponent<Props> = ({
             title={i18n._(t`brand`)}
             buttonText={i18n._(t`Create new account`)}
             primaryTagline={signupTitle || 'Sign up with your work email '}
-            terms={
-              <Trans>By creating an account you are agreeing to {signupTitle || 'the Go1'}&rsquo;s</Trans>
-            }
+            terms={<Trans>By creating an account you are agreeing to {signupTitle || 'the Go1'}&rsquo;s</Trans>}
             secondaryTagline={[i18n._(t`Already have an account?`), i18n._(t`Log in`)]}
             description={signupDescription}
             featuredImage={landingPage}
@@ -208,7 +218,6 @@ const SectionBrand: FunctionComponent<Props> = ({
               cropConfig={{
                 aspect: FEATURED_IMAGE_RATIO,
                 onCrop: handleCrop,
-                onInteractionStart: handleInteractionStart,
               }}
               supportedFormatText={<ImageSupportText />}
               zoomValue={featuredImageZoomValue}

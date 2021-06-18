@@ -5,10 +5,10 @@ import { Trans } from '@lingui/macro';
 
 interface Props {
   primaryTagline: React.ReactNode;
-  description;
+  description: React.ReactNode;
   logo: File | string | null;
-  buttonText;
-  featuredImage;
+  buttonText: React.ReactNode;
+  featuredImage: string;
   terms: React.ReactNode;
   secondaryTagline: React.ReactNode;
   children: React.ReactNode;

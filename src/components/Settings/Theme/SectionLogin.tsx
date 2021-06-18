@@ -62,7 +62,7 @@ const SectionLogin: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings
                   autoComplete="new-password"
                   suffixNode={
                     <View padding={4}>
-                      <IconEye color="accent" />
+                      <IconEye color="successLowest" />
                     </View>
                   }
                 />

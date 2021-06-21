@@ -7,24 +7,28 @@ import Preview from '@src/components/Settings/Theme/Preview';
 import PreviewButton from '@src/components/Settings/Theme/PreviewButton';
 import getConfig from 'next/config';
 import IconEye from '@go1d/go1d/build/components/Icons/Eye';
+import { CurrentSessionType } from '@src/types/user';
+import withAuth from '@src/components/common/WithAuth';
 import { FormValues } from './types';
 
 const {
   publicRuntimeConfig: { CDN_PATH },
 } = getConfig();
-
 interface Props {
   isPartnerPortal?: boolean;
   themeSettings?: FormValues;
+  currentSession: CurrentSessionType;
 }
 
-const SectionLogin: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings }) => {
+const SectionLogin: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings, currentSession }) => {
   const { logo, featuredImage, loginTitle, loginDescription, portalColor } = themeSettings;
   const [openPreview, setOpenPreview] = useState(false);
   const landingPage =
     typeof featuredImage === 'string' && featuredImage.length > 0
       ? `url("${featuredImage}")`
       : `url("${CDN_PATH}/login_default_landing_page.jpg")`;
+  console.log(currentSession.portal.configuration.site);
+  const siteName = currentSession.portal.configuration.site_name;
   return (
     <I18n>
       {({ i18n }) => (
@@ -42,7 +46,7 @@ const SectionLogin: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings
             title={i18n._(t`login`)}
             buttonText={i18n._(t`Log in`)}
             primaryTagline={loginTitle || 'Log in to Go1'}
-            terms={<Trans>By continuing you agree to {loginTitle || 'the Go1'}&rsquo;s</Trans>}
+            terms={<Trans>By continuing you agree to {siteName || 'the Go1'}&rsquo;s</Trans>}
             secondaryTagline={[i18n._(t`Don't have an account?`), i18n._(t`Sign up`)]}
             description={loginDescription}
             featuredImage={landingPage}
@@ -97,4 +101,4 @@ const SectionLogin: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings
   );
 };
 
-export default SectionLogin;
+export default withAuth(SectionLogin);

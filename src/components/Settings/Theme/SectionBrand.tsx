@@ -6,6 +6,8 @@ import { usePrevious } from '@src/hooks/usePrevious';
 import { FormikHandlers } from 'formik';
 import React, { FunctionComponent } from 'react';
 import getConfig from 'next/config';
+import { CurrentSessionType } from '@src/types/user';
+import withAuth from '@src/components/common/WithAuth';
 import SettingsFormSection from '../SettingsFormSection';
 import { ImageSupportText } from './ImageSupportText';
 import PreviewButton from './PreviewButton';
@@ -21,6 +23,7 @@ interface Props {
   onFeaturedImageCropped?: (image: Blob | undefined) => void;
   isPartnerPortal?: boolean;
   themeSettings: FormValues;
+  currentSession: CurrentSessionType;
 }
 
 const {
@@ -52,6 +55,7 @@ const SectionBrand: FunctionComponent<Props> = ({
   onFeaturedImageCropped,
   isPartnerPortal,
   themeSettings,
+  currentSession,
 }) => {
   const [hasInteracted, setHasInteracted] = React.useState<boolean>(false);
   const [openPreview, setOpenPreview] = React.useState(false);
@@ -64,6 +68,8 @@ const SectionBrand: FunctionComponent<Props> = ({
     typeof featuredImage === 'string' && featuredImage.length > 0
       ? `url("${featuredImage}")`
       : `url("${CDN_PATH}/signup_default_landing_page.jpg")`;
+
+  const siteName = currentSession.portal.configuration.site_name;
 
   React.useEffect(() => {
     // reset after having saved which means switch from `true` => `false`
@@ -101,9 +107,7 @@ const SectionBrand: FunctionComponent<Props> = ({
             title={i18n._(t`brand`)}
             buttonText={i18n._(t`Create new account`)}
             primaryTagline={signupTitle || 'Sign up with your work email '}
-            terms={
-              <Trans>By creating an account you are agreeing to {signupTitle || 'the Go1'}&rsquo;s</Trans>
-            }
+            terms={<Trans>By creating an account you are agreeing to {siteName || 'the Go1'}&rsquo;s</Trans>}
             secondaryTagline={[i18n._(t`Already have an account?`), i18n._(t`Log in`)]}
             description={signupDescription}
             featuredImage={landingPage}
@@ -233,4 +237,4 @@ const SectionBrand: FunctionComponent<Props> = ({
   );
 };
 
-export default SectionBrand;
+export default withAuth(SectionBrand);

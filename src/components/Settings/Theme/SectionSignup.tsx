@@ -6,6 +6,8 @@ import SettingsFormSection from '@src/components/Settings/SettingsFormSection';
 import PreviewButton from '@src/components/Settings/Theme/PreviewButton';
 import Preview from '@src/components/Settings/Theme/Preview';
 import getConfig from 'next/config';
+import { CurrentSessionType } from '@src/types/user';
+import withAuth from '@src/components/common/WithAuth';
 import { FormValues } from './types';
 import SignupForm from './Previews/SignupForm';
 
@@ -16,16 +18,17 @@ const {
 interface Props {
   isPartnerPortal?: boolean;
   themeSettings?: FormValues;
+  currentSession: CurrentSessionType;
 }
 
-const SectionSignup: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings }) => {
+const SectionSignup: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings, currentSession }) => {
   const { logo, featuredImage, signupTitle, signupDescription, portalColor } = themeSettings;
   const [openPreview, setOpenPreview] = useState(false);
-
   const landingPage =
     typeof featuredImage === 'string' && featuredImage.length > 0
       ? `url("${featuredImage}")`
       : `url("${CDN_PATH}/signup_default_landing_page.jpg")`;
+  const siteName = currentSession.portal.configuration.site_name;
   return (
     <I18n>
       {({ i18n }) => (
@@ -43,9 +46,7 @@ const SectionSignup: FunctionComponent<Props> = ({ isPartnerPortal, themeSetting
             title={i18n._(t`sign up`)}
             buttonText={i18n._(t`Create new account`)}
             primaryTagline={signupTitle || 'Sign up with your work email '}
-            terms={
-              <Trans>By creating an account you are agreeing to {signupTitle || 'the Go1'}&rsquo;s</Trans>
-            }
+            terms={<Trans>By creating an account you are agreeing to {siteName || 'the Go1'}&rsquo;s</Trans>}
             secondaryTagline={[i18n._(t`Already have an account?`), i18n._(t`Log in`)]}
             description={signupDescription}
             featuredImage={landingPage}
@@ -82,4 +83,4 @@ const SectionSignup: FunctionComponent<Props> = ({ isPartnerPortal, themeSetting
   );
 };
 
-export default SectionSignup;
+export default withAuth(SectionSignup);

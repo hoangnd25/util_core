@@ -6,9 +6,9 @@ import IconEye from '@go1d/go1d/build/components/Icons/Eye';
 const SignupForm = () => (
   <I18n>
     {({ i18n }) => (
-      <View>
+      <View width="100%">
         <View flexDirection="row" display="flex" marginY={3} justifyContent="space-between" width="100%">
-          <View paddingRight={1} flexShrink={1} flexGrow={1}>
+          <View paddingRight={1} flexShrink={1} flexGrow={1} width="50%">
             <TextInput
               id="firstName"
               label={i18n._(t`First Name`)}
@@ -16,7 +16,7 @@ const SignupForm = () => (
               css={{ pointerEvents: 'none' }}
             />
           </View>
-          <View paddingLeft={1} flexShrink={1} flexGrow={1}>
+          <View paddingLeft={1} flexShrink={1} flexGrow={1} width="50%">
             <TextInput
               id="lastName"
               label={i18n._(t`Last Name`)}

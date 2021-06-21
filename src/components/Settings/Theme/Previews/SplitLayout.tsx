@@ -36,7 +36,7 @@ const SplitLayout: React.FC<Props> = (props) => {
     <Provider accent={portalColor}>
       <Theme.Consumer>
         {({ colors }) => (
-          <View width="100%" height="580px" flexDirection="row" border={1} borderColor="soft">
+          <View width={[0, 800, 850]} height="580px" flexDirection="row" border={1} borderColor="soft">
             <View
               width="50%"
               height="100%"
@@ -54,7 +54,7 @@ const SplitLayout: React.FC<Props> = (props) => {
               <View
                 alignItems="center"
                 justifyContent="center"
-                width="100%"
+                // width="100%"
                 marginTop={8}
                 paddingBottom={4}
                 paddingX={6}
@@ -104,20 +104,22 @@ const SplitLayout: React.FC<Props> = (props) => {
                   {buttonText}
                 </ButtonFilled>
 
-                {!showPolicyLinks ? (
-                  <Text textAlign="center">
-                    {terms}{' '}
-                    <Trans>
-                      <Text color="successLowest" fontWeight="bold" textDecoration="underline">
-                        Terms of Use
-                      </Text>{' '}
-                      and{' '}
-                      <Text color="successLowest" fontWeight="bold" textDecoration="underline">
-                        Privacy Policy.
-                      </Text>
-                    </Trans>
-                  </Text>
-                ) : null}
+                {showPolicyLinks && (
+                  <View>
+                    <Text textAlign="center">
+                      {terms}{' '}
+                      <Trans>
+                        <Text color="successLowest" fontWeight="bold" textDecoration="underline">
+                          Terms of Use
+                        </Text>{' '}
+                        and{' '}
+                        <Text color="successLowest" fontWeight="bold" textDecoration="underline">
+                          Privacy Policy.
+                        </Text>
+                      </Trans>
+                    </Text>
+                  </View>
+                )}
               </View>
             </View>
           </View>

@@ -48,7 +48,6 @@ const SectionLogin: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings
             featuredImage={landingPage}
             logo={logo}
             portalColor={portalColor}
-            showPolicyLinks={false}
           >
             <View width="100%">
               <View width="100%">
@@ -66,10 +65,10 @@ const SectionLogin: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings
                     </View>
                   }
                 />
+                <Text color="successLowest" textDecoration="underline" fontWeight="medium">
+                  Forgot your password?
+                </Text>
               </View>
-              <Text color="successLowest" textDecoration="underline" fontWeight="medium">
-                Forgot your password?
-              </Text>
             </View>
           </Preview>
 

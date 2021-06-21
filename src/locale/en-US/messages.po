@@ -18,8 +18,8 @@ msgid ", or"
 msgstr ", or"
 
 #: src/components/Settings/Theme/Previews/SplitLayout.tsx:50
-msgid "<0>terms of use</0> and <1>privacy policy.</1>"
-msgstr "<0>terms of use</0> and <1>privacy policy.</1>"
+msgid "<0>Terms of Use</0> and <1>Privacy Policy.</1>"
+msgstr "<0>Terms of Use</0> and <1>Privacy Policy.</1>"
 
 #: src/components/AwsConnectionDetail/index.tsx:69
 msgid "AWS Connection Details"
@@ -126,10 +126,14 @@ msgstr "Browse for a CSV file to upload for setting up fields mapping rules. For
 msgid "Bucket URL"
 msgstr "Bucket URL"
 
+#: src/components/Settings/Theme/SectionLogin.tsx:21
+msgid "By continuing you agree to {0}’s"
+msgstr "By continuing you agree to {0}’s"
+
 #: src/components/Settings/Theme/SectionBrand.tsx:65
 #: src/components/Settings/Theme/SectionSignup.tsx:21
-msgid "By creating an account you are agreeing to the Go1"
-msgstr "By creating an account you are agreeing to the Go1"
+msgid "By creating an account you are agreeing to {0}’s"
+msgstr "By creating an account you are agreeing to {0}’s"
 
 #: src/components/ContentDistributorExport/index.tsx:76
 msgid "By pushing your Go1 content to the Microsoft Graph, members of your organization will be able to find your Go1 content from Microsoft Search, in Microsoft products like Sharepoint, office.com, and Bing."

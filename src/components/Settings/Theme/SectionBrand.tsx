@@ -4,7 +4,7 @@ import { I18n } from '@lingui/react';
 import SettingsBlockMaker from '@src/components/Settings/SettingsBlockMaker';
 import { usePrevious } from '@src/hooks/usePrevious';
 import { FormikHandlers } from 'formik';
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react';
 import getConfig from 'next/config';
 import { CurrentSessionType } from '@src/types/user';
 import withAuth from '@src/components/common/WithAuth';
@@ -50,6 +50,8 @@ const ColorPicker: FunctionComponent<{
   />
 );
 
+let id: number;
+
 const SectionBrand: FunctionComponent<Props> = ({
   isSaving,
   onFeaturedImageCropped,
@@ -57,10 +59,20 @@ const SectionBrand: FunctionComponent<Props> = ({
   themeSettings,
   currentSession,
 }) => {
-  const [hasInteracted, setHasInteracted] = React.useState<boolean>(false);
-  const [openPreview, setOpenPreview] = React.useState(false);
-  const [featuredImageZoomValue, setFeaturedImageZoomValue] = React.useState(1);
+  const [allowCrop, setAllowCrop] = useState<boolean>(false);
+  const [openPreview, setOpenPreview] = useState(false);
+  const [featuredImageZoomValue, setFeaturedImageZoomValue] = useState(1);
   const prevIsSaving = usePrevious(isSaving);
+
+  // A hack way to not call the callback when component mounted
+  // and right after having saved
+  function setAllow2CropAfterMoment() {
+    if (typeof id !== 'undefined') {
+      clearTimeout(id);
+      id = undefined;
+    }
+    id = window.setTimeout(() => setAllowCrop(true), 500);
+  }
 
   const { logo, featuredImage, signupTitle, signupDescription, portalColor } = themeSettings;
 
@@ -74,18 +86,17 @@ const SectionBrand: FunctionComponent<Props> = ({
   React.useEffect(() => {
     // reset after having saved which means switch from `true` => `false`
     if (typeof prevIsSaving !== 'undefined' && isSaving !== prevIsSaving && !isSaving) {
-      setHasInteracted(false);
+      setAllowCrop(false);
+      setAllow2CropAfterMoment();
       onFeaturedImageCropped(undefined);
-      setFeaturedImageZoomValue(1);
+      if (featuredImageZoomValue !== 1) {
+        setFeaturedImageZoomValue(1);
+      }
     }
   }, [isSaving]);
 
-  function handleInteractionStart() {
-    setHasInteracted(true);
-  }
-
   function handleCrop(file: Blob) {
-    if (hasInteracted) {
+    if (allowCrop) {
       onFeaturedImageCropped(file);
     }
   }
@@ -211,7 +222,6 @@ const SectionBrand: FunctionComponent<Props> = ({
               cropConfig={{
                 aspect: FEATURED_IMAGE_RATIO,
                 onCrop: handleCrop,
-                onInteractionStart: handleInteractionStart,
               }}
               supportedFormatText={<ImageSupportText />}
               zoomValue={featuredImageZoomValue}

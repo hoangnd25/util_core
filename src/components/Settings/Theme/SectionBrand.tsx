@@ -119,8 +119,8 @@ const SectionBrand: FunctionComponent<Props> = ({
             description={signupDescription}
             featuredImage={landingPage}
             logo={logo}
-            showPolicyLinks={false}
             portalColor={portalColor}
+            showPolicyLinks
           >
             <SignupForm />
           </Preview>

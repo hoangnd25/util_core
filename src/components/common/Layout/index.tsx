@@ -1,39 +1,59 @@
-import * as React from "react";
+import * as React from 'react';
 import Head from 'next/head';
 import { View, Container, foundations } from '@go1d/go1d';
 import WithTopNav from './withTopNav';
 import WithSideNav, { WithSideNavProps } from './withSideNav';
 
-const Index = ({ children, title="Go1", wrappingContainer, withTopNav, withSideNav, containerProps } : { children: React.ReactNode, title?: string, wrappingContainer?: boolean, withTopNav?: boolean, withSideNav?: WithSideNavProps, containerProps?: any }) => {
+const Index = ({
+  children,
+  title = 'Go1',
+  wrappingContainer,
+  withTopNav,
+  withSideNav,
+  containerProps,
+}: {
+  children: React.ReactNode;
+  title?: string;
+  wrappingContainer?: boolean;
+  withTopNav?: boolean;
+  withSideNav?: WithSideNavProps;
+  containerProps?: any;
+}) => {
   return (
-      <>
-        <Head>
-          <title>{title}</title>
-        </Head>
-        {withTopNav && <WithTopNav />}
-        {wrappingContainer === true ?
-          (<Container contain="wide" minHeight={600} paddingY={5} paddingX={5} {...containerProps}>
-            {withSideNav ? (
-              <View css={{
+    <>
+      <Head>
+        <title>{title}</title>
+      </Head>
+      {withTopNav && <WithTopNav />}
+      {wrappingContainer === true ? (
+        <Container contain="wide" minHeight={600} paddingY={5} paddingX={5} {...containerProps}>
+          {withSideNav ? (
+            <View
+              css={{
                 [foundations.breakpoints.md]: {
                   paddingBottom: foundations.spacing[6],
                   paddingTop: foundations.spacing[6],
                 },
-              }}>
-                <View flexDirection={["column", "row"]} alignItems={["initial", "flex-start"]}>
-                  <View maxWidth={['unset', 320]} paddingRight={[0, 8]}>
-                    <WithSideNav {...withSideNav} />
-                  </View>
-                  <View flexShrink={1} flexGrow={1}>
-                    {children}
-                  </View>
+              }}
+            >
+              <View flexDirection={['column', 'row']} alignItems={['initial', 'flex-start']}>
+                <View maxWidth={['unset', 320]} paddingRight={[0, 8]}>
+                  <WithSideNav {...withSideNav} />
+                </View>
+                <View flexShrink={1} flexGrow={1} width="100%">
+                  {children}
                 </View>
               </View>
-            ) : children}
-          </Container>)
-          : children}
-      </>
-    );
+            </View>
+          ) : (
+            children
+          )}
+        </Container>
+      ) : (
+        children
+      )}
+    </>
+  );
 };
 
 export default Index;

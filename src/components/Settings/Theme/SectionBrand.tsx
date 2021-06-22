@@ -6,7 +6,6 @@ import { usePrevious } from '@src/hooks/usePrevious';
 import { FormikHandlers } from 'formik';
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import getConfig from 'next/config';
-import { CurrentSessionType } from '@src/types/user';
 import withAuth from '@src/components/common/WithAuth';
 import SettingsFormSection from '../SettingsFormSection';
 import { ImageSupportText } from './ImageSupportText';
@@ -23,7 +22,7 @@ interface Props {
   onFeaturedImageCropped?: (image: Blob | undefined) => void;
   isPartnerPortal?: boolean;
   themeSettings: FormValues;
-  currentSession: CurrentSessionType;
+  siteName?: string;
 }
 
 const {
@@ -57,7 +56,7 @@ const SectionBrand: FunctionComponent<Props> = ({
   onFeaturedImageCropped,
   isPartnerPortal,
   themeSettings,
-  currentSession,
+  siteName,
 }) => {
   const [allowCrop, setAllowCrop] = useState<boolean>(false);
   const [openPreview, setOpenPreview] = useState(false);
@@ -81,9 +80,7 @@ const SectionBrand: FunctionComponent<Props> = ({
       ? `url("${featuredImage}")`
       : `url("${CDN_PATH}/signup_default_landing_page.jpg")`;
 
-  const siteName = currentSession.portal.configuration.site_name;
-
-  React.useEffect(() => {
+  useEffect(() => {
     // reset after having saved which means switch from `true` => `false`
     if (typeof prevIsSaving !== 'undefined' && isSaving !== prevIsSaving && !isSaving) {
       setAllowCrop(false);
@@ -123,8 +120,8 @@ const SectionBrand: FunctionComponent<Props> = ({
             description={signupDescription}
             featuredImage={landingPage}
             logo={logo}
-            showPolicyLinks={false}
             portalColor={portalColor}
+            showPolicyLinks
           >
             <SignupForm />
           </Preview>

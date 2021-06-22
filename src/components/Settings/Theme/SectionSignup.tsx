@@ -18,17 +18,16 @@ const {
 interface Props {
   isPartnerPortal?: boolean;
   themeSettings?: FormValues;
-  currentSession: CurrentSessionType;
+  siteName?: string;
 }
 
-const SectionSignup: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings, currentSession }) => {
+const SectionSignup: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings, siteName }) => {
   const { logo, featuredImage, signupTitle, signupDescription, portalColor } = themeSettings;
   const [openPreview, setOpenPreview] = useState(false);
   const landingPage =
     typeof featuredImage === 'string' && featuredImage.length > 0
       ? `url("${featuredImage}")`
       : `url("${CDN_PATH}/signup_default_landing_page.jpg")`;
-  const siteName = currentSession.portal.configuration.site_name;
   return (
     <I18n>
       {({ i18n }) => (
@@ -51,7 +50,7 @@ const SectionSignup: FunctionComponent<Props> = ({ isPartnerPortal, themeSetting
             description={signupDescription}
             featuredImage={landingPage}
             logo={logo}
-            showPolicyLinks={false}
+            showPolicyLinks
             portalColor={portalColor}
           >
             <SignupForm />
@@ -83,4 +82,4 @@ const SectionSignup: FunctionComponent<Props> = ({ isPartnerPortal, themeSetting
   );
 };
 
-export default withAuth(SectionSignup);
+export default SectionSignup;

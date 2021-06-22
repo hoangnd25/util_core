@@ -7,8 +7,6 @@ import Preview from '@src/components/Settings/Theme/Preview';
 import PreviewButton from '@src/components/Settings/Theme/PreviewButton';
 import getConfig from 'next/config';
 import IconEye from '@go1d/go1d/build/components/Icons/Eye';
-import { CurrentSessionType } from '@src/types/user';
-import withAuth from '@src/components/common/WithAuth';
 import { FormValues } from './types';
 
 const {
@@ -17,18 +15,16 @@ const {
 interface Props {
   isPartnerPortal?: boolean;
   themeSettings?: FormValues;
-  currentSession: CurrentSessionType;
+  siteName?: string;
 }
 
-const SectionLogin: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings, currentSession }) => {
+const SectionLogin: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings, siteName }) => {
   const { logo, featuredImage, loginTitle, loginDescription, portalColor } = themeSettings;
   const [openPreview, setOpenPreview] = useState(false);
   const landingPage =
     typeof featuredImage === 'string' && featuredImage.length > 0
       ? `url("${featuredImage}")`
       : `url("${CDN_PATH}/login_default_landing_page.jpg")`;
-  console.log(currentSession.portal.configuration.site);
-  const siteName = currentSession.portal.configuration.site_name;
   return (
     <I18n>
       {({ i18n }) => (
@@ -52,7 +48,7 @@ const SectionLogin: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings
             featuredImage={landingPage}
             logo={logo}
             portalColor={portalColor}
-            showPolicyLinks={false}
+            showPolicyLinks
           >
             <View width="100%">
               <View width="100%">
@@ -70,10 +66,10 @@ const SectionLogin: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings
                     </View>
                   }
                 />
+                <Text color="successLowest" textDecoration="underline" fontWeight="medium">
+                  Forgot your password?
+                </Text>
               </View>
-              <Text color="successLowest" textDecoration="underline" fontWeight="medium">
-                Forgot your password?
-              </Text>
             </View>
           </Preview>
 
@@ -101,4 +97,4 @@ const SectionLogin: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings
   );
 };
 
-export default withAuth(SectionLogin);
+export default SectionLogin;

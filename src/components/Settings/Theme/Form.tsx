@@ -22,6 +22,7 @@ import ConfirmModal from './ConfirmModal';
 const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => {
   const { portal, user, isSaving } = props;
   const isPartnerPortal = ['content_partner', 'distribution_partner'].includes(portal.type || null);
+  const siteName = portal.configuration.site_name;
   const {
     handleSubmit,
     setFeaturedImageCropped,
@@ -138,9 +139,10 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
         onFeaturedImageCropped={setFeaturedImageCropped}
         isPartnerPortal={isPartnerPortal}
         themeSettings={themeSettings}
+        siteName={siteName}
       />
-      <SectionLogin isPartnerPortal={isPartnerPortal} themeSettings={themeSettings} />
-      <SectionSignup isPartnerPortal={isPartnerPortal} themeSettings={themeSettings} />
+      <SectionLogin isPartnerPortal={isPartnerPortal} themeSettings={themeSettings} siteName={siteName} />
+      <SectionSignup isPartnerPortal={isPartnerPortal} themeSettings={themeSettings} siteName={siteName} />
       <SectionDashboard isPartnerPortal={isPartnerPortal} />
       <SectionCertificate isPartnerPortal={isPartnerPortal} />
       <View flexDirection="row">

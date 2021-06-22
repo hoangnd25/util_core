@@ -15,7 +15,7 @@ interface Props {
   title: string;
   isOpen: boolean;
   onRequestClose: () => void;
-  showPolicyLinks: boolean;
+  showPolicyLinks?: boolean;
   portalColor: string;
 }
 

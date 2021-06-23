@@ -16,12 +16,12 @@ const {
 interface Props {
   isPartnerPortal?: boolean;
   themeSettings?: FormValues;
+  siteName?: string;
 }
 
-const SectionSignup: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings }) => {
+const SectionSignup: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings, siteName }) => {
   const { logo, featuredImage, signupTitle, signupDescription, portalColor } = themeSettings;
   const [openPreview, setOpenPreview] = useState(false);
-
   const landingPage =
     typeof featuredImage === 'string' && featuredImage.length > 0
       ? `url("${featuredImage}")`
@@ -43,7 +43,7 @@ const SectionSignup: FunctionComponent<Props> = ({ isPartnerPortal, themeSetting
             title={i18n._(t`sign up`)}
             buttonText={i18n._(t`Create new account`)}
             primaryTagline={signupTitle || 'Sign up with your work email '}
-            terms={<Trans>By creating an account you are agreeing to {signupTitle || 'the Go1'}&rsquo;s</Trans>}
+            terms={<Trans>By creating an account you are agreeing to {siteName || 'the Go1'}&rsquo;s</Trans>}
             secondaryTagline={[i18n._(t`Already have an account?`), i18n._(t`Log in`)]}
             description={signupDescription}
             featuredImage={landingPage}

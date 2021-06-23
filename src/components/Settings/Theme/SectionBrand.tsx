@@ -21,6 +21,7 @@ interface Props {
   onFeaturedImageCropped?: (image: Blob | undefined) => void;
   isPartnerPortal?: boolean;
   themeSettings: FormValues;
+  siteName?: string;
 }
 
 const {
@@ -54,6 +55,7 @@ const SectionBrand: FunctionComponent<Props> = ({
   onFeaturedImageCropped,
   isPartnerPortal,
   themeSettings,
+  siteName,
 }) => {
   const [allowCrop, setAllowCrop] = useState<boolean>(false);
   const [openPreview, setOpenPreview] = useState(false);
@@ -80,7 +82,7 @@ const SectionBrand: FunctionComponent<Props> = ({
   useEffect(setAllow2CropAfterMoment, []);
 
   useEffect(() => {
-    // Reset after having saved which means switch from `true` => `false`
+    // reset after having saved which means switch from `true` => `false`
     if (typeof prevIsSaving !== 'undefined' && isSaving !== prevIsSaving && !isSaving) {
       setAllowCrop(false);
       setAllow2CropAfterMoment();
@@ -114,7 +116,7 @@ const SectionBrand: FunctionComponent<Props> = ({
             title={i18n._(t`brand`)}
             buttonText={i18n._(t`Create new account`)}
             primaryTagline={signupTitle || 'Sign up with your work email '}
-            terms={<Trans>By creating an account you are agreeing to {signupTitle || 'the Go1'}&rsquo;s</Trans>}
+            terms={<Trans>By creating an account you are agreeing to {siteName || 'the Go1'}&rsquo;s</Trans>}
             secondaryTagline={[i18n._(t`Already have an account?`), i18n._(t`Log in`)]}
             description={signupDescription}
             featuredImage={landingPage}

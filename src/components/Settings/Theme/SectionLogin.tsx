@@ -12,13 +12,13 @@ import { FormValues } from './types';
 const {
   publicRuntimeConfig: { CDN_PATH },
 } = getConfig();
-
 interface Props {
   isPartnerPortal?: boolean;
   themeSettings?: FormValues;
+  siteName?: string;
 }
 
-const SectionLogin: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings }) => {
+const SectionLogin: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings, siteName }) => {
   const { logo, featuredImage, loginTitle, loginDescription, portalColor } = themeSettings;
   const [openPreview, setOpenPreview] = useState(false);
   const landingPage =
@@ -42,12 +42,13 @@ const SectionLogin: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings
             title={i18n._(t`login`)}
             buttonText={i18n._(t`Log in`)}
             primaryTagline={loginTitle || 'Log in to Go1'}
-            terms={<Trans>By continuing you agree to {loginTitle || 'the Go1'}&rsquo;s</Trans>}
+            terms={<Trans>By continuing you agree to {siteName || 'the Go1'}&rsquo;s</Trans>}
             secondaryTagline={[i18n._(t`Don't have an account?`), i18n._(t`Sign up`)]}
             description={loginDescription}
             featuredImage={landingPage}
             logo={logo}
             portalColor={portalColor}
+            showPolicyLinks
           >
             <View width="100%">
               <View width="100%">

@@ -8,6 +8,7 @@ import {
   PREVIEW_IMAGE_TYPE,
 } from '@src/constants';
 import Track from '@src/utils/tracking';
+import getConfig from 'next/config';
 import SectionBrand from './SectionBrand';
 import SectionLogin from './SectionLogin';
 import SectionSignup from './SectionSignup';
@@ -18,6 +19,10 @@ import { deserializeHtml } from './htmlSerializer';
 import { useThemeSettingsFormHandler } from './Form.hooks';
 import { FormValues, ThemeSettingsFormProps } from './types';
 import ConfirmModal from './ConfirmModal';
+
+const {
+  publicRuntimeConfig: { CDN_PATH },
+} = getConfig();
 
 const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => {
   const { portal, user, isSaving } = props;
@@ -44,11 +49,16 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
   // If user has old apiom theme settings for images-> reset to default
   const apiomImages = {};
   PREVIEW_IMAGE_TYPE.forEach((key) => {
-    apiomImages[key] =
-      initialValues[key]?.includes('get-started') || initialValues[key]?.includes('logo-white')
-        ? ''
+    apiomImages.logo =
+      initialValues.logo?.includes('logo-white') || initialValues.logo === undefined
+        ? `${CDN_PATH}/Go1_Logo_Petrol_Green_sm.jpg`
+        : initialValues[key];
+    apiomImages.featuredImage =
+      initialValues.featuredImage?.includes('get-started') || initialValues.featuredImage === undefined
+        ? `${CDN_PATH}/signup_default_landing_page.jpg`
         : initialValues[key];
   });
+
   initialValues = { ...initialValues, ...apiomImages };
 
   const [themeSettings, setThemeSettings] = useState(initialValues);
@@ -130,6 +140,8 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
         portalColor: initialValues.portalColor || theme.colors.accent,
         dashboardImageScale: initialValues.dashboardImageScale || 'fixed-width',
         dashboardWelcomeMessage: deserializeHtml(initialValues.dashboardWelcomeMessage || ''),
+        featuredImage: initialValues.featuredImage,
+        logo: initialValues.logo,
       }}
       onSubmit={handleSubmit}
       onChange={debounce((actions) => handleChange(actions))}

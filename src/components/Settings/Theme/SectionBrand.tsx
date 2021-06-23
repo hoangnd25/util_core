@@ -79,6 +79,8 @@ const SectionBrand: FunctionComponent<Props> = ({
       ? `url("${featuredImage}")`
       : `url("${CDN_PATH}/signup_default_landing_page.jpg")`;
 
+  useEffect(setAllow2CropAfterMoment, []);
+
   useEffect(() => {
     // reset after having saved which means switch from `true` => `false`
     if (typeof prevIsSaving !== 'undefined' && isSaving !== prevIsSaving && !isSaving) {

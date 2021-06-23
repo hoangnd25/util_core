@@ -6,7 +6,6 @@ import { usePrevious } from '@src/hooks/usePrevious';
 import { FormikHandlers } from 'formik';
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import getConfig from 'next/config';
-import withAuth from '@src/components/common/WithAuth';
 import SettingsFormSection from '../SettingsFormSection';
 import { ImageSupportText } from './ImageSupportText';
 import PreviewButton from './PreviewButton';
@@ -244,4 +243,4 @@ const SectionBrand: FunctionComponent<Props> = ({
   );
 };
 
-export default withAuth(SectionBrand);
+export default SectionBrand;

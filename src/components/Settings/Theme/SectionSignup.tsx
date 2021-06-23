@@ -6,8 +6,6 @@ import SettingsFormSection from '@src/components/Settings/SettingsFormSection';
 import PreviewButton from '@src/components/Settings/Theme/PreviewButton';
 import Preview from '@src/components/Settings/Theme/Preview';
 import getConfig from 'next/config';
-import { CurrentSessionType } from '@src/types/user';
-import withAuth from '@src/components/common/WithAuth';
 import { FormValues } from './types';
 import SignupForm from './Previews/SignupForm';
 

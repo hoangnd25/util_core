@@ -3,7 +3,7 @@ import { View, Modal, ButtonFilled } from '@go1d/go1d';
 import { Trans } from '@lingui/macro';
 import SplitLayout from './Previews/SplitLayout';
 
-interface Props {
+interface AuthPreviewProps {
   primaryTagline: React.ReactNode;
   description: string;
   logo: File | string | null;
@@ -19,7 +19,7 @@ interface Props {
   portalColor: string;
 }
 
-const Preview: React.FC<Props> = (props) => {
+const AuthPreview: React.FC<AuthPreviewProps> = (props) => {
   const {
     isOpen,
     onRequestClose,
@@ -61,4 +61,4 @@ const Preview: React.FC<Props> = (props) => {
   );
 };
 
-export default Preview;
+export default AuthPreview;

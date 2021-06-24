@@ -2,28 +2,53 @@ import { Field, RichTextInput, View, RadioGroup, ImageUploader, Checkbox } from 
 import { t, Trans } from '@lingui/macro';
 import { I18n } from '@lingui/react';
 import SettingsFormSection from '@src/components/Settings/SettingsFormSection';
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useState } from 'react';
 import SettingsBlockMaker from '../SettingsBlockMaker';
 import { ImageSupportText } from './ImageSupportText';
 import PreviewButton from './PreviewButton';
 import { imageValidator } from './imageValidator';
+import { ThemeSettingFormValues } from './types';
+
+import useFileData from './DashboardPreview/useFileData';
+import DashboardPreview from './DashboardPreview';
+import TopbarPreview from './DashboardPreview/TopbarPreview';
+import HeroPreview from './DashboardPreview/HeroPreview';
+import ContentPreview from './DashboardPreview/ContentPreview';
+import useHtmlSlateValue from '../../../hooks/useHtmlSlateValue/useHtmlSlateValue';
 
 interface Props {
   isPartnerPortal?: boolean;
+  themeSettings?: ThemeSettingFormValues;
 }
+const SectionDashboard: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings }) => {
+  const { dashboardImage, dashboardIcon: iconValue, dashboardWelcomeMessage } = themeSettings;
+  const [openPreview, setOpenPreview] = useState(false);
 
-const SectionDashboard: FunctionComponent<Props> = ({ isPartnerPortal }) => {
+  const dashboardBackground = useFileData(dashboardImage);
+  const dashboardIcon = useFileData(iconValue);
+  const dashboardMessage = useHtmlSlateValue(dashboardWelcomeMessage);
+
   return (
     <I18n>
       {({ i18n }) => (
         <SettingsFormSection
           title={<Trans>Customize dashboard</Trans>}
-          // Will allow actionButton once the Preview Dashboard is developed
-          // actionButton={
-          //   <PreviewButton>
-          //     <Trans>Preview dashboard</Trans>
-          //   </PreviewButton>
-          // }
+          actionButton={
+            <>
+              <PreviewButton onClick={() => setOpenPreview(true)}>
+                <Trans>Preview dashboard</Trans>
+              </PreviewButton>
+              <DashboardPreview
+                title={i18n._(t`dashboard`)}
+                isOpen={openPreview}
+                onRequestClose={() => setOpenPreview(false)}
+              >
+                <TopbarPreview icon={dashboardIcon} />
+                <HeroPreview image={dashboardBackground} message={dashboardMessage} />
+                <ContentPreview />
+              </DashboardPreview>
+            </>
+          }
         >
           <View marginBottom={5}>
             <Field

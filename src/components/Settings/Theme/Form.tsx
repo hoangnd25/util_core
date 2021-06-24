@@ -9,15 +9,15 @@ import {
 } from '@src/constants';
 import Track from '@src/utils/tracking';
 import getConfig from 'next/config';
+import { deserializeHtml } from '@src/hooks/useHtmlSlateValue/htmlSerializer';
 import SectionBrand from './SectionBrand';
 import SectionLogin from './SectionLogin';
 import SectionSignup from './SectionSignup';
 import { getInitialValues } from './formHelper';
 import SectionCertificate from './SectionCertificate';
 import SectionDashboard from './SectionDashboard';
-import { deserializeHtml } from './htmlSerializer';
 import { useThemeSettingsFormHandler } from './Form.hooks';
-import { FormValues, ThemeSettingsFormProps } from './types';
+import { ThemeSettingFormValues, ThemeSettingsFormProps } from './types';
 import ConfirmModal from './ConfirmModal';
 
 const {
@@ -38,7 +38,7 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
   } = useThemeSettingsFormHandler(props);
 
   const theme = useContext(Theme);
-  let initialValues = getInitialValues<FormValues>(
+  let initialValues = getInitialValues<ThemeSettingFormValues>(
     {
       ...SETTINGS_THEME_UPLOAD_FIELDS_MAPPING,
       ...SETTINGS_THEME_FIELDS_MAPPING,
@@ -102,7 +102,7 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
     return `${URL.createObjectURL(values[imageType])}`;
   };
 
-  const handleChange = async (values: { values: FormValues; errors: FormValues }) => {
+  const handleChange = async (values: { values: ThemeSettingFormValues; errors: ThemeSettingFormValues }) => {
     const newValues = values.values as any;
     const errors = values.errors as any;
 
@@ -155,7 +155,7 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
       />
       <SectionLogin isPartnerPortal={isPartnerPortal} themeSettings={themeSettings} siteName={siteName} />
       <SectionSignup isPartnerPortal={isPartnerPortal} themeSettings={themeSettings} siteName={siteName} />
-      <SectionDashboard isPartnerPortal={isPartnerPortal} />
+      <SectionDashboard isPartnerPortal={isPartnerPortal} themeSettings={themeSettings} />
       <SectionCertificate isPartnerPortal={isPartnerPortal} />
       <View flexDirection="row">
         <SubmitButton

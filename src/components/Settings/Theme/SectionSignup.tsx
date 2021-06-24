@@ -4,9 +4,9 @@ import { t, Trans } from '@lingui/macro';
 import { I18n } from '@lingui/react';
 import SettingsFormSection from '@src/components/Settings/SettingsFormSection';
 import PreviewButton from '@src/components/Settings/Theme/PreviewButton';
-import Preview from '@src/components/Settings/Theme/Preview';
+import AuthPreview from '@src/components/Settings/Theme/AuthPreview';
 import getConfig from 'next/config';
-import { FormValues } from './types';
+import { ThemeSettingFormValues } from './types';
 import SignupForm from './Previews/SignupForm';
 
 const {
@@ -15,7 +15,7 @@ const {
 
 interface Props {
   isPartnerPortal?: boolean;
-  themeSettings?: FormValues;
+  themeSettings?: ThemeSettingFormValues;
   siteName?: string;
 }
 
@@ -37,7 +37,7 @@ const SectionSignup: FunctionComponent<Props> = ({ isPartnerPortal, themeSetting
             </PreviewButton>
           }
         >
-          <Preview
+          <AuthPreview
             isOpen={openPreview}
             onRequestClose={() => setOpenPreview(false)}
             title={i18n._(t`sign up`)}
@@ -52,7 +52,7 @@ const SectionSignup: FunctionComponent<Props> = ({ isPartnerPortal, themeSetting
             portalColor={portalColor}
           >
             <SignupForm />
-          </Preview>
+          </AuthPreview>
 
           <View marginBottom={5}>
             <Field name="signupTitle" label={i18n._(t`Sign up title`)} component={TextInput} hideStatus />

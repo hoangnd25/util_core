@@ -10,8 +10,8 @@ import SettingsFormSection from '../SettingsFormSection';
 import { ImageSupportText } from './ImageSupportText';
 import PreviewButton from './PreviewButton';
 import { imageValidator } from './imageValidator';
-import { FormValues } from './types';
-import Preview from './Preview';
+import { ThemeSettingFormValues } from './types';
+import AuthPreview from './AuthPreview';
 import SignupForm from './Previews/SignupForm';
 
 const FEATURED_IMAGE_RATIO = 1;
@@ -20,7 +20,7 @@ interface Props {
   isSaving?: boolean;
   onFeaturedImageCropped?: (image: Blob | undefined) => void;
   isPartnerPortal?: boolean;
-  themeSettings: FormValues;
+  themeSettings: ThemeSettingFormValues;
   siteName?: string;
 }
 
@@ -110,7 +110,7 @@ const SectionBrand: FunctionComponent<Props> = ({
             </PreviewButton>
           }
         >
-          <Preview
+          <AuthPreview
             isOpen={openPreview}
             onRequestClose={() => setOpenPreview(false)}
             title={i18n._(t`brand`)}
@@ -125,7 +125,7 @@ const SectionBrand: FunctionComponent<Props> = ({
             showPolicyLinks
           >
             <SignupForm />
-          </Preview>
+          </AuthPreview>
 
           <SettingsBlockMaker
             marginBottom={isPartnerPortal ? 0 : 5}

@@ -3,18 +3,18 @@ import { t, Trans } from '@lingui/macro';
 import SettingsFormSection from '@src/components/Settings/SettingsFormSection';
 import React, { FunctionComponent, useState } from 'react';
 import { I18n } from '@lingui/react';
-import Preview from '@src/components/Settings/Theme/Preview';
+import AuthPreview from '@src/components/Settings/Theme/AuthPreview';
 import PreviewButton from '@src/components/Settings/Theme/PreviewButton';
 import getConfig from 'next/config';
 import IconEye from '@go1d/go1d/build/components/Icons/Eye';
-import { FormValues } from './types';
+import { ThemeSettingFormValues } from './types';
 
 const {
   publicRuntimeConfig: { CDN_PATH },
 } = getConfig();
 interface Props {
   isPartnerPortal?: boolean;
-  themeSettings?: FormValues;
+  themeSettings?: ThemeSettingFormValues;
   siteName?: string;
 }
 
@@ -36,7 +36,7 @@ const SectionLogin: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings
             </PreviewButton>
           }
         >
-          <Preview
+          <AuthPreview
             isOpen={openPreview}
             onRequestClose={() => setOpenPreview(false)}
             title={i18n._(t`login`)}
@@ -71,7 +71,7 @@ const SectionLogin: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings
                 </Text>
               </View>
             </View>
-          </Preview>
+          </AuthPreview>
 
           <View marginBottom={5}>
             <Field name="loginTitle" label={i18n._(t`Login title`)} component={TextInput} hideStatus />

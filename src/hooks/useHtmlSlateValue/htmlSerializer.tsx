@@ -1,7 +1,6 @@
 import * as React from "react";
 import Html, { Rule } from "slate-html-serializer";
 import { Value as SlateValue } from 'slate';
-import { stripTabsAndNewLines } from "./formHelper";
 
 enum BLOCK_TAGS {
   blockquote = "block-quote",
@@ -185,3 +184,9 @@ export const serializeHtml = (input?: SlateValue) => {
 
   return htmlSerializer.serialize(input);
 }
+
+export const stripTabsAndNewLines = (input: string) =>
+  input
+    .trim()
+    .replace(/\n/g, '')
+    .replace(/\t/g, '');

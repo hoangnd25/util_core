@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import { Value as SlateValue } from 'slate';
 import { GO1Portal, GO1User } from '@src/types/user';
 
-export interface FormValues {
+export interface ThemeSettingFormValues {
   logo?: File | string | null;
   featuredImage?: File | string | null;
   loginTitle?: string;

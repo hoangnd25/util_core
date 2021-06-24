@@ -47,7 +47,7 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
   );
 
   // If user has old apiom theme settings for images-> reset to default
-  const apiomImages = {};
+  const apiomImages = {} as any;
   PREVIEW_IMAGE_TYPE.forEach((key) => {
     apiomImages.logo =
       initialValues.logo?.includes('logo-white') || initialValues.logo === undefined

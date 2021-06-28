@@ -74,11 +74,6 @@ const SectionBrand: FunctionComponent<Props> = ({
 
   const { logo, featuredImage, signupTitle, signupDescription, portalColor } = themeSettings;
 
-  const landingPage =
-    typeof featuredImage === 'string' && featuredImage.length > 0
-      ? `url("${featuredImage}")`
-      : `url("${CDN_PATH}/signup_default_landing_page.jpg")`;
-
   useEffect(setAllow2CropAfterMoment, []);
 
   useEffect(() => {
@@ -119,7 +114,7 @@ const SectionBrand: FunctionComponent<Props> = ({
             terms={<Trans>By creating an account you are agreeing to {siteName || 'the Go1'}&rsquo;s</Trans>}
             secondaryTagline={[i18n._(t`Already have an account?`), i18n._(t`Log in`)]}
             description={signupDescription}
-            featuredImage={landingPage}
+            featuredImage={`url("${featuredImage}")`}
             logo={logo}
             portalColor={portalColor}
             showPolicyLinks
@@ -132,7 +127,8 @@ const SectionBrand: FunctionComponent<Props> = ({
             title={<Trans>Logo</Trans>}
             description={
               <Trans>
-                For best results, upload your logo with minimum dimensions of 200x200px over a transparent background.
+                For best results, upload your logo in either JPG, PNG or GIF format with minimum dimensions of 200x200px
+                over a transparent background and 5MB maximum size.
               </Trans>
             }
           >
@@ -142,6 +138,8 @@ const SectionBrand: FunctionComponent<Props> = ({
               hideLabel
               hideStatus
               required
+              disableDelete={logo.includes('Go1_Logo_Petrol_Green_sm') && true}
+              defaultImage={`${CDN_PATH}/Go1_Logo_Petrol_Green_sm.jpg`}
               disabled={isSaving}
               imageBackgroundSize="contain"
               validate={imageValidator({
@@ -191,8 +189,8 @@ const SectionBrand: FunctionComponent<Props> = ({
             title={<Trans>Featured image</Trans>}
             description={
               <Trans>
-                Used in sign up and login pages. For best results, upload an image with at least 1000px in height. The
-                image can be repositioned to fit the intended 1:1 ratio.
+                Used in sign up and login pages. For best results, upload an image in either JPG, PNG or GIF format with
+                at least 1000px in height and 5MB maximum size.
               </Trans>
             }
             marginBottom={0}
@@ -202,6 +200,8 @@ const SectionBrand: FunctionComponent<Props> = ({
               name="featuredImage"
               allowCrop
               hideLabel
+              disableDelete={featuredImage.includes('login_default_landing_page') && true}
+              defaultImage={`${CDN_PATH}/login_default_landing_page.jpg`}
               component={ImageUploader}
               validate={imageValidator({
                 maxSizeInMb: 5,

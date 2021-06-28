@@ -38,7 +38,7 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
   } = useThemeSettingsFormHandler(props);
 
   const theme = useContext(Theme);
-  let initialValues = getInitialValues<ThemeSettingFormValues>(
+  const initialValues = getInitialValues<ThemeSettingFormValues>(
     {
       ...SETTINGS_THEME_UPLOAD_FIELDS_MAPPING,
       ...SETTINGS_THEME_FIELDS_MAPPING,
@@ -47,22 +47,43 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
   );
 
   // If user has old apiom theme settings for images-> reset to default
-  const apiomImages = {} as any;
-  PREVIEW_IMAGE_TYPE.forEach((key) => {
-    apiomImages.logo =
-      initialValues.logo?.includes('logo-white') || initialValues.logo === undefined
-        ? `${CDN_PATH}/Go1_Logo_Petrol_Green_sm.jpg`
-        : initialValues[key];
-    apiomImages.featuredImage =
-      initialValues.featuredImage?.includes('get-started') || initialValues.featuredImage === undefined
-        ? `${CDN_PATH}/signup_default_landing_page.jpg`
-        : initialValues[key];
-  });
 
-  initialValues = { ...initialValues, ...apiomImages };
+  const setInitialImages = (initialValue, imageType, apiomImage, defaultImage) => {
+    if (
+      !initialValue[imageType] ||
+      initialValue[imageType].length < 0 ||
+      !initialValue[imageType].includes(apiomImage) ||
+      !initialValue[imageType] === undefined
+    ) {
+      return defaultImage;
+    } 
+      return initialValue[imageType];
+    
+  };
+
+  initialValues.logo = setInitialImages(
+    initialValues,
+    'logo',
+    'logo-white',
+    `${CDN_PATH}/Go1_Logo_Petrol_Green_sm.jpg`
+  );
+
+  initialValues.featuredImage = setInitialImages(
+    initialValues,
+    'logo',
+    'logo-white',
+    `${CDN_PATH}/login_default_landing_page.jpg`
+  );
+
+  initialValues.dashboardIcon = setInitialImages(
+    initialValues,
+    'logo',
+    'logo-white',
+    `${CDN_PATH}/Go1_Logo_Petrol_Green_sm.jpg`
+  );
 
   const [themeSettings, setThemeSettings] = useState(initialValues);
-
+  console.log(themeSettings);
   useEffect(() => {
     // Interaction of featuredImage upload i.e crop  and move does not trigger form change event.
     if (featuredImageCropped !== undefined) {
@@ -86,12 +107,21 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
     // if image is  not an empty string after being deleted and it is
     // check the image is set in the values -> if haven't been set before will not be in default values object
     // Check that the featured image is not an already saved cloudinary image file
-    // Check that the image has not bee removed which defaults to empty string
+    // Check that the image has not been removed which defaults to selected default image
     // Check if errors is present by the returned error message -> then create blob image object
-
     if (!values[imageType] || values[imageType].length < 0) {
-      return '';
+      switch (imageType) {
+        case 'featuredImage':
+          values[imageType] = `${CDN_PATH}/login_default_landing_page.jpg`;
+          break;
+        case 'logo':
+        case 'dashboardIcon':
+          values[imageType] = `${CDN_PATH}/Go1_Logo_Petrol_Green_sm.jpg`;
+          break;
+        default:
+      }
     }
+
     if (values[imageType]?.length > 0 && values[imageType]?.includes('cloudinary')) {
       return values[imageType];
     }
@@ -142,6 +172,7 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
         dashboardWelcomeMessage: deserializeHtml(initialValues.dashboardWelcomeMessage || ''),
         featuredImage: initialValues.featuredImage,
         logo: initialValues.logo,
+        dashboardIcon: initialValues.dashboardIcon,
       }}
       onSubmit={handleSubmit}
       onChange={debounce((actions) => handleChange(actions))}

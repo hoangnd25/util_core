@@ -21,10 +21,7 @@ interface Props {
 const SectionLogin: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings, siteName }) => {
   const { logo, featuredImage, loginTitle, loginDescription, portalColor } = themeSettings;
   const [openPreview, setOpenPreview] = useState(false);
-  const landingPage =
-    typeof featuredImage === 'string' && featuredImage.length > 0
-      ? `url("${featuredImage}")`
-      : `url("${CDN_PATH}/login_default_landing_page.jpg")`;
+
   return (
     <I18n>
       {({ i18n }) => (
@@ -45,7 +42,7 @@ const SectionLogin: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings
             terms={<Trans>By continuing you agree to {siteName || 'the Go1'}&rsquo;s</Trans>}
             secondaryTagline={[i18n._(t`Don't have an account?`), i18n._(t`Sign up`)]}
             description={loginDescription}
-            featuredImage={landingPage}
+            featuredImage={`url("${featuredImage}")`}
             logo={logo}
             portalColor={portalColor}
             showPolicyLinks

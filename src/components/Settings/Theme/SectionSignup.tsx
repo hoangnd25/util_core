@@ -22,10 +22,7 @@ interface Props {
 const SectionSignup: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings, siteName }) => {
   const { logo, featuredImage, signupTitle, signupDescription, portalColor } = themeSettings;
   const [openPreview, setOpenPreview] = useState(false);
-  const landingPage =
-    typeof featuredImage === 'string' && featuredImage.length > 0
-      ? `url("${featuredImage}")`
-      : `url("${CDN_PATH}/signup_default_landing_page.jpg")`;
+
   return (
     <I18n>
       {({ i18n }) => (
@@ -46,7 +43,7 @@ const SectionSignup: FunctionComponent<Props> = ({ isPartnerPortal, themeSetting
             terms={<Trans>By creating an account you are agreeing to {siteName || 'the Go1'}&rsquo;s</Trans>}
             secondaryTagline={[i18n._(t`Already have an account?`), i18n._(t`Log in`)]}
             description={signupDescription}
-            featuredImage={landingPage}
+            featuredImage={`url("${featuredImage}")`}
             logo={logo}
             showPolicyLinks
             portalColor={portalColor}

@@ -138,7 +138,7 @@ const SectionBrand: FunctionComponent<Props> = ({
               hideLabel
               hideStatus
               required
-              disableDelete={logo.includes('Go1_Logo_Petrol_Green_sm') && true}
+              disableDelete={logo?.includes('Go1_Logo_Petrol_Green_sm') && true}
               defaultImage={`${CDN_PATH}/Go1_Logo_Petrol_Green_sm.jpg`}
               disabled={isSaving}
               imageBackgroundSize="contain"
@@ -200,7 +200,7 @@ const SectionBrand: FunctionComponent<Props> = ({
               name="featuredImage"
               allowCrop
               hideLabel
-              disableDelete={featuredImage.includes('login_default_landing_page') && true}
+              disableDelete={featuredImage?.includes('login_default_landing_page') && true}
               defaultImage={`${CDN_PATH}/login_default_landing_page.jpg`}
               component={ImageUploader}
               validate={imageValidator({

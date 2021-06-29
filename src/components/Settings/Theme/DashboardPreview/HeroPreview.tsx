@@ -8,6 +8,7 @@ type HeroPreviewProps = {
 const HeroPreview: React.FC<HeroPreviewProps> = ({ image, message }) => {
   return (
     <View
+      data-testid="preview-dashboard-image"
       height={300}
       width="100%"
       alignItems="center"
@@ -16,7 +17,12 @@ const HeroPreview: React.FC<HeroPreviewProps> = ({ image, message }) => {
         background: image ? `url("${image}") repeat center center fixed` : '',
       }}
     >
-      <View width="50%" color="soft" dangerouslySetInnerHTML={{ __html: message }} />
+      <View
+        data-testid="preview-dashboard-welcome-message"
+        width="50%"
+        color="soft"
+        dangerouslySetInnerHTML={{ __html: message }}
+      />
     </View>
   );
 };

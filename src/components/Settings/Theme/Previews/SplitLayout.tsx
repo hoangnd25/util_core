@@ -38,6 +38,7 @@ const SplitLayout: React.FC<Props> = (props) => {
         {({ colors }) => (
           <View width={[0, 800, 850]} height="580px" flexDirection="row" border={1} borderColor="soft">
             <View
+              data-testid="preview-split-featured-image"
               width="50%"
               height="100%"
               borderColor="successLowest"
@@ -93,7 +94,13 @@ const SplitLayout: React.FC<Props> = (props) => {
                 )}
                 {children}
 
-                <ButtonFilled marginY={4} width="100%" color="accent" css={{ pointerEvents: 'none' }}>
+                <ButtonFilled
+                  data-testid="preview-split-submit-button"
+                  marginY={4}
+                  width="100%"
+                  color="accent"
+                  css={{ pointerEvents: 'none' }}
+                >
                   {buttonText}
                 </ButtonFilled>
 

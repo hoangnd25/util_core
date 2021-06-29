@@ -1,13 +1,13 @@
-import { mount } from 'enzyme';
 import * as React from 'react';
 import { I18nProvider } from '@lingui/react';
 import { GO1Portal, GO1User } from '@src/types/user';
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react-hooks';
 import { Value } from 'slate';
 import { Trans } from '@lingui/macro';
 import AppContext from '@src/utils/appContext';
 import create from '@src/utils/http';
 import MockAdapter from 'axios-mock-adapter';
+import { fireEvent, render, act, screen, waitFor } from '@testing-library/react';
 import ThemeSettingsForm from './Form';
 import { ThemeSettingsFormProps } from './types';
 import { useThemeSettingsFormHandler } from './Form.hooks';
@@ -16,7 +16,6 @@ import { ApplyCustomizationdError, FormSaveError, ImageUploadError } from './err
 const defaultPortal = {
   title: 'test.mygo1.com',
   files: {
-    logo: 'https://logo.jpg',
     login_background: 'https://featured-image.jpg',
     dashboard_icon: 'https://dashboard-icon.jpg',
     feature_image: 'https://dashboard-image.jpg',
@@ -36,30 +35,30 @@ const defaultPortal = {
 };
 
 const INPUTS = {
-  logo: 'ImageUploader[name="logo"]',
-  featuredImage: 'ImageUploader[name="featuredImage"]',
-  loginTitle: 'TextInput[name="loginTitle"]',
-  loginDescription: 'TextInput[name="loginDescription"]',
-  signupTitle: 'TextInput[name="signupTitle"]',
-  signupDescription: 'TextInput[name="signupDescription"]',
-  portalColor: 'ColorPicker[name="portalColor"]',
-  signatureTitle: 'TextInput[name="signatureTitle"]',
-  signatureName: 'TextInput[name="signatureName"]',
-  signatureImage: 'ImageUploader[name="signatureImage"]',
-  dashboardWelcomeMessage: 'RichTextInput[name="dashboardWelcomeMessage"]',
-  dashboardImageScale: 'RadioGroup[name="dashboardImageScale"]',
-  dashboardImage: 'ImageUploader[name="dashboardImage"]',
-  dashboardIcon: 'ImageUploader[name="dashboardIcon"]',
+  logo: '[name="logo"] input[type="file"]',
+  featuredImage: '[name="featuredImage"] input[type="file"]',
+  loginTitle: 'input[name="loginTitle"]',
+  loginDescription: 'input[name="loginDescription"]',
+  signupTitle: 'input[name="signupTitle"]',
+  signupDescription: 'input[name="signupDescription"]',
+  portalColor: '[for="portalColor"]',
+  signatureTitle: 'input[name="signatureTitle"]',
+  signatureName: 'input[name="signatureName"]',
+  signatureImage: '[name="signatureImage"] input[type="file"]',
+  dashboardWelcomeMessage: '[for="dashboardWelcomeMessage"] [contenteditable="true"]',
+  dashboardImageScale: 'input[name="dashboardImageScale"]',
+  dashboardImage: '[name="dashboardImage"] input[type="file"]',
+  dashboardIcon: '[name="dashboardIcon"] input[type="file"]',
 };
 
 const APPLY_CHILD_PORTAL_INPUTS = {
-  applyCustomizationLogo: 'Checkbox[name="applyCustomizationLogo"]',
-  applyCustomizationPortalColor: 'Checkbox[name="applyCustomizationPortalColor"]',
-  applyCustomizationFeaturedImage: 'Checkbox[name="applyCustomizationFeaturedImage"]',
-  applyCustomizationCertificate: 'Checkbox[name="applyCustomizationCertificate"]',
-  applyCustomizationDashboard: 'Checkbox[name="applyCustomizationDashboard"]',
-  applyCustomizationLogin: 'Checkbox[name="applyCustomizationLogin"]',
-  applyCustomizationSignup: 'Checkbox[name="applyCustomizationSignup"]',
+  applyCustomizationLogo: 'input[type="checkbox"][name="applyCustomizationLogo"]',
+  applyCustomizationPortalColor: 'input[type="checkbox"][name="applyCustomizationPortalColor"]',
+  applyCustomizationFeaturedImage: 'input[type="checkbox"][name="applyCustomizationFeaturedImage"]',
+  applyCustomizationCertificate: 'input[type="checkbox"][name="applyCustomizationCertificate"]',
+  applyCustomizationDashboard: 'input[type="checkbox"][name="applyCustomizationDashboard"]',
+  applyCustomizationLogin: 'input[type="checkbox"][name="applyCustomizationLogin"]',
+  applyCustomizationSignup: 'input[type="checkbox"][name="applyCustomizationSignup"]',
 };
 
 let mock: MockAdapter;
@@ -71,7 +70,7 @@ beforeEach(() => {
 });
 
 const setup = (props?: ThemeSettingsFormProps) => {
-  return mount(
+  return render(
     <AppContext.Provider value={{ http, cookies: {} }}>
       <I18nProvider language="en" catalogs={{ en: { messages: {} } }}>
         <ThemeSettingsForm {...props} />
@@ -86,7 +85,7 @@ beforeEach(() => {
 });
 
 it('Should render all fields correctly', () => {
-  const wrapper = setup({
+  const { container } = setup({
     onSave: jest.fn(),
     onUpload: jest.fn(),
     user: {} as GO1User,
@@ -96,35 +95,35 @@ it('Should render all fields correctly', () => {
     } as GO1Portal,
   });
   Object.entries({ ...INPUTS, ...APPLY_CHILD_PORTAL_INPUTS }).forEach(([_, selector]) => {
-    expect(wrapper.find(selector)).toHaveLength(1);
+    expect(container.querySelectorAll(selector).length).toBeGreaterThanOrEqual(1);
   });
 });
 
 it('Should not render apply customization checkboxes for non partner portal', () => {
-  const wrapper = setup({
+  const { container } = setup({
     onSave: jest.fn(),
     onUpload: jest.fn(),
     portal: defaultPortal as GO1Portal,
     user: {} as GO1User,
   });
   Object.entries(APPLY_CHILD_PORTAL_INPUTS).forEach(([_, selector]) => {
-    expect(wrapper.find(selector)).toHaveLength(0);
+    expect(container.querySelectorAll(selector)).toHaveLength(0);
   });
 });
 
 it('Should ignore unchanged fields for submit', async (done) => {
   const saveFn = jest.fn().mockResolvedValue(undefined);
   const uploadFn = jest.fn().mockResolvedValue('https://uploaded-image.jpg');
-  const wrapper = setup({
+  const { getByText } = setup({
     onSave: saveFn,
     onUpload: uploadFn,
     portal: defaultPortal as GO1Portal,
     user: {} as GO1User,
   });
 
-  wrapper.find('Form').simulate('submit');
+  fireEvent.click(getByText('Save changes'));
 
-  setImmediate(() => {
+  await waitFor(async () => {
     expect(saveFn).toHaveBeenCalledWith({}, []); // fields unchanged, save callback should receive an empty object
     done();
   });
@@ -135,7 +134,7 @@ it('Should show confirm modal for apply child portal customization', async (done
     partner_child_portals_number: 10,
   });
   const saveFn = jest.fn().mockResolvedValue(undefined);
-  const wrapper = setup({
+  const { container, getByText } = setup({
     onSave: saveFn,
     onUpload: jest.fn(),
     portal: {
@@ -145,21 +144,16 @@ it('Should show confirm modal for apply child portal customization', async (done
     user: {} as GO1User,
   });
 
-  act(() => {
-    // check apply logo checkbox
-    wrapper.find(`${APPLY_CHILD_PORTAL_INPUTS.applyCustomizationLogo} input`).simulate('change');
-    wrapper.find('Form').simulate('submit');
+  // check apply certificate checkbox
+  const applyCustomizationInput = container.querySelector(APPLY_CHILD_PORTAL_INPUTS.applyCustomizationCertificate);
+  fireEvent.click(applyCustomizationInput);
+  fireEvent.click(getByText('Save changes'));
 
-    setImmediate(() => {
-      wrapper.update();
-      // confirm modal should be visible
-      expect(wrapper.find('ConfirmModal').prop('isOpen')).toBeTruthy();
-      expect(wrapper.find('p[data-testid="confirm-message"]').getDOMNode().textContent).toEqual(
-        'The following options will be applied to all 10 customer portals. Do you want to continue?'
-      );
-      expect(saveFn).not.toHaveBeenCalled();
-      done();
-    });
+  await waitFor(async () => {
+    expect(screen.getByText('Confirm changes')).toBeInTheDocument();
+    expect(screen.getByText('Apply to all portals')).toBeInTheDocument();
+    expect(saveFn).not.toHaveBeenCalled();
+    done();
   });
 });
 
@@ -167,7 +161,7 @@ it('Should be able to handle submit', async (done) => {
   const UPLOADED_URL = 'https://uploaded-image.jpg';
   const saveFn = jest.fn().mockResolvedValue(undefined);
   const uploadFn = jest.fn().mockResolvedValue(UPLOADED_URL);
-  const { result, waitFor } = renderHook(() =>
+  const { result } = renderHook(() =>
     useThemeSettingsFormHandler({
       onSave: saveFn,
       onUpload: uploadFn,
@@ -263,7 +257,7 @@ it('Should be able to handle image upload error', async (done) => {
   const saveFn = jest.fn().mockResolvedValue(undefined);
   const uploadFn = jest.fn().mockRejectedValueOnce(new ImageUploadError());
   const errorFn = jest.fn();
-  const { result, waitFor } = renderHook(() =>
+  const { result } = renderHook(() =>
     useThemeSettingsFormHandler({
       onSave: saveFn,
       onUpload: uploadFn,
@@ -298,7 +292,7 @@ it('Should be able to handle form saving error', async (done) => {
   const saveFn = jest.fn().mockRejectedValue(new FormSaveError());
   const uploadFn = jest.fn().mockResolvedValue('image.jpg');
   const errorFn = jest.fn();
-  const { result, waitFor } = renderHook(() =>
+  const { result } = renderHook(() =>
     useThemeSettingsFormHandler({
       onSave: saveFn,
       onUpload: uploadFn,
@@ -332,7 +326,7 @@ it('Should be able to handle apply customization to child portals error', async 
   const saveFn = jest.fn().mockRejectedValue(new ApplyCustomizationdError());
   const uploadFn = jest.fn().mockResolvedValue('image.jpg');
   const errorFn = jest.fn();
-  const { result, waitFor } = renderHook(() =>
+  const { result } = renderHook(() =>
     useThemeSettingsFormHandler({
       onSave: saveFn,
       onUpload: uploadFn,
@@ -362,4 +356,81 @@ it('Should be able to handle apply customization to child portals error', async 
     );
     done();
   });
+});
+
+it('Should show dashboard preview modal', () => {
+  const { getByText } = setup({
+    onSave: jest.fn(),
+    onUpload: jest.fn(),
+    portal: defaultPortal as GO1Portal,
+    user: {} as GO1User,
+  });
+
+  fireEvent.click(getByText('Preview dashboard'));
+
+  screen.getAllByTestId('preview-dashboard-icon').forEach((elem) => {
+    expect(elem.getAttribute('src')).toEqual(defaultPortal.files.dashboard_icon);
+  });
+  expect(window.getComputedStyle(screen.getByTestId('preview-dashboard-image')).backgroundImage).toContain(
+    defaultPortal.files.feature_image
+  );
+  expect(screen.getByTestId('preview-dashboard-welcome-message').innerHTML).toEqual(
+    defaultPortal.configuration.welcome
+  );
+  expect(screen.getByText('Close preview')).toBeInTheDocument();
+});
+
+it('Should show brand preview modal', () => {
+  const { getByText } = setup({
+    onSave: jest.fn(),
+    onUpload: jest.fn(),
+    portal: defaultPortal as GO1Portal,
+    user: {} as GO1User,
+  });
+
+  fireEvent.click(getByText('Preview brand'));
+
+  expect(window.getComputedStyle(screen.getByTestId('preview-split-featured-image')).backgroundImage).toContain(
+    defaultPortal.files.login_background
+  );
+
+  const submitButton = screen.getByTestId('preview-split-submit-button');
+  expect(window.getComputedStyle(submitButton).backgroundColor).toEqual(
+    'rgb(204, 204, 204)' // rgb value of #cccccc
+  );
+  expect(submitButton.textContent).toEqual('Create new account');
+
+  expect(screen.getByText('Close preview')).toBeInTheDocument();
+});
+
+it('Should show login preview modal', () => {
+  const { getByText } = setup({
+    onSave: jest.fn(),
+    onUpload: jest.fn(),
+    portal: defaultPortal as GO1Portal,
+    user: {} as GO1User,
+  });
+
+  fireEvent.click(getByText('Preview login'));
+
+  const submitButton = screen.getByTestId('preview-split-submit-button');
+  expect(submitButton.textContent).toEqual('Log in');
+
+  expect(screen.getByText('Close preview')).toBeInTheDocument();
+});
+
+it('Should show signup preview modal', () => {
+  const { getByText } = setup({
+    onSave: jest.fn(),
+    onUpload: jest.fn(),
+    portal: defaultPortal as GO1Portal,
+    user: {} as GO1User,
+  });
+
+  fireEvent.click(getByText('Preview sign up'));
+
+  const submitButton = screen.getByTestId('preview-split-submit-button');
+  expect(submitButton.textContent).toEqual('Create new account');
+
+  expect(screen.getByText('Close preview')).toBeInTheDocument();
 });

@@ -32,7 +32,7 @@ const MainIcon = ({ icon, ...props }: MainIconProps) => {
       paddingX={2}
     >
       {icon ? (
-        <View element="img" src={icon} style={{ maxHeight: 40 }} />
+        <View data-testid="preview-dashboard-icon" element="img" src={icon} style={{ maxHeight: 40 }} />
       ) : (
         <IconGo1Logo color="successLowest" size={[8, 6, 6]} />
       )}

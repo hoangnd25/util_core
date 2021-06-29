@@ -14,12 +14,12 @@ const HeroPreview: React.FC<HeroPreviewProps> = ({ image, message }) => {
       alignItems="center"
       justifyContent="center"
       css={{
-        background: image ? `url("${image}") repeat center center fixed` : '',
+        background: image ? `url("${image}") repeat center center` : '',
       }}
     >
       <View
         data-testid="preview-dashboard-welcome-message"
-        width="50%"
+        width="85%"
         color="soft"
         dangerouslySetInnerHTML={{ __html: message }}
       />

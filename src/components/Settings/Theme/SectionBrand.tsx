@@ -115,8 +115,8 @@ const SectionBrand: FunctionComponent<Props> = ({
             terms={<Trans>By creating an account you are agreeing to {siteName || 'the Go1'}&rsquo;s</Trans>}
             secondaryTagline={[i18n._(t`Already have an account?`), i18n._(t`Log in`)]}
             description={signupDescription}
-            featuredImage={featuredImage}
-            logo={logo}
+            featuredImage={typeof featuredImage === 'string' && featuredImage}
+            logo={typeof logo === 'string' && logo}
             portalColor={portalColor}
             showPolicyLinks
           >

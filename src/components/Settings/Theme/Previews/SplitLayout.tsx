@@ -30,7 +30,7 @@ const SplitLayout: React.FC<Props> = (props) => {
     portalColor,
   } = props;
 
-  const DEFAULT_APIOM_LOGO = 'images/logo-white.png';
+  const DEFAULT_LOGO = '/Go1_Logo_Petrol_Green_sm.jpg';
 
   return (
     <Provider accent={portalColor}>
@@ -44,29 +44,23 @@ const SplitLayout: React.FC<Props> = (props) => {
               backgroundColor="successLowest"
               overflow="hidden"
               css={{
-                backgroundImage: featuredImage,
+                backgroundImage: `url("${featuredImage}")`,
                 backgroundPosition: 'center center',
                 backgroundSize: 'cover',
               }}
             />
 
             <View width="50%" backgroundColor="faint" height="100%" overflow="auto">
+              {/* <img height={128} width="auto" src={typeof logo === 'string' && logo} /> */}
               <View alignItems="center" justifyContent="center" marginTop={8} paddingBottom={4} paddingX={6}>
                 {/* LOGOs */}
-                {(logo && logo !== DEFAULT_APIOM_LOGO && (
-                  <View
-                    width="100%"
-                    height={128}
-                    marginY={5}
-                    data-testid="portal-logo"
-                    css={{
-                      backgroundImage: `url(${logo})`,
-                      backgroundPosition: 'center center',
-                      backgroundSize: 'contain',
-                      backgroundRepeat: 'no-repeat',
-                    }}
-                  />
-                )) || <IconGo1Logo size={8} marginY={6} color="successLowest" />}
+                {typeof logo === 'string' && logo !== DEFAULT_LOGO ? (
+                  <View marginY={5} data-testid="portal-logo" height={128} width="auto">
+                    <img height={128} width="auto" src={logo} alt="" />
+                  </View>
+                ) : (
+                  <IconGo1Logo size={8} marginY={6} color="successLowest" />
+                )}
 
                 <Text
                   css={{ width: '100%' }} // explicitly set width for IE

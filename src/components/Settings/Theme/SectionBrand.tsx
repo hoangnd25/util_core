@@ -6,6 +6,7 @@ import { usePrevious } from '@src/hooks/usePrevious';
 import { FormikHandlers } from 'formik';
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import getConfig from 'next/config';
+import { DEFAULT_LOGO, DEFAULT_LANDING_PAGE } from '@src/constants';
 import SettingsFormSection from '../SettingsFormSection';
 import { ImageSupportText } from './ImageSupportText';
 import PreviewButton from './PreviewButton';
@@ -114,7 +115,7 @@ const SectionBrand: FunctionComponent<Props> = ({
             terms={<Trans>By creating an account you are agreeing to {siteName || 'the Go1'}&rsquo;s</Trans>}
             secondaryTagline={[i18n._(t`Already have an account?`), i18n._(t`Log in`)]}
             description={signupDescription}
-            featuredImage={`url("${featuredImage}")`}
+            featuredImage={featuredImage}
             logo={logo}
             portalColor={portalColor}
             showPolicyLinks
@@ -138,8 +139,8 @@ const SectionBrand: FunctionComponent<Props> = ({
               hideLabel
               hideStatus
               required
-              disableDelete={logo?.includes('Go1_Logo_Petrol_Green_sm') && true}
-              defaultImage={`${CDN_PATH}/Go1_Logo_Petrol_Green_sm.jpg`}
+              disableDelete={typeof logo === 'string' && logo?.includes(DEFAULT_LOGO)}
+              defaultImage={DEFAULT_LOGO}
               disabled={isSaving}
               imageBackgroundSize="contain"
               validate={imageValidator({
@@ -200,8 +201,8 @@ const SectionBrand: FunctionComponent<Props> = ({
               name="featuredImage"
               allowCrop
               hideLabel
-              disableDelete={featuredImage?.includes('login_default_landing_page') && true}
-              defaultImage={`${CDN_PATH}/login_default_landing_page.jpg`}
+              disableDelete={typeof featuredImage === 'string' && featuredImage?.includes(DEFAULT_LANDING_PAGE)}
+              defaultImage={DEFAULT_LANDING_PAGE}
               component={ImageUploader}
               validate={imageValidator({
                 maxSizeInMb: 5,

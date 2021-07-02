@@ -6,6 +6,8 @@ import {
   SETTINGS_THEME_FIELDS_MAPPING,
   SETTINGS_THEME_UPLOAD_FIELDS_MAPPING,
   PREVIEW_IMAGE_TYPE,
+  DEFAULT_LANDING_PAGE,
+  DEFAULT_LOGO,
 } from '@src/constants';
 import Track from '@src/utils/tracking';
 import getConfig from 'next/config';
@@ -38,6 +40,7 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
   } = useThemeSettingsFormHandler(props);
 
   const theme = useContext(Theme);
+
   const initialValues = getInitialValues<ThemeSettingFormValues>(
     {
       ...SETTINGS_THEME_UPLOAD_FIELDS_MAPPING,
@@ -46,50 +49,40 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
     portal
   );
 
-  // If user has old apiom theme settings for images-> reset to default
-
-  const setInitialImages = (initialValue, imageType, apiomImage, defaultImage) => {
+  const setInitialImages = (initialValue, imageType, apiomImage?, defaultImage?, errors?) => {
     if (
+      // If they have that issue where there is no theme settings saved against the portal
       !initialValue[imageType] ||
       initialValue[imageType].length < 0 ||
-      !initialValue[imageType].includes(apiomImage) ||
-      !initialValue[imageType] === undefined
+      // if image is not an empty string
+      // !initialValue[imageType] === undefined ||
+      // If the user has the old apiom imageset
+      initialValue[imageType] === apiomImage ||
+      // If the defaultImage is already set
+      initialValue[imageType] === defaultImage ||
+      // If error return matches the imageType
+      (errors && Object.keys(errors).find((a) => a === imageType))
     ) {
       return defaultImage;
+    }
+
+    if (typeof initialValue[imageType] === 'string' && initialValue[imageType].includes('cloudinary')) {
+      // if they have already uploaded an image or have created their preview image then show that.
+      return initialValue[imageType];
     } 
+      initialValue[imageType] = URL.createObjectURL(initialValue[imageType]);
       return initialValue[imageType];
     
   };
 
-  initialValues.logo = setInitialImages(
-    initialValues,
-    'logo',
-    'logo-white',
-    `${CDN_PATH}/Go1_Logo_Petrol_Green_sm.jpg`
-  );
-
-  initialValues.featuredImage = setInitialImages(
-    initialValues,
-    'logo',
-    'logo-white',
-    `${CDN_PATH}/login_default_landing_page.jpg`
-  );
-
-  initialValues.dashboardIcon = setInitialImages(
-    initialValues,
-    'logo',
-    'logo-white',
-    `${CDN_PATH}/Go1_Logo_Petrol_Green_sm.jpg`
-  );
-
   const [themeSettings, setThemeSettings] = useState(initialValues);
-  console.log(themeSettings);
+
   useEffect(() => {
     // Interaction of featuredImage upload i.e crop  and move does not trigger form change event.
     if (featuredImageCropped !== undefined) {
       themeSettings.featuredImage = `${URL.createObjectURL(featuredImageCropped)}`;
     }
-  }, [featuredImageCropped]);
+  }, [featuredImageCropped, themeSettings]);
 
   const formikRef = useRef<Formik>(null);
 
@@ -107,40 +100,49 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
     // if image is  not an empty string after being deleted and it is
     // check the image is set in the values -> if haven't been set before will not be in default values object
     // Check that the featured image is not an already saved cloudinary image file
-    // Check that the image has not been removed which defaults to selected default image
+    // Check that the image has not bee removed which defaults to empty string
     // Check if errors is present by the returned error message -> then create blob image object
-    if (!values[imageType] || values[imageType].length < 0) {
-      switch (imageType) {
-        case 'featuredImage':
-          values[imageType] = `${CDN_PATH}/login_default_landing_page.jpg`;
-          break;
-        case 'logo':
-        case 'dashboardIcon':
-          values[imageType] = `${CDN_PATH}/Go1_Logo_Petrol_Green_sm.jpg`;
-          break;
-        default:
-      }
-    }
 
-    if (values[imageType]?.length > 0 && values[imageType]?.includes('cloudinary')) {
+    if (typeof values[imageType] === 'string' && values[imageType]?.includes('cloudinary')) {
       return values[imageType];
     }
+
     if (errors?.length > 0) {
-      return undefined;
+      if (imageType === 'featuredImage') {
+        values[imageType] = DEFAULT_LANDING_PAGE;
+        return values[imageType];
+      } 
+        values[imageType] = DEFAULT_LOGO;
+        return values[imageType];
+      
     }
 
-    return `${URL.createObjectURL(values[imageType])}`;
+    if (
+      typeof values[imageType] === 'string' &&
+      (values[imageType].includes(DEFAULT_LANDING_PAGE) || values[imageType].includes(DEFAULT_LOGO))
+    ) {
+      return values[imageType];
+    }
+
+    if (typeof values[imageType] === 'string' && values[imageType].includes('blob')) {
+      return values[imageType];
+    }
+
+    if (typeof values[imageType] === 'object') {
+      return `${URL.createObjectURL(values[imageType])}`;
+    } return '';
   };
 
   const handleChange = async (values: { values: ThemeSettingFormValues; errors: ThemeSettingFormValues }) => {
     const newValues = values.values as any;
     const errors = values.errors as any;
 
-    const previewImages = {};
+    const previewImages = {} as any;
     PREVIEW_IMAGE_TYPE.forEach((key) => {
       previewImages[key] = setPreviewImage(key, newValues, errors);
     });
     const previewValues = { ...newValues, ...previewImages };
+
     setThemeSettings(previewValues);
   };
 
@@ -162,6 +164,7 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
     setShowConfirmModal(false);
     formikRef.current?.submitForm();
   };
+
   return (
     <Form
       formikRef={formikRef}

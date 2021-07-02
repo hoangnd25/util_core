@@ -43,7 +43,7 @@ const SectionSignup: FunctionComponent<Props> = ({ isPartnerPortal, themeSetting
             terms={<Trans>By creating an account you are agreeing to {siteName || 'the Go1'}&rsquo;s</Trans>}
             secondaryTagline={[i18n._(t`Already have an account?`), i18n._(t`Log in`)]}
             description={signupDescription}
-            featuredImage={`url("${featuredImage}")`}
+            featuredImage={featuredImage}
             logo={logo}
             showPolicyLinks
             portalColor={portalColor}

@@ -21,7 +21,7 @@ interface Props {
   themeSettings?: ThemeSettingFormValues;
 }
 const SectionDashboard: FunctionComponent<Props> = ({ isPartnerPortal, themeSettings }) => {
-  const { dashboardImage, dashboardIcon: iconValue, dashboardWelcomeMessage } = themeSettings;
+  const { dashboardImage, dashboardImageScale, dashboardIcon: iconValue, dashboardWelcomeMessage } = themeSettings;
   const [openPreview, setOpenPreview] = useState(false);
 
   const dashboardBackground = useFileData(dashboardImage);
@@ -44,7 +44,7 @@ const SectionDashboard: FunctionComponent<Props> = ({ isPartnerPortal, themeSett
                 onRequestClose={() => setOpenPreview(false)}
               >
                 <TopbarPreview icon={dashboardIcon} />
-                <HeroPreview image={dashboardBackground} message={dashboardMessage} />
+                <HeroPreview image={dashboardBackground} imageScale={dashboardImageScale} message={dashboardMessage} />
                 <ContentPreview />
               </DashboardPreview>
             </>

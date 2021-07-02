@@ -2,6 +2,7 @@ import React from 'react';
 import { View, ButtonFilled, Text, Provider, Theme } from '@go1d/go1d';
 import IconGo1Logo from '@go1d/go1d/build/components/Icons/Go1Logo';
 import { Trans } from '@lingui/macro';
+import { DEFAULT_LOGO } from '@src/constants';
 
 interface Props {
   primaryTagline: React.ReactNode;
@@ -29,8 +30,6 @@ const SplitLayout: React.FC<Props> = (props) => {
     showPolicyLinks,
     portalColor,
   } = props;
-
-  const DEFAULT_LOGO = '/Go1_Logo_Petrol_Green_sm.jpg';
 
   return (
     <Provider accent={portalColor}>

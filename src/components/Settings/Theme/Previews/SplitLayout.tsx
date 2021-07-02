@@ -51,7 +51,6 @@ const SplitLayout: React.FC<Props> = (props) => {
             />
 
             <View width="50%" backgroundColor="faint" height="100%" overflow="auto">
-              {/* <img height={128} width="auto" src={typeof logo === 'string' && logo} /> */}
               <View alignItems="center" justifyContent="center" marginTop={8} paddingBottom={4} paddingX={6}>
                 {/* LOGOs */}
                 {typeof logo === 'string' && logo !== DEFAULT_LOGO ? (

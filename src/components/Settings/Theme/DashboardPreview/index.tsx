@@ -16,7 +16,7 @@ const DashboardPreview: React.FC<DashboardPreviewProps> = ({ title, isOpen, onRe
     <Modal title={`Preview ${title}`} onRequestClose={onRequestClose} isOpen={isOpen} maxWidth={850}>
       <View css={{ border: `1px solid ${theme.colors.faint}`, borderRadius: 4 }}>{children}</View>
       <View marginTop={5} display="flex" flexDirection="row" justifyContent="center">
-        <ButtonFilled color="accent" onClick={onRequestClose}>
+        <ButtonFilled onClick={onRequestClose}>
           <Trans>Close preview</Trans>
         </ButtonFilled>
       </View>

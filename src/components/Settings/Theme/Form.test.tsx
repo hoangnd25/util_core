@@ -16,9 +16,9 @@ import { ApplyCustomizationdError, FormSaveError, ImageUploadError } from './err
 const defaultPortal = {
   title: 'test.mygo1.com',
   files: {
-    login_background: 'https://featured-image.jpg',
-    dashboard_icon: 'https://dashboard-icon.jpg',
-    feature_image: 'https://dashboard-image.jpg',
+    login_background: 'https://cloudinary_image.jpg',
+    dashboard_icon: 'https://cloudinary_image..jpg',
+    feature_image: 'https://cloudinary_image..jpg',
     feature_image_sizing_type: 'fixed-width',
   },
   configuration: {

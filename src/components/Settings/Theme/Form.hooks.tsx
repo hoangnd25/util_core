@@ -5,6 +5,8 @@ import {
   SETTINGS_THEME_FIELDS_MAPPING,
   SETTINGS_THEME_UPLOAD_FIELDS_MAPPING,
   SETTINGS_THEME_CUSTOMIZATION_GROUPS_MAPPING,
+  DEFAULT_LOGO,
+  DEFAULT_LANDING_PAGE,
 } from '@src/constants';
 import { serializeHtml } from '@src/hooks/useHtmlSlateValue/htmlSerializer';
 import { ThemeSettingFormValues, FormApplyCustomizationValues, ThemeSettingsFormProps } from './types';
@@ -31,6 +33,11 @@ export const useThemeSettingsFormHandler = (props: ThemeSettingsFormProps) => {
 
     if (typeof image === 'string' && croppedImage) {
       return onUpload(croppedImage); // image not changed but cropped, upload cropped image then return uploaded url
+    }
+
+    if ([DEFAULT_LOGO, DEFAULT_LANDING_PAGE].includes(image)) {
+      // If the images contain default images set to empty string to accomodate for Delete image function
+      return '';
     }
 
     return undefined; // return undefined to skip updating this field
@@ -61,7 +68,8 @@ export const useThemeSettingsFormHandler = (props: ThemeSettingsFormProps) => {
         ...(signatureImage !== undefined && { [SETTINGS_THEME_UPLOAD_FIELDS_MAPPING.signatureImage]: signatureImage }),
         ...(featuredImage !== undefined && { [SETTINGS_THEME_UPLOAD_FIELDS_MAPPING.featuredImage]: featuredImage }),
         ...(dashboardImage !== undefined && { [SETTINGS_THEME_UPLOAD_FIELDS_MAPPING.dashboardImage]: dashboardImage }),
-        ...(dashboardIcon !== undefined && { [SETTINGS_THEME_UPLOAD_FIELDS_MAPPING.dashboardIcon]: dashboardIcon }),
+        ...(dashboardIcon !== undefined &&
+          dashboardIcon !== DEFAULT_LOGO && { [SETTINGS_THEME_UPLOAD_FIELDS_MAPPING.dashboardIcon]: dashboardIcon }),
         ...getFieldsValues(
           { ...SETTINGS_THEME_FIELDS_MAPPING },
           {

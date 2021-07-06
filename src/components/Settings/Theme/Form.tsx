@@ -22,10 +22,6 @@ import { useThemeSettingsFormHandler } from './Form.hooks';
 import { ThemeSettingFormValues, ThemeSettingsFormProps } from './types';
 import ConfirmModal from './ConfirmModal';
 
-const {
-  publicRuntimeConfig: { CDN_PATH },
-} = getConfig();
-
 const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => {
   const { portal, user, isSaving } = props;
   const isPartnerPortal = ['content_partner', 'distribution_partner'].includes(portal.type || null);
@@ -48,32 +44,6 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
     },
     portal
   );
-
-  const setInitialImages = (initialValue, imageType, apiomImage?, defaultImage?, errors?) => {
-    if (
-      // If they have that issue where there is no theme settings saved against the portal
-      !initialValue[imageType] ||
-      initialValue[imageType].length < 0 ||
-      // if image is not an empty string
-      // !initialValue[imageType] === undefined ||
-      // If the user has the old apiom imageset
-      initialValue[imageType] === apiomImage ||
-      // If the defaultImage is already set
-      initialValue[imageType] === defaultImage ||
-      // If error return matches the imageType
-      (errors && Object.keys(errors).find((a) => a === imageType))
-    ) {
-      return defaultImage;
-    }
-
-    if (typeof initialValue[imageType] === 'string' && initialValue[imageType].includes('cloudinary')) {
-      // if they have already uploaded an image or have created their preview image then show that.
-      return initialValue[imageType];
-    } 
-      initialValue[imageType] = URL.createObjectURL(initialValue[imageType]);
-      return initialValue[imageType];
-    
-  };
 
   const [themeSettings, setThemeSettings] = useState(initialValues);
 
@@ -111,10 +81,9 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
       if (imageType === 'featuredImage') {
         values[imageType] = DEFAULT_LANDING_PAGE;
         return values[imageType];
-      } 
-        values[imageType] = DEFAULT_LOGO;
-        return values[imageType];
-      
+      }
+      values[imageType] = DEFAULT_LOGO;
+      return values[imageType];
     }
 
     if (
@@ -130,7 +99,8 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
 
     if (typeof values[imageType] === 'object') {
       return `${URL.createObjectURL(values[imageType])}`;
-    } return '';
+    }
+    return '';
   };
 
   const handleChange = async (values: { values: ThemeSettingFormValues; errors: ThemeSettingFormValues }) => {

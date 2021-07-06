@@ -52,10 +52,12 @@ export const setInitialImages = (value, apiomImage, defaultImage) => {
     // If error return matches the imageType
   ) {
     return defaultImage;
-  } if (typeof value === 'string' && value.includes('cloudinary')) {
+  }
+  if (typeof value === 'string' && value.includes('cloudinary')) {
     // if they have already uploaded an image or have created their preview image then show that.
     return value;
-  } return defaultImage;
+  }
+  return defaultImage;
 };
 
 export const getInitialValues = <T>(
@@ -73,10 +75,10 @@ export const getInitialValues = <T>(
     switch (fieldName) {
       case 'logo':
       case 'dashboardIcon':
-        value = setInitialImages(fieldName, 'logo-white', DEFAULT_LOGO);
+        value = setInitialImages(value, 'logo-white', DEFAULT_LOGO);
         break;
       case 'featuredImage':
-        value = setInitialImages(fieldName, 'getting-started', DEFAULT_LANDING_PAGE);
+        value = setInitialImages(value, 'getting-started', DEFAULT_LANDING_PAGE);
         break;
       default:
     }

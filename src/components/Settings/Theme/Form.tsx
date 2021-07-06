@@ -77,11 +77,7 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
     }
 
     if (errors?.length > 0) {
-      if (imageType === 'featuredImage') {
-        values[imageType] = DEFAULT_LANDING_PAGE_IMAGE;
-        return values[imageType];
-      }
-      values[imageType] = DEFAULT_LOGO;
+      values[imageType] = imageType === 'featuredImage' ? DEFAULT_LANDING_PAGE_IMAGE : DEFAULT_LOGO;
       return values[imageType];
     }
 

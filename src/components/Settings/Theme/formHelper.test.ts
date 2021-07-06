@@ -43,9 +43,9 @@ it('Should get correct initial values', () => {
 });
 
 it('If portal has default Apiom images or no images, set to Default theme images', () => {
-  expect(getInitialValues(SETTINGS_THEME_UPLOAD_FIELDS_MAPPING, { portalWithApiomImages })).toStrictEqual({
-    dashboardIcon: '/Go1_Logo_Petrol_Green_sm.jpg',
-    featuredImage: '/login_default_landing_page.jpg',
-    logo: '/Go1_Logo_Petrol_Green_sm.jpg',
+  expect(getInitialValues(SETTINGS_THEME_UPLOAD_FIELDS_MAPPING, { portalWithApiomImages })).toEqual({
+    dashboardIcon: DEFAULT_LOGO,
+    featuredImage: DEFAULT_LANDING_PAGE,
+    logo: DEFAULT_LOGO,
   });
 });

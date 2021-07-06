@@ -8,7 +8,7 @@ import AppContext from '@src/utils/appContext';
 import create from '@src/utils/http';
 import MockAdapter from 'axios-mock-adapter';
 import { fireEvent, render, act, screen, waitFor } from '@testing-library/react';
-import { DEFAULT_LOGO, DEFAULT_LANDING_PAGE } from '@src/constants';
+import { DEFAULT_LOGO, DEFAULT_LANDING_PAGE_IMAGE } from '@src/constants';
 import ThemeSettingsForm from './Form';
 import { ThemeSettingsFormProps } from './types';
 import { useThemeSettingsFormHandler } from './Form.hooks';
@@ -137,7 +137,7 @@ it('Images should save as strings if they are default images', async (done) => {
   const defaultImagesPortal = {
     title: 'test.mygo1.com',
     files: {
-      login_background: DEFAULT_LANDING_PAGE,
+      login_background: DEFAULT_LANDING_PAGE_IMAGE,
       dashboard_icon: DEFAULT_LOGO,
       feature_image: 'https://cloudinary_feature_image.jpg',
       feature_image_sizing_type: 'fixed-width',

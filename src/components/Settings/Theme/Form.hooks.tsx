@@ -6,7 +6,7 @@ import {
   SETTINGS_THEME_UPLOAD_FIELDS_MAPPING,
   SETTINGS_THEME_CUSTOMIZATION_GROUPS_MAPPING,
   DEFAULT_LOGO,
-  DEFAULT_LANDING_PAGE,
+  DEFAULT_LANDING_PAGE_IMAGE,
 } from '@src/constants';
 import { serializeHtml } from '@src/hooks/useHtmlSlateValue/htmlSerializer';
 import { ThemeSettingFormValues, FormApplyCustomizationValues, ThemeSettingsFormProps } from './types';
@@ -35,7 +35,7 @@ export const useThemeSettingsFormHandler = (props: ThemeSettingsFormProps) => {
       return onUpload(croppedImage); // image not changed but cropped, upload cropped image then return uploaded url
     }
 
-    if ([DEFAULT_LOGO, DEFAULT_LANDING_PAGE].includes(image)) {
+    if ([DEFAULT_LOGO, DEFAULT_LANDING_PAGE_IMAGE].includes(image)) {
       // If the images contain default images set to empty string to accomodate for Delete image function
       image = '';
       return image;

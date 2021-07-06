@@ -1,4 +1,4 @@
-import { SETTINGS_THEME_UPLOAD_FIELDS_MAPPING, DEFAULT_LOGO, DEFAULT_LANDING_PAGE } from '@src/constants';
+import { SETTINGS_THEME_UPLOAD_FIELDS_MAPPING, DEFAULT_LOGO, DEFAULT_LANDING_PAGE_IMAGE } from '@src/constants';
 import { getFieldsValues, getInitialValues } from './formHelper';
 
 const portal = {
@@ -45,7 +45,7 @@ it('Should get correct initial values', () => {
 it('If portal has default Apiom images or no images, set to Default theme images', () => {
   expect(getInitialValues(SETTINGS_THEME_UPLOAD_FIELDS_MAPPING, { portalWithApiomImages })).toEqual({
     dashboardIcon: DEFAULT_LOGO,
-    featuredImage: DEFAULT_LANDING_PAGE,
+    featuredImage: DEFAULT_LANDING_PAGE_IMAGE,
     logo: DEFAULT_LOGO,
   });
 });

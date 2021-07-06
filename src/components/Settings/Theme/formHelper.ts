@@ -1,4 +1,4 @@
-import { DEFAULT_LANDING_PAGE, DEFAULT_LOGO, SETTINGS_THEME_CUSTOMIZATION_GROUPS_MAPPING } from '@src/constants';
+import { DEFAULT_LANDING_PAGE_IMAGE, DEFAULT_LOGO, SETTINGS_THEME_CUSTOMIZATION_GROUPS_MAPPING } from '@src/constants';
 import _get from 'lodash/get';
 import { FormApplyCustomizationValues } from './types';
 
@@ -73,7 +73,7 @@ export const getInitialValues = <T>(
         value = setInitialImages(value, 'logo-white', DEFAULT_LOGO);
         break;
       case 'featuredImage':
-        value = setInitialImages(value, 'getting-started', DEFAULT_LANDING_PAGE);
+        value = setInitialImages(value, 'getting-started', DEFAULT_LANDING_PAGE_IMAGE);
         break;
       default:
     }

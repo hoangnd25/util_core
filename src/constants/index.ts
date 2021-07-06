@@ -76,4 +76,4 @@ export const SETTINGS_THEME_CUSTOMIZATION_GROUPS_MAPPING: Record<string, string>
 export const PREVIEW_IMAGE_TYPE = ['logo', 'featuredImage'];
 
 export const DEFAULT_LOGO = `${CDN_PATH}/Go1_Logo_Petrol_Green_sm.jpg`;
-export const DEFAULT_LANDING_PAGE = `${CDN_PATH}/login_default_landing_page.jpg`;
+export const DEFAULT_LANDING_PAGE_IMAGE = `${CDN_PATH}/login_default_landing_page.jpg`;

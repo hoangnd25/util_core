@@ -6,7 +6,7 @@ import {
   SETTINGS_THEME_FIELDS_MAPPING,
   SETTINGS_THEME_UPLOAD_FIELDS_MAPPING,
   PREVIEW_IMAGE_TYPE,
-  DEFAULT_LANDING_PAGE,
+  DEFAULT_LANDING_PAGE_IMAGE,
   DEFAULT_LOGO,
 } from '@src/constants';
 import Track from '@src/utils/tracking';
@@ -78,7 +78,7 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
 
     if (errors?.length > 0) {
       if (imageType === 'featuredImage') {
-        values[imageType] = DEFAULT_LANDING_PAGE;
+        values[imageType] = DEFAULT_LANDING_PAGE_IMAGE;
         return values[imageType];
       }
       values[imageType] = DEFAULT_LOGO;
@@ -87,12 +87,10 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
 
     if (
       typeof values[imageType] === 'string' &&
-      (values[imageType].includes(DEFAULT_LANDING_PAGE) || values[imageType].includes(DEFAULT_LOGO))
+      (values[imageType].includes(DEFAULT_LANDING_PAGE_IMAGE) ||
+        values[imageType].includes(DEFAULT_LOGO) ||
+        values[imageType].includes('blob'))
     ) {
-      return values[imageType];
-    }
-
-    if (typeof values[imageType] === 'string' && values[imageType].includes('blob')) {
       return values[imageType];
     }
 

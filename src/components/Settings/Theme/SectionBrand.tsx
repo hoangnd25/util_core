@@ -6,7 +6,7 @@ import { usePrevious } from '@src/hooks/usePrevious';
 import { FormikHandlers } from 'formik';
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import getConfig from 'next/config';
-import { DEFAULT_LOGO, DEFAULT_LANDING_PAGE } from '@src/constants';
+import { DEFAULT_LOGO, DEFAULT_LANDING_PAGE_IMAGE } from '@src/constants';
 import SettingsFormSection from '../SettingsFormSection';
 import { ImageSupportText } from './ImageSupportText';
 import PreviewButton from './PreviewButton';
@@ -201,8 +201,8 @@ const SectionBrand: FunctionComponent<Props> = ({
               name="featuredImage"
               allowCrop
               hideLabel
-              disableDelete={typeof featuredImage === 'string' && featuredImage?.includes(DEFAULT_LANDING_PAGE)}
-              defaultImage={DEFAULT_LANDING_PAGE}
+              disableDelete={typeof featuredImage === 'string' && featuredImage?.includes(DEFAULT_LANDING_PAGE_IMAGE)}
+              defaultImage={DEFAULT_LANDING_PAGE_IMAGE}
               component={ImageUploader}
               validate={imageValidator({
                 maxSizeInMb: 5,

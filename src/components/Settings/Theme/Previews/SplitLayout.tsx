@@ -43,7 +43,7 @@ const SplitLayout: React.FC<Props> = (props) => {
               backgroundColor="successLowest"
               overflow="hidden"
               css={{
-                backgroundImage: `url("${featuredImage}")`,
+                backgroundImage: `url('${featuredImage}')`,
                 backgroundPosition: 'center center',
                 backgroundSize: 'cover',
               }}
@@ -53,9 +53,18 @@ const SplitLayout: React.FC<Props> = (props) => {
               <View alignItems="center" justifyContent="center" marginTop={8} paddingBottom={4} paddingX={6}>
                 {/* LOGOs */}
                 {typeof logo === 'string' && logo !== DEFAULT_LOGO ? (
-                  <View marginY={5} data-testid="portal-logo" height={128} width="auto">
-                    <img height={128} width="auto" src={logo} alt="" />
-                  </View>
+                  <View
+                    width="100%"
+                    height={128}
+                    marginY={5}
+                    data-testid="portal-logo"
+                    css={{
+                      backgroundImage: `url('${logo}')`,
+                      backgroundPosition: 'center center',
+                      backgroundSize: 'contain',
+                      backgroundRepeat: 'no-repeat',
+                    }}
+                  />
                 ) : (
                   <IconGo1Logo size={8} marginY={6} color="successLowest" />
                 )}

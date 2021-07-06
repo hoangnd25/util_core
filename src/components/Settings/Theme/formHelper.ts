@@ -1,9 +1,4 @@
-import {
-  DEFAULT_LANDING_PAGE,
-  DEFAULT_LOGO,
-  PREVIEW_IMAGE_TYPE,
-  SETTINGS_THEME_CUSTOMIZATION_GROUPS_MAPPING,
-} from '@src/constants';
+import { DEFAULT_LANDING_PAGE, DEFAULT_LOGO, SETTINGS_THEME_CUSTOMIZATION_GROUPS_MAPPING } from '@src/constants';
 import _get from 'lodash/get';
 import { FormApplyCustomizationValues } from './types';
 

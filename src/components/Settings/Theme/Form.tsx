@@ -10,7 +10,6 @@ import {
   DEFAULT_LOGO,
 } from '@src/constants';
 import Track from '@src/utils/tracking';
-import getConfig from 'next/config';
 import { deserializeHtml } from '@src/hooks/useHtmlSlateValue/htmlSerializer';
 import SectionBrand from './SectionBrand';
 import SectionLogin from './SectionLogin';

@@ -37,7 +37,8 @@ export const useThemeSettingsFormHandler = (props: ThemeSettingsFormProps) => {
 
     if ([DEFAULT_LOGO, DEFAULT_LANDING_PAGE].includes(image)) {
       // If the images contain default images set to empty string to accomodate for Delete image function
-      return '';
+      image = '';
+      return image;
     }
 
     return undefined; // return undefined to skip updating this field

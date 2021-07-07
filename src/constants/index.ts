@@ -1,3 +1,9 @@
+import getConfig from 'next/config';
+
+const {
+  publicRuntimeConfig: { CDN_PATH },
+} = getConfig();
+
 export const SIDEBAR_MENUS_INTEGRATIONS = {
   ADDONS: 'sidebar.integrations-addons',
   SCORM: 'sidebar.integrations-scorm',
@@ -68,3 +74,6 @@ export const SETTINGS_THEME_CUSTOMIZATION_GROUPS_MAPPING: Record<string, string>
 };
 
 export const PREVIEW_IMAGE_TYPE = ['logo', 'featuredImage'];
+
+export const DEFAULT_LOGO = `${CDN_PATH}/Go1_Logo_Petrol_Green_sm.jpg`;
+export const DEFAULT_LANDING_PAGE_IMAGE = `${CDN_PATH}/login_default_landing_page.jpg`;

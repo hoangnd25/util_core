@@ -2,6 +2,7 @@ import React from 'react';
 import { View, ButtonFilled, Text, Provider, Theme } from '@go1d/go1d';
 import IconGo1Logo from '@go1d/go1d/build/components/Icons/Go1Logo';
 import { Trans } from '@lingui/macro';
+import { DEFAULT_LOGO } from '@src/constants';
 
 interface Props {
   primaryTagline: React.ReactNode;
@@ -30,8 +31,6 @@ const SplitLayout: React.FC<Props> = (props) => {
     portalColor,
   } = props;
 
-  const DEFAULT_APIOM_LOGO = 'images/logo-white.png';
-
   return (
     <Provider accent={portalColor}>
       <Theme.Consumer>
@@ -45,7 +44,7 @@ const SplitLayout: React.FC<Props> = (props) => {
               backgroundColor="successLowest"
               overflow="hidden"
               css={{
-                backgroundImage: featuredImage,
+                backgroundImage: `url('${featuredImage}')`,
                 backgroundPosition: 'center center',
                 backgroundSize: 'cover',
               }}
@@ -54,20 +53,22 @@ const SplitLayout: React.FC<Props> = (props) => {
             <View width="50%" backgroundColor="faint" height="100%" overflow="auto">
               <View alignItems="center" justifyContent="center" marginTop={8} paddingBottom={4} paddingX={6}>
                 {/* LOGOs */}
-                {(logo && logo !== DEFAULT_APIOM_LOGO && (
+                {typeof logo === 'string' && logo !== DEFAULT_LOGO ? (
                   <View
                     width="100%"
                     height={128}
                     marginY={5}
                     data-testid="portal-logo"
                     css={{
-                      backgroundImage: `url(${logo})`,
+                      backgroundImage: `url('${logo}')`,
                       backgroundPosition: 'center center',
                       backgroundSize: 'contain',
                       backgroundRepeat: 'no-repeat',
                     }}
                   />
-                )) || <IconGo1Logo size={8} marginY={6} color="successLowest" />}
+                ) : (
+                  <IconGo1Logo size={8} marginY={6} color="successLowest" />
+                )}
 
                 <Text
                   css={{ width: '100%' }} // explicitly set width for IE

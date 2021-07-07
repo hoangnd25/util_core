@@ -6,9 +6,10 @@ import {
   SETTINGS_THEME_FIELDS_MAPPING,
   SETTINGS_THEME_UPLOAD_FIELDS_MAPPING,
   PREVIEW_IMAGE_TYPE,
+  DEFAULT_LANDING_PAGE_IMAGE,
+  DEFAULT_LOGO,
 } from '@src/constants';
 import Track from '@src/utils/tracking';
-import getConfig from 'next/config';
 import { deserializeHtml } from '@src/hooks/useHtmlSlateValue/htmlSerializer';
 import SectionBrand from './SectionBrand';
 import SectionLogin from './SectionLogin';
@@ -19,10 +20,6 @@ import SectionDashboard from './SectionDashboard';
 import { useThemeSettingsFormHandler } from './Form.hooks';
 import { ThemeSettingFormValues, ThemeSettingsFormProps } from './types';
 import ConfirmModal from './ConfirmModal';
-
-const {
-  publicRuntimeConfig: { CDN_PATH },
-} = getConfig();
 
 const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => {
   const { portal, user, isSaving } = props;
@@ -38,28 +35,14 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
   } = useThemeSettingsFormHandler(props);
 
   const theme = useContext(Theme);
-  let initialValues = getInitialValues<ThemeSettingFormValues>(
+
+  const initialValues = getInitialValues<ThemeSettingFormValues>(
     {
       ...SETTINGS_THEME_UPLOAD_FIELDS_MAPPING,
       ...SETTINGS_THEME_FIELDS_MAPPING,
     },
     portal
   );
-
-  // If user has old apiom theme settings for images-> reset to default
-  const apiomImages = {} as any;
-  PREVIEW_IMAGE_TYPE.forEach((key) => {
-    apiomImages.logo =
-      initialValues.logo?.includes('logo-white') || initialValues.logo === undefined
-        ? `${CDN_PATH}/Go1_Logo_Petrol_Green_sm.jpg`
-        : initialValues[key];
-    apiomImages.featuredImage =
-      initialValues.featuredImage?.includes('get-started') || initialValues.featuredImage === undefined
-        ? `${CDN_PATH}/signup_default_landing_page.jpg`
-        : initialValues[key];
-  });
-
-  initialValues = { ...initialValues, ...apiomImages };
 
   const [themeSettings, setThemeSettings] = useState(initialValues);
 
@@ -68,7 +51,7 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
     if (featuredImageCropped !== undefined) {
       themeSettings.featuredImage = `${URL.createObjectURL(featuredImageCropped)}`;
     }
-  }, [featuredImageCropped]);
+  }, [featuredImageCropped, themeSettings]);
 
   const formikRef = useRef<Formik>(null);
 
@@ -89,28 +72,40 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
     // Check that the image has not bee removed which defaults to empty string
     // Check if errors is present by the returned error message -> then create blob image object
 
-    if (!values[imageType] || values[imageType].length < 0) {
-      return '';
-    }
-    if (values[imageType]?.length > 0 && values[imageType]?.includes('cloudinary')) {
+    if (typeof values[imageType] === 'string' && values[imageType]?.includes('cloudinary')) {
       return values[imageType];
     }
+
     if (errors?.length > 0) {
-      return undefined;
+      values[imageType] = imageType === 'featuredImage' ? DEFAULT_LANDING_PAGE_IMAGE : DEFAULT_LOGO;
+      return values[imageType];
     }
 
-    return `${URL.createObjectURL(values[imageType])}`;
+    if (
+      typeof values[imageType] === 'string' &&
+      (values[imageType].includes(DEFAULT_LANDING_PAGE_IMAGE) ||
+        values[imageType].includes(DEFAULT_LOGO) ||
+        values[imageType].includes('blob'))
+    ) {
+      return values[imageType];
+    }
+
+    if (typeof values[imageType] === 'object') {
+      return `${URL.createObjectURL(values[imageType])}`;
+    }
+    return '';
   };
 
   const handleChange = async (values: { values: ThemeSettingFormValues; errors: ThemeSettingFormValues }) => {
     const newValues = values.values as any;
     const errors = values.errors as any;
 
-    const previewImages = {};
+    const previewImages = {} as any;
     PREVIEW_IMAGE_TYPE.forEach((key) => {
       previewImages[key] = setPreviewImage(key, newValues, errors);
     });
     const previewValues = { ...newValues, ...previewImages };
+
     setThemeSettings(previewValues);
   };
 
@@ -132,6 +127,7 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
     setShowConfirmModal(false);
     formikRef.current?.submitForm();
   };
+
   return (
     <Form
       formikRef={formikRef}
@@ -142,6 +138,7 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
         dashboardWelcomeMessage: deserializeHtml(initialValues.dashboardWelcomeMessage || ''),
         featuredImage: initialValues.featuredImage,
         logo: initialValues.logo,
+        dashboardIcon: initialValues.dashboardIcon,
       }}
       onSubmit={handleSubmit}
       onChange={debounce((actions) => handleChange(actions))}

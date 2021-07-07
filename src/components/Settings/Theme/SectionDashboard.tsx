@@ -111,8 +111,8 @@ const SectionDashboard: FunctionComponent<Props> = ({ isPartnerPortal, themeSett
             title={<Trans>Dashboard icon</Trans>}
             description={
               <Trans>
-                Used as the logo in your dashboard. For best results, upload an image with minimum dimensions of
-                100x100px over a transparent background.
+                Used as the logo in your dashboard. For best results, upload an image in either JPG, PNG or GIF format
+                with minimum dimensions of 100x100px over a transparent background and 5MB maximum size.
               </Trans>
             }
           >

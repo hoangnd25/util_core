@@ -8,6 +8,7 @@ import {
   PREVIEW_IMAGE_TYPE,
   DEFAULT_LANDING_PAGE_IMAGE,
   DEFAULT_LOGO,
+  DEFAULT_WELCOME_MESSAGE,
 } from '@src/constants';
 import Track from '@src/utils/tracking';
 import { deserializeHtml } from '@src/hooks/useHtmlSlateValue/htmlSerializer';
@@ -128,6 +129,8 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
     formikRef.current?.submitForm();
   };
 
+  const defaultWelcomeMessage = DEFAULT_WELCOME_MESSAGE.welcome;
+
   return (
     <Form
       formikRef={formikRef}
@@ -135,7 +138,7 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
         ...initialValues,
         portalColor: initialValues.portalColor || theme.colors.accent,
         dashboardImageScale: initialValues.dashboardImageScale || 'fixed-width',
-        dashboardWelcomeMessage: deserializeHtml(initialValues.dashboardWelcomeMessage || ''),
+        dashboardWelcomeMessage: deserializeHtml(initialValues.dashboardWelcomeMessage || defaultWelcomeMessage),
         featuredImage: initialValues.featuredImage,
         logo: initialValues.logo,
         dashboardIcon: initialValues.dashboardIcon,

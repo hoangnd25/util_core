@@ -76,4 +76,10 @@ export const SETTINGS_THEME_CUSTOMIZATION_GROUPS_MAPPING: Record<string, string>
 export const PREVIEW_IMAGE_TYPE = ['logo', 'featuredImage'];
 
 export const DEFAULT_LOGO = `${CDN_PATH}/Go1_Logo_Petrol_Green_sm.jpg`;
+
 export const DEFAULT_LANDING_PAGE_IMAGE = `${CDN_PATH}/login_default_landing_page.jpg`;
+
+export const DEFAULT_WELCOME_MESSAGE = {
+  local: 'AU',
+  welcome: `<Trans><p>Here are some tips to help get you started. Select your name from the top right, then:</p><ul><li><strong>"Account"</strong> to manage your user details</li><li><strong>"Administer"</strong> to manage this portal's learning materials and users, and view reports</li><li><strong>"Portal Settings"</strong> to manage the settings and appearance of this portal</li></ul><p>Questions? Select the button on the bottom right of your browser to contact GO1.</p></Trans>`,
+};

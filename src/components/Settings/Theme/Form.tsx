@@ -129,8 +129,6 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
     formikRef.current?.submitForm();
   };
 
-  const defaultWelcomeMessage = DEFAULT_WELCOME_MESSAGE.welcome;
-
   return (
     <Form
       formikRef={formikRef}
@@ -138,7 +136,7 @@ const ThemeSettingsForm: FunctionComponent<ThemeSettingsFormProps> = (props) => 
         ...initialValues,
         portalColor: initialValues.portalColor || theme.colors.accent,
         dashboardImageScale: initialValues.dashboardImageScale || 'fixed-width',
-        dashboardWelcomeMessage: deserializeHtml(initialValues.dashboardWelcomeMessage || defaultWelcomeMessage),
+        dashboardWelcomeMessage: deserializeHtml(initialValues.dashboardWelcomeMessage || DEFAULT_WELCOME_MESSAGE),
         featuredImage: initialValues.featuredImage,
         logo: initialValues.logo,
         dashboardIcon: initialValues.dashboardIcon,

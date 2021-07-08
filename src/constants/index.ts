@@ -79,7 +79,4 @@ export const DEFAULT_LOGO = `${CDN_PATH}/Go1_Logo_Petrol_Green_sm.jpg`;
 
 export const DEFAULT_LANDING_PAGE_IMAGE = `${CDN_PATH}/login_default_landing_page.jpg`;
 
-export const DEFAULT_WELCOME_MESSAGE = {
-  local: 'AU',
-  welcome: `<Trans><p>Here are some tips to help get you started. Select your name from the top right, then:</p><ul><li><strong>"Account"</strong> to manage your user details</li><li><strong>"Administer"</strong> to manage this portal's learning materials and users, and view reports</li><li><strong>"Portal Settings"</strong> to manage the settings and appearance of this portal</li></ul><p>Questions? Select the button on the bottom right of your browser to contact GO1.</p></Trans>`,
-};
+export const DEFAULT_WELCOME_MESSAGE = `<p>Here are some tips to help get you started. Select your name from the top right, then:</p><ul><li><strong>&quot;Account&quot;</strong> to manage your user details</li><li><strong>&quot;Administer&quot;</strong> to manage this portal&#x27;s learning materials and users, and view reports</li><li><strong>&quot;Portal Settings&quot;</strong> to manage the settings and appearance of this portal</li></ul><p>Questions? Select the button on the bottom right of your browser to contact Go1.</p>`;

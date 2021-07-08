@@ -4,11 +4,12 @@ import React, { useState } from 'react';
 import {
   SETTINGS_THEME_FIELDS_MAPPING,
   SETTINGS_THEME_UPLOAD_FIELDS_MAPPING,
-  SETTINGS_THEME_CUSTOMIZATION_GROUPS_MAPPING,
   DEFAULT_LOGO,
   DEFAULT_LANDING_PAGE_IMAGE,
+  DEFAULT_WELCOME_MESSAGE,
 } from '@src/constants';
 import { serializeHtml } from '@src/hooks/useHtmlSlateValue/htmlSerializer';
+import isEmptyTag from '@src/utils/isEmptyTag';
 import { ThemeSettingFormValues, FormApplyCustomizationValues, ThemeSettingsFormProps } from './types';
 import { getCustomizationGroupsFromValues, getFieldsValues } from './formHelper';
 import { ApplyCustomizationdError, FormSaveError, ImageUploadError } from './errors';
@@ -82,6 +83,13 @@ export const useThemeSettingsFormHandler = (props: ThemeSettingsFormProps) => {
           portal
         ),
       };
+
+      const hasNoWelcomeMessage = isEmptyTag(portal.configuration.welcome);
+      const nextWelcomeMessage = toSaveObject['configuration.welcome'];
+      if (nextWelcomeMessage === DEFAULT_WELCOME_MESSAGE && hasNoWelcomeMessage) {
+        // we don't need to save the default one
+        delete toSaveObject['configuration.welcome'];
+      }
 
       if (featuredImage) {
         actions.setFieldValue('featuredImage', featuredImage);

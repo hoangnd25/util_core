@@ -15,7 +15,7 @@ const HeroPreview: React.FC<HeroPreviewProps> = ({ image, imageScale, message })
       alignItems="center"
       justifyContent="center"
       css={{
-        background: image ? `url("${image}") repeat center center` : '',
+        background: image ? `url("${image}") no-repeat center center` : '',
         backgroundSize: imageScale === 'fixed-width' ? '100% auto' : 'auto 100%',
       }}
     >

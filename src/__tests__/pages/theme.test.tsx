@@ -32,7 +32,9 @@ const currentSession = {
       logo: 'https://logo.jpg',
       feature_image: 'https://featured-image.jpg',
     },
-    configuration: {},
+    configuration: {
+      welcome: '<p>The welcome message</p>',
+    },
   },
   user: {
     id: 1,

@@ -55,6 +55,24 @@ const SectionDashboard: FunctionComponent<Props> = ({ isPartnerPortal, themeSett
               name="dashboardWelcomeMessage"
               label={i18n._(t`Welcome message`)}
               component={RichTextInput}
+              dynamicValues={[
+                {
+                  label: i18n._(t`Full name`),
+                  value: '!fullName',
+                },
+                {
+                  label: i18n._(t`Email`),
+                  value: '!mail',
+                },
+                {
+                  label: i18n._(t`Last name`),
+                  value: '!last_name',
+                },
+                {
+                  label: i18n._(t`First name`),
+                  value: '!first_name',
+                },
+              ]}
               hideStatus
             />
           </View>
